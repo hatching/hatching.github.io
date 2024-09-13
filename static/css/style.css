@@ -1,0 +1,225 @@
+/* vim:set noet: */
+/*! Author: Ben de Graaff <https://nx3d.org/>
+ */
+
+* {
+	box-sizing: border-box;
+}
+
+html, button, input, select, textarea {
+	font-size: 11pt;
+	font-family: Arial, sans-serif;
+}
+
+@media screen {
+	html, body { min-height: 100% }
+	html, body { margin: 0; padding: 0; }
+	html {
+		color: #000;
+		background: #FFF;
+	}
+	h1, h2, h3 { font-weight: normal }
+	.container {
+		color: #000;
+		padding: 1em 4em;
+		margin: 4px 0;
+		border-radius: 2px;
+	}
+	article img { max-width: 100% }
+	.literal, code { font-size: 11pt; }
+	article pre { margin: 0 0 0 16px; font-size: 10pt }
+	.article-content { overflow-x: auto }
+}
+
+@media screen and (min-width: 600px) {
+	body { font-size: 12pt }
+	.literal, code { font-size: 12pt; }
+	article pre { font-size: 12pt }
+}
+@media screen and (min-width: 820px) {
+	body { font-size: 12pt; }
+}
+
+pre, code { background-color: #f6f4ff; } pre { overflow: auto }
+
+/* ------------------------------------------------------------------------- */
+
+* + h1, * + h2, * + h3 { margin-top: 1em }
+
+a { color: #1e91d2; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #E9E9E9;
+margin: 1em 0; padding: 0; }
+
+.list-unstyled { list-style: none; padding-left: 0; }
+
+
+/* ------------------------------------------------------------------------- */
+
+header.page-header {
+	display: block;
+	background-color: #000000;
+	color: #ffffff;
+}
+header .padded { padding: 32px 64px; }
+
+header.page-header.kb {
+	background-position: bottom;
+	background-image: url(../images/kb.jpg);
+}
+
+header nav,
+header .title {
+	display: inline-block;
+}
+header .title {
+	padding-right: 20px;
+}
+
+header nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+header nav li {
+	display: inline-block;
+	padding: 0;
+	margin: 0 10px;
+}
+
+header nav a {
+	display: inline-block;
+	color: #FFF;
+	padding: 6px 12px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+header .subheader {
+	margin-top: 64px;
+	display: flex;
+	margin-left: 256px;
+}
+
+header .subheader .title {
+	background-color: #fcc200;
+	color: black;
+	width: 256px;
+	height: 248px;
+	font-size: 24pt;
+	padding: 16px;
+}
+
+header .subheader .crap {
+	margin-left: 128px;
+	font-size: 36pt;
+	font-weight: bold;
+}
+
+
+/* ------------------------------------------------------------------------- */
+
+.yellow {
+	background-color: gold;
+	padding: 5em 10em;
+}
+
+/* ------------------------------------------------------------------------- */
+
+header h1 {
+	font-size: 140%;
+	white-space: nowrap;
+}
+
+header nav a {
+	color: #FFF;
+	padding: 6px 12px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+header nav .menu-selected a {
+	color: #333;
+	background-color: #FFF;
+}
+
+header nav a:hover {
+	color: #99A;
+	text-decoration: none
+}
+
+header nav .menu-selected a:hover {
+	background: #EEE;
+	color: #333
+}
+
+/* ------------------------------------------------------------------------- */
+.post-list ul {
+	display: block;
+	list-style-type: none;
+	padding: 0;}
+.post-list li {
+	display: block;
+	font-size: 90%;
+	margin-bottom: 1em }
+.post-list a {
+	 display: block;
+	font-size: 120% }
+.post-list p { margin: 0.3em 0 }
+/* ------------------------------------------------------------------------- */
+
+
+article h1 { font-size: 140% }
+article h1 a { color: black }
+article h2 { font-size: 130% }
+article h3 { font-size: 115% }
+
+.article-title { font-size: 240% }
+
+article table { border: 1px solid silver }
+article td { padding: 0.2em 1em }
+article thead { background: #eee; }
+
+img.center { display: block; margin: 1em auto; }
+
+.pagination { margin-top: 32px; font-size: 0.85em; color: #888; }
+
+.entry-title a { color: #333; text-decoration: none; }
+.entry-title a:hover { text-decoration: underline; }
+
+.article-outline { margin: 6px 0; }
+
+.article-content,
+.article-summary { margin: 32px 0; }
+
+.single-page-article {
+	max-width: 55em;
+}
+
+/* -- Article info -- */
+.article-info { color: #445 }
+
+.post-date { color: #111; }
+.post-tag { }
+
+/* -- Footer ----------------------------------------------------------------*/
+
+footer {
+	font-size: 80%;
+	background-color: black;
+	color: white;
+}
+footer .padded {
+	padding: 32px 64px;
+}
+
+/* */
+
+.container {
+	background-image: url(../images/block.svg);
+	background-position: top right;
+	background-repeat: no-repeat;
+	min-height: 640px;
+}

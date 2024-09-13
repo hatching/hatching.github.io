@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-44.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-44.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Overview Section and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Overview Section and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-44.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-09-17T00:00:00Z">2020-09-17</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another entry in our Triage Thursday blog series. We have a few more things to cover this week - mostly updated and improved family support and configuration extraction.</p>
+<ul>
+<li><a href="#ransomware">Updates to handling of InfinityLock, Chimera, Ouroboros and SunCrypt ransomware</a></li>
+<li><a href="#trickbot">TrickBot Update</a></li>
+<li><a href="#emotet">Emotet Detection Update</a></li>
+<li><a href="#revengerat">RevengeRAT Static Detection</a></li>
+</ul>
+<p>First though, our highlight this week is a new Overview report section which summarises the results of all tasks, both static and dynamic.</p>
+<h2 id="analysis-overview">Analysis Overview</h2>
+<p>The Overview section brings together the findings from each task of an analysis to a single, easy-to-reference location</p>
+<figure><img src="../../static/images/blog/tt-20-09-17/overview_infinitylock.png"><figcaption>
+      <h4>Overview for InfinityLock sample (200831-tnfgvzw7da)</h4>
+    </figcaption>
+</figure>
+
+<p>This overview is backed up by a new <code>overview.json</code> file which is available via the API. Like the UI version it contains summary information on all tasks and files submitted for a single analysis. A new endpoint has been added, <code>GET /samples/{sampleID}/overview.json</code>, to allow fetching of this file directly. More information and request examples can be found in the <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidoverviewjson">API documentation</a>.</p>
+<p>Below we will quickly go over each section of the new overview and summarise the data available there.</p>
+<h3 id="general-tab">General Tab</h3>
+<p>Under General is listed basic information about the file that was submitted to Triage. For ZIP/archive files, this will be the archive itself - SHA256 hash, sample ID etc.</p>
+<p>Note also that the score value shown here is the highest score across the analysis tasks - static, behavioural, etc.</p>
+<figure><img src="../../static/images/blog/tt-20-09-17/overview_general.png">
+</figure>
+
+<h3 id="malware-config-tab">Malware Config Tab</h3>
+<p>This section shows any extracted configurations, C2 addresses or ransom notes from all of the analysis tasks.</p>
+<figure><img src="../../static/images/blog/tt-20-09-17/overview_malconfig.png"><figcaption>
+      <h4>Example Emotet Config</h4>
+    </figcaption>
+</figure>
+
+<h3 id="targets-tab">Targets Tab</h3>
+<p>Here you can find a summary of all files run for analysis and a summary of the findings for each such as hashes, score and tags. For an analysis with multiple files, such as an archive, this will have multiple entries and references the relevant tasks for each one.</p>
+<figure><img src="../../static/images/blog/tt-20-09-17/overview_targets.png">
+</figure>
+
+<hr>
+<h2 id="ransomware">Ransomware Updates</h2>
+<p>As usual there is no shortage of new ransomware samples to look at currently. We have added classifications for a few more families that have received attention recently.</p>
+<h3 id="infinitylock">InfinityLock</h3>
+<p>InfinityLock, also known as InfinityCrypt, has been around for some years but is still seeing active use in the wild. A sample was reported on Twitter at the end of August which caught our attention, and we have now added support based on the samples we were able to gather.</p>
+<p>More information on the family can be found on the <a href="https://translate.google.ru/translate?hl=ru&amp;tab=wT&amp;sl=ru&amp;tl=en&amp;u=https%3A%2F%2Fid-ransomware.blogspot.com%2F2017%2F09%2Finfinitylock-ransomware.html">ID Ransomware blog</a>.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200831-tnfgvzw7da/behavioral1">200831-tnfgvzw7da</a></li>
+<li><a href="https://tria.ge/200908-78xbfgykyn/behavioral1">200908-78xbfgykyn</a></li>
+</ul>
+<h3 id="chimera">Chimera</h3>
+<p>Chimera is another family which has been around for some time, with MalwareBytes <a href="https://blog.malwarebytes.com/threat-analysis/2015/12/inside-chimera-ransomware-the-first-doxingware-in-wild/">first reporting on it</a> back in December 2015. It is still around in the wild and saw a new version appear in August this year. We have added support based on a couple of recent samples on Triage.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200917-eaa2a96xna/behavioral1">200917-eaa2a96xna</a></li>
+<li><a href="https://tria.ge/200917-bnytrvfrcx/behavioral1">200917-bnytrvfrcx</a></li>
+</ul>
+<h3 id="ouroboros">Ouroboros</h3>
+<p>This family has been active for years too, constantly releasing new versions and with other families branching off from it over time. The main Ouroboros family, also known as ZeroPadypt, has gone through multiple iterations over the years. At the start of September we noticed a variant of the family which was evading our rules and have now extended coverage.</p>
+<p><strong>Analyses:</strong>
+New sample seen in Sept. 2020:</p>
+<ul>
+<li><a href="https://tria.ge/200911-3wb7tfrw2j/behavioral1#report">200911-3wb7tfrw2j</a></li>
+</ul>
+<p>Older Family Samples:</p>
+<ul>
+<li><a href="https://tria.ge/200917-denh91ztp2">200917-denh91ztp2</a></li>
+<li><a href="https://tria.ge/200917-1eb3nkgwvx">200917-1eb3nkgwvx</a></li>
+<li><a href="https://tria.ge/200917-gq9jhe7j16">200917-gq9jhe7j16</a></li>
+</ul>
+<h3 id="suncrypt">SunCrypt</h3>
+<p>SunCrypt has been around for a bit under a year, thought to have first begun operations in October 2019 according to <a href="https://www.bleepingcomputer.com/news/security/suncrypt-ransomware-sheds-light-on-the-maze-ransomware-cartel/">BleepingComputer</a>. The operators have also claimed to be associated with the Maze ransomware group, although this is something the Maze developers have since denied. Regardless it does share some characteristics with the Maze group, including reusing C2 addresses previously associated with Maze campaigns and in the way it steals data to use as leverage in the ransom demands.</p>
+<p>It appears to have stepped up operations in the second half to 2020, and has reportedly had successful infections at several organisations such as <a href="https://www.bleepingcomputer.com/news/security/university-hospital-new-jersey-hit-by-suncrypt-ransomware-data-leaked/">University Hospital New Jersey</a> and a <a href="https://www.bleepingcomputer.com/news/security/suncrypt-ransomware-shuts-down-north-carolina-school-district/">North Carolina school district</a>.</p>
+<p>Not that to get the analysis below to run correctly, it required a longer timeout than usual. This was run with 5 minutes instead of our default 2.5.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200917-35p4dy1zb6">200917-35p4dy1zb6</a></li>
+</ul>
+<h2 id="trickbot">TrickBot Configuration Extractor Update</h2>
+<p>TrickBot saw another minor tweak this week, with a change to its packer opcodes. We have extended our detection and configuration extraction to handle the update.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200916-w52vg1yl1a/behavioral1">200916-w52vg1yl1a</a></li>
+</ul>
+<h2 id="emotet">Emotet Update</h2>
+<p>Emotet also received a minor update earlier in the week. A change in the opcode pattern used to parse the malware&rsquo;s list of C2 IP addresses caused it to slip through our yara rules. This has now been fixed.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200916-12jqxmyyax/behavioral1">200916-12jqxmyyax</a></li>
+<li><a href="https://tria.ge/200916-1mqxfssp36/behavioral1">200916-1mqxfssp36</a></li>
+<li><a href="https://tria.ge/200916-2jdyemqa3e/behavioral1">200916-2jdyemqa3e</a></li>
+<li><a href="https://tria.ge/200916-2xmp8bqzdn/behavioral1">200916-2xmp8bqzdn</a></li>
+<li><a href="https://tria.ge/200916-2y7ykmdvys/behavioral1">200916-2y7ykmdvys</a></li>
+</ul>
+<h2 id="revengerat">RevengeRAT</h2>
+<p>RevengeRAT is an extremely popular remote access tool used in the wild, which has been around since 2016. The source code was leaked some time ago, so there are many different versions and variants floating around. We recently observed a few samples which were not triggering signatures due to inactive C2, so we have improved static detection for this group.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200629-ajyq7qancx/static1">200629-ajyq7qancx</a></li>
+<li><a href="https://tria.ge/200629-y8nlv3deqs/static1">200629-y8nlv3deqs</a></li>
+<li><a href="https://tria.ge/200912-1p2t1hs1ta/static1">200912-1p2t1hs1ta</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Knowledge Base</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 134: Ubuntu 22.04, RedHat Linux, and French Language Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-06/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Using Magic Links</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/magic-links/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 80</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-14/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-69.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-69.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Greater Filetype Support, Family Updates, and New Coniguration Extractors</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Greater Filetype Support, Family Updates, and New Coniguration Extractors</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-69.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-03-10T00:00:00Z">2022-03-10</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another week of Triage Thursday updates! We&rsquo;ve got a few family updates to go over, as well as a bit of an experiment for our handling of different file types.</p>
+<p>In the news today:</p>
+<ul>
+<li><a href="#filetypes">Expanded support filetypes</a></li>
+<li><a href="#cryptbot">Updated Cryptbot detections and configuration extractor</a></li>
+<li><a href="#plugx">Improved PlugX handling to cover more versions/variants</a></li>
+<li><a href="#xenomorph">Added detection and configuration extractor for Xenomorph Android banking trojan</a></li>
+<li><a href="#blackguard">Added detection and configuration extractor for BlackGuard stealer</a></li>
+<li><a href="#jester">Added detection and configuration extractor for Jester stealer</a></li>
+</ul>
+<p>If you discover any issues or missing detections while using Triage, please do send us feedback. It&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="filetypes">Expansion to Supported Filetypes</h2>
+<p>So far with Triage we have always kept the supported file types to a limited list, based on those formats we think are relevant for behavioural analysis like executables, scripts etc. Although files like JPEGs or other image/video formats can be leveraged maliciously their use is normally limited to 1 of 2 options:</p>
+<ol>
+<li>A fake file which is not actually a valid JPEG, MPEG etc. These are generally either plain executables with the extension or some header fields changed, or an encrypted payload disguised as one of these files but which is actually totally useless without the associated loader to decrypt/unpack and deploy it. In the case of the former Triage already covers these, and for the latter we saw limited value in allowing them to run as standalone files since they won&rsquo;t do anything anyway - we&rsquo;re more interested in the loader file and the sequence of actions that carries out.</li>
+<li>An actual, valid media file with some embedded content intended to exploit a vulnerability in a particular piece of software. Whilst these are a legitimate threat, the fact they rely on very specific bits of software meant that we didn&rsquo;t see much value in supporting them.</li>
+</ol>
+<p>We&rsquo;re using media files here as an example since these are by far the most oft requested additions, but the same is true of many other formats. Over time it has become clear that many of our users would still like the ability to submit files such as these regardless of the limitations, so this week we are rolling out an experimental feature to open up Triage and remove file type limitations altogether. For now this will remain on the public cloud only while we iron out any issues this brings up - we expect there may be some potential for false positives here for example - and if you come across any issues or file types not behaving properly please feel free to report those to us.</p>
+<p><strong>Note that this only affects the UI and not interaction via the API</strong>, which will work exactly as before. The idea here is not to accidentally burn up analysis quotas on invalid files since existing pipelines might not include any file type filtering. However you can force analysis of any filetype if you like by using the <code>pick</code> field in your submit API request - some more details on that can be found in our API documentation <a href="https://private.tria.ge/docs/cloud-api/samples/#choosing-a-profile">here</a>.</p>
+<h2 id="cryptbot">Cryptbot</h2>
+<p>CryptBot is an infostealer which has been active in the wild since early 2019. Although its use has expanded over time it is regularly distributed alongside legitimate software which acts as its lure, often affecting users installing cracked versions of software downloaded from torrent sites.</p>
+<p>The family was quite active throughout 2021 with a few new versions and variants appearing over the course of the year. It most recently appeared on this blog <a href="https://hatching.io/blog/tt-2021-12-09/#cryptbot">back in December</a> when we made some tweaks to our configuration extractor, and it&rsquo;s back on the menu today with some more improvements. We have recently observed an update for the family which wasn&rsquo;t being properly parsed by Triage, so this has been addressed to ensure we cover as much of the family as possible.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220226-j96l7sbddj">220226-j96l7sbddj</a></li>
+<li><a href="https://tria.ge/220226-j96bfabdcr">220226-j96bfabdcr</a></li>
+<li><a href="https://tria.ge/220226-j96bfaaag5">220226-j96bfaaag5</a></li>
+<li><a href="https://tria.ge/220224-wrfz2segbq">220224-wrfz2segbq</a></li>
+<li><a href="https://tria.ge/220224-hxm4naddhj">220224-hxm4naddhj</a></li>
+</ul>
+<h2 id="plugx">PlugX</h2>
+<p>PlugX, also sometimes called Korplug, is a RAT with a long history. It is known to have been around <a href="https://www.cyber.nj.gov/threat-center/threat-profiles/trojan-variants/plugx">since 2012</a>, although TrendMicro suggest that the developers have been running similar malware as far back as 2008.</p>
+<p>PlugX has all the features of a remote access tool and stealer, capable of uploading and downloading files, keylogging, capturing images through attached webcams and running a full cmd.exe shell which can be used by the attacker to execute further commands. Over recent years the family has <a href="https://go.recordedfuture.com/hubfs/reports/cta-2021-0228.pdf">often been associated with Chinese state threat actors</a> by companies like RecordedFuture, forming part of a much broader toolset which includes other payloads like <a href="https://hatching.io/blog/2021-10-14-triage-thursday/#sakula">Sakula</a>.</p>
+<p>We added support and a configuration extractor for the family back in 2020 and haven&rsquo;t really seen any significant changes since then, until we recently spotted some new samples which were slipping by our detections. In the process of addressing that we also found a small bug in the configuration extractor so have fixed that too. Overall you should find that coverage for PlugX has been improved.</p>
+<p>We are going to continue working on PlugX - and a couple of the other families popular with Chinese actors - in the future, but this update addresses the immediate priorities. With regard to Sakula, we&rsquo;re seeing some overlap in IoCs and detections with Redline stealer so we&rsquo;ll be looking at ways to better differentiate these 2 in future.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220131-zwgzpaceb6">220131-zwgzpaceb6</a></li>
+<li><a href="https://tria.ge/220224-nck2fschd6">220224-nck2fschd6</a></li>
+<li><a href="https://tria.ge/220224-ncejnschd5">220224-ncejnschd5</a></li>
+<li><a href="https://tria.ge/220224-nb4r6schd4">220224-nb4r6schd4</a></li>
+<li><a href="https://tria.ge/220228-tardcagaan">220228-tardcagaan</a></li>
+</ul>
+<h2 id="xenomorph">Xenomorph</h2>
+<p>Xenomorph, otherwise known as the &ldquo;Alien&rdquo;, is an extraterrestrial hive-based endoparasitoid&hellip;.wait, no, wrong page. Xenomorph is a new Android banking trojan <a href="https://www.threatfabric.com/blogs/xenomorph-a-newly-hatched-banking-trojan.html">discovered in February 2022</a> by ThreatFabric. It was observed being delivered directly from the Play Store having managed to get by the detection techniques in use there, and reportedly had over 50,000 downloads at the time ThreatFabric&rsquo;s report.</p>
+<p>The family is a new fork of an older Android banker called Alien. However it seems that, while sharing a lot of similarities, this is more than simply a new wrapper or slightly tweaked update. The available functionality is quite different, and it also reportedly includes a lot of logging and unfinished features which have led ThreatFabric to suggest that it is in fact the beginning of a new project from the original Alien developer rather than a rip-off or direct fork. One similarity between the 2 that has been seen is the sharing of the same loader component, known as Gymdrop.</p>
+<p>The family has features fairly familiar to Android analysis:</p>
+<ul>
+<li>Gather and exfiltrate device information</li>
+<li>Harvest text messages, both from the device storage and via live interception over the wire</li>
+<li>Carry out overlay attacks against certain applications (mainly banking/finance related)</li>
+<li>Intercept and modify notifications</li>
+<li>Block attempts to uninstall the application</li>
+</ul>
+<p>You can find a complete writeup in the detailed blogpost from ThreatFabric mentioned above. You can <a href="https://www.threatfabric.com/blogs/xenomorph-a-newly-hatched-banking-trojan.html">find that here</a>.</p>
+<figure><img src="../../static/images/blog/tt-2022-03-10/xenomorph.png">
+</figure>
+
+<p>Currently there are not many samples publicly available, but we reviewed those made available to us and implemented detections and a configuration extractor. This can dump the C2 domains and relevant AES encryption keys used by the samples. An example is provided below - note that a UI update to improve the display of the configuration will follow shortly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220310-tgwawabggk">220310-tgwawabggk</a></li>
+</ul>
+<h2 id="blackguard">Blackguard</h2>
+<p>Last week we added support for the 44Caliber family of infostealers - you can check that out in <a href="https://hatching.io/blog/tt-2022-03-03/#44caliber">our previous Triage Thursday blogpost</a>. This week we&rsquo;re bringing in detections for a new fork of this family with some modifications applied called BlackGuard.</p>
+<p>As you can see above, the family was initially spotted by <a href="https://twitter.com/3xp0rtblog/status/1499748871362261001">@3xp0rtblog</a> on Twitter. The name is taken from internal naming conventions within the malware, and although has a lot of similarities to 44Caliber it does seem to feature a couple of differences. Chief among these is the move away from a Discord-based C2 channel, instead using either a dedicated web panel or a Telegram bot for this purpose.</p>
+<p>We have reviewed quite a few samples which have been made available by researchers and implemented both detection and configuration extraction for the family - examples below.</p>
+<figure><img src="../../static/images/blog/tt-2022-03-10/blackguard.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220305-2wpqmshed7">220305-2wpqmshed7</a></li>
+<li><a href="https://tria.ge/220306-pg6z6aaea9">220306-pg6z6aaea9</a></li>
+<li><a href="https://tria.ge/220306-n1r5nsadh6">220306-n1r5nsadh6</a></li>
+<li><a href="https://tria.ge/220306-n2xrjsadh7">220306-n2xrjsadh7</a></li>
+<li><a href="https://tria.ge/220306-n3grqacbfp">220306-n3grqacbfp</a></li>
+</ul>
+<h2 id="jester">Jester Stealer</h2>
+<p>Jester stealer first popped up on underground forums in July 2021 but has taken some time to come to the attention of researchers. <a href="https://cyberint.com/blog/research/jester-stealer/">According to Cyberint</a> this family is the &lsquo;flagship&rsquo; malware for a group which has a whole portfolio of threats, from botnets through cryptominers to a full exploit building kit. Jester seems to have gained some more attention in early 2022, although it has been tracked since its first appearance.</p>
+<p>The group behind it seems to have put quite some effort into marketing for their new malware, even going so far as to offer dedicated training courses with discounts for existing clients. Support and sales are mostly conducted via a Telegram channel, and are generally provided in Russian and/or English.</p>
+<p>The stealer itself goes after data which is pretty familiar from other malware of this type - stored credentials and cookies from more than 20 browsers; data from email clients and messaging apps like Whatsapp, Discord and Telegram; system/network information and credentials; cryptocurrency wallets; FTP details from common clients. It also includes a few less common targets, like some VPN software and password managers. According to a <a href="https://blog.cyble.com/2022/02/24/jester-stealer-an-emerging-info-stealer/">report by Cyble</a> it also includes some anti-VM/anti-analysis techniques.</p>
+<p>Jester appears to be in active development, with a reported 7 versions being seen since it was initially released.</p>
+<figure><img src="../../static/images/blog/tt-2022-03-10/jester.png">
+</figure>
+
+<p>We have reviewed a number of available samples and implemented both detections and a configuration extractor - this can dump the C2 URLs, as well as the botnet name/ID and the license key associated with the sample. A number of examples are below, and you can find more using the <a href="https://tria.ge/s/family:jester"><code>family:jester</code></a> search query.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211203-bq9kraddcn">211203-bq9kraddcn</a></li>
+<li><a href="https://tria.ge/211204-d5xwlsabdq">211204-d5xwlsabdq</a></li>
+<li><a href="https://tria.ge/211216-w6ltvadddq">211216-w6ltvadddq</a></li>
+<li><a href="https://tria.ge/220116-p48ghafdf7">220116-p48ghafdf7</a></li>
+<li><a href="https://tria.ge/220116-p7w8msfgcr">220116-p7w8msfgcr</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New Mitre ATT&amp;CK Matrix UI</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-05/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 84</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-08-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updated Gozi Detection and Gootkit Extractor</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 116: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-25/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

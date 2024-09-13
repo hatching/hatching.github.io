@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-78.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-78.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Raccoon v2 and Other Detection Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Raccoon v2 and Other Detection Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-78.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-06-30T00:00:00Z">2022-06-30</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Another week, another Triage Thursday blogpost! We&rsquo;ve got our usual collection of detection and configuration extractor updates to go over, including the return of Raccoon and a couple of families new to Triage:</p>
+<ul>
+<li><a href="#raccoon">Updated detections for Raccoon to support V2, and extended the configuration extractor</a></li>
+<li><a href="#privateloader">Added signatures and a configuration extractor for PrivateLoader</a></li>
+<li><a href="#icexloader">Added detections for IceXLoader</a></li>
+<li><a href="#symbiote">Added signatures for the Symbiote Linux backdoor</a></li>
+<li><a href="#sectoprat">Updated rules for a variant of the SectopRAT family</a></li>
+</ul>
+<p>As always if you find any problems with the Triage platform or the detections in it, please do let us know. Community input is a vital part of tracking and keeping up to date with the rapidly evolving malware landscape and is extremely helpful in making these updates possible. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="raccoon">Raccoon V2</h2>
+<p>A couple of weeks back we included a family called RecordBreaker in our blogpost. Since then more analysis of it has become available and it seems that it was initially mis-identified, in reality being a new version of Raccoon stealer.</p>
+<p>Raccoon was a well established family up until March 2022, when operations were shut down after a key developer was killed in the Russian invasion of Ukraine. It remained inactive until early June when the operators resumed posting on the underground forums and began to push a version 2 of the malware.</p>
+<p>The new version appears to have involved rewriting significant sections of the malware but currently the overall flow and functionality is mostly unchanged. According to <a href="https://medium.com/s2wblog/raccoon-stealer-is-back-with-a-new-version-5f436e04b20d">a post by S2W</a> it claims some improvements like an expanded list of targets from which to harvest data, cross-compatibility with 32 and 64 bit systems, string encryption, and a fully automated payload builder.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-30/raccoon.png">
+</figure>
+
+<p>We have refactored our earlier RecordBreaker signatures and made some more improvements based on further analysis of these files. Since it seems like this is a new start for the project we expect to see further updates and variants in the future so will of course be keeping an eye on it and making adjustments as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220614-j72kgachcl">220614-j72kgachcl</a></li>
+<li><a href="https://tria.ge/220610-hwtj2sdag2">220610-hwtj2sdag2</a></li>
+<li><a href="https://tria.ge/220610-y6vg4afbgj">220610-y6vg4afbgj</a></li>
+<li><a href="https://tria.ge/220607-q6n2bafah4">220607-q6n2bafah4</a></li>
+<li><a href="https://tria.ge/220610-qc14sabdaq">220610-qc14sabdaq</a></li>
+</ul>
+<h2 id="privateloader">PrivateLoader</h2>
+<p>PrivateLoader has been around in some form since early 2021 but has largely slipped under the radar until earlier this year. It is not specific to one particular family or threat group, being offered online under a pay-per-install (PPI) model which has become increasingly common for loaders like this. It has been seen distributing ransomware, stealers, and other payloads - a couple of weeks back <a href="https://hatching.io/blog/tt-2022-06-16/#netdooka">we reported on NetDooka</a> which is a module framework often seen being delivered by PrivateLoader.</p>
+<p>In order to hinder some common detection techniques the malware relies heavily on encrypting both the strings and API calls required - these are decrypted at runtime and in the case of the latter resolved dynamically. According to <a href="https://www.zscaler.com/blogs/security-research/peeking-privateloader">ZScaler&rsquo;s report</a> it also uses a lot of junk code to confuse reverse engineering attempts.</p>
+<p>The malware uses a 2 stage C2 setup, where hardcoded URLs are used as a deaddrop address from which the malware can fetch the location of the actual C2 server. In turn the C2 server will then generally provide additional URLs which point to the final payload to be delivered. Interestingly PrivateLoader also includes some initial discovery functionality querying the presence of various file paths, registry keys and browser extensions commonly looked at by stealers - saved browser logins, cryptocurrency wallets, banking cookies etc. However it does not exfiltrate anything, it simply checks if they are present. ZScaler suggests this is to inform the choice of payload to be deployed based on the content identified.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-30/privateloader.png">
+</figure>
+
+<p>We have reviewed available samples and implemented detections and a configuration extractor to dump out the hardcoded URLs - these are the original &lsquo;deaddrop&rsquo; URLs, plus the secondary backup that&rsquo;s hardcoded in case the dynamic attempts fail.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220617-w92pgachhm">220617-w92pgachhm</a></li>
+<li><a href="https://tria.ge/220617-w991vafeb7">220617-w991vafeb7</a></li>
+<li><a href="https://tria.ge/220617-xaax5sdaak">220617-xaax5sdaak</a></li>
+<li><a href="https://tria.ge/220617-xab57sdaal">220617-xab57sdaal</a></li>
+<li><a href="https://tria.ge/220430-z8fbmaagb9">220430-z8fbmaagb9</a></li>
+</ul>
+<h2 id="icexloader">IceXLoader</h2>
+<p>IceXLoader is another new loader family (no prizes for guessing that one), this one having popped up within the last few weeks. It is not related to the older XLoader family (which is itself an evolution of Formbook).</p>
+<p>The exact age of the family is not currently clear, as the first copy to be reported widely appears to identify itself as version 3. <a href="https://www.fortinet.com/blog/threat-research/new-icexloader-3-0-developers-warm-up-to-nim">Fortinet report</a> that they have come across copies of the original version 1 by exploring the current C2 servers but little evidence has been reported of this appearing in the wild. Version 3 is written in the Nim programming language, an unusual choice but one that has increasingly been gaining popularity thanks to the fact that many detection solutions do not handle it well. Earlier versions appear to have been written in AutoIT but coverage for malware using this has improved a lot over recent years so that likely prompted the switch. The current version 3 payload seems to be something of a work in progress port as the previous version 1 payloads reportedly included more features, and some functionality such as mutex creation is clearly unfinished.</p>
+<p>Once installed on a victim the malware establishes persistence via abusing both the startup folder and a Run registry key. It then carries out live patching of the <code>amsi.dll</code> file in memory which allows it to bypass the Windows Antimalware Scan Interface used by various security products to check content, signficantly reducing its detectability. It also uses Powershell to directly disable Windows Defender&rsquo;s realtime scanning and to add directory exceptions which protect the malware&rsquo;s install location.</p>
+<p>A full writeup can be found by Fortinet <a href="https://www.fortinet.com/blog/threat-research/new-icexloader-3-0-developers-warm-up-to-nim">here</a>. We have implemented general detections for the family, and we expect to visit it again in future as the family develops beyond the current version 3.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220620-whe2dsbae9">220620-whe2dsbae9</a></li>
+<li><a href="https://tria.ge/220630-sc227adgh6">220630-sc227adgh6</a></li>
+<li><a href="https://tria.ge/220620-whe2dsbaf3">220620-whe2dsbaf3</a></li>
+</ul>
+<h2 id="symbiote">Symbiote</h2>
+<p>Symbiote is a new Linux backdoor first reported in a joint effort by BlackBerry and Intezer - their report on it can be found <a href="https://blogs.blackberry.com/en/2022/06/symbiote-a-new-nearly-impossible-to-detect-linux-threat">here</a>. It is an interesting threat because it is deployed not as a standalone executable but as a shared object library - this is loaded into all running processes and this infects the machine. However it cannot do anything on its own without being loaded by an existing process.</p>
+<p>Once a machine is infected the malware will act like a rootkit, using its access to hide its own files, processes and network activity. It can then stealthily remain on the machine providing backdoor access to the attacker as needed, who can login using any account on the compromised system.</p>
+<p>Another unusual feature is its use of Berkeley Packet Filter (BPF) hooking to communicate discretely with its C2 infrastructure. It is not the first malware to do so - an Equation Group payload has included this before, and at the start of the month <a href="https://hatching.io/blog/tt-2022-06-02/#bpfdoor">we added detection for a backdoor</a> which depends heavily on this - but it is still quite a rare sight. It&rsquo;s also very effective, so we&rsquo;ll likely be seeing more of this in future.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220630-sdaz4adgh8">220630-sdaz4adgh8</a></li>
+<li><a href="https://tria.ge/220630-sdj8rsdha4">220630-sdj8rsdha4</a></li>
+<li><a href="https://tria.ge/220630-sdmnwscadj">220630-sdmnwscadj</a></li>
+<li><a href="https://tria.ge/220630-sdps9acadk">220630-sdps9acadk</a></li>
+</ul>
+<h2 id="sectoprat">SectopRAT</h2>
+<p>SectopRAT dates back to 2019 when it was first discovered by <a href="https://twitter.com/malwrhunterteam">MalwareHunterTeam</a>. It is a remote access trojan written in .NET with a couple of unusual features that set it apart from similar threats.</p>
+<p>Chief of these is its ability to create a 2nd desktop environment which is hidden from users. It can then launch and control processes here, especially web browsers that it can then use for other purposes. It can also directly stream the user&rsquo;s desktop to the C2 server to facilitate spying and data collection.</p>
+<p>The initial version was thought to be a testing build, as it did not include any particularly malicious behaviour besides basic profiling of an infected system. However in early 2020 a sample was observed which appeared to be a weaponised version of the family and that led us to implement some initial detections for the family. We have recently noticed a new variant in the wild which makes some attempt to evade detection by encrypting strings and function names so this week we have updated our rules to properly cover these samples - some examples are below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220627-kta12aaaal">220627-kta12aaaal</a></li>
+<li><a href="https://tria.ge/220313-2tdwcsadh2">220313-2tdwcsadh2</a></li>
+<li><a href="https://tria.ge/220519-m9n9pseea9">220519-m9n9pseea9</a></li>
+<li><a href="https://tria.ge/220525-se1xxabeb8">220525-se1xxabeb8</a></li>
+<li><a href="https://tria.ge/220610-apgb5sdfeq">220610-apgb5sdfeq</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 102: Submission UI Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Onion Support and Signature Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Network Simulation and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-19/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage for Linux</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-for-linux/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

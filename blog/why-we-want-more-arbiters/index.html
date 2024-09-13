@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-10.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-10.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Why We Want More Arbiters</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Making the Call</h5>
+        
+        <h2>Why We Want More Arbiters</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-10.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2019-05-07T00:00:00Z">2019-05-07</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=polyswarm">polyswarm</a></p><li><p><a href="/blog/#category=arbiter">arbiter</a></p><li><p><a href="/blog/#category=crypto">crypto</a></p><li><p><a href="/blog/#category=innovation">innovation</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/menno.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Menno Brendeke</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p><img src="../../static/images/blog/polyswarm.png" alt="Polyswarm"></p>
+<h2 id="introduction">Introduction</h2>
+<p>In the previous two blogs on Hatching&rsquo;s Polyswarm arbitership, we looked at
+what an arbiter is, what it does and how we became PolySwarm&rsquo;s first Arbiter.
+In this blog, we want to call upon others to become an arbiter as well, because
+we believe this can benefit both future Arbiters, as well as contribute to the
+development PolySwarm&rsquo;s revolutionary platform.</p>
+<h2 id="recap-what-is-an-arbiter">Recap: What is an arbiter?</h2>
+<p>By definition, Arbiter is somebody tasked with making difficult decisions in
+light of conflicting interests. In the case of PolySwarm&rsquo;s threat intelligence
+marketplace, that means judging the potential malicious intent of file samples:
+a sort of cat and mouse game between security analysts and malware authors. In
+the end, the verdict of the Arbiters forms what is called the Ground Truth. The
+Ground Truth is the final decision on the intent of a sample that is used to
+settle the bounties.</p>
+<h2 id="why-do-we-want-more-arbiters">Why do we want more arbiters?</h2>
+<p>The answer to this question is straightforward. More is better. Why? Because it
+can significantly improve the quality of decision making. As an Arbiter, your
+primary objective is to judge a file&rsquo;s maliciousness. To do so, you must
+utilize the analytical resources you have at your disposal. However, there will
+always be a limit to the knowledge a single Arbiter can have. That is why you
+want to combine as many resources as possible.</p>
+<p>You can compare it to having multiple judges in a court of justice. Each judge
+(or Arbiter in this case) brings its own, unique skill set to the table. By
+combining these skill sets, you will always be able to get a better, more
+substantiated judgment than you would have from just a single judge (or
+Arbiter).</p>
+<p>In addition to this, you are also able to learn from the input of the other
+arbiters. For example, imagine a case in which four out of five Arbiters would
+classify a file as malicious, but one would not. Assuming the majority is
+right, this would be beneficial information for that single Arbiter. Perhaps,
+maybe even more interesting, what if closer inspection proved that the minority
+was right. If there would only be one arbiter, you would never have the
+opportunity to learn from your judgments in such a way.</p>
+<h2 id="how-to-become-an-arbiter">How to become an arbiter</h2>
+<p>PolySwarm is revolutionizing the threat detection industry by bringing together
+subject-matter experts. To become an Arbiter, you need to have a product or a
+solution that can determine the potential maliciousness of a file, as well as
+the ability to contribute to the skill set of the existing arbiters. However,
+it does not matter if you are an antivirus solution, a threat intelligence
+solution of some sort or even another malware sandbox for that matter. The
+value for both customers and participants of the marketplace is in the
+interconnectivity that leverages the diverse skill.</p>
+<p>If you feel like your company meets these requirements and you believe that you
+can contribute to PolySwarm&rsquo;s marketplace, you can reach out to them
+<a href="https://polyswarm.io/contact/index.html">directly</a>. We found integration with their platform pretty straightforward,
+as <a href="https://github.com/polyswarm/polyswarmd">polyswarmd</a> does most of the work for you.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 142: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-01/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet Updates, and BazarLoader Emulation</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-11-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 131: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Smokeloader Analysis and More Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-08-27/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

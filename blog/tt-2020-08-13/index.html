@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-55.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-55.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New extractors, expanded family support and Android analysis</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New extractors, expanded family support and Android analysis</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-55.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-08-13T00:00:00Z">2020-08-13</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to this week&rsquo;s Triage Thursday blogpost. In this weekly series we go over updates made in the last week to provide an overview of newly available features and family support.</p>
+<p>In this post, we&rsquo;ll give a brief overview of the following changes:</p>
+<ul>
+<li><a href="#android">Android Analysis</a></li>
+<li>New configuration extractors for <a href="#formbook">Formbook</a> and <a href="#diamondfox">DiamondFox</a></li>
+<li><a href="#zloader">Improved configuration extractor for ZLoader</a></li>
+<li>Family classification for VenomRat samples</li>
+</ul>
+<hr>
+<h3 id="android">Android Analysis</h3>
+<p>This week saw the release of the first version of our new Android analysis sandbox, allowing full dynamic analysis of Android binaries on Triage.</p>
+<ul>
+<li>Interact in realtime with Android through our UI.</li>
+<li>Detect suspicious use of the Android APIs.</li>
+<li>Unpack dynamically loaded .dex files.</li>
+<li>Capture dropped payloads as well as monitor accesses to the filesystem.</li>
+<li>Analyze network traffic.</li>
+<li>Monitor application related processes and services.</li>
+</ul>
+<p>For more information on this and a case study of the Anubis Android banking trojan, check out the full blogpost <a href="https://hatching.io/blog/triage-for-android/">published earlier this week</a>.</p>
+<blockquote>
+<p>Example Android Analyses:</p>
+<ul>
+<li><a href="https://tria.ge/200813-v3nsqe7snn/behavioral1">200813-v3nsqe7snn</a></li>
+<li><a href="https://tria.ge/200813-s9klzhq5ka/behavioral1">200813-s9klzhq5ka</a></li>
+<li><a href="https://tria.ge/200813-m8qffw1xej/behavioral1">200813-m8qffw1xej</a></li>
+</ul>
+</blockquote>
+<h3 id="configuration-extractors">Configuration Extractors</h3>
+<p>We&rsquo;re always updating and expanding our support for config extraction during analysis, and this week we have improved handling of a few families.</p>
+<h4 id="formbook">Formbook</h4>
+<p>This new extractor dumps all URLs for the sample and distinguishes between the real C2 and the fake domains included as decoys. These are all clearly reported after the analysis completes:</p>
+<figure><img src="../../static/images/blog/tt-20-08-13/formbook-config.png">
+</figure>
+
+<blockquote>
+<p>Example Formbook Analyses:</p>
+<ul>
+<li><a href="https://tria.ge/200810-2b9zl1cdns/behavioral1">200810-2b9zl1cdns</a></li>
+<li><a href="https://tria.ge/200810-12br5knqes/behavioral1">200810-12br5knqes</a></li>
+</ul>
+</blockquote>
+<h4 id="diamondfox">DiamondFox</h4>
+<p>A private researcher, <a href="https://twitter.com/fr3dhk">@fr3dhk</a>, passed us some DiamondFox Kettu samples while researching the family for their recent blogpost (which you <a href="https://fr3d.hk/blog/diamondfox-bank-robbers-will-be-replaced">can find here</a>). To go along with the post, we released an automated config extractor for Triage which dumps C2 URLs and the XOR key used for communications.</p>
+<figure><img src="../../static/images/blog/tt-20-08-13/diamond-fox-config.png">
+</figure>
+
+<blockquote>
+<p>Example DiamondFox Kettu Analysis:</p>
+<ul>
+<li><a href="https://tria.ge/200812-vc8ftkz17s/behavioral1">200812-vc8ftkz17s</a></li>
+</ul>
+</blockquote>
+<h4 id="zloader">ZLoader</h4>
+<p>The ZLoader extractor has also received a small update, and now extracts the RSA public key when possible as well as the RC4 key used for C2 communications. As before it also extracts the botnet ID and all C2 URLs.</p>
+<figure><img src="../../static/images/blog/tt-20-08-13/zloader-config.png">
+</figure>
+
+<blockquote>
+<p>Updated ZLoader Analysis:</p>
+<ul>
+<li><a href="https://tria.ge/200809-q4s5grlexj/static1">200809-q4s5grlexj</a></li>
+</ul>
+</blockquote>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New and Updated Families</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-12-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 101: New Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-21/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 106: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-26/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet x64 and Other Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-28/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

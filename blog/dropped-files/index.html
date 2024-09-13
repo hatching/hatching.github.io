@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-89.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-89.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Accessing Dropped Files on Triage</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Short Guides</h5>
+        
+        <h2>Accessing Dropped Files on Triage</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-89.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-03-20T00:00:00Z">2020-03-20</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>Over recent weeks, a number of users have got in touch asking about downloading files dropped by a sample during analysis. Although not currently accessible through the web UI, this feature is available via the API. This short guide will cover how to use the API to lookup and download dropped files for an analysis.</p>
+<h2 id="1-viewing-dropped-files">1. Viewing Dropped Files</h2>
+<p>When the Onemon agent (our Windows kernel driver) identifies the creation of a new unique file by the sample being analysed, it may dump its contents and its name will be recorded in the final report file. The raw JSON for this file is accessible using the <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidtaskidreport_triagejson"><code>report_triage.json</code> endpoint</a>:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;API-KEY&gt;' \
+https://api.tria.ge/v0/samples/&lt;SAMPLE_ID&gt;/&lt;TASK_ID&gt;/report_triage.json
+</code></pre>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Field</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">SAMPLE_ID</td>
+          <td style="text-align: left">The identifier visible in the report URL - e.g. <code>200303-bdsch48nyx</code>. <br /><br />This is also returned by the API when submitting a file using the <a href="https://tria.ge/docs/cloud-api/samples/#post-samples"><code>samples</code> endpoint</a>.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">TASK_ID</td>
+          <td style="text-align: left">Can be quickly accessed from the final part of the report URL - e.g. <code>behavioral1</code>, <code>behavioral2</code>, etc. <br /><br />Where possible, Task IDs should be obtained using the <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleid">summary endpoint</a> instead, e.g.<br /><br />```curl -sH &lsquo;Authorization: Bearer &lt;API_KEY&gt;&rsquo; &lsquo;<a href="https://api.tria.ge/v0/samples/">https://api.tria.ge/v0/samples/</a>&lt;SAMPLE_ID&gt;&rsquo;</td>
+      </tr>
+  </tbody>
+</table>
+<p>The following command example will fetch the JSON report for the analysis <a href="https://tria.ge/reports/200303-bdsch48nyx/behavioral1">200303-bdsch48nyx</a> and output the section detailing dropped files:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;API-KEY&gt;' \
+https://api.tria.ge/v0/samples/200303-bdsch48nyx/behavioral1/report_triage.json \
+| jq .dumped
+</code></pre>
+<p>The list this returns includes all dumped data from the analysis - note that this can also include other files such as process memory dumps. This can be filtered to only dropped files by selecting those of the <code>martian</code> kind:</p>
+<pre><code>jq '.dumped[] | select(.kind==&quot;martian&quot;)'
+</code></pre>
+<p>This gives us a list of the available dropped files, with each entry following this structure:</p>
+<pre><code>{
+  &quot;at&quot;: 42900,
+  &quot;pid&quot;: 1604,
+  &quot;procid&quot;: 30,
+  &quot;path&quot;: &quot;C:\\Users\\Admin\\AppData\\Roaming\\Microsoft\\Cyuujswhia\\ciynbw.exe&quot;,
+  &quot;name&quot;: &quot;files/0x0003000000012f27-8.dat&quot;,
+  &quot;kind&quot;: &quot;martian&quot;
+}
+</code></pre>
+<ul>
+<li><code>at</code>: Timestamp (in milliseconds) at which the file was created, relative to the start of the analysis.</li>
+<li><code>pid</code>: PID of the process which created the file</li>
+<li><code>procid</code>: Unique internal ID value assigned to the process by Triage to avoid confusions if PIDs are reused during an analysis.</li>
+<li><code>path</code>: Original file path of then file on the VM.</li>
+<li><code>name</code>: Internal ID of the dropped file. This is used to fetch the file itself from the API.</li>
+</ul>
+<h2 id="2-downloading-dropped-files">2. Downloading Dropped Files</h2>
+<p>Using the <code>name</code> field from the output above, the <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidtaskidfilesfilename">files endpoint</a> can be used to fetch files directly:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;API_KEY&gt;' \
+'https://api.tria.ge/v0/samples/&lt;SAMPLE_ID&gt;/&lt;TASK_ID&gt;/files/&lt;FILE_NAME&gt;' \
+--output output.bin
+</code></pre>
+<p>For example, using the output from part 1 above for the analysis <a href="https://tria.ge/reports/200303-bdsch48nyx/behavioral1">200303-bdsch48nyx</a>:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;API_KEY&gt;' \
+'https://api.tria.ge/v0/samples/200303-bdsch48nyx/behavioral1/files/0x0003000000012f27-8.dat' \
+--output ciynbw.exe
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>We hope this guide answers your questions about this feature. Further information on the API, including command examples, can be found in the <a href="https://tria.ge/docs/">official documentation</a>. As usual, feel free to get in touch with us to give us any feedback on this or other aspects of Triage. Follow us on Twitter (<a href="https://twitter.com/hatching_io">@hatching_io</a>) for news on the latest changes as they are released.</p>
+<p>Not signed up yet? Head on over to <a href="https://tria.ge/">https://tria.ge/</a> to request early access to the platform!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Submitting Zip Files to Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/archive-submissions/">Read</a>
+        </li>
+      
+        <li>
+          <h3>More Excel 4.0 XLM Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/more-excel-xlm-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Acquisition News and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/acquisition-recorded-future/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 141: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-25/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-39.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-39.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>More Excel 4.0 XLM Extraction</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Office</h5>
+        
+        <h2>More Excel 4.0 XLM Extraction</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-39.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-04-15T00:00:00Z">2020-04-15</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=excel">excel</a></p><li><p><a href="/blog/#category=xlm">xlm</a></p><li><p><a href="/blog/#category=macro">macro</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/nikos.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Team</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>This week we&rsquo;re back with more information on XLM (Excel 4.0) Macros, and our progress on extracting these automatically during Triage analysis. If you haven&rsquo;t already read our first blogpost on this subject, you can check that out <a href="https://hatching.io/blog/excel-xlm-extraction/">here</a>.</p>
+<p>As usual once we started digging into the subject we rather fell down the rabbit hole, finding a whole host of ways in which XLM macros are being leveraged maliciously. In last week&rsquo;s post we covered what could be considered the more straightforward types of XLM macros and demonstrated Triage&rsquo;s new extractor. Today we have released an update for this, adding support for a range of additional XLM macro-enabled Office documents.</p>
+<p>Overall, quite a lot has been happening in the space of XLM-enabled macro
+documents. Read on below for examples of these files and links to relevant Triage analyses!</p>
+<h2 id="latest-in-xlm-macros">Latest in XLM macros</h2>
+<p>Some samples have started using encrypted Office documents, a technique that
+has been discussed for several years already. Primarily, these encrypted
+documents make static analysis tools like Yara rules harder, but after
+decryption it&rsquo;s the same old game.</p>
+<p><a href="http://www.pwncode.io/2020/04/xlm-hidden-macrosheets-used-for-evasion.html">http://www.pwncode.io/2020/04/xlm-hidden-macrosheets-used-for-evasion.html</a></p>
+<p>Here is an example analysis from one of the files discussed in the blogpost:</p>
+<p><a href="https://tria.ge/reports/200410-tmzpvazbjn/static1">https://tria.ge/reports/200410-tmzpvazbjn/static1</a></p>
+<p>Some XLM documents have started activating on specific days or, more
+accurately, deactivating after the <a href="https://x.com/H_Miser/status/1248614211220955136">intended distribution date</a>.</p>
+<p>For these cases we&rsquo;ve implemented a rather basic &ldquo;day recovery&rdquo; mechanism that
+automatically resolves the correct day, and thus encryption key, and extracts
+the formulas from there. For example -</p>
+<p><a href="https://tria.ge/reports/200415-ge3z646ttx/static1">https://tria.ge/reports/200415-ge3z646ttx/static1</a></p>
+<p>Another feature that&rsquo;s not &ldquo;ideal&rdquo; about this document is the fact that it
+dynamically crafts the formula to be executed, but then this formula includes
+a reference to the URL (for <code>URLDownloadToFileA</code>) in
+<a href="https://bettersolutions.com/excel/formulas/cell-references-a1-r1c1-notation.htm">R1C1 notation</a>.
+In other words, the XLM parser and interpreter need to be highly aware of its
+surrounding cells.</p>
+<p>Continuing forward on that topic, more recent samples have started adding the
+document and cell properties (such as &ldquo;amount of rows&rdquo;, &ldquo;amount of columns&rdquo;,
+&ldquo;font size&rdquo;, etc) as input variables for the encryption key. See also the
+<a href="https://x.com/DissectMalware/status/1250108991709106177">following tweet</a> with accompanying analysis.</p>
+<p>Our analysis on <a href="https://tria.ge/">tria.ge</a>:</p>
+<p><a href="https://tria.ge/reports/200415-y6k7zj694a/static1">https://tria.ge/reports/200415-y6k7zj694a/static1</a></p>
+<h2 id="future-work">Future Work</h2>
+<p>We&rsquo;re currently looking into a couple of other, new XLM Macro capabilities
+employed since today and yesterday. E.g., embedding XLM macros in Office 2007+
+documents.</p>
+<h2 id="some-iocs">Some IoCs</h2>
+<p>Following are a bunch of new IoCs based on public submissions to
+<a href="https://tria.ge/">https://tria.ge/</a> as well as our own, continuous research.</p>
+<pre tabindex="0"><code>    358 hxxps://rwtkoaqe[.]club/adfbr53g
+    355 hxxp://fcowhcwsb[.]space/erg4ewr1
+    326 hxxps://grpxmqnrb[.]pw/ehrj4g9g
+    285 hxxps://grpxmqnrb[.]pw/egrg4g3g
+    265 hxxps://waitupdate[.]xyz/deg34g
+    215 hxxp://kacper-formela[.]pl/wp-smart.php
+    215 hxxp://braeswoodfarmersmarket[.]com/wp-smart.php
+    183 hxxps://pxdgcvnsb[.]xyz/aaeg4df12
+    154 hxxps://ddfspwxrb[.]club/fb2g424g
+    150 hxxps://gfhudnjv[.]xyz/vjd7f2js
+    143 hxxps://veqejzkb[.]xyz/SDVe2f2fds
+    141 hxxps://cworld[.]top/wp-front.php
+    141 hxxps://assemble[.]sg/wp-front.php
+    136 hxxps://merystol[.]xyz/6ng688x8
+    136 hxxps://cdncloudtech[.]xyz/deg34g
+    130 hxxps://emmnebuc[.]xyz/SDVJKBsdkhv1
+    129 hxxps://cdncloudtech[.]xyz/bag4hy
+    122 hxxps://doolised[.]xyz/DSBVhsdv78f
+    120 hxxps://pnxkntdl[.]xyz/KJSDBViad7
+    111 hxxp://wrjmkdod[.]xyz/KDHBVsd7v8
+     99 hxxps://fbknuele[.]pw/ajt1eg4fh3a
+     96 hxxps://paxtontranter[.]xyz/rv24t2
+     95 hxxps://grundschule-manderbach[.]de/wp-content/themes/calliope/wp_data.php
+     95 hxxps://free-lans[.]online/wp/wp-content/themes/calliope/wp_data.php
+     92 hxxps://amberlessard[.]xyz/brg2sv
+     91 hxxps://fbknuele[.]pw/aagaeg4df12
+     89 hxxps://tdvomds[.]pw/12341324rfefv
+     89 hxxps://gameaze[.]com/wp-content/themes/wp_data.php
+     81 hxxps://efbzfyvsb[.]website/f2f23
+     73 hxxps://merystol[.]xyz/DVkjbsdv37
+     69 hxxps://tozcftdl[.]xyz/SDVjkhb7831r
+     66 hxxps://narensyndicate[.]com/wp-crun.php
+     66 hxxps://greentec-automation[.]com/wp-crun.php
+     65 hxxps://wrjmkdod[.]xyz/SDFwef2fvbbe
+     65 hxxps://pnxkntdl[.]xyz/KDSBVksdhv778a
+     62 hxxps://friendoffishing[.]com//wp-content/themes/calliope/template-parts/wp_data.php
+     59 hxxps://giaytore[.]com/wp-content/themes/calliope/wp-front.php
+     59 hxxps://amgdorie[.]online/avdv43g
+     56 hxxps://hxzfvomd[.]buzz/asf2f1ff
+     56 hxxp://caudebachthu[.]com/wp-content/themes/calliope/wp_data.php
+     56 hxxp://caude368[.]com/wp-content/themes/calliope/wp_data.php
+     55 hxxps://rosannahtacey[.]xyz/vg43
+     53 hxxps://ethelenecrace[.]xyz/fbb3
+     51 hxxps://emmnebuc[.]xyz/vbdh72F
+     50 hxxps://pjtcdnrd[.]pw/ckjbvkf732
+     50 hxxps://gdchub[.]com/wp-content/themes/chihua/wp-front.php
+     49 hxxps://pxdgcvnsb[.]xyz/ajt1eg4fh
+     49 hxxps://pjtcdnrd[.]pw/fsgbfgbfsg43
+     48 hxxps://gfhudnjv[.]xyz/bh6dk3an
+     48 hxxps://amgdorie[.]online/avdv42g
+     47 hxxp://tubolso[.]cl/wp-content/uploads/2020/02/white/444444.png
+     47 hxxp://murreeweather[.]com/wp-content/white/444444.png
+     47 hxxp://freespacemarketing[.]com/wp-content/uploads/2020/02/white/444444.png
+     47 hxxp://batilservice[.]xyz/wp-content/uploads/2020/02/white/444444.png
+     45 hxxps://tdvomds[.]pw/fgwg24g24g
+     42 hxxps://friendoffishing[.]com/wp-content/themes/calliope/template-parts/wp_data.php
+     36 hxxps://uenoeakd[.]site/grwrg24g2g
+     35 hxxps://narensyndicate[.]com/wp-cran.php
+     35 hxxps://greentec-automation[.]com/wp-cran.php
+     35 hxxps://emmnebuc[.]xyz/DSKVJBdsj2
+     29 hxxp://209[.]141.54.161/crypt.dll
+     26 hxxp://uniluisgpaez[.]edu.co/wp-content/uploads/2020/02/idle/444444.png
+     26 hxxps://wgyafqtc[.]online/fgwg24g24g
+     26 hxxp://samphaopet[.]com/wp-content/uploads/2020/02/idle/111111.png
+     26 hxxp://icietdemain[.]fr/contents/2020/02/idle/222222.png
+     26 hxxp://careers[.]sorint.it/idle/33333.png
+     19 hxxp://clarityupstate[.]com/b.ocx
+     15 hxxps://studyshine[.]in/wp-cryn.php
+     15 hxxps://gameaze[.]com//wp-content/themes/wp_data.php
+     15 hxxps://arturkauf[.]pl/wp-cryn.php
+     14 hxxps://flickkon[.]com//wp-content/themes/calliope/wp-front.php
+     14 hxxps://flashretrieval[.]com/wp-content/themes/calliope/wp-front.php
+     14 hxxp://march262020[.]club/files/bot.dll
+     14 hxxp://lorrainehomeconsulting[.]com/wp-content/uploads/2020/02/trusty/187213.png
+     14 hxxp://g2creditsolutions[.]com/trusty/444444.png
+     12 hxxps://tdvomds[.]pw/1451345341fff
+     10 hxxps://gartnerkvartalet[.]no/wp-content/themes/calliope/wp-front.php
+     10 hxxps://assemble[.]sg/wp-frunt.php
+      9 hxxps://orruucsl[.]xyz/fdgareg34g
+      9 hxxps://gdchub[.]com//wp-content/themes/chihua/wp-front.php
+      7 hxxp://gengrasjeepram[.]com/sv.exe
+      6 hxxp://march262020[.]com/files/april8.dll
+      5 hxxps://wrjmkdod[.]xyz/vdjfvfs7871f
+      5 hxxps://doolised[.]xyz/SDVJbsldkcvg1
+      3 hxxps://doolised[.]xyz/test
+      3 hxxp://209[.]141.54.161/files/crypt.dll
+      2 hxxp://wmwifbajxxbcxmucxmlc[.]com/files/april14.dll
+      2 hxxps://wgyafqtc[.]online/sgfbsb4
+      1 hxxps://virtualworkplace[.]online
+      1 hxxps://nonnewspaper[.]com/bot.dll
+      1 hxxps://merystol[.]xyz/qY3DRY3N
+      1 hxxp://rilaer[.]com/IfAmGZIJjbwzvKNTxSPM/ixcxmzcvqi.exe
+      1 hxxp://fikima[.]com/axel.exe
+      1 hxxp://fibercemper[.]com/wild.exe
+      1 hxxp://209[.]141.54.161/crypt18.dll
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>Every day we&rsquo;re seeing more and newer XLM document variants being released
+and we&rsquo;re making sure to properly handle and detonate all of those in Triage.</p>
+<p>We&rsquo;re doing our very best to be on top of all of these techniques and to show
+you the results in a high-level manner. After all, it is our goal
+with <a href="https://tria.ge/">Hatching Triage</a> to make automated malware analysis
+easy, simple, and affordable to use.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 125: Easier Upload via Drag &amp; Drop or Copy/Paste</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-03-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 103: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-05/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updated family classifications</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-08-20/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 116: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-25/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-40.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-40.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New UI, TOR support, and detection updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New UI, TOR support, and detection updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-40.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-06-10T00:00:00Z">2021-06-10</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=phishing">phishing</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>After last week&rsquo;s <a href="https://hatching.io/blog/triage-for-macos/">look at our new macOS support</a>, we&rsquo;re back to our usual format today taking a look at all of the changes to Triage over the last couple of weeks. We have a wide range of topics this time, with the normal selection of signature updates as well as UI changes and new TOR network support. Check out the full content list:</p>
+<ul>
+<li><a href="#ui">Multiple UI updates</a></li>
+<li><a href="#tor">TOR network routing</a></li>
+<li><a href="#snake">Updated Snake keylogger configuration extractor</a></li>
+<li><a href="#ransomware">New Family signatures for Magniber and Prometheus ransomware</a></li>
+<li><a href="#revengerat">Updated Revenge RAT detection and configuration extractor</a></li>
+<li><a href="#systembc">New SystemBC configuration extractor</a></li>
+<li><a href="#packers">New signatures for common packer frameworks</a></li>
+<li><a href="#orcus">Updated Orcus RAT detection</a></li>
+<li><a href="#skids">Family detections for selection of skidware RATs</a></li>
+</ul>
+<p>If you missed it over the last few weeks, we are also currently hiring a Go developer to join the Hatching team and help build the future of Triage. If you think this might be of interest to you or someone you know, the full job listing can <a href="https://hatching.io/jobs/senior-go-developer/">be found here</a> - feel free to reach out with any questions.</p>
+<p>You can also contact us with any feedback or suggestions about Triage or the analyses it produces - we&rsquo;re always keen to hear from you. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="ui">UI Updates</h2>
+<p>If you use the public Triage server regularly, you&rsquo;ll probably have noticed a few changes to the user interface over the last week or 2. These are part of a larger revamp of the platform to prepare for some of the planned features we have coming later in the year - more on those in future blogposts!</p>
+<p>For now though, there are a several nice tweaks to make the user experience a bit smoother. We&rsquo;ll introduce a couple of the main ones below. There are also minor appearance changes to the site as a whole</p>
+<h4 id="new-submit-screen">New Submit Screen</h4>
+<figure><img src="../../static/images/blog/tt-2021-06-10/ui_submit.png">
+</figure>
+
+<p>We have begun the first steps towards a more advanced and flexible submit process, with a new file picker window as shown above. This now gives you the option to customise the analysis parameters directly at the time of submitting a file instead of having to use preset Profiles - though of course these are still available as a way of saving common configurations.</p>
+<p>Currently the available options are the same as before, but we&rsquo;ll be making additions to these in the coming months.</p>
+<h4 id="updated-replay-monitor">Updated Replay Monitor</h4>
+<figure><img src="../../static/images/blog/tt-2021-06-10/ui_replay_monitor.png">
+</figure>
+
+<p>Following some requests from users, we have improved the Replay Monitor in reports to be a little more visible and responsive.</p>
+<p>The playback resolution will now adapt to fit the available space better, and we have added a &lsquo;Fullscreen&rsquo; option to view the replay recording more easily.</p>
+<h4 id="cleaned-up-machines-listing">Cleaned Up Machines Listing</h4>
+<figure><img src="../../static/images/blog/tt-2021-06-10/ui_machines.png">
+</figure>
+
+<p>This one will mainly be useful to those using the Private Cloud, but users on the Public accounts also have read-only access to <a href="https://tria.ge/machines">this page</a>. Here you can find information on the available VM configurations, and how many Triage can run in parallel for sample analyses.</p>
+<hr>
+<h2 id="tor">TOR Network Routing</h2>
+<p>The ability to route VM traffic through TOR has been a common request since Triage launched, and this week we&rsquo;re happy to make this feature available for the first time.</p>
+<p>TOR can be enabled in the Network Options section of Profiles (or the new Submit screen mentioned above), and will direct all traffic from the Triage VM through the TOR network. This is currently intended for the selection of cases where it would appear that our servers have been blocked by malware operators, causing various HTTP errors when attempting to reach out to C2 or download additional stages. Using TOR, we are able to mask the true source of the request and add some resiliency to our network traffic.</p>
+<p>Currently the TOR options are not configurable, and will simply use the settings defined by us internally. We&rsquo;ll be continuing to expand on network support in the future with things like geolocation proxying so keep an eye open for more news on this front.</p>
+<figure><img src="../../static/images/blog/tt-2021-06-10/ui_tor.png">
+</figure>
+
+<hr>
+<h2 id="ransomware">New Ransomware Family Signatures</h2>
+<p>This week we&rsquo;ve deployed initial detections for a couple of additional ransomware families - Magniber and Prometheus. We have analysed samples available through Triage and built preliminary family signatures to correctly classify them on top of the existing behavioural results and ransomnote dumping.</p>
+<p>You can find more information on each family and some example analysis links below.</p>
+<h3 id="magniber-ransomware">Magniber Ransomware</h3>
+<p>Magniber has been around for a few years, initially solely targeting users in South Korea and then expanding to cover additional South-East Asian countries. The malware is generally spread via the Magnitude Exploit Kit, which like many recent EKs also mainly operates in the APAC region, but the ransomware itself also included extensive checks to ensure that it only ran on machines in that area.</p>
+<p>The family&rsquo;s name comes from this relation with the Magnitude EK, and some code similarities to the successful Cerber ransomware.</p>
+<p>Recent samples appear to have done away with the geolocation checking, likely marking a move away from dependence on exploit kits for distribution as these are normally not as successful in Western countries.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210522-avrsva3a7s">210522-avrsva3a7s</a></li>
+<li><a href="https://tria.ge/210522-fad5v5zgre">210522-fad5v5zgre</a></li>
+<li><a href="https://tria.ge/210522-hl665jwd3a">210522-hl665jwd3a</a></li>
+<li><a href="https://tria.ge/210519-macc77ed1x">210519-macc77ed1x</a></li>
+</ul>
+<h3 id="prometheus-ransomware">Prometheus Ransomware</h3>
+<p>Prometheus was first observed in the wild in early 2021, and has been identified as a new variant of the Thanos ransomware family which appeared during 2020.</p>
+<p>The developers are claiming to be part of the REvil threat group, but according to reports by the <a href="https://unit42.paloaltonetworks.com/prometheus-ransomware/">likes of PaloAlto Networks</a> it seems likely that this is a lie being used for marketing purposes - the REvil name carries some weight in the ransomware scene.</p>
+<p>The group claims to have breached several dozen organisations in the first half of 2021, but reports show that so far only 4 have paid up. However it appears the family is quite active, and will likely remain so for some time.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210528-acjqsda27j">210528-acjqsda27j</a></li>
+<li><a href="https://tria.ge/210528-43bj78bba6">210528-43bj78bba6</a></li>
+<li><a href="https://tria.ge/210528-aztjgyg22a">210528-aztjgyg22a</a></li>
+<li><a href="https://tria.ge/210528-w5abwajf3x">210528-w5abwajf3x</a></li>
+<li><a href="https://tria.ge/210528-9sn3jdwaa2">210528-9sn3jdwaa2</a></li>
+</ul>
+<hr>
+<h2 id="snake">Updated Snake Keylogger Configuration Extractor</h2>
+<p>Snake is a relatively straightforward keylogger which is sold through forums rather than being used by a single actor. As is common with modern keyloggers it also includes some functionality of a stealer, being able to gather stored credentials from browsers, take screenshots, and extract the contents of the clipboard.</p>
+<figure><img src="../../static/images/blog/tt-2021-06-10/cfg_snake.png">
+</figure>
+
+<p>We added a configuration extractor for the family <a href="https://hatching.io/blog/tt-2021-03-18/#snake">back in March</a> but recently observed a new variant which was getting past it. We have analysed the available samples and updated as required. As usual we&rsquo;ll continue to keep an eye out for any further changes and will make tweaks if needed. In the meantime you can find examples of the new variant below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210607-8m6qyqvppj">210607-8m6qyqvppj</a></li>
+<li><a href="https://tria.ge/210607-evt668clj6">210607-evt668clj6</a></li>
+<li><a href="https://tria.ge/210607-k9mcwtqs4e">210607-k9mcwtqs4e</a></li>
+<li><a href="https://tria.ge/210607-p893rlxmqx">210607-p893rlxmqx</a></li>
+<li><a href="https://tria.ge/210607-sw7rkqv6ee">210607-sw7rkqv6ee</a></li>
+</ul>
+<hr>
+<h2 id="revengerat">Updated RevengeRAT Configuration Extractor</h2>
+<p>RevengeRAT is an old face in town, with the original versions dating back to 2016. It is a full-featured remote access tool providing complete control of any machine it is installed on. The source code was leaked early on, meaning that it has become a popular choice for building custom versions by various threat actors. Nowadays there are lots of different variants floating around making reliable detection a challenge at times.</p>
+<figure><img src="../../static/images/blog/tt-2021-06-10/cfg_revenge.png">
+</figure>
+
+<p>We have previously added and modified detections for the family based on samples observed on Triage, and this week we&rsquo;re back with a minor background tweak to support some more versions observed recently. We doubt it will be the last time RevengeRAT appears in one of these blogs, but it should cover all current samples of the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210607-l73rvl7mvx">210607-l73rvl7mvx</a></li>
+<li><a href="https://tria.ge/210607-l1m6bm93v2">210607-l1m6bm93v2</a></li>
+<li><a href="https://tria.ge/210607-dtg136l3be">210607-dtg136l3be</a></li>
+<li><a href="https://tria.ge/210607-98pvybcl3j">210607-98pvybcl3j</a></li>
+<li><a href="https://tria.ge/210602-86h2p513je">210602-86h2p513je</a></li>
+</ul>
+<hr>
+<h2 id="systembc">New SystemBC Configuration Extractor</h2>
+<p>SystemBC is a RAT which is commonly used as a loader stage for other threats - most recently ransomware families. It provides secure download of remote files, as well as its range of remote administration options, making it a powerful tool for ransomware gangs looking to carry out targeted infections with manual control over data gathering and deployment.</p>
+<p>We added family detection back in <a href="https://hatching.io/blog/tt-2021-02-11/#systembc">February 2021</a>, and since it has continued to see widespread use we&rsquo;re revisiting it this week to add a full configuration extractor. We have carried out reprocessing of all recent samples to properly reflect this change so you can find analyses simply by searching <code>family:systembc</code>, but a few examples are also linked directly below for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210608-z3wkc58gcn">210608-z3wkc58gcn</a></li>
+<li><a href="https://tria.ge/210608-k6xfxegpje">210608-k6xfxegpje</a></li>
+<li><a href="https://tria.ge/210603-32q8f8c9e6">210603-32q8f8c9e6</a></li>
+</ul>
+<hr>
+<h2 id="packers">Detection for Common Packer Frameworks</h2>
+<p>Whilst not always malicious in and of themselves, the presence of a packer can be a sign that a sample is attempting to make itself harder to analyse using static methods. Triage already features detection for a few different packers, providing a fallback to suggest that additional analysis is required in case execution fails for some reason and prevents behaviour being captured fully.</p>
+<p>This week we are adding rules for a few more frameworks seen in use recently. All of the below target solely .NET assemblies - some examples are provided for each as a reference:</p>
+<p><strong>.NET Reactor</strong></p>
+<ul>
+<li><a href="https://tria.ge/210531-yp1ncndat2">210531-yp1ncndat2</a></li>
+<li><a href="https://tria.ge/210510-ktlcmbe1de">210510-ktlcmbe1de</a></li>
+<li><a href="https://tria.ge/210510-k6xvw7n5yx">210510-k6xvw7n5yx</a></li>
+</ul>
+<p><strong>CustAttr</strong></p>
+<ul>
+<li><a href="https://tria.ge/210520-7g8118y5fe">210520-7g8118y5fe</a></li>
+<li><a href="https://tria.ge/210528-x8y99r7vwe">210528-x8y99r7vwe</a></li>
+<li><a href="https://tria.ge/210603-e7paf64x3a">210603-e7paf64x3a</a></li>
+</ul>
+<p><strong>Core1</strong></p>
+<ul>
+<li><a href="https://tria.ge/210528-4x97f3ggfn">210528-4x97f3ggfn</a></li>
+<li><a href="https://tria.ge/210528-16tayj62r6">210528-16tayj62r6</a></li>
+<li><a href="https://tria.ge/210526-zltw5g7dbj">210526-zltw5g7dbj</a></li>
+</ul>
+<p>Between them, these 3 have been used in many thousands of samples uploaded to Triage over recent months. To provide more detail on them and help with any further manual analysis, we have added rules which will provide informational feedback about the presence of the packer.</p>
+<hr>
+<h2 id="updated-orcus-rat-signatures">Updated Orcus RAT Signatures</h2>
+<p>Orcus is a relatively advanced remote access trojan with an extensive feature set. It is sold through forums for use by varied actors looking for a stealer/backdoor solution, and includes support for custom plugins enabling users to easily extend or target its capabilities to their use case.</p>
+<p>This week we&rsquo;ve made some minor additions to our detection for the family, adding fallback rules to catch samples which slip by our existing detections. Some examples from the last couple of months can be seen below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210528-w2zdy9hk9a">210528-w2zdy9hk9a</a></li>
+<li><a href="https://tria.ge/210526-v1egykknse">210526-v1egykknse</a></li>
+<li><a href="https://tria.ge/210521-dtzh4fq5ds">210521-dtzh4fq5ds</a></li>
+<li><a href="https://tria.ge/210507-levrjtnhxs">210507-levrjtnhxs</a></li>
+</ul>
+<hr>
+<h2 id="skids">Family Detections for Recent Skidware RATs</h2>
+<p>There are always dozens of families coming and going which barely last long enough to be worth building detections for. Small, poorly made trojans and ransomware samples which make a single phishing run and then vanish; or the new &rsquo;next big thing&rsquo; which turns out to be worse in every way than its existing competitors and never gets off the ground.</p>
+<p>This week we noticed a few RATs that seemed worthwhile looking into, so we have pushed detections for them despite their low technical complexity and poor implementation. Some relevant links for each of these are given below.</p>
+<h3 id="plaguebot">PlagueBot</h3>
+<ul>
+<li><a href="https://tria.ge/210404-84a6kjhrkn">210404-84a6kjhrkn</a></li>
+</ul>
+<h3 id="a310logger">a310logger</h3>
+<ul>
+<li><a href="https://tria.ge/210603-8wls6tgak6">210603-8wls6tgak6</a></li>
+<li><a href="https://tria.ge/210531-z4pc6he4ja">210531-z4pc6he4ja</a></li>
+<li><a href="https://tria.ge/210531-83jrfbhyba">210531-83jrfbhyba</a></li>
+<li><a href="https://tria.ge/210531-5j3tfy65pn">210531-5j3tfy65pn</a></li>
+<li><a href="https://tria.ge/210525-yfkktm1njx">210525-yfkktm1njx</a></li>
+</ul>
+<h3 id="loaderbot">LoaderBot</h3>
+<ul>
+<li><a href="https://tria.ge/210403-c2n6zaemfx">210403-c2n6zaemfx</a></li>
+<li><a href="https://tria.ge/210403-lbcabwgxp6">210403-lbcabwgxp6</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Backend Updates and Family Detection Improvements</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-12-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-29/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 127: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-04-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 147: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-09-05/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

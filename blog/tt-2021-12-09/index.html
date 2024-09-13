@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-61.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-61.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Backend Updates and Family Detection Improvements</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Backend Updates and Family Detection Improvements</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-61.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-12-09T00:00:00Z">2021-12-09</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another entry in our Triage Thursday update blog series!</p>
+<p>This week we&rsquo;ve got a couple of backend changes to mention, as well as our usual selection of detection and extractor updates:</p>
+<ul>
+<li><a href="#hypervisor">Updated hypervisor to improve handling of packers for Emotet, IcedID and Gozi</a></li>
+<li><a href="#logonserver">Added spoofing of LOGONSERVER variable to enable execution of new Dridex droppers</a></li>
+<li><a href="#bazar">Updated emulator for Bazar</a></li>
+<li><a href="#target">Added signatures for TargetCompany ransomware</a></li>
+<li><a href="#snake">Updated SnakeKeylogger detections</a></li>
+<li><a href="#cryptbot">Updated Cryptbot rules</a></li>
+</ul>
+<p>As always if you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account, or reach out to us using the contact form <a href="https://hatching.io/">on our website</a> to find out more about our commercial options.</p>
+<hr>
+<h2 id="hypervisor">Hypervisor updates to improve packer handling</h2>
+<p>As with most sandboxing solutions, under the hood of Triage is a hypervisor which hosts the virtual machines we use for analysis. The one we use has been heavily modified by our team to harden it against detection and anti-VM techniques, but this is a huge topic and there can always be room for something to sneak in the door.</p>
+<p>We recently came across some packers which were utilising CPU instructions not supported by our hypervisor, which was preventing some samples from running in our environment. We do not believe this was an intentional anti-VM technique, more just a quirk of their use of advanced features to evade unrelated detections and reverse engineering techniques.</p>
+<p>The packers in question were being utilised by some of the largest families in distribution currently, including Emotet, IcedID and Gozi.</p>
+<p>We have now deployed an update to resolve this, adding support for the instruction (and some other fixes and improvements) to ensure that they are correctly unpacked and executed during analysis. Some examples are provided below for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211209-whze2aeedl">211209-whze2aeedl</a> (Emotet)</li>
+<li><a href="https://tria.ge/211209-wj1dqaeedq">211209-wj1dqaeedq</a> (IcedID)</li>
+<li><a href="https://tria.ge/211209-wj5nfaeedr">211209-wj5nfaeedr</a> (Gozi)</li>
+</ul>
+<h2 id="logonserver">Spoofing LOGONSERVER results</h2>
+<p>In the last few months we have seen a few samples checking the LOGONSERVER environment variable as a way to target their attacks, and prevent execution in unsuitable systems. Unfortunately as our VMs are currently isolated machines connected &lsquo;directly&rsquo; to the internet, Triage squarely qualifies as one of these unsuitable systems.</p>
+<p>The approach is fairly simple, but means that only machines connected to a Windows domain/workgroup would allow execution to continue and the malware to perform its actions. Just replacing the value of the variable had the potential to cause other issues with the standard operation of the system, but we also wanted to find a way to ensure that these files could run in our sandbox.</p>
+<p>The current solution is to spoof the results of the API call(s) being used to check the variable from the malware samples. By returning false values to specific queries, we can ensure that the rest of the system runs smoothly while also preventing detection by the malware. After testing internally, we have today deployed this to the public cloud.</p>
+<p>This is only a stop-gap measure to resolve the issue while we work on other features that will render it obsolete (yes, Active Directory is coming to Triage!). However, it should mean that for now you will not come across problems with these kinds of samples.</p>
+<p>Some examples of the files making these checks are available below. It has so far mainly been observed in droppers for the Dridex malware family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211209-wmrwraeefm/behavioral2">211209-wmrwraeefm</a></li>
+<li><a href="https://tria.ge/211209-wmyz3aeefp/behavioral2">211209-wmyz3aeefp</a></li>
+</ul>
+<h2 id="bazar">Updated Bazar emulation</h2>
+<p>A couple of weeks ago we introduced our new emulation functionality for BazarLoader. To see some more information on that <a href="https://hatching.io/blog/tt-2021-11-18/#bazar">check out the blogpost from the time</a>.</p>
+<p>We have been continuing to work on the family since, and this week sees a few more improvements to our handling being deployed to the public cloud. This basically adds support for additional CPU instructions to our emulator, enabling a more complete analysis than was initially possible.</p>
+<h2 id="target">TargetCompany ransomware</h2>
+<p>TargetCompany is a fairly straightforward ransomware family which has been around since about the middle of 2021.</p>
+<p>When encrypting files, it appends a extension to their names which is based on the name of the company that is being attacked. This information appears to be hardcoded into samples suggesting that it is highly targeted in its deployment.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-09/targetcompany.png">
+</figure>
+
+<p>We have now implemented dedicated family rules, and our ransomnote parser is able to detect and dump the instructions file during analysis.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210617-t6kkx9hs4j">210617-t6kkx9hs4j</a></li>
+<li><a href="https://tria.ge/210811-pgc8cvzvlx">210811-pgc8cvzvlx</a></li>
+<li><a href="https://tria.ge/211128-ff255sfhgj">211128-ff255sfhgj</a></li>
+</ul>
+<h2 id="snake">Updated SnakeKeylogger detection</h2>
+<p>SnakeKeylogger is a simple stealer which is sold through cybercrime forums to any user willing to pay to run their own campaigns. As such it is a common sight, but generally operated by separate groups rather than a single actor.</p>
+<p>As is common for modern keyloggers, it also includes some functionality of a stealer. It is able to gather stored credentials from web browsers, take screenshots, and dump the contents of the clipboard in search of passwords etc.</p>
+<p>We added detection for the family <a href="https://hatching.io/blog/tt-2021-01-14/#snake">back in January</a> and revisited it in March to <a href="https://hatching.io/blog/tt-2021-03-18/#snake">add a full configuration extractor</a> to better support the large number of samples we were receiving on Triage.</p>
+<p>This week we&rsquo;ve gone back to it again to make some tweaks to account for recent variants and changes in the executables. We have updated our triggers for the configuration extractor and static detection, which should provide better results for the latest samples. As usual we&rsquo;ll continue to monitor the family for changes and will revisit it as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211206-mrvzjadggm">211206-mrvzjadggm</a></li>
+<li><a href="https://tria.ge/211203-lr7snagabp">211203-lr7snagabp</a></li>
+<li><a href="https://tria.ge/211203-lr7snabac6">211203-lr7snabac6</a></li>
+<li><a href="https://tria.ge/211203-lrpxvabac5">211203-lrpxvabac5</a></li>
+<li><a href="https://tria.ge/211202-krmbaagfd7">211202-krmbaagfd7</a></li>
+</ul>
+<h2 id="cryptbot">Updated Cryptbot rules</h2>
+<p>Cryptbot has made a few appearances on this blog in 2021, as we have applied changes to adapt to its new variations as they have been observed. Today is no different, and we have made some more tweaks to our static detection and configuration extractor triggers to ensure that we maintain thorough coverage for the family.</p>
+<p>The family is an infostealer which was first reported back in early 2019. It has been fairly active consistently since then, often being distributed bundled with cracked software which acts as the lure.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211205-m35ccacchm">211205-m35ccacchm</a></li>
+<li><a href="https://tria.ge/211205-m265jscchl">211205-m265jscchl</a></li>
+<li><a href="https://tria.ge/211205-mzjw8sfbb2">211205-mzjw8sfbb2</a></li>
+<li><a href="https://tria.ge/211205-mzjw8sfba9">211205-mzjw8sfba9</a></li>
+<li><a href="https://tria.ge/211205-mzjw8scchk">211205-mzjw8scchk</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Network Simulation and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-19/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 120: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 110: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-23/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-08/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

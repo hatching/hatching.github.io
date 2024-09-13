@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-72.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-72.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>UPX Unpacking and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>UPX Unpacking and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-72.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-04-14T00:00:00Z">2022-04-14</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week in our Triage Thursday blogs, in which we go over the major changes from the last few days. Today we have a couple of new additions to Triage&rsquo;s list of supported families, plus a few updates to existing detections. We also have a new addition to our static processing:</p>
+<ul>
+<li><a href="#upx">Added UPX unpacking to static analysis</a></li>
+<li><a href="#redline">Updated Redline rules to cover undetected samples</a></li>
+<li><a href="#bumblebee">Added configuration extractor for BumbleBee</a></li>
+<li><a href="#metastealer">Added configuration extractor for MetaStealer</a></li>
+<li><a href="#qakbot">Updated detections for new Qakbot variant with anti-analysis features</a></li>
+<li><a href="#industroyer">Updated rules for new Industroyer2 payloads</a></li>
+<li><a href="#matanbuchus">Updated rules for Matanbuchus loader</a></li>
+</ul>
+<p>As usual if you have any comments, suggestions or other feedback about Triage feel free to get in touch with us. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="upx">UPX Unpacking</h2>
+<p>In general our approach to packers so far has been to deal with them at the behavioural phase, letting them to the hard work themselves and then creating process dumps once the plaintext version is available in memory. This does mean that often yara or our configuration extractors won&rsquo;t find anything at the static phase, but for a sandbox where almost all samples are submitted for static and dynamic analysis it&rsquo;s never been much of an issue.</p>
+<p>However we would like to improve and expand our static processing wherever possible, moving nearer to it functioning as a kind of pre-screening step which can inform the decision of whether to take the time for a live run as well. Some aspects of that have been mentioned on this blog already, such as our x86 emulator used for families like Metasploit or Bazar; and our XLM macro parsing. As part of this process we have been exploring ways to improve packer handling, and so this week are pleased to be able to release UPX unpacking on the public cloud.</p>
+<figure><img src="../../static/images/blog/tt-2022-04-14/upx.png">
+</figure>
+
+<p>This is not just vanilla UPX handling, although the core of the functionality is built around that of course. It&rsquo;s pretty common to see samples using UPX with slightly modifications which break the default binaries/parsers so we have attempted to cover as many of these as possible, taking quite a flexible approach to enable Triage to handle small deviations in the normal algorithm. Hopefully this should be quite a robust handler which enables us to significantly increase the number of detections at the static phase, but of course UPX is only one of the many packers used in the wild.</p>
+<p>We have tested this extensively internally and look forward to seeing how it works in the wild. It will be on the public cloud only for a while for us to evaluate its performance, but once everything looks good it will be making its way over to the private cloud as well.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220413-x62qqsfdcq">220413-x62qqsfdcq</a></li>
+<li><a href="https://tria.ge/220414-p8a2sshebl">220414-p8a2sshebl</a></li>
+<li><a href="https://tria.ge/220414-qa3vlahfek">220414-qa3vlahfek</a></li>
+</ul>
+<h2 id="redline">Redline Stealer</h2>
+<p>Redline is no stranger to this blog, so we won&rsquo;t take up your time going over the background in detail again. In short, it is a potent stealer with capabilities to extract content from a wide range of browsers, email clients, cryptocurrency wallets and other local applications on any infected systems. We have covered it many times over the course of the last couple of years as it is very actively developed, and regularly pushes new updates which require some tweaking to our extractors etc.</p>
+<p>This week we noticed a subset of Redline samples that were not being covered by our detections, so this update is just aimed at addressing that. The samples are recent but not necessarily new variants etc., just things which had slipped through the net so far since there are so many different versions of the family. As always, we&rsquo;ll continue to watch out for any new versions or undetected samples and will bring out more updates as required.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220407-ql8j8adfhr">220407-ql8j8adfhr</a></li>
+<li><a href="https://tria.ge/220413-m1nxkseeg9">220413-m1nxkseeg9</a></li>
+<li><a href="https://tria.ge/220413-l9mkfaecd4">220413-l9mkfaecd4</a></li>
+<li><a href="https://tria.ge/220413-kz39rsagek">220413-kz39rsagek</a></li>
+<li><a href="https://tria.ge/220413-kz1tmseac6">220413-kz1tmseac6</a></li>
+</ul>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee - taking its name from the useragent string used in its C2 communications - is a loader component generally associated with an Initial Access Broker group who have worked with ransomware gangs like Conti. If you aren&rsquo;t familiar with the term, and Initial Access Broker (IAB) is a group/person who makes the initial breach into a company, and then sells that access on to other groups to deploy their payloads. This is especially popular with ransomware groups as it reduces their wasted time and means they can tailor their own attack to the specific company and/or user to improve chances of receiving a ransom payment. In the case of EXOTIC LILY - the name assigned to this particular threat group - they seem to have &lsquo;industrialised&rsquo; this process with a team of people carrying out manual (spear)phishing and social engineering to gain access to companies.</p>
+<p>The family itself is a fairly typical loader - it uses WMI to harvest general information about the system and reports that back to the C2, which can issue it a task for the next stage. This task can vary but mainly revolve around deploying code and payloads onto the system. For a fuller writeup of the samples you can find a blogpost about it from Google&rsquo;s Threat Analysis Group <a href="https://blog.google/threat-analysis-group/exposing-initial-access-broker-ties-conti/">here</a>.</p>
+<figure><img src="../../static/images/blog/tt-2022-04-14/bumblebee.png">
+</figure>
+
+<p>Although ransomware is certainly a focus of the group, they do deploy other things as well. Most recently BumbleBee was spotted distributing CobaltStrike payloads.</p>
+<p>We have reviewed a number of available samples, and built out some detections and a dedicated configuration extractor to dump the C2 address.</p>
+<h2 id="bumblebee-1">BumbleBee</h2>
+<ul>
+<li><a href="https://tria.ge/220403-ja8brageh4">220403-ja8brageh4</a></li>
+<li><a href="https://tria.ge/220414-sdnk7adbdl">220414-sdnk7adbdl</a></li>
+<li><a href="https://tria.ge/220414-sdsj5sgda6">220414-sdsj5sgda6</a></li>
+<li><a href="https://tria.ge/220414-sdw8bsdbdm">220414-sdw8bsdbdm</a></li>
+<li><a href="https://tria.ge/220414-sd17aagda7">220414-sd17aagda7</a></li>
+</ul>
+<h2 id="metastealer">MetaStealer</h2>
+<p>Picked out by Brad Duncan of <a href="https://twitter.com/malware_traffic">@malware_traffic</a> fame, MetaStealer is an infostealer which is distributed via malicious Excel files sent as email attachments. The family uses the legitimate web services Github and transfer.sh to host and fetch the final payloads - an exe and DLL - to make the C2 traffic look more inconspicuous. The binaries are stored as data blobs which can be fetched quietly and converted into executables on the infected machine. You can find the full writeup on the samples <a href="https://isc.sans.edu/diary/28522">here</a>.</p>
+<figure><img src="../../static/images/blog/tt-2022-04-14/metastealer.png">
+</figure>
+
+<p>After gaining an initial foothold the samples appear to use the WinLogon registry keys for persistence, creating a new entry which launches the malicious payload via explorer.exe. It also checks the location as set in the registry, presumably to prevent executing on systems in CIS or other nations.</p>
+<p>We have added detections and a configuration extractor for the family, which can dump out the C2 address being used.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220406-amc7psfde5">220406-amc7psfde5</a></li>
+<li><a href="https://tria.ge/220331-zel73sdfcn">220331-zel73sdfcn</a></li>
+<li><a href="https://tria.ge/220411-dm3n5sgcgk">220411-dm3n5sgcgk</a></li>
+<li><a href="https://tria.ge/220412-njrgtabbef">220412-njrgtabbef</a></li>
+</ul>
+<h2 id="qakbot">Qakbot</h2>
+<p>Qakbot likely needs no introduction, but if you’re not familiar with the family it is a powerful infostealer/trojan which has been in use in various forms since around 2009. It has been repurposed for a few different roles over the years, including a banking trojan attacking Active Directory servers and a stint as a ransomware dropper.</p>
+<p>Triage has long supported both behavioural detection and configuration extraction for the Qakbot family, but as an active and advanced threat it regularly requires minor tweaks to keep our signatures up to date. We recently spotted a new version that was taking some additional steps to complicate analysis, with garbage API calls to mislead investigations and some new IDs which weren&rsquo;t covered by the configuration extractor. We&rsquo;ve now updated to cover these properly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220407-t6j9xafgfm">220407-t6j9xafgfm</a></li>
+<li><a href="https://tria.ge/220407-tsg8dsfefk">220407-tsg8dsfefk</a></li>
+<li><a href="https://tria.ge/220407-tsg8dsfefk">220407-tdb3tsaca7</a></li>
+</ul>
+<h2 id="industroyer">Industroyer2</h2>
+<p>Triage has featured some static detection for Industroyer for a couple of years now, but the war in Ukraine has borught with it a whole raft of new variants and families, including some updates for Industroyer.</p>
+<p>If you&rsquo;re not familiar with the family it is a destructive piece of malware targeting certain industrial control systems (ICS), specifically those related to national energy grids. The initial version was revealed in late 2016 after an attack against a Ukrainian power company which cut of power to parts of Kyiv for a short period. Since the beginning of Russia&rsquo;s full-scale invasion in February attacks like this have become more prolific, making use of a wide range of different wipers and other destructive malware including updated versions of the Industroyer payloads <a href="https://www.welivesecurity.com/2022/04/12/industroyer2-industroyer-reloaded/">reported by ESET</a> earlier this week.</p>
+<p>We have reviewed the available samples and made some tweaks to our original rules to ensure they are correctly reported. Considering the active situation we expect to see more changes in future, so will continue to keep an eye on this and other families being used against Ukraine and will do our best to release new detections as soon as possible.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220412-qvadsabbfg">220412-qvadsabbfg</a></li>
+<li><a href="https://tria.ge/220412-kxqkwshehj">220412-kxqkwshehj</a></li>
+<li><a href="https://tria.ge/220413-lyxahaeca9">220413-lyxahaeca9</a></li>
+</ul>
+<h2 id="matanbuchus">Matanbuchus</h2>
+<p>Matanbuchus appeared in early 2021, but only really began to make an appearance in the samples we saw around the end of the year. We added initial detections in our <a href="https://hatching.io/blog/2021-review/#matanbuchus">final blogpost of 2021</a> and revisited it again earlier this year when a new variant appeared, and today we&rsquo;re checking in again to make a couple of minor modifications to cover a sample we found that was going unreported.</p>
+<p>The family includes fairly standard loader functionality including loading and running executables directly in memory; using schtasks to add or modify tasks on the machine; and PowerShell execution of commands/scripts. In addition, if the user has no existing infection chain in place the developer can provide a standalone launcher for the malware to get it started. Advertised as malware-as-a-service, it can be rented out on a monthly basis by anyone looking to run their own campaigns.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220411-pzzc2aabg7">220411-pzzc2aabg7</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Excel 4.0 XLM Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/excel-xlm-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 123: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-03-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Knowledge Base</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>macOS Announcement and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-04-22/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

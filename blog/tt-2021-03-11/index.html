@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-29.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-29.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Family Detection Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Family Detection Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-29.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-03-11T00:00:00Z">2021-03-11</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday update blog series. We have a long list of new updates to introduce today which have been deployed recently. Last week&rsquo;s post was dedicated to the new <a href="https://hatching.io/blog/custom-yara/">custom Yara feature</a>, so we also have a few of the more minor things to cover that were deployed alongside.</p>
+<ul>
+<li><a href="#search">Improved URL search functionality</a></li>
+<li><a href="#agenttesla">Updated AgentTesla detections and extractor</a></li>
+<li><a href="#soap">Added support for SOAP network protocol</a></li>
+<li><a href="#buer">Updated Buer extractor</a></li>
+<li><a href="#ransomnote">Updated ransomnote parsing to catch Ryuk note variant</a></li>
+<li><a href="#plead">Configuration extractor for PLEAD Linux-based backdoor</a></li>
+<li>Embedded network IoCs into report Overview for easy reference</li>
+<li>URLs extracted from PDFs, Office documents, etc. now displayed directly in report Overview</li>
+<li>Improved Yara support in Android analyses</li>
+<li>Added extraction of URLs from JNLP droppers</li>
+<li>Added extraction of URLs from .docx files using WebSettings to fetch payloads</li>
+<li>Added family detection for RemoteUtilitiesRAT (RuRAT)</li>
+<li>Added family detection for <a href="https://www.bleepingcomputer.com/news/security/new-sarbloh-ransomware-supports-indian-farmers-protest/">Sarbloh ransomware targeting users in India</a></li>
+<li>Added family detection for <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.servhelper">ServHelper backdoor</a></li>
+<li>Added family detection for TriumphLoader</li>
+<li>Added family detection for <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.webmonitor">WebMonitor RAT</a></li>
+<li>Updated detection for Quasar RAT</li>
+<li>Added family detection for <a href="https://twitter.com/3xp0rtblog/status/1321209656774135810">FickerStealer</a></li>
+</ul>
+<p>Read on below for more details on some of the more significant updates of the week. As usual, if you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="search">Improved URL Search Functionality</h2>
+<p>We&rsquo;ve been receiving some feedback about the Search feature <a href="https://hatching.io/blog/tt-2020-10-23/">added back in October last year</a>, and based on this we have made some tweaks which should make it easier to find analyses based on URL IoCs.</p>
+<p>Originally only URLs extracted during analysis (e.g. from a configuration extractor) were searchable. We have now added support for also matching against URLs submitted to Triage, such as phishing URLs or download links.</p>
+<p>We have also implemented a domain search feature, which will return all analyses containing URLs referencing the specified domain. This is helpful in finding related samples as URL searches only return exact matches. As with URLs, domains are also matched against all relevant data and will return both analyses that were initially submitted as URLs and those which reference them in network traffic. For example, to <a href="https://tria.ge/s?q=domain%3Adrive.google.com">return all analyses which contain Google Drive links</a>:</p>
+<figure><img src="../../static/images/blog/tt-2021-03-11/domain_search.png">
+</figure>
+
+<h2 id="agenttesla">Updated AgentTesla Detection and Configuration Extractor</h2>
+<p>AgentTesla has been a consistent threat for years now, and continue to push new versions and features. It was one of the earliest families added to Triage&rsquo;s detections, and recently we have been carrying out a thorough review of it to ensure our detection is accurate, especially taking into account the more recent versions 2 and 3.</p>
+<p>We have reviewed a large set of samples from various points in AgentTesla&rsquo;s development, and have completely reworked our signatures to provide better coverage while also reducing the chance for false-positives against other stealer families.</p>
+<p>We have also implemented a new configuration extractor, which dumps the C2 information for the sample for easy access in the final report. The C2 infrastructure used depends on the version, but is generally done through some non-HTTP protocol or application. For example SMTP, FTP and Telegram are common C2 channels for the family.</p>
+<p>After deploying the changes, we have also searched out existing AgentTesla analyses on the Triage server and reprocessed them - over 18,000 in all so far. As such all AgentTesla links should now be updated to reflect these changes.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210217-8e1k41gqsx">210217-8e1k41gqsx</a></li>
+<li><a href="https://tria.ge/210109-r7cea19fre">210109-r7cea19fre</a></li>
+<li><a href="https://tria.ge/210222-wxqjbynprj">210222-wxqjbynprj</a></li>
+<li><a href="https://tria.ge/210226-dyjsh9ehta">210226-dyjsh9ehta</a></li>
+<li><a href="https://tria.ge/210215-m368w576ye">210215-m368w576ye</a></li>
+</ul>
+<h2 id="soap">Added Support for SOAP Network Protocol</h2>
+<p>We recently observed samples - mainly from the Redline stealer family - which were using SOAPAction HTTP header fields to obfuscate C2 communications.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-11/soapaction.png">
+</figure>
+
+<p>Triage&rsquo;s network handling has now been updated to support parsing of these header fields, enabling us to use them in detections and/or extract the data they are used to transmit. This has enabled us to better support the Redline stealer family, and will find use elsewhere in future.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210223-rygq85tfya">210223-rygq85tfya</a></li>
+</ul>
+<h2 id="buer">Updated Buer Extractor</h2>
+<p>Buer Loader is another recurring feature in our update blogs. We introduced a configuration extractor for it <a href="https://hatching.io/blog/tt-2021-02-18/#buer">back in February</a>, and this week we have a tweak to handle a change we&rsquo;ve seen in samples since then.</p>
+<p>In early versions, the encryption key used by the loader was hardcoded, making extraction relatively simple. This is no longer the case, so we have had to update our strategy to take this into account.</p>
+<p>Thanks to <a href="https://twitter.com/r0ny_123">@r0ny_123</a> for bringing this sample to our attention.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210302-mgpzzr767e">210302-mgpzzr767e</a></li>
+</ul>
+<h2 id="ransomnote">Updated Ransomnote Parsing</h2>
+<p>We recently noticed a sample of Ryuk ransomware on Triage which, although was being correctly identified as Ryuk, was not extracting any ransomnote. We took a look and realised that the note was HTML and showed the actual ransom text within a Javascript <code>alert()</code> function rather than the HTML body. As such, it was not being handled correctly by our HTML ransomnote parser which ignored script sections.</p>
+<p>We have added support for this type of note to our extractors, which will now also check script sections and include parts which appear to be relevant in the ransomnote output.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-11/ryuk_note.png">
+</figure>
+
+<p>If you come across any incorrect or unexpected output from the ransomnote extractors please feel free to report it to us. We&rsquo;re always looking to expand coverage.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210311-n5b4nrzd9e">210311-n5b4nrzd9e</a></li>
+</ul>
+<h2 id="plead">Configuration Extractor for PLEAD Linux-based Malware</h2>
+<p>We are still working away on improving our support for analysis on non-Windows platforms, and this week have published our first configuration extractor for Linux malware! Triage now has an extractor for the ELF_PLEAD family, a backdoor which is generally associated with the BlackTech APT group.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-11/elf_plead.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210311-jzy5573b96">210311-jzy5573b96</a></li>
+<li><a href="https://tria.ge/210311-q6xkxrzeze">210311-q6xkxrzeze</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Dashboard Update and Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-01-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Kbs</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/kb/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 101: New Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-21/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox Architecture</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-architecture/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

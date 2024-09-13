@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-80.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-80.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 81</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 81</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-80.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-07-21T00:00:00Z">2022-07-21</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of our Triage Thursday blog series! If you&rsquo;re new here in these posts we go over all the changes made to Triage during the past week, and give a little bit of a breakdown of the various families. We&rsquo;ve got quite a long list today so let&rsquo;s get straight to it!</p>
+<ul>
+<li>Added support for <a href="#maui">Maui</a>, <a href="#hades">Hades</a>, and <a href="#surtr">Surtr</a> ransomware families</li>
+<li><a href="#hermit">Added signatures for Hermit Android spyware</a></li>
+<li><a href="#phorphiex">Added configuration extractor for Phorphiex/Phorpiex</a></li>
+<li><a href="#wellmess">Added signatures and configuration extraction for Wellmess RAT</a></li>
+<li><a href="#ermac">Added signatures and configuration extraction for Ermac 2.0 Android banker</a></li>
+<li><a href="#danabot">Updated Danabot configuration extractor for recent samples</a></li>
+<li><a href="vulturi">Added signatures and configuration extraction for Vulturi stealer</a></li>
+</ul>
+<p>If you have any feedback, questions or issues about Triage feel free to reach out to us any time - we do our best to respond to all feedback but even if we can&rsquo;t get back to you straight away your files will go into our list of things to review and help us prioritise tasks. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="maui">Maui Ransomware</h2>
+<p>Maui has seemingly been around for some time but began to receive a lot of attention in early July 2022, after the Cybersecurity and Infrastructure Security Agency (CISA) <a href="https://www.cisa.gov/uscert/ncas/alerts/aa22-187a">published an advisory</a> warning about its use by North Korean APTs against healthcare organisations in the US. Working in cooperation with Stairwell (who also published a technical analysis <a href="https://stairwell.com/wp-content/uploads/2022/07/Stairwell-Threat-Report-Maui-Ransomware.pdf">here</a>), the FBI, and the Treasury Department, CISA assesses that the campaigns go back to around May 2021.</p>
+<blockquote>
+<p>&ldquo;North Korean state-sponsored cyber actors used Maui ransomware in these incidents to encrypt servers responsible for healthcare services—including electronic health records services, diagnostics services, imaging services, and intranet services.&rdquo;</p>
+<ul>
+<li>CISA Joint Advisory</li>
+</ul>
+</blockquote>
+<p>The malware appears to be intended for manual execution on an infected machine suggesting highly targeted attacks where the attacker will deploy the file to an already-compromised system and then use a command line interface to identify files to encrypt. The operator can also extract data from the system directly.</p>
+<p>This manual execution complicates detection in a sandbox because when the file is run without any command-line arguments it will just print usage information and exit.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-21/maui_usage.png">
+</figure>
+
+<p>To try and ensure detection even when it doesn&rsquo;t run fully we have implemented static signatures to cover the samples available to us.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220721-sye5jsgdd4">220721-sye5jsgdd4</a></li>
+<li><a href="https://tria.ge/220721-syk1ssgdd5">220721-syk1ssgdd5</a></li>
+<li><a href="https://tria.ge/220721-sypzragdd6">220721-sypzragdd6</a></li>
+</ul>
+<h2 id="hades">Hades Ransomware</h2>
+<p>Hades ransomware has been active in the wild since December 2020, generally attributed to a single threat group rather than using a ransomware-as-a-service model. The exact attribution is a little hazy but <a href="https://www.mandiant.com/resources/unc2165-shifts-to-evade-sanctions">Mandiant suggests</a> that it is associated with the well known Evil Corp group (otherwise referred to as INDRIK SPIDER) due to significant code and infrastructure overlaps with their other projects.</p>
+<p>Hades is <a href="https://www.crowdstrike.com/blog/hades-ransomware-successor-to-indrik-spiders-wastedlocker/">reportedly a 64-bit variant of the WastedLocker family</a> which was also developed and used by Evil Corp prior to <a href="https://home.treasury.gov/news/press-releases/sm845">the sanctions issued against the group</a> by the US Treasury Department in late 2019. Following these measures the group went through a quiet period while they updated tools and methods to bypass the new countermeasures - Hades seems to have been part of this as they moved away from the now widely-detected WastedLocker.</p>
+<p>Along with trying to reduce its detection the new family also added a few improvements and updates over the old functionality including more code obfuscation, a shift to system calls instead of standard Windows APIs for file and registry actions, and a new UAC bypass technique.</p>
+<p>Generally speaking it seems that Hades has already been replaced by new ransomware families like PhoenixLocker and PayloadBIN, and more recently Mandiant reports that Evil Corp seems to be moving away from developing their own custom ransomware altogether in favour of existing RaaS payloads like Lockbit. However samples still popup in the wild so we have reviewed a few that were submitted to Triage recently and implemented basic detections to make sure they don&rsquo;t go undetected.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220720-n23ykafad3">220720-n23ykafad3</a></li>
+<li><a href="https://tria.ge/220720-n29q4sfad4">220720-n29q4sfad4</a></li>
+<li><a href="https://tria.ge/220720-n2p2psfac5">220720-n2p2psfac5</a></li>
+<li><a href="https://tria.ge/220720-n2w51sfear">220720-n2w51sfear</a></li>
+<li><a href="https://tria.ge/220720-q4fl6agbbr">220720-q4fl6agbbr</a></li>
+</ul>
+<h2 id="surtr">Surtr Ransomware</h2>
+<p>Surtr popped up in late 2021 as a new ransomware-as-a-service. It includes limitations to prevent execution within CIS countries and contains a number of references to the REvil/Sodinokibi ransomware group (for example <a href="https://blog.polyswarm.io/surtr-ransomware">changing the system manufacturer name</a> to <code>Tribute to the REvil &lt;3.</code>). Analysis suggests it&rsquo;s unlikely the developers are affiliated with those behind REvil but they may have been in the past or are just leveraging the name to try and gain some publicity.</p>
+<p>The family has multiple anti-VM and anti-analysis techniques, and uses a few different persistence methods to make sure the malware is executed after any system reboot or login. It writes itself to the Start Up folder, creates scheduled tasks to trigger on user login, and backs it all up with registry Run keys.</p>
+<p>We have added behavioural and static detection for the family, and also a ransomnote extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220121-dt7axadbbn">220121-dt7axadbbn</a></li>
+<li><a href="https://tria.ge/211224-hx8qcscee3">211224-hx8qcscee3</a></li>
+<li><a href="https://tria.ge/220721-s3nmgsgdg5">220721-s3nmgsgdg5</a></li>
+<li><a href="https://tria.ge/220101-zjrclaaaa5">220101-zjrclaaaa5</a></li>
+<li><a href="https://tria.ge/220721-s31baagdg7">220721-s31baagdg7</a></li>
+</ul>
+<h2 id="hermit">Hermit Android Spyware</h2>
+<p>In June 2022 the Google Threat Analysis Group <a href="https://blog.google/threat-analysis-group/italian-spyware-vendor-targets-users-in-italy-and-kazakhstan/">published a blogpost</a> documenting a widespread spyware campaign against users in Italy and Kazakhstan. The implant is referred to as Hermit and is believed to have been developed by RCS Labs, an Italian provider of surveillance technology, and has versions for both Android and iOS.</p>
+<p>Based on Google&rsquo;s observations it seems that quite a bit of effort was put into many of the attacks. In order to infect victims the actors seemingly went as far as to get their ISP to disable mobile data connectivity completely, following up with an SMS pretending to be from the ISP and asking them to install an application from a URL to restore connectivity. In cases where the ISP could not be relied on the lure is generally a fake messaging application.</p>
+<p>The iOS variant installs itself from a malicious webpage using Apple&rsquo;s own <code>itms-services</code> protocol which is intended for distributing in-house apps to Apple devices. The resulting installation is signed with a legitimate certificate and satisfies all requirements due to the company being enrolled in the Apple Developer Enterprise Program.</p>
+<p>The Android installation requires the user to take a few more manual steps, and the device must be configured to be able to install apps from outside the Google Play store.</p>
+<p>We have reviewed available Android samples and added detection for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220721-s364tsghfk">220721-s364tsghfk</a></li>
+<li><a href="https://tria.ge/220721-s4bz3sghgj">220721-s4bz3sghgj</a></li>
+<li><a href="https://tria.ge/220721-s4fm9sgdh3">220721-s4fm9sgdh3</a></li>
+<li><a href="https://tria.ge/220721-s4kl8agdh4">220721-s4kl8agdh4</a></li>
+<li><a href="https://tria.ge/220721-s4qhgaghgk">220721-s4qhgaghgk</a></li>
+</ul>
+<h2 id="phorphiex">Phorphiex/Phorpiex</h2>
+<p>Phorphiex/Phorpiex is a worm and loader which infects systems and incorporates them into a botnet. It also often deploys additional payloads to infected systems such as cryptojackers, miners, or ransomware.</p>
+<p>Originally a major aspect of the family was building a botnet which could be leveraged for other malicious actions. Using a payload called <code>Tldr</code>, it could take over machines and build them into a network controlled by the attacker from a central C2 server.</p>
+<p>However that changed after Phorphiex shut down its C2 infrastructure around mid-2021. As <a href="https://research.checkpoint.com/2021/phorpiex-botnet-is-back-with-a-new-twizt-hijacking-hundreds-of-crypto-transactions/">Checkpoint report</a> in a blogpost from December 2021 the family was inactive for around 2 months before one of the developers attempted to sell the source code through underground forums. The exact outcome of this is unknown, but shortly afterwards the C2 servers came back online at new addresses and began to distribute a completely new bot called <code>Twizt</code>, which replaces the original <code>Tldr</code>.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-21/phorphiex.png">
+</figure>
+
+<p>We made some updates to Phorphiex detections in our last blogpost of 2021 but since it has continue to pop up regularly we have revisited it this week to implement a proper configuration extractor to go along with the standard detections.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220716-ff9j8agff5">220716-ff9j8agff5</a></li>
+<li><a href="https://tria.ge/220701-fsx2ysdchk">220701-fsx2ysdchk</a></li>
+<li><a href="https://tria.ge/220701-f5bpgsdhdk">220701-f5bpgsdhdk</a></li>
+<li><a href="https://tria.ge/220607-2w3mhafhh6">220607-2w3mhafhh6</a></li>
+<li><a href="https://tria.ge/220616-hwkl5sgahr">220616-hwkl5sgahr</a></li>
+</ul>
+<h2 id="wellmess">Wellmess RAT</h2>
+<p>WellMess is a remote access trojan which gives an attacker full remote access to download and execute additional files/scripts on an infected machine. It was reported in a CISA advisory from June 2020 when it was observed in use by the APT29 group (also known as Cozy Bear) to try and steal intellectual property from organisations working on COVID-19 vaccine development.</p>
+<p><a href="https://www.pwc.co.uk/issues/cyber-security-services/insights/cleaning-up-after-wellmess.html">According to PWC</a> the family goes back to 2018 originally but the 2020 version saw some updates, especially around expanding C2 methods. The latest versions can be configured to communicate over HTTP, HTTPS, or DNS protocols. It also has versions for <a href="https://blogs.jpcert.or.jp/en/2018/07/malware-wellmes-9b78.html">both Windows and Linux operating systems</a> and these use the Golang language to enable easy cross-compilation for both (though there also seem to be some variants for Windows only which use .NET instead).</p>
+<figure><img src="../../static/images/blog/tt-2022-07-21/wellmess.png">
+</figure>
+
+<p>We have reviewed samples for both operating systems and implemented detections plus a full configuration extractor which can dump the C2 URL.</p>
+<p><strong>Analyses:</strong>
+Win samples:</p>
+<ul>
+<li><a href="https://tria.ge/220721-s6daxsgea5">220721-s6daxsgea5</a></li>
+<li><a href="https://tria.ge/220721-s6hweaghgp">220721-s6hweaghgp</a></li>
+<li><a href="https://tria.ge/220721-s6lx3ageb2">220721-s6lx3ageb2</a></li>
+</ul>
+<p>Linux samples:</p>
+<ul>
+<li><a href="https://tria.ge/220721-s7e6xageb4">220721-s7e6xageb4</a></li>
+<li><a href="https://tria.ge/220721-s7j5vsghhq">220721-s7j5vsghhq</a></li>
+<li><a href="https://tria.ge/220721-s7pqcageb5">220721-s7pqcageb5</a></li>
+<li><a href="https://tria.ge/220721-s651yaghhp">220721-s651yaghhp</a></li>
+<li><a href="https://tria.ge/220721-s62craghhn">220721-s62craghhn</a></li>
+</ul>
+<h2 id="ermac">Ermac 2.0 Android Banker</h2>
+<p>In late 2021 <a href="https://www.threatfabric.com/blogs/ermac-another-cerberus-reborn.html">ThreatFabric published a report</a> about a new Android banking trojan they had observed being advertised and sold through forums. Calling itself ERMAC, they reported that it closely resembled the old Cerberus banker in terms of the codebase with only a few aspects of the obfuscation and encryption algorithms showing any significant differences. <a href="https://hatching.io/blog/2021-09-30-triage-thursday/#ermac">We visited the family</a> not long afterwards and added some initial detections which covered the samples we&rsquo;d observed.</p>
+<p>A couple of months ago <a href="https://twitter.com/ESETresearch/status/1526897310231322630">ESET Labs</a> reported on Twitter they had come across a new Android trojan which they identified as an updated version of ERMAC. It comes with a significantly increased list of applications it can harvest data from but in general still shares the same functionality as the original - the main focus is stealing data relating to finance/banking and cryptocurrency apps. The campaign seen by ESET targeted users in Poland by imitating the popular Bolt food delivery service, and <a href="https://blog.cyble.com/2022/05/25/ermac-back-in-action/">Cyble report</a> that they have also seen it pretending to be a browser update delivered via malicious websites.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-21/ermac.png">
+</figure>
+
+<p>We have extended our existing detections for Ermac to cover the new version and to make sure the versions are marked clearly. We have also updated the configuration extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220502-newkzahgg2">220502-newkzahgg2</a></li>
+<li><a href="https://tria.ge/220503-jsn1tsdaa7">220503-jsn1tsdaa7</a></li>
+<li><a href="https://tria.ge/220505-jzd47sffc6">220505-jzd47sffc6</a></li>
+<li><a href="https://tria.ge/220509-lvgqmschd9">220509-lvgqmschd9</a></li>
+<li><a href="https://tria.ge/220713-l3xrtscgdn">220713-l3xrtscgdn</a></li>
+</ul>
+<h2 id="danabot">Danabot</h2>
+<p>Danabot is a banking trojan/stealer which has been in widespread usage since mid-2018. The malware itself is modular including functions for browser injections/network sniffing, stealing credentials stored locally by a range of software, and remote access capability.</p>
+<p>The family has gone through several iterations since it first released, and it has already appeared on this blog a couple of times in 2022. In this update we have addressed some issues with the configuration extractor we added <a href="https://hatching.io/blog/tt-2022-05-05/#danabot">back in May</a>, in order to improve performance and address a couple of issues that popped up with some recent payloads.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-21/danabot.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220709-jnnt9sfee9">220709-jnnt9sfee9</a></li>
+<li><a href="https://tria.ge/220716-we61psebel">220716-we61psebel</a></li>
+</ul>
+<h2 id="vulturi">Vulturi Stealer</h2>
+<p>Vulturi is a straightforward stealer family that appeared in early 2021 and was reported by our friends over at SEKOIA.IO earlier this year. There is currently very limited public analysis of the family available but it seems to be a fairly typical infostealer capable of extracting data from a comprehensive list of software. It is sold through forums for anyone to use (or at least it was until the cracked version became available in June 2021).</p>
+<p>We have taken a look at the samples shared by <a href="https://twitter.com/sekoia_io/status1503666500393222145s">SEKOIA.IO</a> and implemented detections and a configuration extractor.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-21/vulturi.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220718-mrzmqabfa2">220718-mrzmqabfa2</a></li>
+<li><a href="https://tria.ge/220718-mryqesbeh9">220718-mryqesbeh9</a></li>
+<li><a href="https://tria.ge/220718-mrrl4scfep">220718-mrrl4scfep</a></li>
+<li><a href="https://tria.ge/220718-mr1j1sbfa3">220718-mr1j1sbfa3</a></li>
+<li><a href="https://tria.ge/220714-kqngysfafl">220714-kqngysfafl</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>SMTP/FTP Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/smtp-ftp-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Versions and New Families</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-02-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-04-29/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Year, New Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-13/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

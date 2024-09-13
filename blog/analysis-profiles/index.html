@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-62.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-62.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Analysis Profiles</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Short Guides</h5>
+        
+        <h2>Analysis Profiles</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-62.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-08-24T00:00:00Z">2020-08-24</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>In this short guide, we&rsquo;ll highlight the Profiles feature on Triage. Profiles allow configuration of the VMs used to analyse submitted files/URLs, overriding the defaults Triage will use if the selection is left on Automatic.</p>
+<p>Profiles are only available to accounts which have a confirmed Researcher license. You can request a Researcher license free in your Profile settings - just fill out the extra information fields and we will review your application and get back to you as soon as possible.</p>
+<h2 id="profile-settings">Profile Settings</h2>
+<p>Profiles can be selected for an analysis when submitting any kind of sample. If not manually defined, by default Triage will automatically choose suitable VMs for the filetype with a generic OS installation. Using Profiles you can override this to manually configure:</p>
+<ul>
+<li>Analysis duration</li>
+<li>Internet access</li>
+<li>Operating system</li>
+<li>Default browser (affects any links opened)</li>
+</ul>
+<figure><img src="../../static/images/blog/analysis-profiles/create_profile.png">
+</figure>
+
+<h3 id="analysis-duration">Analysis Duration</h3>
+<p>Every analysis on Triage has a timeout value which it cannot exceed. When this value is hit, the VM is shut down and report generation begins. The default value is 2 minutes 30 seconds, but using Profiles this can be changed to values from 30 seconds up to the maximum of 30 minutes.</p>
+<figure><img src="../../static/images/blog/analysis-profiles/timeout.png">
+</figure>
+
+<p>Note that if the host OS is shut down before this timeout the analysis will end early.</p>
+<h3 id="internet-access">Internet Access</h3>
+<p>Network configuration options are currently minimal - this is an area we plan to expand in future. For now, you can choose whether or not the VM has an internet connection.</p>
+<figure><img src="../../static/images/blog/analysis-profiles/internet.png">
+</figure>
+
+<h3 id="operating-system">Operating System</h3>
+<p>Instead of relying on Triage to detect the file type and choose a relevant OS, you can manually define this setting using a Profile. Current options are Windows 7, Windows 10 and Android (SDK version 29 as of August 2020).</p>
+<figure><img src="../../static/images/blog/analysis-profiles/os.png">
+</figure>
+
+<h3 id="default-browser">Default Browser</h3>
+<p>When you submit a URL to Triage, or a sample opens one without defining the browser, the default browser as configured in the OS will handle the request. Profiles allow you to modify this behaviour by defining a different default for the VM.</p>
+<p>Current options are:</p>
+<ul>
+<li>OS Default (Internet Explorer 11 on Windows)</li>
+<li>Mozilla Firefox</li>
+<li>Google Chrome</li>
+</ul>
+<figure><img src="../../static/images/blog/analysis-profiles/browser.png">
+</figure>
+
+<h2 id="submitting-with-a-profile">Submitting with a Profile</h2>
+<p>Selecting a profile for an analysis through the web UI is simple. Any available profiles will be listed after submitting a sample. Multiple profiles can be selected for a single analysis - each will spawn its own task which can be interacted with in the Live Monitor.</p>
+<figure><img src="../../static/images/blog/analysis-profiles/ui_profile_select.png">
+</figure>
+
+<p>You can also choose Profiles when submitting via the API.
+The documentation for this is available <a href="https://tria.ge/docs/cloud-api/samples/#choosing-a-profile">here</a> but we&rsquo;ll briefly go over an example below.</p>
+<p>An array must be added to the JSON data included with the Submit POST request which defines the Profiles to use. This array can include multiple entries, and as with the web UI above will each spawn a task within the analysis.</p>
+<pre><code>&quot;profiles&quot;: [
+  {
+    &quot;profile&quot;: &quot;PROFILE NAME&quot;
+    &quot;pick&quot;: &quot;unpack001/something.exe&quot;
+  }
+],
+</code></pre>
+<p>Note that the <code>pick</code> option is only required for archive file submissions, and should reference the path of the target file within the archive itself. It can be omitted from single-file submissions or set to the string <code>sample</code>.</p>
+<p><code>PROFILE NAME</code> is the name as defined on the Create Profile page.</p>
+<p>For example, using curl:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_ACCESS_KEY&gt;' \
+  -X POST \
+  -F 'file=@&lt;SAMPLE_FILE_PATH&gt;' \
+  -F '_json={&quot;kind&quot;:&quot;file&quot;,&quot;interactive&quot;:false,&quot;profiles&quot;:[{&quot;profile&quot;:&quot;&lt;PROFILE NAME&gt;&quot;}]}' \
+  'https://klaut.staging.hatching.dev/api/v0/samples'
+</code></pre>
+<p>You can also create, modify and delete Profiles directly through the API. For more information on those endpoints check out the <a href="https://tria.ge/docs/cloud-api/profiles/">official documentation</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We hope this short guide helps you to get the most out of your Triage analyses. If you have any questions about this or other aspects of the platform please feel free to get in touch <a href="https://hatching.io/">through the website</a> or <a href="https://twitter.com/hatching_io">on Twitter</a>.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to sign up for a free account!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>MacOS, TA505 and Other Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-11-04-triage-thursday/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Search by Platform and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-12-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 131: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 110: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-23/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

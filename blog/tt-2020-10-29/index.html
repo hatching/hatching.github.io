@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-73.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-73.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Integrations, Updated DLL Handling and New Family Classifications</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Integrations, Updated DLL Handling and New Family Classifications</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-73.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-10-29T00:00:00Z">2020-10-29</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>It&rsquo;s been another busy week of updates for Triage, so join us for today&rsquo;s Triage Thursday blogpost. Since the <a href="https://hatching.io/blog/tt-2020-10-23/">release of Search</a> last week we have been working on a number of quality of life updates to help you get the most out of the platform, and have released improvements to static detection, IoC visibility in the UI, new integrations, and several more family detections.</p>
+<p>The full changelog:</p>
+<ul>
+<li><a href="#urlscan">Added URLScan Integration</a></li>
+<li><a href="#ja3">Added JA3/JA3S Support</a></li>
+<li><a href="#regsvr">Updated DLL handling to support execution with regsvr32.exe</a></li>
+<li><a href="#tags">Updated UI to show Campaign and Botnet tags</a></li>
+<li><a href="#plugx">Added new PlugX configuration extractor</a></li>
+<li><a href="#asyncrat">Added new AsyncRAT configuration extractor</a></li>
+<li><a href="#mountlocker">Added MountLocker detection</a></li>
+<li><a href="#netsupport">Added NetSupport RAT Detection</a></li>
+<li><a href="#strongpity">Added StrongPity Stealer detection</a></li>
+<li><a href="#phoenix">Added Phoenix Keylogger detection</a></li>
+<li><a href="#dridex">Updated Dridex detection</a></li>
+<li><a href="#trickbot">Updated Trickbot configuration extractor</a></li>
+<li><a href="#smokeloader">Updated SmokeLoader configuration extractor</a></li>
+<li>Updated Office yara rule causing false-positives on MSI files</li>
+<li>Updated <strong>M00ndev</strong> yara rule causing false-positives on some Hawkeye keylogger files</li>
+<li>Added fallback yara rule for <strong>DiamondFox</strong></li>
+<li>Updated yara rule to improve <strong>Valak</strong> family detection</li>
+<li>Updated <strong>Raccoon stealer</strong> family signatures</li>
+<li>Added fallback yara rule for <strong>RevengeRat</strong></li>
+<li>Added detection for <strong>CryptOne</strong> packer</li>
+</ul>
+<p>If you discover any issues or missing detections while using Triage, please do send us feedback. It&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="urlscan">URLScan Integration</h2>
+<p>We announced in a previous blogpost that we were working on integrating <a href="https://urlscan.io/">URLScan</a> reports into Triage. We are pleased to say that this is now available on the public server.</p>
+<p>URLScan is a free service which carries out behavioural analysis targeted specifically at web pages. With this integration we hope to provide a more complete report on malicious webpages which may not exhibit behaviour we would associate with malware - for example exploit kits or fake login pages used in phishing campaigns.</p>
+<h4 id="how-does-it-work">How does it work?</h4>
+<p>Any analysis submitted as a URL - via the UI or API - will generate an additional task which contains the URLScan report.</p>
+<figure><img src="../../static/images/blog/tt-2020-10-29/urlscan_report.png"><figcaption>
+      <h4>URLScan report for a fake PayPal phishing site</h4>
+    </figcaption>
+</figure>
+
+<p>Triage will still run its own behavioural analysis of the URL alongside the URLScan output, and we hope that by combining these 2 sources we can provide much more robust reports covering a wider variety of web-based threats.</p>
+<p>You can find an example URL analysis here: <a href="https://tria.ge/201029-zrbh6kw9ca/urlscan1">201029-zrbh6kw9ca</a></p>
+<h2 id="ja3">Support for JA3/JA3S TLS Fingerprints</h2>
+<p>JA3 is a system for generating &lsquo;fingerprints&rsquo; of SSL/TLS traffic which can be used to identify network communication where it follows repeated patterns, such as in malware C2. JA3 provides support for client-side fingerprinting, while its counterpart JA3S can do the same for server responses.</p>
+<p>On the client side JA3 looks at the following data fields:</p>
+<ul>
+<li>TLSVersion/SSLVersion</li>
+<li>Cipher</li>
+<li>SSLExtension</li>
+<li>EllipticCurve</li>
+<li>EllipticCurvePointFormat</li>
+</ul>
+<p>For server responses JA3S includes the following fields:</p>
+<ul>
+<li>TLSVersion/SSLVersion</li>
+<li>Cipher</li>
+<li>SSLExtension</li>
+</ul>
+<p>The fingerprint for network communications is available in the <code>network</code> section of <code>report_triage.json</code>, which is accessible through the API. An example Curl command to view this directly is shown below:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_API_KEY&gt;' \
+	https://api.tria.ge/v0/samples/201029-6tkmnbakx2/behavioral1/report_triage.json \
+	jq .network.flows
+
+{
+&quot;id&quot;: 14,
+&quot;src&quot;: &quot;10.10.0.90:51462&quot;,
+&quot;dst&quot;: &quot;104.18.62.171:443&quot;,
+&quot;proto&quot;: &quot;tcp&quot;,
+&quot;pid&quot;: 4164,
+&quot;procid&quot;: 75,
+&quot;first_seen&quot;: 10507,
+&quot;last_seen&quot;: 11177,
+&quot;rx_bytes&quot;: 435018,
+&quot;rx_packets&quot;: 331,
+&quot;tx_bytes&quot;: 8155,
+&quot;tx_packets&quot;: 169,
+&quot;protocols&quot;: [
+	&quot;tls&quot;,
+	&quot;http&quot;
+],
+&quot;domain&quot;: &quot;enjoymylifecheryl.com&quot;,
+**&quot;tls_ja3&quot;: &quot;3b5074b1b5d032e5620f69f9f700ff0e&quot;,**
+**&quot;tls_ja3s&quot;: &quot;466556e923186364e82cbdb4cad8df2c&quot;,**
+&quot;tls_sni&quot;: &quot;enjoymylifecheryl.com&quot;
+</code></pre>
+<p>}</p>
+<p>Now that this system is in place we will also be expanding on it internally in the future, implementing signature detections which take JA3 fingerprints into account.</p>
+<h2 id="regsvr">RegSvr DLL Support</h2>
+<p>Up until now, if Triage detected a submission as a DLL file it would launch it using <code>rundll32.exe</code>. This worked fine in most cases, but we have been increasingly aware of examples which instead expect to be run via <code>regsvr32.exe</code>. These include many of DLLs associated with the Trickbot family, as well as others such as IcedID and ransomware like MountLocker.</p>
+<p>We have now extended DLL detection to include a check of the exported functions - the presence of the <code>DLLInstall</code> and <code>DLLRegisterServer</code> exports indicates that the file is designed for execution with <code>regsvr32.dll</code>. Our VM agent will then take this into account and launch them using the correct handler.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li>Trickbot: <a href="https://tria.ge/201029-vsztnfplge">201029-vsztnfplge</a></li>
+<li>MountLocker: <a href="https://tria.ge/201029-wrhynhybq6">201029-wrhynhybq6</a></li>
+<li>IcedID: <a href="https://tria.ge/201029-hwm8rpqmhx">201029-hwm8rpqmhx</a></li>
+</ul>
+<h2 id="tags">UI Update: Botnet and Campaign Tags</h2>
+<p>Earlier this week we deployed an update for the web interface to display <code>campaign</code> and <code>botnet</code> tags directly through the UI.</p>
+<p>These tags are assigned by our configuration extractors and family signatures based on the file contents. They are particularly useful for families such as Trickbot, Emotet and ZLoader where differentiating between campaigns can be useful for tracking.</p>
+<p>The tags are also searchable. You can click on the tag in the UI to create a search directly, or use queries like:</p>
+<ul>
+<li><a href="https://tria.ge/s?q=botnet%3Achil103">botnet:chil103</a></li>
+<li><a href="https://tria.ge/s?q=campaign%3A26%2f10">campaign:26/10</a></li>
+</ul>
+<h2 id="trickbot">Updated Trickbot Configuration Extractor</h2>
+<p>We observed a variation of Trickbot which was not being properly handled by our configuration extractor. We have analysed the sample and implemented some improvements to better support these variants and ensure that they are extracted fully.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201028-ndxae1c7qe">201028-ndxae1c7qe</a></li>
+</ul>
+<h2 id="smokeloader">Updated SmokeLoader Configuration Extractor</h2>
+<p>It was recently reported to us through feedback that some Smokeloader analyses were reporting incorrect values for the fields dumped by our configuration extractor. This has now been fixed, and all extracted information should be accurate. If you come across any further issues like this please do notify us and we will address it.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201028-38rr17b1an">201028-38rr17b1an</a></li>
+</ul>
+<h2 id="plugx">PlugX Configuration Extractor</h2>
+<p>PlugX, also sometimes called Korplug, is a RAT with a long history. It is known to have been around <a href="https://www.cyber.nj.gov/threat-center/threat-profiles/trojan-variants/plugx">since 2012</a>, although TrendMicro suggest that the developers have been running similar malware <a href="https://blog.trendmicro.com/trendlabs-security-intelligence/plugx-new-tool-for-a-not-so-new-campaign/">as far back as 2008</a>.</p>
+<p>PlugX has all the features of a remote access tool and stealer, capable of uploading and downloading files, keylogging, capturing images through attached webcams and running a full cmd.exe shell which can be used by the attacker to execute further commands.</p>
+<p>We have implemented static detection for the family and added a configuration extractor which dumps C2 URLs and attributes.</p>
+<figure><img src="../../static/images/blog/tt-2020-10-29/plugx_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201029-s7y2m76wn6">201029-s7y2m76wn6</a></li>
+<li><a href="https://tria.ge/201029-avzq6ze6n6">201029-avzq6ze6n6</a></li>
+</ul>
+<h2 id="asyncrat">AsyncRAT Configuration Extractor</h2>
+<p>AsyncRAT is an open-source RAT available on <a href="https://github.com/NYAN-x-CAT/AsyncRAT-C-Sharp/">Github</a>. As is common with these, it claims to be for legitimate remote administration only and includes legal disclaimers about malicious use in the repository, but as usual this doesn&rsquo;t prevent anyone from misusing it.</p>
+<p>Triage has included general family detection for AsyncRAT for some months. However we have now also added a configuration extractor which dumps information like version number, C2 IP/URL, mutex name, installation path, and various module settings.</p>
+<figure><img src="../../static/images/blog/tt-2020-10-29/asyncrat_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201018-4gva9edphn">201018-4gva9edphn</a></li>
+<li><a href="https://tria.ge/201020-xfye5kljae">201020-xfye5kljae</a></li>
+</ul>
+<h2 id="dridex">Updated Dridex Detection</h2>
+<p>We recently observed a version of Dridex which was evading our detection due to some differences in the file structure. We have now extended support to also catch these and process them correctly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200714-s43spmm1nn">200714-s43spmm1nn</a></li>
+<li><a href="https://tria.ge/200714-xzklav3tax">200714-xzklav3tax</a></li>
+<li><a href="https://tria.ge/200714-djyygf591a">200714-djyygf591a</a></li>
+<li><a href="https://tria.ge/200714-a7gpqcllfn">200714-a7gpqcllfn</a></li>
+</ul>
+<h2 id="mountlocker">MountLocker Ransomware</h2>
+<p>MountLocker is a new ransomware family which was first spotted in July 2020. It follows the recent trend of including data exfiltration capabilities as part of its extortion method - data is released publicly through a web page if the ransom is not paid, in much the same way as groups like Maze.</p>
+<p>This family was also affected by the <code>regsvr32</code> change <a href="#regsvr">mentioned above</a> as the sample obtained is a DLL not supported by <code>rundll32</code>.</p>
+<p>Now that the family runs properly we have implemented detection for it at the static and dynamic stages, as well as extraction of the HTML ransomnote (note that for now the note is not dropped automatically here, but needs to be opened manually to trigger the extractor).</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201029-wrhynhybq6">201029-wrhynhybq6</a></li>
+</ul>
+<h2 id="netsupport">NetSupport RAT</h2>
+<p>NetSupport is a legitimate remote administration tool (strange how often I write that in malware-related blogposts) which is often abused for malicious purposes. It gained attention in May 2020 when Microsoft identified a large phishing campaign which deployed NetSupport, using <a href="https://twitter.com/MsftSecIntel/status/1262504864694726656">COVID-19 related</a> lures.</p>
+<p>We have now added signatures to detect this family in Triage.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201029-q8e1sz7k2a">201029-q8e1sz7k2a</a></li>
+<li><a href="https://tria.ge/201029-ahlp2nvr9a">201029-ahlp2nvr9a</a></li>
+<li><a href="https://tria.ge/201029-fapk5yzxja">201029-fapk5yzxja</a></li>
+</ul>
+<h2 id="strongpity-stealer-strongpity">StrongPity Stealer {strongpity}</h2>
+<p>StrongPity is an APT which has been involved in many campaigns over the years. In 2016 they began to make use of an advanced stealer which was <a href="https://securelist.com/on-the-strongpity-waterhole-attacks-targeting-italian-and-belgian-encryption-users/76147/">initially distributed through compromised software downloads</a>.</p>
+<p>We have added detection for a number of samples submitted to Triage recently, including a yara rule to cover samples which are unable to successfully contact their C2 infrastructure. We will continue to keep an eye open for new samples from this group and extend detection as required.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201012-av2g2s97wn">201012-av2g2s97wn</a></li>
+<li><a href="https://tria.ge/201012-a36mqnngha">201012-a36mqnngha</a></li>
+<li><a href="https://tria.ge/201012-mjgjx4f4ns">201012-mjgjx4f4ns</a></li>
+</ul>
+<h2 id="phoenix-keylogger-phoenix">Phoenix Keylogger {phoenix}</h2>
+<p>Phoenix is a keylogger sold through hacking forums which was <a href="https://www.binarydefense.com/threat_watch/phoenix-keylogger/">first reported in the summer of 2019</a>. In its initial form it was a fairly limited keylogger but has since added a range of stealer functionality. This includes common activity such as dumping local passwords from browsers, email clients and FTP software. It also includes basic evasion by killing processes from a preconfigured list.</p>
+<p>We have implemented family detection for the stealer, including static yara support.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201029-jclghn42la">201029-jclghn42la</a></li>
+<li><a href="https://tria.ge/201029-ag9m3688b2">201029-ag9m3688b2</a></li>
+<li><a href="https://tria.ge/201029-ta1j98mbls">201029-ta1j98mbls</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 105: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-19/">Read</a>
+        </li>
+      
+        <li>
+          <h3>UPX Unpacking and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 139: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 138: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-04/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

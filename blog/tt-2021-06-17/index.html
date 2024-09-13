@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-41.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-41.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Onion Support and Signature Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Onion Support and Signature Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-41.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-06-17T00:00:00Z">2021-06-17</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>It&rsquo;s Thursday again, and that means it&rsquo;s time for another entry in our weekly update blog series. Today we&rsquo;re mostly focussed on family signatures again, but we do also have a useful improvement for the Tor networking support <a href="https://hatching.io/blog/tt-2021-06-10/#tor">we added last week</a>. Check out the list below for this week&rsquo;s content:</p>
+<ul>
+<li><a href="#onion">Added support for handling .onion URLs with Tor networking</a></li>
+<li><a href="#quasar">New configuration extractor for Quasar RAT</a></li>
+<li><a href="#blackrock">Added detections for BlackRock Android banking trojan</a></li>
+<li><a href="#gafgyt">New signatures for Gafgyt Linux IoT botnet</a></li>
+<li><a href="#webmonitor">Updated detection for WebMonitor</a></li>
+<li><a href="#dcrat">Improvements to DCRat detection</a></li>
+</ul>
+<p>If you missed it over the last few weeks, we are also currently hiring a Go developer to join the Hatching team and help build the future of Triage. If you think this might be of interest to you or someone you know, the full job listing can <a href="https://hatching.io/jobs/senior-go-developer/">be found here</a> - feel free to reach out with any questions.</p>
+<p>You can also contact us with any feedback or suggestions about Triage or the analyses it produces - we&rsquo;re always keen to hear from you. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="onion">Added Support for Onion URLs</h2>
+<p>Last week <a href="https://hatching.io/blog/tt-2021-06-10/#tor">we added Tor network support</a> to Triage, enabling you to route all traffic from the analysis VMs through the Tor network. We have now extended this slightly to better handle .onion URLs, i.e. URLs pointing to Onion services only accessible through the Tor network.</p>
+<p>With this update, submitting a .onion URL with default analysis settings will automatically launch a Windows 10 VM with Tor networking enabled, and open the link in a relevant web browser.</p>
+<figure><img src="../../static/images/blog/tt-2021-06-17/onion_site.png">
+</figure>
+
+<p>You can of course force other options through Profiles or analysis settings, but you no longer <strong>need</strong> to do anything to make the submission work properly.</p>
+<h2 id="quasar">New Configuration Extractor for Quasar RAT</h2>
+<p>Quasar is a remote administration tool for Windows which is used maliciously by a wide range of attackers. The malware is open-source, being available to download <a href="https://github.com/quasar/Quasar">from GitHub</a>, and as such is a popular choice for those looking for an out-of-the-box solution or one which can be easily modified to a particular use-case.</p>
+<p>The availability of the source code means that multiple variants have popped over the years such as Velgax, which we <a href="https://hatching.io/blog/tt-2021-01-21/#velgax">added detection for back in January this year</a>.</p>
+<figure><img src="../../static/images/blog/tt-2021-06-17/quasar_config.png">
+</figure>
+
+<p>In this week&rsquo;s updates we have deployed a new configuration extractor for the family, which dumps available settings from the binary - C2 addresses, file and registry names, encryption key etc. The extractor was developed based on current samples, and we will be carrying out reprocessing of the family over the next few days - if we identify variants not covered by the extractor then we shall make further tweaks as needed.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210617-e9xpw8561s">210617-e9xpw8561s</a></li>
+</ul>
+<h2 id="blackrock">Added Detections for BlackRock Android Banking Trojan</h2>
+<p>BlackRock has been around for a year or so, with early reports going back to May 2020. However the codebase goes back further with strong links to the Xerxes banking trojan, the source code for which was leaked online in 2019. Xerxes itself is a fork of the even older LokiBot Android malware.</p>
+<p>With its strong reliance on existing families there isn&rsquo;t a lot unique about BlackRock - it is a full-featured Android RAT and stealer which can target data both at rest and during live interaction with various applications on the mobile device. Where it stands apart from many other Android families is its target list, which besides the usual banking and financial applications also includes a wide range of social, communication and dating apps. <a href="https://www.threatfabric.com/blogs/blackrock_the_trojan_that_wanted_to_get_them_all.html">ThreatFabric suggests</a> this is likely an attempt to cash in on the increase in use of such applications during the Covid-19 pandemic.</p>
+<p>We have added signatures to detect the family and apply the relevant tag. You can find a couple of recent examples below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210615-csdph6r2wn">210615-csdph6r2wn</a></li>
+<li><a href="https://tria.ge/210615-576fzatjjj">210615-576fzatjjj</a></li>
+</ul>
+<h2 id="gafgyt">New Signatures for Gafgyt Linux Malware</h2>
+<p>Gafgyt is an old threat for Linux, with early versions dating all the way back to 2014. Although it never achieved quite the same infamy as its younger relative Mirai, Gafgyt has been enormously successful over the years and now includes a vast range of variants and spinoffs.</p>
+<p>The malware targets IoT devices such as routers to form a botnet which can then be used to carry out additional attacks, especially DDoS. Different versions leverage a wide array of exploits/CVEs from the last several years depending on their creation date and particular set of targets. It has continued to evolve to this day, adding new features and techniques as they become available.</p>
+<p>We have reviewed the samples of Gafgyt available on Triage and have implemented signatures for the family. Some examples are below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210614-pwscfsebxe">210614-pwscfsebxe</a></li>
+<li><a href="https://tria.ge/210614-cp8srl9jfs">210614-cp8srl9jfs</a></li>
+<li><a href="https://tria.ge/210612-47wbft57ns">210612-47wbft57ns</a></li>
+<li><a href="https://tria.ge/210611-tnvs75816a">210611-tnvs75816a</a></li>
+</ul>
+<h2 id="webmonitor">Updated detection for WebMonitor</h2>
+<p>We added basic detections for WebMonitor a couple of months back, and this week we&rsquo;re applying some updates to improve and expand on these based on recent samples.</p>
+<p>WebMonitor is another RAT openly sold through its own website as a legitimate administration tool. However as is common with these applications the feature set strongly suggests that it is designed for less legal use cases, including things like stealth installation and secure, robust C2 communication.</p>
+<p>Based on recent samples, we have improved static detection for the family to make it more reliable.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210604-xtw6m4g5ys">210604-xtw6m4g5ys</a></li>
+<li><a href="https://tria.ge/210525-jajkyd35kx">210525-jajkyd35kx</a></li>
+<li><a href="https://tria.ge/210511-9ap4pttvfa">210511-9ap4pttvfa</a></li>
+<li><a href="https://tria.ge/210407-h2tt7jq6j2">210407-h2tt7jq6j2</a></li>
+</ul>
+<h2 id="dcrat">Improved DCRat Detection</h2>
+<p>DCRat last popped up in one of these blogposts <a href="https://hatching.io/blog/tt-2021-03-18/#dcrat">a couple of months ago</a>, with a detection update based on samples from the first few months of 2021. We&rsquo;ve been keeping an eye on the family since then, and this week pushed some more improvements to account for recent changes in the samples we&rsquo;ve observed.</p>
+<p>DarkCrystal RAT, more commonly known as DCRat, first appeared in late 2019 providing an extensive set of functionality to its users. A detailed breakdown of the family can be found in <a href="https://www.fireeye.com/blog/threat-research/2020/05/analyzing-dark-crystal-rat-backdoor.html">FireEye&rsquo;s report</a> from May 2020.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210615-tarexz32ax">210615-tarexz32ax</a></li>
+<li><a href="https://tria.ge/210615-ctcry3nmva">210615-ctcry3nmva</a></li>
+<li><a href="https://tria.ge/210615-b65xfypra2">210615-b65xfypra2</a></li>
+<li><a href="https://tria.ge/210615-4n5re6g3ga">210615-4n5re6g3ga</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Insights: Octo Android Banker</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-insights-ep1/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New and Updated Families</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-12-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage for Android</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-for-android/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Maldoc Handling Updates and Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-03-17/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

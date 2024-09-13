@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-37.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-37.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Updates for Flubot, Redline, Bazar, DoubleBack and more</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Updates for Flubot, Redline, Bazar, DoubleBack and more</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-37.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-05-13T00:00:00Z">2021-05-13</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We&rsquo;ve got some nice detection updates this week, expanding on a few families which have been seen recently, and going back to tidy up some older names which don&rsquo;t get heard from so often these days.</p>
+<p>Read on below for information on the following:</p>
+<ul>
+<li><a href="#flubot">Added Flubot detection</a></li>
+<li><a href="#redline">Updated configuration extractor for new version of Redline stealer</a></li>
+<li><a href="#bazar">Updated detection for Bazar variants</a></li>
+<li><a href="#gandcrab">Additional detection for Gandcrab ransomware payloads</a></li>
+<li><a href="#doubleback">New family signatures for DoubleBack</a></li>
+<li><a href="#hanta">HANTA ransomware family signatures</a></li>
+<li><a href="#legionlocker">LegionLocker family signatures</a></li>
+</ul>
+<p>We are continuing to work on some larger features additions in the background, and are looking forward to being able to share those with you in the coming weeks. We recently announced our upcoming macOS support, and this is continuing to move along well with our initial release planned for <strong>the end of May 2021</strong>. We&rsquo;ll have a lot more information on that at the time.</p>
+<p>In the meantime, if you come across any unexpected or incorrect results in your Triage browsing please let us know about it! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<h2 id="flubot">Flubot Identification</h2>
+<p>Flubot is an Android trojan/stealer which was first discovered in late 2020. Spread via SMS phishing, it has gained a lot of attention recently due to large scale attacks against European users. Initially targeting Spain, the family has since branched out considerably to target - in its most recent campaigns - users in the <a href="https://www.proofpoint.com/us/blog/threat-insight/flubot-android-malware-spreading-rapidly-through-europe-may-hit-us-soon">UK, Germany, Hungary, Italy and Poland</a>.</p>
+<p>Regardless of version or exact target, Flubot always uses SMS phishing lures pretending to be from parcel delivery services like FedEx, DHL, and Correos (the Spanish postal service).</p>
+<p>We have spent some time carrying out a thorough review of Flubot samples, and have now deployed family detection for the current known versions. Sadly we cannot use an extractor to enrich these results with the C2 configuration as the family uses a DGA at runtime, meaning we can only collect the URLs/domains which are actively contacted.</p>
+<p>In addition to the family detections, we have improved our Android support with regard to dumping memory during execution to provide better support for Flubot and other samples.</p>
+<p>You can find a technical breakdown of the family and its recent activity from Proofpoint <a href="https://www.proofpoint.com/us/blog/threat-insight/flubot-android-malware-spreading-rapidly-through-europe-may-hit-us-soon">here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210513-ca8exx1m7e">210513-ca8exx1m7e</a></li>
+<li><a href="https://tria.ge/210513-q1xa72xpns">210513-q1xa72xpns</a></li>
+</ul>
+<h2 id="redline">Updated Redline Configuration Extractor</h2>
+<p>Earlier in the week we noticed a new minor variant of the Redline stealer family which was also deploying IcedID as an additional stage. Besides the changes to Redline itself, this is the first time we have observed these 2 families being used alongside each other in this way.</p>
+<p>We have made some tweaks to our configuration extractor for Redline and deployed it to properly cover other similar payloads. Some examples can be found below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210510-51q2zwvjce">210510-51q2zwvjce</a></li>
+<li><a href="https://tria.ge/210510-1wbq4xyak6">210510-1wbq4xyak6</a></li>
+<li><a href="https://tria.ge/210507-2v7r2kd3q2">210507-2v7r2kd3q2</a></li>
+<li><a href="https://tria.ge/210510-cdf8nml7an">210510-cdf8nml7an</a></li>
+</ul>
+<h2 id="bazar">Updated Bazar Detection</h2>
+<p>Bazar has changed a lot since it was first observed, and it was recently pointed out to us that some early samples were not being properly detected by Triage.</p>
+<p>These were versions that were seen very early in Bazar&rsquo;s development, containing a number of debug strings and resources which were removed for the later releases. Interestingly this came to our attention due to what appears to be a new campaign using this old version - quite why an actor decided to use this instead of a newer variant we are not sure.</p>
+<p>We have no expanded our signatures to cover these for the sake of completeness, although we don&rsquo;t expect to see much more of them in future. Thanks to <a href="https://twitter.com/r0ny_123">@r0ny_123</a> on Twitter for getting in touch about this one.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210505-mq8bqqpk6x">210505-mq8bqqpk6x</a></li>
+<li><a href="https://tria.ge/210505-vc9dqnmbba">210505-vc9dqnmbba</a></li>
+</ul>
+<h2 id="gandcrab">Additional Detections for Gandcrab Ransomware</h2>
+<p>From early 2018 through mid-2019, Gandcrab was one of the most prolific and successful ransomware on the scene. It evolved rapidly, incorporating a series of relevant CVEs into its codebase to make it a highly infectious family.</p>
+<p>The creators shut down their infrastructure and distribution channels in 2019 after announcing their &lsquo;retirement&rsquo; through a cybercrime forum. However some samples are still floating around and we&rsquo;re always looking to ensure that we provide accurate judgements even for historic files, so this week we have pushed some improvements to our detection for the family to better catch samples we had noticed during reviews of Triage submissions.</p>
+<p>More detailed information on Gandcrab&rsquo;s career can be found in Fortinet&rsquo;s <a href="https://www.fortinet.com/blog/threat-research/gandcrab-threat-actors-retire">2019 blogpost on the family</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210507-hj1gwxn3z6">210507-hj1gwxn3z6</a></li>
+<li><a href="https://tria.ge/210507-zww6mpwble">210507-zww6mpwble</a></li>
+<li><a href="https://tria.ge/210302-k2jznjcb4j">210302-k2jznjcb4j</a></li>
+<li><a href="https://tria.ge/210302-sxqrlp6zge">210302-sxqrlp6zge</a></li>
+<li><a href="https://tria.ge/210302-23wvx69xen">210302-23wvx69xen</a></li>
+</ul>
+<h2 id="doubleback">Added Family Signatures for DoubleBack</h2>
+<p>The DoubleBack backdoor was recently <a href="https://www.fireeye.com/blog/threat-research/2021/05/unc2529-triple-double-trifecta-phishing-campaign.html">reported in a FireEye blogpost</a>, in which they revealed 3 new families they had observed running campaigns in December 2020.</p>
+<p>The 3 families are all linked to the same threat actor - referred to by FireEye as UNC2529 - and form a single execution chain:</p>
+<ol>
+<li>DOUBLEDRAG downloader</li>
+<li>DOUBLEDROP fileless loader/installer</li>
+<li>DOUBLEBACK backdoor module</li>
+</ol>
+<p>Based on the findings reported by FireEye, we have implemented detections for the backdoor component of the family, and will continue to monitor available information to update and expand on these as required.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210505-n9rqlnyrcs">210505-n9rqlnyrcs</a> (x64 version)</li>
+<li><a href="https://tria.ge/210505-r57hsrp74a">210505-r57hsrp74a</a> (x86 version)</li>
+<li><a href="https://tria.ge/210322-ay61e967h2">210322-ay61e967h2</a> (x86 version)</li>
+</ul>
+<h2 id="hanta">Added HANTA Ransomware Signatures</h2>
+<p>HANTA ransomware was identified by Twitter user <a href="https://twitter.com/fbgwls245/status/1375391746104823809">@fbgwls245</a> in March 2021, as a new variant of the open-source HiddenTear family. We noticed it submitted to Triage by <a href="https://twitter.com/Amigo_A_">@Amigo_A_</a>, who has published an article for the family on their ID Ransomware blog <a href="https://id-ransomware.blogspot.com/2021/03/hanta-ransomware.html">here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="210504-shmn9mxr3x">210504-shmn9mxr3x</a></li>
+<li><a href="210504-s8mgdkfxmx">210504-s8mgdkfxmx</a></li>
+</ul>
+<h2 id="legionlocker">Added LegionLocker Family Signatures</h2>
+<p>During our regular reviews of Triage submissions we observed a few ransomware samples which were showing extracted notes but were not receiving a family tag. Reviewing these anaylses showed them to be LegionLocker samples, a family a which popped up in the wild around April 2021 and has seen regular use since then.</p>
+<p>LegionLocker is based on the older CobraLocker malware which has been around in various forms for a year or more. Some basic flaws in the design of CobraLocker mean that it and many of its variants are in fact decryptable without paying a ransom - this reportedly includes the current versions of LegionLocker.</p>
+<p>The family has seen a number of updates since it first appeared, with LegionLocker 3.0 being reported by <a href="https://twitter.com/fbgwls245/status/1391309074487152640">@fbgwls245</a> at the start of this week.</p>
+<p>In general the samples so far are not advanced, and make no great effort to hide their identity prior to infection. However as it&rsquo;s continuing to change we will be keeping an eye on it for future changes and adding more advanced detection if needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210504-ffc4l5kase">210504-ffc4l5kase</a></li>
+<li><a href="https://tria.ge/210504-mmlg7t6xs2">210504-mmlg7t6xs2</a></li>
+<li><a href="https://tria.ge/210504-ffc4l5kase">210504-ffc4l5kase</a></li>
+<li><a href="https://tria.ge/210509-6lmtnjlrkj">210509-6lmtnjlrkj</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 136: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-20/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 84</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-08-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 143: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Family Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-16/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

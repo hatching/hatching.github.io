@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-78.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-78.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>BumbleBee Fix and New Extractors</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>BumbleBee Fix and New Extractors</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-78.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-06-23T00:00:00Z">2022-06-23</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we round up the week&rsquo;s main updates to the platform. It&rsquo;s a shorter one this week as the team&rsquo;s been focusing on a couple of more fiddly families, but we still have a few new additions to the list of configuration extractors as well as some updates for an existing family:</p>
+<ul>
+<li><a href="#bumblebee">Updated configuration extractor for BumbleBee</a></li>
+<li><a href="#octo">Added signatures and configuration extractor for Octo Android malware</a></li>
+<li><a href="#nymaim">Added signatures and configuration extractor for Nymaim</a></li>
+<li><a href="#purecrypter">Added detections for PureCrypter loader</a></li>
+</ul>
+<p>As always if you find any problems with the Triage platform or its detections please do let us know. Community input is a vital part of tracking and keeping up to date with the rapidly evolving malware landscape and is extremely helpful in making these updates possible. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee is a loader which rose to prominence back in April 2022. So far it has formed part of the toolkit of an Initial Access Broker group called EXOTIC LILY, who gain access to systems and networks which they can then sell on to other groups like ransomware gangs rather than directly exploiting it themselves. For example BumbleBee was seen early on distributing Conti ransomware and CobaltStrike payloads.</p>
+<p>On a technical level it is a fairly typical example of its type, using WMI to harvest general information about the system and report it back to the C2 infrastructure which then issues commands for the next steps. This task can vary but mainly revolves around deploying code and payloads onto the system. You can find a full writeup of the family from Google’s Threat Analysis Group <a href="https://blog.google/threat-analysis-group/exposing-initial-access-broker-ties-conti/">here</a>.</p>
+<p>We added detections and a configuration extractor for the family back in April but some samples were recently brought to our attention which were showing garbage data in the output. We&rsquo;ve now reviewed these and made the necessary updates. If you come across any similar issues - with BumbleBee or any other family - please feel free to let us know!</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220620-gwkfpsgfbm">220620-gwkfpsgfbm</a></li>
+<li><a href="https://tria.ge/220620-gxfh5sgfej">220620-gxfh5sgfej</a></li>
+<li><a href="https://tria.ge/220622-jqlspadfb7">220622-jqlspadfb7</a></li>
+<li><a href="https://tria.ge/220622-jsbeqsdfb9">220622-jsbeqsdfb9</a></li>
+</ul>
+<h2 id="octo">Octo</h2>
+<p>Octo first popped up under this name in early 2022, with <a href="https://threatfabric.com/blogs/octo-new-odf-banking-trojan.html">ThreatFabric reporting</a> that they came across the name on underground forums on January 23rd. Analysis since then seems to suggest it was developed around the end of 2021 by a new developer using the source code for an old family called ExobotCompact, which was in operation until around 2018 when it shut down and the source code was leaked.</p>
+<p>The family is another Android stealer which seems to be a direct successor to ExobotCompact, with ThreatFabric&rsquo;s analysis suggesting that it uses basically the same functionality with some additions and general rebranding. Chief among the changes is a new remote access feature which enables the family to also be used for on-device fraud (i.e. where a device is directly hijacked to permit theft etc. rather than just exfiltrating data which can be used later) - major targets for this of course include multi-factor authentication and banking apps. Including Exobot functions it has an extensive feature set covering SMS phishing, keylogging, overlay attacks, and the ability to intercept phone calls and text messages.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-23/octo.png">
+</figure>
+
+<p>We have reviewed some available samples and implemented behavioural detections and a configuration extractor to dump C2 information.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220613-m1yrsacab9">220613-m1yrsacab9</a></li>
+<li><a href="https://tria.ge/220614-hvhq6agef5">220614-hvhq6agef5</a></li>
+<li><a href="https://tria.ge/220614-jqkwdscgcn">220614-jqkwdscgcn</a></li>
+</ul>
+<h2 id="nymaim">Nymaim</h2>
+<p>Nymaim is a trojan/loader which has been around in various forms since 2013. In its first iterations it also included its own 2nd stage payload which was a screenlocker aimed at extorting victims into paying a ransom. It has since done away with that 2nd stage instead being primarily used to deliver other families like Ursnif and Pony - in 2016 it was even combined into a new trojan/stealer with Gozi that earned the nickname GozNym.</p>
+<p>Although old its regular updates have kept the family relevant over the years, and it has popped up repeatedly with periods of heightened activity. It has become quite advanced by now with extensive anti-VM and anti-analysis techniques built in - for example <a href="https://www.proofpoint.com/us/threat-insight/post/nymaim-config-decoded">Proofpoint reports</a> that it at some point started using its own bytecode language which is directly interpreted by Nymaim, running in a virtual machine managed by the malware.</p>
+<p>Since activity on this family seems to be going through one of its busier period again we&rsquo;ve developed detections and a configuration extractor for it. We have reviewed as wide a cross section as we can but for something that goes back as long as this there are likely to be some edge cases we haven&rsquo;t covered, so if you come across anything please do let us know and we&rsquo;ll be monitoring it ourselves as well.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-23/nymaim.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220616-pk26dahdh9">220616-pk26dahdh9</a></li>
+<li><a href="https://tria.ge/220621-m8jmtsfdd6">220621-m8jmtsfdd6</a></li>
+<li><a href="https://tria.ge/220521-kwky1seeak">220521-kwky1seeak</a></li>
+<li><a href="https://tria.ge/220521-ssftwshhc9">220521-ssftwshhc9</a></li>
+<li><a href="https://tria.ge/220521-tk9bxadcfn">220521-tk9bxadcfn</a></li>
+</ul>
+<h2 id="purecrypter">PureCrypter</h2>
+<p>PureCrypter is another loader family, this one written in .NET and using obfuscation and encryption techniques to evade static detection techniques. It has reportedly been around <a href="https://cyware.com/news/purecrypter-loader-updated-with-new-modules-1a0ba794">since March 2021</a> and can be purchased by attackers for use in their own campaigns rather than being associated with any single group.</p>
+<p>According to <a href="https://cyware.com/news/purecrypter-loader-updated-with-new-modules-1a0ba794">Cyware&rsquo;s report on a new update in June 2022</a> it has been seen delivering quite a large range of other families including AgentTesla, AsyncRAT, RedLine, Remcos, and Warzone RAT. The malware is still in active development and recently added the ability to communicate over Telegram for C2 as well as expanding on anti-VM methods. Configurable options are defined using Google&rsquo;s Protocol Buffer format to make it harder to detect strings etc. in the payloads even once decrypted.</p>
+<p>Buyers can customise their particular strain of PureCrypter using a web-based builder framework which includes a large range of different options around startup locations, enabled evasion modules, build metadata etc. The tooling also helps with building initial infection methods with an Office macro builder included. A technical writeup can be found in <a href="https://www.zscaler.com/blogs/security-research/technical-analysis-purecrypter">ZScaler&rsquo;s blog from June 13th 2022</a>.</p>
+<p>We&rsquo;ve haven&rsquo;t seen huge numbers of this family yet but a few have come onto our radar over the first half of 2022 so we felt it was time to add detection. We have reviewed the samples we&rsquo;ve identified and implemented some signatures for them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220623-s676asdghj">220623-s676asdghj</a></li>
+<li><a href="https://tria.ge/220623-s7aw7agee8">220623-s7aw7agee8</a></li>
+<li><a href="https://tria.ge/220623-s7ekdagef6">220623-s7ekdagef6</a></li>
+<li><a href="https://tria.ge/220623-s7gdzagef7">220623-s7gdzagef7</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 141: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-25/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 108: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Acquisition News and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/acquisition-recorded-future/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Improvements</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-12/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

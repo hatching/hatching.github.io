@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-66.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-66.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Versions and New Families</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Versions and New Families</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-66.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-02-10T00:00:00Z">2022-02-10</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! We have updates and improvements for quite a few families today, including a few we mentioned last week on Twitter but are including again here for those of you who don&rsquo;t follow us there.</p>
+<p>Let&rsquo;s get straight into it:</p>
+<ul>
+<li><a href="#emailto">Added &rsquo;email_to&rsquo; field to Matiex and SnakeyKeylogger extractors</a></li>
+<li><a href="#purplefox">Added support for PurpleFox</a></li>
+<li><a href="#mars">Added support for MarsStealer</a></li>
+<li><a href="#redline">Added extraction of authentication key for Redline stealer</a></li>
+<li><a href="#targetcompany">Expanded TargetCompany ransomware detections to cover other variants</a></li>
+<li><a href="#koxic">Added support for Koxic ransomware</a></li>
+<li><a href="#dcrat">Updated DCrat detections for new variant</a></li>
+<li><a href="#matanbuchus">Updated Matanbuchus loader rules for new variant</a></li>
+<li><a href="#vidar">Updated Vidar detections for new variant</a></li>
+</ul>
+<p>As always if you come across any issues, have feedback about the platform and its detections, or just have some bright ideas for improvements, then you can always reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<hr>
+<h2 id="emailto">Added email_to field extraction for Matiex and SnakeyKeylogger</h2>
+<p>In our <a href="https://hatching.io/blog/tt-2022-01-27/#agenttesla">previous blogpost</a> we updated the AgentTesla configuration extractor to include the <code>email_to</code> field, which is part of the the SMTP settings embedded in certain variants.</p>
+<p>Based on feedback our team has now expanded this support to 2 other families which also leverage SMTP for exfiltration and C2 communication. The configuration extractors for both <a href="https://hatching.io/blog/tt-2020-09-24/#matiex">Matiex</a> and <a href="https://hatching.io/blog/tt-2021-01-14/#snake">Snakekeylogger</a> have been updated to include this data in their results, which should be a helpful IoC for easily tracking individual campaigns.</p>
+<p>Remember that if you have access to the API, you can easily access the contents of any configuration extractor results under the <code>extracted</code> JSON key.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220128-zlgaeadef8">220128-zlgaeadef8</a> (Matiex)</li>
+<li><a href="https://tria.ge/220131-wgbmksaehp">220131-wgbmksaehp</a> (SnakeKeylogger)</li>
+</ul>
+<h2 id="purplefox">PurpleFox Rootkit</h2>
+<p>PurpleFox is a fairly new rootkit, samples of which were first picked out by <a href="https://twitter.com/malwrhunterteam/status/1474846690674937860">MalwareHunterTeam</a> and <a href="https://twitter.com/JAMESWT_MHT/status/1478242707512377351">JAMESWT</a> on Twitter.</p>
+<p>The family can carry out a full infection with its own custom dropper being used to deliver the actual rootkit. It is extremely modular, breaking the infection chain into small pieces which are, on their own, often quite unlikely to be detected by standard AV tools.</p>
+<p>As an additional step is its attempt to appear legitimate, the samples observed so far drop an actual installer for the Telegram desktop app along with the malicious payload, and the loader itself uses icons and file information to try and imitate Telegram.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-10/purplefox.png">
+</figure>
+
+<p>You can find a detailed write up of the family and its various stages in a blogpost by Minerva Labs <a href="https://blog.minerva-labs.com/malicious-telegram-installer-drops-purple-fox-rootkit">here</a>, published in early January. We have reviewed the samples available and implemented some initial detection for the dropper/loader and rootkit stages, and will continue to keep an eye on the family going forward.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220125-n28ttaebbg">220125-n28ttaebbg</a></li>
+<li><a href="https://tria.ge/220122-jyv2bsaddr">220122-jyv2bsaddr</a></li>
+<li><a href="https://tria.ge/220119-k3bzpagfak">220119-k3bzpagfak</a></li>
+<li><a href="https://tria.ge/220114-hz1grsfbbm">220114-hz1grsfbbm</a></li>
+<li><a href="https://tria.ge/220104-gde39saebq">220104-gde39saebq</a></li>
+</ul>
+<h2 id="mars">Mars Stealer</h2>
+<p>Mars Stealer was first spotted on Russian forums around the middle of 2021, being promoted as having the ability to steal saved credentials from a wide range of web browsers as well as a large number of cryptocurrency wallets.</p>
+<p>The focus on cryptocurrency sets this family apart from many of the other infostealers currently available - although it is not unusual to steal some of the more common wallets when available, Mars covers a significant number of products and can bypass some of the techniques used to secure them.</p>
+<p>According to a <a href="https://3xp0rt.com/posts/mars-stealer">blogpost by the researcher 3xp0rt</a> Mars Stealer is an updated version of the old Oski trojan which was shut down by the developers back in mid-2020. According to them the code base is very similar but with a few notable additions, like the extra cryptocurrency functionality and some more anti-debugging/anti-analysis checks.</p>
+<p>We have reviewed the available samples and added detections and a configuration extractor for the family, which can dump the C2 URL being used.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-10/marsstealer.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220204-rbkabaahbk">220204-rbkabaahbk</a></li>
+<li><a href="https://tria.ge/220204-rbkk3sagb9">220204-rbkk3sagb9</a></li>
+<li><a href="https://tria.ge/220204-rbkwvaagc2">220204-rbkwvaagc2</a></li>
+<li><a href="https://tria.ge/220204-rblhdaahbl">220204-rblhdaahbl</a></li>
+<li><a href="https://tria.ge/220204-rbm17sagc6">220204-rbm17sagc6</a></li>
+</ul>
+<h2 id="redline">Redline Stealer</h2>
+<p>At this point Redline likely needs no introduction, as the infostealer has been one of the most widespread threats of the last year or more. We have mentioned it multiple times on this blog as new versions and variants have needed tweaks to our detections, most recently at the <a href="https://hatching.io/blog/tt-2022-01-20/#redline">start of this year</a>.</p>
+<p>It has recently also gained attention in the news again as it ran a campaign around the end of January where the payload was presented as a <a href="https://threatresearch.ext.hp.com/redline-stealer-disguised-as-a-windows-11-upgrade/">Windows 11 upgrade installer</a>. It was distributed via a website closely imitating the look, feel and URL of the actual Windows 11 upgrade page.</p>
+<p>We aren&rsquo;t introducing a new version today, but rather a small improvment to our extractor to add some new data output. In some of the newer variants a specific field is used in securing communications with their C2 infrastructure, functioning as a token to authenticate with the server before receiving commands, additional payloads, etc. Triage&rsquo;s configuration extractor will now dump this along with the existing C2 fields.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-10/redline.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220208-fctpladdeq">220208-fctpladdeq</a></li>
+</ul>
+<h2 id="targetcompany">TargetCompany Ransomware</h2>
+<p>At the end of 2021 we <a href="https://hatching.io/blog/tt-2021-12-09/#target">added support for the TargetCompany ransomware</a> which had first been observed in the middle of the year. A fairly straightforward family it appears to be very much intended for manual, targeted attacks against companies rather than general distribution in large-scale campaigns.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-10/targetcompany.png">
+</figure>
+
+<p>Since initially looking into the family the <code>Mallox</code> variant has also popped up, reported initially as a completely separate family but quickly identified as a new version of TargetCompany. This version is different enough that it was not being tagged by our family definitions, so this week we&rsquo;re deploying an update to address a couple of the available samples and widen the detections to better support the whole family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220114-grf8gsefc9">220114-grf8gsefc9</a></li>
+<li><a href="https://tria.ge/220105-n2wjgsaegq">220105-n2wjgsaegq</a></li>
+<li><a href="https://tria.ge/211231-keqg6sggb4">211231-keqg6sggb4</a></li>
+</ul>
+<h2 id="koxic">Koxic Ransomware</h2>
+<p>Koxic is a new addition to the ransomware landscape first reported on at the start of this month in a technical blogpost by <a href="https://blog.cyble.com/2022/02/03/koxic-ransomware-deep-diveanalysis/">Cyble</a>.</p>
+<p>It follows very familiar patterns for other families: disabling security features and software, deleting backups, shutting down any software that may interfere with file operations, and then encrypting the contents of the filesystem. Before encryption it also harvests system and user information from the infected machine.</p>
+<p>We have checked available samples and made sure they are handled properly by Triage for ransomnote dumping and general behaviour. We have also added some specific family definitions to identify it easily.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220130-3l5jsacben">220130-3l5jsacben</a></li>
+<li><a href="https://tria.ge/220130-3k79aacbcp">220130-3k79aacbcp</a></li>
+<li><a href="https://tria.ge/220121-nhqtwscgbj">220121-nhqtwscgbj</a></li>
+</ul>
+<h2 id="dcrat">DCRat</h2>
+<p>DarkCrystal RAT, more commonly known as DCRat, was first reported in late 2019. It provides an extensive set of remote administration functions triggered by specific commands received from the C2 server. These range from file upload/download, keylogging, and data theft, to gimmicks like opening and closing the CD drive or interacting with the Windows speech synthesizer. In addition to the built-in commands it can also run shell commands directly and pipe the output to the remote C2 server.</p>
+<p>A detailed analysis of the family can be found in a <a href="https://www.mandiant.com/resources/analyzing-dark-crystal-rat-backdoor">report by Mandiant</a> from May 2020, in which they breakdown some samples and all their supported commands.</p>
+<p>We recently observed some samples of a new variant which were not being properly detected by Triage. We have now reviewed these and made some improvements to our behavioural signatures.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220209-dy7ggahccq">220209-dy7ggahccq</a></li>
+<li><a href="https://tria.ge/220209-d5xwlshba2">220209-d5xwlshba2</a></li>
+<li><a href="https://tria.ge/220130-13xt6abccq">220130-13xt6abccq</a></li>
+<li><a href="https://tria.ge/220125-f2kszshddn">220125-f2kszshddn</a></li>
+<li><a href="https://tria.ge/220120-qjy8rsabdk">220120-qjy8rsabdk</a></li>
+</ul>
+<h2 id="matanbuchus">Matanbuchas Loader</h2>
+<p>In our <a href="https://hatching.io/blog/2021-review/#matanbuchus">very last blogpost of 2021</a> we introduced support for the Matanbuchus loader, a family which had been around on forums since February. Operated on a malware-as-a-service model it appears to have gained some popularity and we saw quite a few samples submitted through November and December 2021.</p>
+<p>The family includes fairly standard loader functionality including loading and running executables directly in memory; using schtasks to add or modify tasks on the machine; and PowerShell execution of commands/scripts. In addition, if the user has no existing infection chain in place the developer can provide a standalone launcher for the malware to get it started.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-10/matanbuchus.png">
+</figure>
+
+<p>We added detections and a configuration extractor with that past blogpost but we recently observed a variant with some new modifications which were evading dumping. We have now addressed these and the family should be fully supported, but as always we&rsquo;ll be keeping an eye open for any new updates.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220130-pkf8xabfc3">220130-pkf8xabfc3</a></li>
+<li><a href="https://tria.ge/220207-wdjh1sfbd2">220207-wdjh1sfbd2</a></li>
+<li><a href="https://tria.ge/211221-ltyb1achf7">211221-ltyb1achf7</a></li>
+<li><a href="https://tria.ge/211214-we54eahbgj">211214-we54eahbgj</a></li>
+</ul>
+<h2 id="vidar">Vidar</h2>
+<p>Vidar is back on the menu this week due to a new variant that&rsquo;s been observed in the wild. It wasn&rsquo;t working properly with our detections and extractor so we have made some tweaks that resolve those issues and ensure that the family is handled as expected. Some examples of this new version are provided below for reference, and others can be found by searching based on the family name and/or botnet ID.</p>
+<p>If you&rsquo;re not familiar with the family you can find more detail in our <a href="https://hatching.io/blog/tt-2021-07-08/#vidar">blogpost from July 2021</a> where we initially introduced the configuration extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220203-vmn97acbh3">220203-vmn97acbh3</a></li>
+<li><a href="https://tria.ge/220203-ct26hscgc9">220203-ct26hscgc9</a></li>
+<li><a href="https://tria.ge/220202-w4cs6abagj">220202-w4cs6abagj</a></li>
+<li><a href="https://tria.ge/220202-w4s55sbagl">220202-w4s55sbagl</a></li>
+<li><a href="https://tria.ge/220202-w525fabagr">220202-w525fabagr</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Hooking VBScript execution in Cuckoo</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/vbscript-hooking/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Dropped files and more goodies</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/dropped-files-ui/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 124: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-03-21/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

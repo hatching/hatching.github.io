@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>API Client and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>API Client and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-77.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-10-01T00:00:00Z">2020-10-01</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>The year of September is finally over, and it&rsquo;s time for a new month and new Triage Thursday blog!</p>
+<p>This week we release <strong>our new API library/client</strong>. Available in Python and Go it includes full libraries you can use in your own programs to interact with Triage, as well as a pre-made commandline client for manual use. <a href="#api">Read on below</a> for more information.</p>
+<p>As usual we also have a bunch of family detection updates which have been deployed over the course of the week:</p>
+<ul>
+<li><a href="#bazar">BazarLoader</a></li>
+<li><a href="#exorcist">Exorcist Ransomware 2.0</a></li>
+<li><a href="#crypt32">Crypt32 Ransomware</a></li>
+<li><a href="#dusk">Dusk Ransomware</a></li>
+<li><a href="#sekhmet">Sekhmet Ransomware</a></li>
+</ul>
+<p>Remember you can always give feedback or report any issues through the Feedback button in any analysis report. You can also reach us directly <a href="https://hatching.io/">through the website</a> or <a href="https://twitter.com/hatching_io">on Twitter</a>.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="api">API Library and Client</h2>
+<p>The Triage API is a REST-like interface which provides a way to interact with Triage via the commandline or scripts. We will not be going in-depth with the API itself here - you can find <a href="https://tria.ge/docs/cloud-api/">full documentation here</a> if you want to know more about that aspect.</p>
+<p>Today we are publishing libraries for use with the API, to simplify the process of creating custom scripts. We have also created pre-made clients for manual use on the commandline. These are all implemented in both <strong>Python 3</strong> and <strong>Go</strong>, and are cross-compatible with Windows and Linux.</p>
+<p>Below we will take a quick look at these clients and some basic usage.</p>
+<h3 id="installation">Installation</h3>
+<p>The full library is available on Github - <a href="https://github.com/hatching/triage">github.com/hatching/triage</a>.</p>
+<p>Clone the repository to a local directory. You will see directories for Python and Go inside it.</p>
+<h4 id="go">Go</h4>
+<p>In the <code>triage/go</code> directory, simply run the <code>make</code> command to compile and install the client. The binary will be written to your configured Gobin path as <code>triage</code>. Any version of Go 1.13 or later will support the client, although it&rsquo;s always advisable to use the latest version (currently 1.15).</p>
+<pre><code>$ cd go
+$ make
+go build -o &quot;~/work/bin/triage&quot; github.com/hatching/triage/go/cmd/triage
+
+$ triage --help
+Usage of triage:
+
+  authenticate [token] [flags]
+
+    Stores credentials for Triage.
+
+  submit [url/file] [flags]
+
+    Submit a new sample file or URL.
+
+  select-profile [sample]
+
+    Interactively lets you select profiles for samples that have been submitted
+    in interactive mode. If an archive file was submitted, you will also be
+    promted to select the files to analyze from the archive.
+
+  list [flags]
+
+    Show the latest samples that have been submitted.
+
+  file [sample] [task] [file] [flags]
+
+    Download task related files.
+
+  archive [sample] [flags]
+
+    Download all task related files as an archive.
+
+  delete [sample]
+
+    Delete a sample.
+
+  report [sample] [flags]
+
+    Query reports for a (finished) analysis.
+
+  create-profile [flags]
+
+  delete-profile [flags]
+
+  list-profiles [flags]
+</code></pre>
+<h4 id="python-3">Python 3</h4>
+<p>While the Python library is located in the <code>triage/python</code> directory, one can
+easily install the library through pip. Note that it requires Python 3.</p>
+<pre><code>$ pip install hatching-triage
+[...]
+Successfully installed hatching-triage-0.1
+
+$ triage --help
+Usage: triage [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  archive
+  authenticate
+  create-profile
+  delete
+  delete-profile
+  file
+  list
+  list-profiles
+  report
+  select-profile
+  submit
+</code></pre>
+<h3 id="basic-usage">Basic Usage</h3>
+<p>Now that it is installed, you can start using the client just by the <code>triage</code> command.</p>
+<p>First, you can always access help for any command by running <code>triage [command] --help</code>, which will list the available options. A full list of commands can be seen with just <code>triage --help</code>.</p>
+<p>To get started you first need to register your API token with the client. This allows it to handle requests and access your account without you needing to supply the API key every request, or type it on the commandline regularly.</p>
+<pre><code>triage authenticate [API_KEY]
+</code></pre>
+<p>By default the client is configured to use the public Triage API endpoints. If you wish to use it with a private instance, you can also register that using the <code>authenticate</code> command:</p>
+<pre><code>triage authenticate [API_KEY] -u [API_URL]
+</code></pre>
+<p>The URL used here should be the root API without any endpoint paths. For example <code>https://api.tria.ge</code> for the public server. Note that the client currently can only be logged in with one instance at a time, and cannot store multiple sets of credentials.</p>
+<p>You can now access all the client&rsquo;s functionality. Here is a brief description of each command&rsquo;s purpose:</p>
+<ul>
+<li><strong>submit:</strong> submit a sample file or URL</li>
+<li><strong>select-profile:</strong> Lets you select profiles for samples that have been submitted in interactive mode. If an archive file was submitted, you will also be prompted to select the files to analyze from the archive.</li>
+<li><strong>list:</strong> view a list of recent analyses on Triage</li>
+<li><strong>file:</strong> download a task related file from an analysis, such as a Dumped File.</li>
+<li><strong>archive:</strong> fetch the full archive containing all of the analysis data, including dropped files, PCAPs, JSON reports and raw logs.</li>
+<li><strong>delete:</strong> delete an analysis you own from Triage</li>
+<li><strong>report:</strong> fetch the JSON report for a completed analysis</li>
+<li><strong>create-profile:</strong> create an analysis profile with specific attributes (not available to all account types)</li>
+<li><strong>delete-profile:</strong> delete an analysis profile you own (not available to all account types)</li>
+<li><strong>list-profiles:</strong> show all analysis profiles useable by your account (not available to all account types)</li>
+</ul>
+<h2 id="exorcist">Exorcist 2.0 Ransomware</h2>
+<p>At the end of September <a href="https://www.bleepingcomputer.com/news/security/fake-software-crack-sites-used-to-push-exorcist-20-ransomware/">it was reported</a> that the Exorcist ransomware was distributing a new version in fake software cracks that were available online. We already had detection for the original Exorcist, and we have now updated this to cover the new 2.0 variant as well.</p>
+<p>The family drops a note in the .hta format which directs victims towards a .onion site for payment instructions.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200930-vz17f3p2d2">200930-vz17f3p2d2</a></li>
+</ul>
+<h2 id="bazar">BazarLoader</h2>
+<p>Bazar is a well known loader and backdoor which has been reported to have potential links to the Trickbot developers. It uses EmerDNS to communicate with C2 via the .bazar domains which gave the family its name. A detailed writeup of the family by CyberReason can be found <a href="https://www.cybereason.com/blog/a-bazar-of-tricks-following-team9s-development-cycles">here</a>.</p>
+<p>We recently observed that some Bazar samples were not being caught by our existing signatures, so we reviewed a number of samples and updated our detection. Triage&rsquo;s coverage of the family is now much more robust, and we will continue to update as required by new variants.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200910-c8x1yrxskj">200910-c8x1yrxskj</a></li>
+<li><a href="https://tria.ge/200910-qkcd2agbt2">200910-qkcd2agbt2</a></li>
+<li><a href="https://tria.ge/200910-y38gepapq2">200910-y38gepapq2</a></li>
+<li><a href="https://tria.ge/200910-yc81hdjgh2">200910-yc81hdjgh2</a></li>
+<li><a href="https://tria.ge/200915-3mq9s8lcxn">200915-3mq9s8lcxn</a></li>
+</ul>
+<h2 id="crypt32">Crypt32 Ransomware</h2>
+<p>Crypt32 is an unusual type of ransomware which is sometimes referred to as fan-extortion malware. It does not demand any financial payment in return for decrypting an infected system, but simply requires that the victim install the game <a href="https://heroesofthestorm.com/">Heroes of the Storm</a>.</p>
+<p>It drops a .txt ransomnote which has the instructions in both English and Korean. Thanks to <a href="https://twitter.com/Amigo_A_/status/1305421128702230529?s=20">@Amigo_A_</a> for the sample.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200913-jegg8khgp2">200913-jegg8khgp2</a></li>
+</ul>
+<h2 id="dusk">Dusk Ransomware</h2>
+<p>Dusk was observed at the end of September by <a href="https://twitter.com/GrujaRS/status/1310504899466194944?s=20">@GrujaRS</a>. It is a straightforward ransomware with very distinctive naming and ransomnote contents. We have added family classification for it, and will keep an eye on future versions.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200928-7bsdqsxae6">200928-7bsdqsxae6</a></li>
+</ul>
+<h2 id="sekhmet">Sekhmet Ransomware</h2>
+<p>Sekhmet was mainly active in early and mid 2020, but was brought to our attention recently by <a href="https://twitter.com/Amigo_A_">@Amigo_A_</a>, who reported a potential new variant of the family <a href="https://twitter.com/Amigo_A_/status/1308659440485363717?s=20">calling itself Egregor</a>.</p>
+<p>Sekhmet is distributed as a DLL file intended to be launched using <code>regsvr32.exe</code>. It drops .txt ransomnotes and includes communication with a C2 server.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201001-lbxang9l8s">201001-lbxang9l8s</a></li>
+<li><a href="https://tria.ge/201001-ymk5zevjns">201001-ymk5zevjns</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>SAML Release and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-05-05/">Read</a>
+        </li>
+      
+        <li>
+          <h3>More Family Updates and Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-05-20/">Read</a>
+        </li>
+      
+        <li>
+          <h3>The Tech Behind Our PolySwarm Arbiter</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/first-polyswarm-arbiter-part-2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 120: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-22/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

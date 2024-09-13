@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="234px" height="234px" viewBox="0 0 234 234" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 26</title>
+    <g id="Triage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Hatching-Triage" transform="translate(-922.000000, -3504.000000)">
+            <g id="Group-42" transform="translate(-1.000000, 2877.000000)">
+                <g id="Group-26" transform="translate(899.000000, 603.000000)">
+                    <g id="Group-6" transform="translate(141.000000, 235.000000) rotate(45.000000) translate(-141.000000, -235.000000) translate(109.000000, 203.000000)" fill="#FC493E">
+                        <polygon id="Fill-1" points="1.5063506e-12 31.8056466 31.8056466 31.8056466 31.8056466 -3.12638804e-13 1.5063506e-12 -3.12638804e-13" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-2" points="31.8056466 31.8056466 63.6119293 31.8056466 63.6119293 -3.12638804e-13 31.8056466 -3.12638804e-13" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-6" points="0 63.6125654 31.8062827 63.6125654 31.8062827 31.8062827 0 31.8062827" stroke="#FC493E"></polygon>
+                    </g>
+                    <g id="Group-6" transform="translate(46.500000, 141.057383) rotate(45.000000) translate(-46.500000, -141.057383) translate(14.000000, 109.057383)" fill="#FC493E">
+                        <polygon id="Fill-2" points="0.805646597 31.8056466 32.6119293 31.8056466 32.6119293 2.27373675e-13 0.805646597 2.27373675e-13" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-3" points="32.5915733 31.8056466 64.3972199 31.8056466 64.3972199 2.27373675e-13 32.5915733 2.27373675e-13" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-4" points="32.5915733 63.6087487 64.3972199 63.6087487 64.3972199 31.802466 32.5915733 31.802466" stroke="#FC493E"></polygon>
+                    </g>
+                    <g id="Group-6" transform="translate(235.000000, 141.057383) rotate(45.000000) translate(-235.000000, -141.057383) translate(203.000000, 108.557383)" fill="#FC493E">
+                        <polygon id="Fill-8" points="1.8189894e-12 64.4169398 31.8056466 64.4169398 31.8056466 32.6112932 1.8189894e-12 32.6112932" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-9" points="31.8056466 64.4169398 63.6119293 64.4169398 63.6119293 32.6112932 31.8056466 32.6112932" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-6" points="0 32.6125654 31.8062827 32.6125654 31.8062827 0.806282723 0 0.806282723" stroke="#FC493E"></polygon>
+                    </g>
+                    <g id="Group-6" transform="translate(141.000000, 46.500000) rotate(45.000000) translate(-141.000000, -46.500000) translate(108.500000, 14.000000)" fill="#FC493E">
+                        <polygon id="Fill-4" points="32.5915733 32.6087487 64.3972199 32.6087487 64.3972199 0.802465969 32.5915733 0.802465969" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-5" points="32.5915733 64.4169398 64.3972199 64.4169398 64.3972199 32.6112932 32.5915733 32.6112932" stroke="#FC493E"></polygon>
+                        <polygon id="Fill-9" points="0.805646597 64.4169398 32.6119293 64.4169398 32.6119293 32.6112932 0.805646597 32.6112932" stroke="#FC493E"></polygon>
+                    </g>
+                    <rect id="Rectangle" fill="#FCC200" transform="translate(140.500000, 140.500000) rotate(-45.000000) translate(-140.500000, -140.500000) " x="123" y="123" width="35" height="35"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

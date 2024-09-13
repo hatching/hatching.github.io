@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Support for Eternity Project and EnemyBot, Plus Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Support for Eternity Project and EnemyBot, Plus Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-77.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-06-09T00:00:00Z">2022-06-09</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday update blog series! It&rsquo;s been another busy week here and we have a bunch of new detection updates to go over today, including a couple of quite familiar faces:</p>
+<ul>
+<li><a href="#asyncrat">Updated configuration extractor for AsyncRAT</a></li>
+<li><a href="#emotet">Updated key extraction for Emotet Epoch 4/5 samples</a></li>
+<li><a href="#eternity">Added configuration extractor for some EternityProject components</a></li>
+<li><a href="#enemybot">Added support for EnemyBot family on Linux</a></li>
+<li><a href="#vidar">Updated detections for some Vidar samples</a></li>
+</ul>
+<p>As always if you find any problems with the Triage platform or the detections in it, please do let us know. Community input is a vital part of tracking and keeping up to date with the rapidly evolving malware landscape and is extremely helpful in making these updates possible. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<hr>
+<h2 id="asyncrat">AsyncRAT</h2>
+<p>AsyncRAT is an open-source RAT available on <a href="https://github.com/NYAN-x-CAT/AsyncRAT-C-Sharp/">Github</a>. It claims to be for legitimate remote administration purposes only, but is of course commonly used by criminals looking for an easy to use, adaptable RAT. It is written using C# and has a wide variety of functionality including screen recording, file upload/download via SFTP, local password recovery, and techniques to disable anti-virus software (for a full list see the readme on Github).</p>
+<p>We recently started seeing samples which are using Telegram for their C2 communications, so this update improves our configuration extractor for be able to handle these variants. We&rsquo;ve also done a bit of refactoring of the extractor overall to make it more robust - AsyncRAT is created by the same developer as another trojan called StormKitty, and in many areas they share quite a bit of code. We&rsquo;ve limited this as much as we can currently but in some cases you may see an overlap in the detections on Triage.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-09/asyncrat.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220405-azqnkaaecm">220405-azqnkaaecm</a></li>
+<li><a href="https://tria.ge/220404-ytqy5sbhd2">220404-ytqy5sbhd2</a></li>
+<li><a href="https://tria.ge/220330-pbskksbhh6">220330-pbskksbhh6</a></li>
+</ul>
+<h2 id="emotet">Emotet</h2>
+<p>The Epoch 5 botnet has been active since the start of 2022, following on from Epoch 4 which was active towards the end of 2021. Both have remained active alongside each other, with a few changes being made to the samples for both since they initially appeared.</p>
+<p>We were recently made aware of a couple of issues with our configuration extractor not properly dumping the keys - some samples were missing the key altogether, and in other cases the output was being duplicated unintentionally.</p>
+<p>We have now fixed these issues so you should find performance for the Epoch 4 and 5 samples has improved. If you come across any more irregularities please feel free to let us know.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220607-px4vqsaffm">220607-px4vqsaffm</a></li>
+<li><a href="https://tria.ge/220607-qvtgnaehe8">220607-qvtgnaehe8</a></li>
+</ul>
+<h2 id="eternity">EternityProject</h2>
+<p><a href="https://hatching.io/blog/tt-2022-06-02/#eternity">In our blogpost last week</a> we introduced detections for the Eternity Project, a new malware-as-a-service with a whole range of different components which can be mixed and matched to suit a particular scenario or campaign.</p>
+<p>According to the <a href="https://www.bleepingcomputer.com/news/security/eternity-malware-kit-offers-stealer-miner-worm-ransomware-tools/">report by BleepingComputer</a> among the modules currently on offer are an info-stealer; a coin miner; a clipper; a fully functional ransomware; a worm spreader; and soon a bot for carrying out DDoS attacks. The modules are sold separately, with customers using a Telegram bot to automatically build their binaries based on the features they have selected. Based on the results observed from the sandbox it seems that most samples use .onion URLs as part of their C2 communications.</p>
+<p>We added basic detections last week for each of the components we were able to get hold of, and today we are widening that to include a full configuration extractor for a few of them. Examples of the worm, clipper and stealer components will now have relevant information dumped out directly, as well as the existing static signatures.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-09/eternity.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220603-j52sfshdcl">220603-j52sfshdcl</a></li>
+<li><a href="https://tria.ge/220603-j54baaddf6">220603-j54baaddf6</a></li>
+<li><a href="https://tria.ge/220603-j58wrsddf8">220603-j58wrsddf8</a></li>
+<li><a href="https://tria.ge/220603-j5w7zahdbr">220603-j5w7zahdbr</a></li>
+<li><a href="https://tria.ge/220603-j5z9mahdck">220603-j5z9mahdck</a></li>
+</ul>
+<h2 id="enemybot">EnemyBot</h2>
+<p>EnemyBot is a fairly new DDoS botnet targeting Linux systems, <a href="https://www.fortinet.com/blog/threat-research/enemybot-a-look-into-keksecs-latest-ddos-botnet">reported on in early April by Fortinet</a>. It is attributed to a threat group called <code>Keksec</code> who specialise in attacks around cryptomining and DDoS.</p>
+<p>It mainly goes after routers, sometimes exploiting specific vulnerabilities to spread - it can support a wide range of architectures for both IoT and desktop devices however including ARM, MIPS, BSD, and x86/x64. It can also spread via misconfigured Android devices with an exposed Android Debug Bridge port, or just by trying common default passwords against login services. In terms of origins it&rsquo;s a bit of chimera with a significant portion of its codebase being taken from Gafgyt, but with clear signs of some sections being borrowed from Mirai.</p>
+<p>We have now added detections for the family and will update if and when needed. We&rsquo;ve been looking a bit more at Linux lately to fill in some gaps in our detections, so if you have interesting samples there you&rsquo;d like us to add detections for then let us know!</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220609-rljfrsdcb2/static1">220609-rljfrsdcb2</a></li>
+<li><a href="https://tria.ge/220609-rnaawagher/static1">220609-rnaawagher</a></li>
+<li><a href="https://tria.ge/220609-rneklaghfk/static1">220609-rneklaghfk</a></li>
+<li><a href="https://tria.ge/220609-rnjvbadcd6/static1">220609-rnjvbadcd6</a></li>
+<li><a href="https://tria.ge/220609-rnpessghgj/static1">220609-rnpessghgj</a></li>
+</ul>
+<h2 id="vidar">Vidar</h2>
+<p>Vidar is back in the blog again this week with some updates to handle a few samples we came across recently. It&rsquo;s a pretty regular visitor here so we won&rsquo;t go into details on the background again - if you&rsquo;re not familiar with the family you can check out <a href="https://hatching.io/blog/tt-2021-07-08/#vidar">our blogpost from July 2021</a> where we initially added the configuration extractor.</p>
+<p>This week&rsquo;s changes aren&rsquo;t for a new variant - we just found a few samples which were not covered by our existing rules so wanted to make sure to cover them. As always if we spot any others in future we&rsquo;ll make sure to make any other required changes - for big, sprawling families like Vidar accounting for every variation can be quite a challenge.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-09/vidar.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220531-s91kmafcgl">220531-s91kmafcgl</a></li>
+<li><a href="https://tria.ge/220602-1nq33abha7">220602-1nq33abha7</a></li>
+<li><a href="https://tria.ge/220531-l7c8zsahd2">220531-l7c8zsahd2</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Release of Cuckoo-compatible onemon Windows kernel driver</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/onemon-cuckoo-release/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox Setup for People in a Hurry</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-setup/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet Epoch 5 and other version updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-20/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Knowledge Base</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

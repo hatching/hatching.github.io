@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-32.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-32.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Preview of Phishing Analysis</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Preview of Phishing Analysis</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-32.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-03-25T00:00:00Z">2021-03-25</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We&rsquo;re doing something a little different for this week&rsquo;s Triage Thursday blogpost. Over recent weeks we have been working on a new set of functionality for Triage to support analysis and rating of phishing URLs which would not normally trigger  behavioural detections. Although it is still in early stages, in today&rsquo;s blogpost we&rsquo;ll be showing something of a sneak preview of the current state and our goals with the project.</p>
+<h3 id="our-approach-to-phishing-analysis">Our Approach to Phishing Analysis</h3>
+<figure><img src="../../static/images/blog/tt-2021-03-25/phishing_general.png">
+</figure>
+
+<p>In general processing phishing URLs through a behavioural sandbox returns limited or no results, as there is no interaction between the web page and the local system - for example in the screenshot above the URL would receive a score of 1 under the current signature system. However just because a page isn&rsquo;t deploying exploits or malware to the VM doesn&rsquo;t mean that it is of no interest.</p>
+<p>To address this we are building a system around static analysis of the webpage that is retrieved during live analysis. The new module assesses multiple aspects of the site accessed, comparing them against known page layouts to identify likely phishing attempts. In its final verdict it also takes into account other aspects of the web server hosting the page to eliminate false positives and separate legitimate websites from those attempting to imitate them.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-25/phishing_aliexpress.png"><figcaption>
+      <h4>Example phishing page imitating AliExpress account login</h4>
+    </figcaption>
+</figure>
+
+<h3 id="where-are-we-currently">Where Are We Currently?</h3>
+<p>Right now we have the basic groundwork in place to start building out detections and adding details. Our focus so far in development has been to target particular known websites commonly targeted in phishing attempts - such as PayPal, mail carriers and major banks - while we get the system working. We currently have support for a few dozen common brands or organisations and are now expanding that list rapidly.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-25/phishing_aliexpress_2.png">
+</figure>
+
+<p>The phishing analysis system fits straight into the existing Triage workflow for URL submissions. <strong>You will have access to the VMs during analysis through our Live Monitor, letting you interact with the phishing sites directly in a safe environment.</strong> You can also use Profiles to configure which browser will be used to launch the analysis, how long it will run for, and which operating system it uses. URL analysis is already supported by all of our OS options - Windows 7/10, Linux, Android and our upcoming macOS environment - and this is also true of the phishing module.</p>
+<h3 id="whats-next">What&rsquo;s Next?</h3>
+<p>With the framework ready we have 2 major objectives:</p>
+<ol>
+<li>Expand the list of currently supported brands/companies commonly imitated for phishing purposes.</li>
+<li>Widen the scope of the detections to include general detections which are not limited to matches against specific known bad values.</li>
+</ol>
+<p>With the scale and range of phishing campaigns the second point of the list is of particular interest going forwards. We want to ensure that Triage provides good detection coverage in a landscape that is constantly changing, so it is important that we are not anchored to a set of &rsquo;templates&rsquo; which need regular updating. We&rsquo;ll be building out this aspect in the coming weeks and months.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>We&rsquo;ll have more information on phishing support in future blogposts. Note that this is not currently available on Triage public or private cloud servers, as it is still in early development. We&rsquo;ll let you know when versions are going live through our normal channels here and on Twitter.</p>
+<p>If you would like to reach out to us about anything covered here or with general questions and feedback you can find us <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 120: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Phishing Analysis and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-04-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 119: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-04-29/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-12.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-12.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Submitting URLs as QR Codes</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Short Guides</h5>
+        
+        <h2>Submitting URLs as QR Codes</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-12.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2023-11-08T00:00:00Z">2023-11-08</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=qr">qr</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>This feature is now available to all users!</p>
+<h2 id="introduction">Introduction</h2>
+<p>Over recent months we have had increasing reports of phishing attacks shifting to the use of QR codes in their lures rather than relying on embedded links. As detections and anti-phishing measures have improved and made it less likely that users will be able to access malicious links from inside managed email accounts especially, threat actors have had to adapt to increase their infection rates. By using QR codes embedded URLs are hidden from standard detection/filtering techniques, preventing security solutions from blocking them before they reach users. There is of course a cost to this as well since loading a QR code requires a lot more interaction from the user than just clicking a link, but based on the regularity with which this vector has been seen recently it is evidently considered to be effective regardless.</p>
+<p>In order to enable easy analysis of these URLs we have now added support for QR codes within the Triage sandbox, enabling easy submission of these phishing attempts for verification. This short blog post will introduce the new feature and cover some basics on how to use it fully.</p>
+<h2 id="how-to-submit-a-qr-code">How to submit a QR code</h2>
+<p>With this new feature there are currently 2 methods to submit a QR code to the sandbox:</p>
+<ol>
+<li>Directly as an image file like <code>.png</code>, <code>.jpg</code>, etc. This also includes those contained with archive files (<code>.zip</code> etc.)</li>
+<li>Embedded within emails which can be uploaded in <code>.eml</code> or <code>.msg</code> format. In this case the sandbox will extract images and run detection over them as above.</li>
+</ol>
+<figure><img src="../../static/images/blog/qrcodes/qr_summary.png">
+</figure>
+
+<p>The image above shows an <code>.eml</code> file submitted with some text and an embedded QR code in the body. The highlighted areas show the key steps in processing this file:</p>
+<ol>
+<li>Any file which is found to contain a QR code will receive the <code>QR</code> tag. This is indexed like our other analysis tags, enabling quick searching for any such submissions using the search term <a href="https://tria.ge/s?q=tags%3Aqr"><code>tags:qr</code></a>.</li>
+<li>The File Tree shows all files extracted from the <code>.eml</code>. Note that in order to run a URL from a QR code <strong>no files need to be selected here</strong> (by default image formats are not supported for behavioural analysis), though of course if there are other files of interest in the list like executables those can be selected to run as usual. <strong>The <code>.eml</code>/<code>.msg</code> itself should not be selected at all</strong>. In this example it is best left on default settings.</li>
+<li>All URLs extracted from the QR code(s) will be shown in this Extracted URLs section on the right. <strong>The sandbox will not automatically launch URL analysis on these</strong> due to the potential for there being lots of perfectly benign links, for example in company email signatures. To launch an analysis just click on the <code>Analyze</code> button next to the relevant URL.</li>
+</ol>
+<p>Unless other files have also been selected in the File Tree for behavioural analysis, the Analyze button in the bottom floating footer can be disregarded completely.</p>
+<h3 id="start-a-new-url-analysis-from-the-static-report">Start a new URL analysis from the static report</h3>
+<p>What happens if the URL wasn&rsquo;t run at submit time, and now a behavioural analysis has been run and the page shown above is no longer accessible? Extracted URLs are also listed in the static report, and a new URL analysis can be launched from there at any time.</p>
+<p>First, if a QR code with a URL is detected then an informational signature will be shown in the report:</p>
+<figure><img src="../../static/images/blog/qrcodes/qr_sig.png">
+</figure>
+
+<p>The extracted URLs will then be listed under the Files section at the bottom of the report (note the blue highlighting at the left of the <code>hatching_test.png</code> file marking this as the file that has signatures related):</p>
+<figure><img src="../../static/images/blog/qrcodes/qr_static_files.png">
+</figure>
+
+<p>As above just click the Analyze button to create a new analysis task for that URL - you will then be taken to the submission page to configure options like the browser, OS, etc.</p>
+<hr>
+<p>We hope this has been a helpful guide on making use of this new feature. Thanks to everyone who reached out to us with examples and feedback around the need for this feature, as always it helps a lot in choosing what we need to prioritise. If you have any questions or issues please do feel free to reach out - you can contact us <a href="https://hatching.io/">through the website</a> or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage for Linux</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-for-linux/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 113: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Hatching</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 96</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-17/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

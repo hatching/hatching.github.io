@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-54.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-54.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Detection Updates for BazarLoader, ERMAC, Jupyter and Vidar</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Detection Updates for BazarLoader, ERMAC, Jupyter and Vidar</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-54.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-09-30T00:00:00Z">2021-09-30</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of Triage Thursday updates! We have another set of detection improvements to go over today mostly related to configuration extractors - read on below for more on those. We&rsquo;ve also been working hard on some upcoming improvements to the UI which we&rsquo;re looking forward to revealing in the coming weeks, so stay tuned for that!</p>
+<p>In the news this week:</p>
+<ul>
+<li><a href="#bazar">Updated BazarLoader detection to improve coverage of x86 versions</a></li>
+<li><a href="#vidar">Updated Vidar configuration extractor</a></li>
+<li><a href="#ermac">Added static detection for ERMAC Android banker</a></li>
+<li><a href="#jupyter">Added new configuration extractor for Jupyter trojan</a></li>
+</ul>
+<p>If you come across any issues or missing detections while using Triage, please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="bazar">BazarLoader</h2>
+<p>BazarLoader appeared on the scene in April 2020 being used by the Trickbot gang as a successor to their long running family of the same name. Initially part of a 2 part infection with the BazarBackdoor module, these components have since been separated and are now commonly seen being used independently of one another.</p>
+<p>BazarLoader has found widespread use as the initial access point for a variety of other families, including the <a href="https://www.bleepingcomputer.com/news/security/bazarloader-used-to-deploy-ryuk-ransomware-on-high-value-targets/">Ryuk</a> and <a href="https://thedfirreport.com/2021/09/13/bazarloader-to-conti-ransomware-in-32-hours/">Conti</a> ransomware families. Indeed it has become one of the main vectors for ransomware infection over recent months.</p>
+<p>As with their previous projects the Trickbot gang are very actively maintaining and developing their tool, with new versions appearing on a very regular basis in a constant effort to stay ahead of countermeasures. Triage has long included detections for the family but over time its lineage has become more and more complex and varied, and we have been made aware of some x86 variants which were not being correctly handled. This week we have done a deep analysis of a selection of these and have updated our detections accordingly.</p>
+<p>We&rsquo;d like to give a shoutout to community member <a href="https://twitter.com/r0ny_123">Rony</a> for bringing these samples to our attention.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210915-hf8n2adaeq">210915-hf8n2adaeq</a></li>
+<li><a href="https://tria.ge/210916-rc1npagdel">210916-rc1npagdel</a></li>
+</ul>
+<h2 id="vidar">Vidar Stealer</h2>
+<p>Vidar is an infostealer first discovered in late 2018 and which is thought to have released in October of that year. It started life as a <a href="https://fumik0.com/2018/12/24/lets-dig-into-vidar-an-arkei-copycat-forked-stealer-in-depth-analysis/">fork of the older Arkei stealer</a>, though it has seen many changes and evolutions since then.</p>
+<p>The family is quite flexible in its operations. It fetches a configuration file from C2 at runtime and this dictates which features are activated and what information is gathered and exfiltrated. The way in which it gets hold of this config has changed over time - indeed it was recently observed using Tumblr as a C2 path for this purpose.</p>
+<p>Vidar has been supported by Triage for some time, including with its own configuration extractor to dump relevant information. We recently observed a new variant however which was slipping by our detections, so we have carried out a bit of a review and applied some updates as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210923-pbqe8aacel">210923-pbqe8aacel</a></li>
+<li><a href="https://tria.ge/210923-pc5arsedd4">210923-pc5arsedd4</a></li>
+<li><a href="https://tria.ge/210923-pcvrbsebgp">210923-pcvrbsebgp</a></li>
+<li><a href="https://tria.ge/210923-phxg4seccl">210923-phxg4seccl</a></li>
+<li><a href="https://tria.ge/210923-phyeeaedh2">210923-phyeeaedh2</a></li>
+</ul>
+<h2 id="ermac">ERMAC Android Banker</h2>
+<p>Earlier this month <a href="https://www.threatfabric.com/blogs/ermac-another-cerberus-reborn.html">ThreatFabric published a report</a> about a new Android banking trojan they had observed being advertised and sold through forums. Calling itself ERMAC, they report that it closely resembles the old Cerberus banker in terms of the codebase, with only a few aspects of the obfuscation and encryption algorithms showing any significant differences.</p>
+<p>ThreatFabric also report that, based on overlap in the C2 servers and the forum accounts propagating the family, the new family is chiefly being operated by the former BlackRock stealer actor(s) who have been a long running threat group targeting mobile markets.</p>
+<p>Like its predeccesor, ERMAC&rsquo;s infostealer capabilities mainly focus around using overlays to trick users into entering sensitive information which can then be exfiltrated. However it also doubles as effectively a full backdoor, inheriting all of Cerberus&rsquo;s other functionality too such as full control of texts and calls, installing/deleting applications, and dumping contacts.</p>
+<p>We have reviewed a selection of samples available from both ThreatFabric and the community, and have implemented initial static detection to classify it correctly in Triage.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210928-lnzmwabfam">210928-lnzmwabfam</a></li>
+<li><a href="https://tria.ge/210928-lse42abfbm">210928-lse42abfbm</a></li>
+<li><a href="https://tria.ge/210928-ltakyabfbq">210928-ltakyabfbq</a></li>
+<li><a href="https://tria.ge/210928-mc171abgaj">210928-mc171abgaj</a></li>
+<li><a href="https://tria.ge/210928-mc639abeg5">210928-mc639abeg5</a></li>
+</ul>
+<h2 id="jupyter">Jupyter Trojan</h2>
+<p>Jupyter was first reported in late 2020 in a <a href="https://blog.morphisec.com/jupyter-infostealer-backdoor-introduction">blogpost by Morphisec</a>. It is a relatively straightforward infostealer which targets data stored by the common Chromium, Firefox, and Google Chrome browsers. It also includes the ability to open a remote backdoor into an infected system giving operators the option of manual intervention if desired.</p>
+<p>A couple of weeks ago Morphisec published another post about the family, reporting that it has developed a new infection chain with modules consistently receiving &ldquo;very low to zero detections in the VirusTotal database&rdquo;, meaning that it is slipping under the radar of most anti-virus solutions on the market. The new approach leverages MSI installers which are generally set up to resemble legitimate software, even reportedly going so far as to actually install a full version of the relevant software as well as the malicious payload - Morphisec report that all the examples they studied were presented as <code>Nitro Pro 13</code>, a commercial PDF viewer/editor.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-30/jupyter.png">
+</figure>
+
+<p>For full technical details of the latest version you can find the writeup on the Morphisec website <a href="https://blog.morphisec.com/new-jupyter-evasive-delivery-through-msi-installer">here</a>. We have reviewed available samples - of the new version as well as historic variants - and implemented both basic detection and a configuration extractor for the loader stage capable of dumping C2 addresses and version information.</p>
+<p>Below you can find links to a selection of the samples, with a few examples of both the installer and payload modules provided for reference.</p>
+<p><strong>Analyses:</strong></p>
+<p>Main installer:</p>
+<ul>
+<li><a href="https://tria.ge/210926-r2e4aafaa8">210926-r2e4aafaa8</a></li>
+<li><a href="https://tria.ge/210916-kkanxacfb4">210916-kkanxacfb4</a></li>
+<li><a href="https://tria.ge/210916-keqg6scfa6">210916-keqg6scfa6</a></li>
+</ul>
+<p>Payload only:</p>
+<ul>
+<li><a href="https://tria.ge/210926-sfhgysfad9">210926-sfhgysfad9</a></li>
+<li><a href="https://tria.ge/210926-rl99gsehh4">210926-rl99gsehh4</a></li>
+<li><a href="https://tria.ge/210923-jgd2gsgbc7">210923-jgd2gsgbc7</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>BumbleBee Fix and New Extractors</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-23/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 94</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for ZLoader, Netwalker, QNodeService and WSHRAT</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 116: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-25/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

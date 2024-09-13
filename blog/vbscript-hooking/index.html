@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-2.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-2.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Hooking VBScript execution in Cuckoo</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Hooking VBScript execution in Cuckoo</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-2.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2018-10-03T00:00:00Z">2018-10-03</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=hooking">hooking</a></p><li><p><a href="/blog/#category=monitor">monitor</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Designed as a scripting language for Windows system administration, VBScript
+support has been available in every version of the operating system since
+Windows 98. It became popular for its extra power and flexibility compared to
+alternatives like Batch scripting. As an interpreted language VBScript code
+must be executed within a host environment - Windows provides a number of these
+such as Windows Script Host (WSH), which is invoked through tools like
+wscript.exe and cscript.exe.</p>
+<p>In the browser world, VBS is only supported by Internet Explorer and is no
+longer included even in Edge with Microsoft acknowledging the dominance of
+JavaScript and the security risks of the language. However Internet Explorer is
+far from dead, with many users still active especially in Asia. Indeed
+<a href="https://blog.malwarebytes.com/threat-analysis/2018/08/exploit-kits-summer-2018-review/">MalwareBytes attributed</a> much of the recent resurgence in exploit kit
+activity to the appearance of new exploits in IE and Adobe Flash, which were
+finding widespread application across Asian countries. Exploit Kits like
+Magnitude, Greenflash Sundown, KaiXin and Underminer all focus on markets like
+South Korea and China, while EK infections in Europe and the US continue to
+fall.</p>
+<p>In this post, we&rsquo;ll cover creating a hook for VBScript code within Cuckoo
+Monitor, to enable to extraction of script contents at runtime.</p>
+<h2 id="adding-the-hook">Adding the Hook</h2>
+<p>To execute VBScript, Internet Explorer implements what it refers to as an
+&lsquo;Engine&rsquo; for the language. In practice this is an interface - much like the WSH
+applications cscript and wscript - between the execution context (i.e., the
+browser) and the operating system. Regardless of the original source of the
+script - the &lsquo;host environment&rsquo; - execution is passed to the relevant Windows
+library: vbscript.dll. Procmon shows this in practice when we run a simple test
+script in Internet Explorer 8 on Windows 7.</p>
+<figure><img src="../../static/images/blog/vbscript-hooking/iexplore_dll_import.png"><figcaption>
+      <h4>Internet Explorer DLL import</h4>
+    </figcaption>
+</figure>
+
+<p>This gives us a single point through which all vbscript execution occurs, and a
+target for attempts to intercept the code for analysis purposes. This also has
+the advantage of providing visibility on scripts which are encoded or
+encrypted, as code passed to vbscript.dll must be legitimate.</p>
+<p>Cuckoo Sandbox detects events during analysis by installing a user-mode agent
+onto the guest system called Cuckoo Monitor (which is bundled with Cuckoo
+installs or available on <a href="https://github.com/cuckoosandbox/monitor">Github</a>). For some time this has supported
+extracting JavaScript code executed in the same way through jscript.dll.</p>
+<figure><img src="../../static/images/blog/vbscript-hooking/jscript_hooking.png"><figcaption>
+      <h4>JScript hooking</h4>
+    </figcaption>
+</figure>
+
+<p>As a Windows component, the version of vbscript on a system is liable to change with operating system updates, and naturally internal structure offsets and such vary between releases. For this blogpost we will be examining the following example unless otherwise stated:</p>
+<table>
+<tr><td>
+<tr><th>vbscript.dll    </th><td>Version 5.8.7601.17514                                          </td></tr>
+<tr><th>SHA256 Hash     </th><td>2945909670FC16A74322C09DDF8BDB2A34180B0A921EF41121C5522B73432EBA</td></tr>
+<tr><th>Operating System</th><td>Windows 7 x64 (SP1)                                             </td></tr>
+</table>
+<p>Using IDA we can disassemble the DLL and look for the function
+<code>COleScript::Compile</code>, which is where the script code is passed for
+execution. Following is its prototype.</p>
+<pre><code>__int64 __fastcall COleScript::Compile(
+    COleScript *this,
+    struct CScriptBody **a2,
+    const unsigned __int16 *a3,
+    unsigned int a4,
+    void *Dst,
+    __int64 a6,
+    const unsigned __int16 *a7,
+    struct CompileScriptException *a8,
+    const unsigned __int16 *a9,
+    const unsigned __int16 *a10
+)
+</code></pre>
+<p>This function requires a number of arguments to be passed to it but we are only interested in the 3rd one, which is a pointer to the script code to be run. This can be confirmed using WinDBG (here I&rsquo;m loading <code>cscript.exe</code> with the path to a VBS script containing a simple &lsquo;Hello World&rsquo; provided as an argument).</p>
+<ol>
+<li>
+<p>As we are only interested in <code>vbscript.dll</code>, run cscript until it loads the module:</p>
+<pre><code> sxe ld vbscript; g
+</code></pre>
+</li>
+<li>
+<p>Set a breakpoint in <code>vbscript.dll</code> on the <code>COleScript::Compile</code> function:</p>
+<pre><code> bu vbscript!COleScript::Compile; g
+</code></pre>
+</li>
+<li>
+<p>At this point we can examine the stack and registers to investigate the function parameters.</p>
+<figure><img src="../../static/images/blog/vbscript-hooking/cscript_registers.png"><figcaption>
+          <h4>CScript registers</h4>
+        </figcaption>
+    </figure>
+
+</li>
+<li>
+<p>Although the calling convention marked in IDA is <code>fastcall</code> the DLL is 64-bit, so we know that it makes use of the Microsoft x64 calling convention which puts the first 4 arguments (left to right) into the registers <code>RCX</code>, <code>RDX</code>, <code>R8</code>, <code>R9</code>. From IDA it&rsquo;s evident that the 1st argument refers to a COleScript object and the 2nd is a structure, immediately ruling these out, so let&rsquo;s start with the 3rd argument which should be stored in the register <code>r8</code>.</p>
+<figure><img src="../../static/images/blog/vbscript-hooking/windbg_r8_dump.png"><figcaption>
+          <h4>WinDBG R8 dump</h4>
+        </figcaption>
+    </figure>
+
+</li>
+</ol>
+<p>At this point, we have located all the information needed to create a new hook
+for Cuckoo Monitor to intercept VBScript content and include it in the report.
+More detailed information on extending the Monitor is available in the
+<a href="https://cuckoo-monitor.readthedocs.io/en/latest/i">documentation</a>. The finished code looks like this:</p>
+<pre><code>COleScript_Compile
+  module: vbscript
+
+  offsets:
+    0x4ce7c9e6:
+      bitmode: 64
+      offset: 0x16e90
+      register: r8
+      stack: 56
+      logging:
+        - u script r8
+        - u type stk0
+</code></pre>
+<p>After cloning the Cuckoo Monitor repository, a new hook signature can be added
+to the <code>monitor/insn</code> directory to be compiled into a new version of the
+binary. The content should resemble the above, although actual offsets may vary
+if different versions are being used.</p>
+<ul>
+<li>
+<p>The first line defines the function call which is to be hooked. Note that
+this is not used to actually implement the hook and is mainly for
+identification purposes, so does not have to exactly match the function name
+as defined by debugging symbols.</p>
+</li>
+<li>
+<p><strong>module</strong> marks which DLL contains the function of interest.</p>
+</li>
+<li>
+<p><strong>offsets</strong> contains information on where exactly within the module the hooking should occur.</p>
+<ul>
+<li>
+<p>Offset of the PE timestamp field, used as a point of reference. This can
+be found easily with a short python script (requires <code>python-pefile</code>):</p>
+<pre><code>  import pefile, sys
+  pe = pefile.PE(sys.argv[1])
+  print &quot;0x%08x&quot; % pe.FILE_HEADER.TimeDateStamp
+</code></pre>
+</li>
+<li>
+<p><strong>bitmode</strong>: 64 or 32 bit module</p>
+</li>
+<li>
+<p><strong>offset</strong>: the offset for the start of the function to hook within
+<code>vbscript.dll</code>. This can be found quickly in IDA by subtracting the image
+base address (easy way to see this value is in <code>Edit -&gt; Segments -&gt; Rebase program</code>) from the address of the function (visible at the bottom
+of the IDA View window):</p>
+<pre><code>  0x7FF750F6E90 - 0x7FF750E0000 = 0x16E90
+</code></pre>
+</li>
+<li>
+<p><strong>register</strong> defines the register holding the information we are interested in extracting</p>
+</li>
+<li>
+<p><strong>logging</strong> defines the way findings are reported by the software and
+tells it how to interpret what it finds at the position defined by the
+other settings. Detailed information on the flags available for the
+logging API are available in the <a href="https://cuckoo-monitor.readthedocs.io/en/latest/hooks.html#logging-api">relevant docs</a>:</p>
+<p><code>u script r8</code> - extract a Unicode string as a script from the contents of the r8 register</p>
+<p><code>u type stk0</code> - defines the value of the &rsquo;type&rsquo; argument returned in the report</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Once this new hook has been added, Monitor needs to be compiled and added to your Cuckoo install.</p>
+<ol>
+<li>Run <code>make</code> in the root directory of the Monitor repository. This will
+compile the files into the <code>bin</code> directory.</li>
+<li>Switch to the Cuckoo Working Directory (<code>~/.cuckoo</code> by default) and
+enter the monitor directory. Here you will see a number of folders and a
+file called <code>latest</code> - this simply contains the name of the folder with
+the current version of the Monitor to be added to analysis guests. You need
+to copy the newly compiled Monitor into a folder here, either by overwriting
+the contents of the current <code>latest</code> directory or creating a new one and
+updating <code>latest</code> to point to this instead.</li>
+<li>The new hook should now function correctly in any future analyses.</li>
+</ol>
+<p>The hook will now be working, but we will not be able to see any output in the
+web interface. To do these we need to add a regular signature which takes the
+hook event and reports it properly. In this case, the signature <code>js_eval.py</code>
+already covered this for Cuckoo&rsquo;s JavaScript hooking so only a <a href="https://github.com/Brae/community/commit/f411e1fe1090168bc75ddeb8425904c94552a555">small
+change</a> was needed to differentiate between VBS or JS.</p>
+<p>These changes will soon be incorporated into the main branch of Cuckoo Sandbox,
+but as noted above this will only cover a single version of <code>vbscript.dll</code>.
+We hope to add support for other versions in the future.</p>
+<figure><img src="../../static/images/blog/vbscript-hooking/js_eval_rule_result.png"><figcaption>
+      <h4>Script evaluations captured</h4>
+    </figcaption>
+</figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>So far this has all applied to running a script locally by directly interacting
+with the execution environment. As previously mentioned, VBScript is not as
+small an attack vector as one might think. In 2018 a whole new generation of
+EK&rsquo;s and new &lsquo;pseudo-EKs&rsquo; (generally a single exploit taken from public
+research and deployed with minimal technical knowledge and customisation) have
+appeared using <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-8174">CVE-2018-8174</a>, a newly discovered vulnerability
+in Internet Explorer&rsquo;s VBScript handling.</p>
+<p>To aid with the analysis of these threats, new functionality is being added to
+Cuckoo to take a PCAP file and &lsquo;replay&rsquo; it, then interacting with it for
+analysis as though a live site was being investigated. Once complete, this will
+allow automated dynamic analysis of exploit kits and extraction of payloads and
+malicious scripts. More information on this will be documented in a separate,
+future blogpost :-)</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 131: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for ZLoader, Netwalker, QNodeService and WSHRAT</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 102: Submission UI Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 109: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-16/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

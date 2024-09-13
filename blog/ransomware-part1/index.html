@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-12.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-12.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>General Techniques</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Understanding Ransomware</h5>
+        
+        <h2>General Techniques</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-12.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2019-10-30T00:00:00Z">2019-10-30</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=ransomware">ransomware</a></p><li><p><a href="/blog/#category=ransomnotes">ransomnotes</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>Although in itself referencing quite a specific subsection of malware,
+ransomware is a term that can refer to an enormous variety of malicious
+software. From simplistic viruses with little to no defense evasion to advanced
+threats featuring heavy anti-analysis and anti-sandboxing tricks, the world of
+ransomware is as varied as it is lucrative for the cybercriminals behind it.</p>
+<p>Fortunately, there are many common denominators in the behavior of all
+ransomware families, which help us in our efforts to detect and categorize
+these samples. This mini-series of blog posts will aim to outline how
+behavioral analysis can be a powerful tool in detecting and protecting against
+these threats and will provide an overview of how this works in practice using
+our Triage sandbox. In part 1, we will briefly go over some generic techniques
+which are not specific to any particular family, with more technical
+descriptions provided in future case studies of some, particularly interesting
+variants.</p>
+<h2 id="ransom-notes">Ransom Notes</h2>
+<p>Practically all ransomware will create readable files in noticeable locations,
+which serve to inform the system owner they have been infected and instruct
+them on how to pay the ransom demand. As such, these files can often contain
+easily recognizable information, which can help to identify details of the
+infection such as family and version, as well as useful information for further
+investigation like bitcoin payment addresses and contact information.</p>
+<p>As a method of protecting a live system, this approach obviously has limited
+value as generally ransom notes will only be created <em>after</em> the encryption
+process. However, as a method of detecting ransomware in a sandbox environment,
+this has some real value.</p>
+<p>Ransom notes are not intended to be hidden - they often follow very distinct
+naming conventions and multiple copies are created throughout the file system.
+Some example file paths are listed as follows.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Family</th>
+          <th style="text-align: left">File Path</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Cerber</td>
+          <td style="text-align: left">C:\Users\admin\Documents\<em>R_E_A_D___T_H_I_S___1UCQ90</em>.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">C:\Users\admin\Desktop\<em>R_E_A_D___T_H_I_S___Z7NS2O31</em>.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">WannaCry</td>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp\@Please_Read_Me@.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">C:\Users\Admin\Downloads\@Please_Read_Me@.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Sodin</td>
+          <td style="text-align: left">C:\Users\Public\Pictures\Sample Pictures\gltiw7kx7b-readme.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">C:\Users\Public\Pictures\Sample Pictures\gltiw7kx7b-readme.txt</td>
+      </tr>
+  </tbody>
+</table>
+<p>Most families of ransomware have a specific way of dropping these ransom notes
+and employ very distinct wording within the files (often even including the
+family name), making them a very useful method to categorize and identify
+samples.</p>
+<figure><img src="../../static/images/blog/ransom1/crbr_ransom_note.png"><figcaption>
+      <h4>Cerber ransom note dropped in each folder where files were encrypted</h4>
+    </figcaption>
+</figure>
+
+<p>Using the image above as an example, not only is the note extremely
+recognizable, but it also includes the personalized links created for each
+infection that victims would need to visit to pay the ransom. In other cases,
+it often includes a Bitcoin wallet address to be used for payment, or email
+addresses to contact the operators directly. This is all useful information to
+gather up when investigating ransomware campaigns, and which is often only
+accessible during dynamic analysis of a sample.</p>
+<p>In a sandboxed environment, we have clear visibility on the files created and
+modified by a sample. By checking the contents of these files - especially the
+opening bytes, which as in the example above, often include identifying or
+unique information - we can identify which of these are ransom notes and dump
+them for further analysis.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Family</th>
+          <th style="text-align: left">Header</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Cerber</td>
+          <td style="text-align: left">\r\n CERBER RANSOMWARE\r\n \r\n &mdash;&ndash;\r\n</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">\r\n Hi, I&rsquo;am CRBR ENCRYPTOR ;)\r\n</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">CryptoMix</td>
+          <td style="text-align: left"><em>&mdash;CryptoMix&mdash;</em>\r\n\r\nNOT YOUR LANGUAGE?</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Dharma</td>
+          <td style="text-align: left">\r\nATTENTION!\r\nAt the moment, your system is not protected.\r\nWe can fix it and restore files.\r\nTo restore the system write to this address:\r\n</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Ordinypt</td>
+          <td style="text-align: left">============================ WELCOME ============================\r\n============== DO NOT DELETE THIS FILE UNTIL ALL YOUR DATA HAS BEEN RECOVERED! ==============\r\n</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Ryuk</td>
+          <td style="text-align: left">\n\r\nRyuk\n</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Sodinokibi</td>
+          <td style="text-align: left">Hello dear friend!\r\n\r\nYour files are encrypted,</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">WannaCry</td>
+          <td style="text-align: left">Q: What&rsquo;s wrong with my files?\r\n\r\nA: Ooops, your important files are encrypted.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Once relevant files have been found, it is simply a question of parsing the
+contents to extract whatever useful information is available.</p>
+<figure><img src="../../static/images/blog/ransom1/cerber_extracted.png"><figcaption>
+      <h4>Full report available at https://tria.ge/reports/191030-74m7ldmwsn</h4>
+    </figcaption>
+</figure>
+
+<h2 id="preventing-system-recovery">Preventing system recovery</h2>
+<h4 id="deleting-shadow-copies">Deleting shadow copies</h4>
+<p>Shadow copies are a backup feature first introduced in Windows Server 2003.
+Initially, they functioned by tracking filesystem changes over time, enabling
+recovery of files at each modification, not unlike SCM solutions such as git.
+The term has now expanded to include multiple modes for creating these shadow
+copies, including the capability to create full &lsquo;snapshots&rsquo; of a filesystem at
+a particular point in time. These &lsquo;backups&rsquo; are created using techniques
+intended to minimize the time and disk space consumed by the process - the
+differential technique especially can provide backup functionality with far
+smaller storage requirements than a traditional full-disk copy.</p>
+<p>Shadow copies are, by default, created when Windows creates a system restore
+point - a process that occurs in many systems as a daily task.</p>
+<p>Whichever creation mode is used, shadow copies are now central to the built-in
+Windows backup and recovery tools, making them an obvious target for ransomware
+to make it harder for victims to recover from an infection without paying the
+ransom.</p>
+<p>In practice, this is generally achieved through one of two (or both) Windows
+commands - <code>vssadmin</code> or <code>wmic</code>.</p>
+<ul>
+<li><code>vssadmin delete shadows /all /quiet</code></li>
+<li><code>wmic shadowcopy delete /nointeractive</code></li>
+</ul>
+<p>These are easily detected during dynamic analysis, as they both create new
+processes rather than being internal commands. WannaCry is an excellent example
+of this functionality, as it includes both methods.</p>
+<figure><img src="../../static/images/blog/ransom1/wannacry_shadow_copy_deletion.png"><figcaption>
+      <h4>Full report available at https://tria.ge/reports/191030-35tdg7dqen</h4>
+    </figcaption>
+</figure>
+
+<h4 id="disable-recovery-mode">Disable recovery mode</h4>
+<p>Windows recovery mode enables users to access safe boot, and most of the
+built-in system restore features, including repairing a Windows installation
+from a recovery device. Many ransomware families will disable this mode to make
+recovery harder. As recovery mode is accessed when booting the system, this is
+disabled by editing the boot configuration settings using the <code>bcdedit</code>
+utility.</p>
+<p><code>bcdedit /set {default} recoveryenabled no</code></p>
+<p>This feature can commonly be seen in many families such as Phobos, WannaCry,
+and Cerber, although it is not as common as shadow copy deletion.</p>
+<figure><img src="../../static/images/blog/ransom1/bcdedit.png">
+</figure>
+
+<h4 id="delete-backups">Delete backups</h4>
+<p>In addition to the shadow copy approach already discussed, Windows includes
+support for full-disk backups that take a copy of the entire filesystem state.
+As mentioned previously, these are far larger and more resource-intensive to
+create and store, so they are less common as an automatic process on most
+systems. However, they are another obvious target for anyone attempting to
+hinder system recovery.</p>
+<p>These backups are accessed through the Windows Backup tools - through the
+command line; this means the <code>wbadmin</code> utility.</p>
+<p><code>wbadmin delete catalog -quiet</code></p>
+<p>This feature is present in most significant malware families as if used Windows
+Backup is an extremely easy way to bypass the ransom payment.</p>
+<h4 id="clear-logs">Clear logs</h4>
+<p>Although of limited value in the recovery process, some forms of ransomware
+also opt to destroy some system event logs during the infection process. This
+operation is less common than those discussed already, and is less specific to
+ransomware, but is worth covering briefly here for completeness.</p>
+<p>The <code>wevtutil</code> command is provided in Windows to interact with the event logs
+via CLI, and malware can leverage this to clear logs. For example, the Zenis
+ransomware
+<a href="https://twitter.com/malwrhunterteam/status/973523764607639558">discovered in 2018 by MalwareHunterTeam</a>
+uses this to clear all of the main Windows event logs -</p>
+<ul>
+<li><code>cmd.exe /C wevtutil.exe cl Application</code></li>
+<li><code>cmd.exe /C wevtutil.exe cl Security</code></li>
+<li><code>cmd.exe /C wevtutil.exe cl System</code></li>
+</ul>
+<p>Presumably, this is intended to make it harder to analyze the origin of the infection but also functions as a clearly malicious attempt at hiding activities which is very visible during dynamic analysis.</p>
+<p>The full report for this Zenis sample is available at <a href="https://tria.ge/reports/191030-4jjvvmbgys">https://tria.ge/reports/191030-4jjvvmbgys</a></p>
+<h4 id="changing-desktop-wallpaper">Changing desktop wallpaper</h4>
+<p>Many varieties of ransomware modify the desktop wallpaper in some way -
+generally either by generating a bitmap image dynamically using a function like
+<a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawtext">DrawText</a>
+or setting it to an image bundled in the payload.</p>
+<p>The usefulness of this action is limited, as the text content of the wallpaper is normally based on the ransom notes also dropped. It is, however, an unusual action for non-ransomware to perform, so it can be useful in automatically classifying a sample.</p>
+<figure><img src="../../static/images/blog/ransom1/wallpaper_change.png"><figcaption>
+      <h4>Full report available at https://tria.ge/reports/191030-35tdg7dqen</h4>
+    </figcaption>
+</figure>
+
+<p>If the wallpaper were of specific interest, it would also be possible to hook the relevant APIs (like DrawText) to intercept the content being written to the image or employ a technique such as OCR to parse a pre-existing image. However, as mentioned, it is generally easier to get this information from the ransom notes.</p>
+<h2 id="file-operations">File operations</h2>
+<p>The techniques covered so far have all been extremely specific - individual
+interactions that can be detected during dynamic analysis. This section is a
+little less defined but attempts to identify a ransomware infection by looking
+at patterns in file operations carried out on a system.</p>
+<p>This approach specifically targets the encryption algorithm of the ransomware,
+which generally follows a clear process:</p>
+<ol>
+<li>Enumerate files in a folder</li>
+<li>Read and encrypt content of each file</li>
+<li>Write encrypted content back to file, either overwriting the original or creating a new file</li>
+<li>Clean up by removing the original file if not overwritten, or renaming the encrypted file to fit the ransomware&rsquo;s naming convention.</li>
+</ol>
+<p>When ransomware renames a file to include its specific file extension etc., it
+is actually performing a file move operation. If this is carried out for every
+file on a normal system this will involve large numbers of almost identical
+operations - potentially thousands of them - making it an extremely noisy
+process.</p>
+<p>File moves can be carried out through a few different APIs. The most basic uses
+the MoveFile functions, passing a source and destination path. Other
+implementations may abstract this process a little, copying the contents of a
+file using ReadFile and then creating a new one with the amended filename using
+CreateFile to which it writes the now-encrypted file content.</p>
+<p>As an example of the latter process, examining a WannaCry sample in Procmon
+shows patterns like the following -</p>
+<figure><img src="../../static/images/blog/ransom1/wannacry_file_rename.png"><figcaption>
+      <h4>Full report available at: https://tria.ge/reports/191030-35tdg7dqen</h4>
+    </figcaption>
+</figure>
+
+<p>Monitoring analyses for large numbers of file writes like this can be a good way of detecting ransomware of all kinds. If these APIs can be hooked during the analysis process, it is also possible to examine the buffers to confirm that encryption is taking place and eliminate the possibility that these are benign file operations.</p>
+<p>Alternatively, another way to verify that these are likely operations coming from ransomware is by examining the file types that are written by the sample. Where the original files will have discernible headers, which programs like <code>file</code> can read to identify the file type, the post-encryption version will no longer have these distinguishing features, meaning that they will be detected as <code>data</code> or some similar, generic type. A sample which dumps large numbers of files with unrecognizable MIME types is likely a good indicator of the presence of a ransomware cryptor.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We hope this blog post has given a basic introduction to detecting ransomware in a dynamic environment. However, the general behavior is only part of the picture, and individual families generally contain far more functionality than outlined above.</p>
+<p>This blog is the beginning of our mini-series on ransomware and more blogs will be released over the coming weeks. Watch this space for future blog posts in which we will examine some major ransomware families and look at ways of detecting and classifying those. We will also take a closer look at the configuration and ransom note extractors built into Triage and how these can automate the collection of useful information from malware campaigns.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New and Updated Families</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-12-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>SAML Release and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-05-05/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New UI, TOR support, and detection updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Excel 4.0 XLM Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/excel-xlm-extraction/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

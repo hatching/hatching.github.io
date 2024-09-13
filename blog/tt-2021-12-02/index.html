@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-60.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-60.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Advanced Submit Screen and Emotet Powershell Parsing</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Advanced Submit Screen and Emotet Powershell Parsing</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-60.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-12-02T00:00:00Z">2021-12-02</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we provide a quick rundown of all the changes that have been deployed to Triage in the last week.</p>
+<p>Today we&rsquo;re pleased to finally be able to share the new Advanced Submit screen, which the team has been working hard on for the last few months. This replaces the entire workflow from file/URL submission through to the behavioural stage, and brings with it a bunch of new features and usability improvements to help you get more out of the platform. You can find details on that <a href="#febe">below</a> - we can&rsquo;t wait to hear your thoughts and feedback!</p>
+<p>Also in the news today for detection and signature changes:</p>
+<ul>
+<li><a href="#emotet">Improved parsing of Emotet Powershell scripts</a></li>
+<li><a href="#latam">Added configuration extractor for common Latin American banking trojans</a></li>
+<li><a href="#hive">Updated detections for Hive ransowmare</a></li>
+<li><a href="#onlylogger">Added detections for OnlyLogger family</a></li>
+<li><a href="#danabot">Tweaked Danabot rules</a></li>
+</ul>
+<p>As always if you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account, or reach out to us using the contact form <a href="https://hatching.io/">on our website</a> to find out more about our commercial options.</p>
+<hr>
+<h2 id="febe">New Submission Screen</h2>
+<p>Since Triage first released the process for submitting samples has remained pretty much unchanged. However as we prepare for future functionality this is something that we have been focussed on improving for some time now, both to increase the accessibility of options already available and to let us more easily incorporate the other features on our roadmap such as geolocation options.</p>
+<p>Today we&rsquo;re pleased to be releasing our reworked submission screen on the public cloud, where all of our free users will be able to try it out and get used to the new options available. It will be made available on the private cloud once we&rsquo;re sure there are no issues hidden away anywhere.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_generic.png">
+</figure>
+
+<p>Read on below for a breakdown of the main changes brought in with this update, including the widely requested ability to add command line argument directly through the UI!</p>
+<h4 id="updated-fileurl-submission-process">Updated file/URL submission process</h4>
+<p>Instead of immediately triggering static analysis when you upload a file to the UI, you will now have the chance to review the file and some basic information about it (size and file type) before choosing whether to submit it or not.</p>
+<p>For zip files or other archives, this also means that you can now enter the password <em>after</em> uploading, instead of having the option disappear once you add a file.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_zip_upload.png">
+</figure>
+
+<h4 id="submit-script-code-directly">Submit script code directly</h4>
+<p>Sometimes it is more convenient to directly upload a script as code, rather than saving it to a file and uploading that. You can now submit common script formats directly to the sandbox via the new <code>Code</code> tab at submission.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_code_submit.png">
+</figure>
+
+<h4 id="add-command-line-arguments-during-submission">Add command line arguments during submission</h4>
+<p>No more messing around with scripts to add arguments to a file execution! You can now directly set command line arguments for any given file straight from the picker screen that appears after uploading a file. Just click the icon next to the file name to open the box.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_cmd_args.png">
+</figure>
+
+<h4 id="reworked-profiles-and-option-selection">Reworked profiles and option selection</h4>
+<p>Previously we felt that it was not entirely clear how Profiles worked in the UI, or how the options you could select in general affected any which have been predefined through them. In the new workflow we hope that the purpose of them is a little bit clearer and that they are more useful than before.</p>
+<p>After uploading a file you now have 2 tabs available for configuring your analysis settings. The first - <code>Profiles</code> - lists any presets you have configured for you to choose from. Alternatively, you can just leave it on <code>Automatic</code> and Triage will make its own selection of OS etc. based on the file identification.</p>
+<p>The 2nd tab - <code>Customize</code> - is where you can choose your own options or make small modifications to the chosen preset. If you choose a Profile on the other tab, then those settings will be reflected here for you to tweak as needed - for example you might want to use all the OS and network options from one of your Profiles, but with a longer timeout or different default browser.</p>
+<p>You will also notice that, instead of picking particular VM images as before (i.e. where there were separate options for each language pack, OS etc.), you now pick the OS and the language you want to use with it. This should make the UI much cleaner and more usable, especially as we expand on the few options currently available.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_os_lang.png">
+</figure>
+
+<h4 id="select-multiple-oss-in-a-single-profile">Select multiple OSs in a single Profile</h4>
+<p>Before this you could choose multiple operating systems/VMs at submission time, but could not configure Profiles to work in the same way - you needed one profile per OS. We have now updated this so that you can choose multiple versions, and each will have the other settings - network options, timeout, etc. - applied to them. We hope this will simplify use cases where you&rsquo;re using profiles for automated analysis and want to make side-by-side comparisons between, for example, different Windows versions.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/febe_profile.png">
+</figure>
+
+<h4 id="added-edge-as-a-browser-option">Added Edge as a browser option</h4>
+<p>Previously Edge was just the default option when choosing a Windows 10 VM. We have now made this choice clearer with a dedicated option for it in the UI, alongside Chrome, Firefox and Internet Explorer</p>
+<h2 id="emotet">Emotet Powershell Handling</h2>
+<p><a href="https://hatching.io/blog/tt-2021-11-18/#emotet">In our last blogpost</a> we covered Emotet&rsquo;s return to the threat landscape, and introduced our updated extractor to dump the configuration for the new versions. Since then we have been receiving a lot of samples thanks to our community, and have been keeping a close eye out for any areas where we can improve our handling of the family.</p>
+<p>If you&rsquo;ve done much analysis of Emotet on Triage already you&rsquo;ll likely be familiar with the Powershell dumping that takes place on relevant samples. The family regularly makes use of Powershell executed directly as commands, as shown in the process listing view below.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/emotet_cmdline.png">
+</figure>
+
+<p>Triage intercepts this, and performs some de-obfuscation to make it a bit more readable. This week we&rsquo;ve made some tweaks to the way this is done, in order to better handle some of the contents we&rsquo;ve been observing. Hopefully this helps you get more from the output of this module.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/emotet_ps1.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211117-g5za8aeear">211117-g5za8aeear</a></li>
+<li><a href="https://tria.ge/211117-hdnk3seedn">211117-hdnk3seedn</a></li>
+</ul>
+<h2 id="latam">Configuration Extractor for Latam Bankers</h2>
+<p>Banking trojans targeting users in latin America are extremely common, accounting for a significant amount of the cybercrime in the region. Although there are many separate families - such as Numando, which we&rsquo;ve covered <a href="https://hatching.io/blog/2021-09-23-triage-thursday/#numando">on this blog before</a> - the vast majority share a close resemblance to each other in terms of functionality and structure.</p>
+<p>According to research <a href="https://www.welivesecurity.com/wp-content/uploads/2020/09/ESET_LATAM_financial_cybercrime.pdf">published by ESET in 2020</a>, most of the activity can be attributed to 11 families which have a large overlap in their implementation, suggesting that at the very least the operators are in contact with each other. This assertion is backed up by a few points, such as 6 of the 11 families using the same, completely custom encryption scheme not seen elsewhere; usage of the same obfuscation and packing techniques; and almost identical delivery methods. They also change as a group, with ESET reporting that during their research they observed the majority of the families switching to Themida packer simultaneously, as well as starting to use MSI packages instead of their original download methods.</p>
+<p>These similarities run deep enough that it is generally hard to differentiate between them in an automated fashion. Some are more easily separated than others, but they share so many of the same TTPs and general techniques that one looks much like another. However this has also allowed us to analyse them as a batch, and this week we have implemented some detections to cover them as a &lsquo;class&rsquo;, rather than individually.</p>
+<figure><img src="../../static/images/blog/tt-2021-12-02/latam.png">
+</figure>
+
+<p>This update also includes a configuration extractor for the downloader components, dumping out C2 information to ensure good availability on the IoCs regardless of how well the sample runs. Some examples of the families concerned are below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211123-te3xyaafak">211123-te3xyaafak</a></li>
+<li><a href="https://tria.ge/211123-st8ajadfd5">211123-st8ajadfd5</a></li>
+<li><a href="https://tria.ge/211123-smbyraadgr">211123-smbyraadgr</a></li>
+<li><a href="https://tria.ge/211123-qp4ensdch9">211123-qp4ensdch9</a></li>
+<li><a href="https://tria.ge/211122-xhhb7agfdn">211122-xhhb7agfdn</a></li>
+</ul>
+<h2 id="hive">Hive Ransomware</h2>
+<p>We added support for Hive ransomware <a href="https://hatching.io/blog/tt-2021-08-19/#hive">back in August this year</a>, but as usual it refuses to just stay the same forever. This week we have made some minor changes to ensure good coverage of the family, based on a number of observed samples which were not being properly detected.</p>
+<p>Hive was first reported in June 2021. It uses the double extortion approach increasingly common with ransomware developers, where it exfiltrates sensitive files before encrypting so that the operators can then threaten to leak data as leverage in ransom negotiations. The group behind it has their own leak site online on similar lines to other larger families.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211124-rt6ahachej">211124-rt6ahachej</a></li>
+<li><a href="https://tria.ge/211122-nljjzsfchq">211122-nljjzsfchq</a></li>
+<li><a href="https://tria.ge/211122-m5tnmaacg3">211122-m5tnmaacg3</a></li>
+<li><a href="https://tria.ge/211123-vhng4adhg5">211123-vhng4adhg5</a></li>
+<li><a href="https://tria.ge/211122-njes1sfcgp">211122-njes1sfcgp</a></li>
+</ul>
+<h2 id="onlylogger">OnlyLogger</h2>
+<p>OnlyLogger first came to our attention thanks to a tweet some months ago by security researcher <a href="https://twitter.com/benkow_">@benkow_</a>.</p>
+<p>IPLogger is a web service which can be used to track and log users&rsquo; IP addresses, helping attackers detect and evade sandboxes and other online analysis solutions.</p>
+<p>Based on the file linked by Benkow, we were able to identify a number of other similar samples which belong to the same family. We have reviewed these and implemented some initial family signatures to classify them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211121-tb73gshad5">211121-tb73gshad5</a></li>
+<li><a href="https://tria.ge/210815-41ga9lcj7s">210815-41ga9lcj7s</a></li>
+<li><a href="https://tria.ge/210728-j1hlbwmzwe">210728-j1hlbwmzwe</a></li>
+<li><a href="https://tria.ge/210706-sx1j2z1kgn">210706-sx1j2z1kgn</a></li>
+</ul>
+<h2 id="danabot">Danabot</h2>
+<p>Danabot is a banking trojan/stealer which has been widely used in the wild since it appeared <a href="https://www.proofpoint.com/us/threat-insight/post/danabot-new-banking-trojan-surfaces-down-under-0">in mid-2018</a>. It has featured in several of our blogposts recently, such as <a href="https://hatching.io/blog/tt-2021-08-05/#danabot">when we updated the configuration extractor back in August</a>, so we won&rsquo;t go into depth introducing it here.</p>
+<p>This week sees another set of tweaks and improvements to keep up with changes to the payloads we&rsquo;re seeing on Triage. Some of the relevant samples are shown below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211123-kvfb5scgc8">211123-kvfb5scgc8</a></li>
+<li><a href="https://tria.ge/211123-k1794scgd8">211123-k1794scgd8</a></li>
+<li><a href="https://tria.ge/211119-abg2hsgcdn">211119-abg2hsgcdn</a></li>
+<li><a href="https://tria.ge/211118-yycmbaaea8">211118-yycmbaaea8</a></li>
+<li><a href="https://tria.ge/211118-xhc3gafbej">211118-xhc3gafbej</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 132: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-16/">Read</a>
+        </li>
+      
+        <li>
+          <h3>CobaltStrike, Trickbot and Other Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-09-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Year, New Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 136: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-20/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

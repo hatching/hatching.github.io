@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-88.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-88.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 89</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 89</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-88.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-11-10T00:00:00Z">2022-11-10</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another entry in our Triage Thursday blog series, where we go over the main updates and detection changes in the previous week. We&rsquo;ll be keeping it fairly brief today, but will cover some background on the main additions.</p>
+<p>In the news today:</p>
+<ul>
+<li><a href="#azov">Added signatures for new Azov ransomware</a></li>
+<li><a href="#screencap">Added signatures for Screencap keylogger</a></li>
+<li><a href="#ratmilad">Added signatures and configuration extractor for Ratmilad Android spyware</a></li>
+<li>Updates for Emotet configuration extraction to handle garbage instructions included in latest versions, and the new IP/port number format</li>
+<li>Updates for Qakbot to handle new C2 list format</li>
+<li>Updates for Raccoon stealer to detect recent samples</li>
+<li>Added fallback rules for Redline stealer to detect recent samples where obfuscation prevents extraction</li>
+<li>Updates for AgentTesla to properly extract credentials from recent samples</li>
+</ul>
+<p>As always you can contact us any time directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="azov">Azov Ransomware</h2>
+<p>Towards the end of October a new family was seen in the wild being distributed by the Smokeloader family. Dubbed Azov due to its references and supposed opposition to the Russian occupation of Crimea (&lsquo;supposed&rsquo; as there appears to be no real activist justification for the targets affected), it was originally identified as ransomware but subsequent analysis has shown that it is in fact effectively a file wiper with no way to recover the locked data.</p>
+<p>According to the alert <a href="https://www.cyber.nj.gov/alerts-advisories/new-azov-ransomware-data-wiper">published by NJCCIC</a> and <a href="https://www.binarydefense.com/threat_watch/azov-ransomware-identified-as-wiper-malware/">analysis by BinaryDefense</a> the samples will encrypt all files on disk which do not have the <code>.exe</code>, <code>.dll</code>, or <code>.ini</code> extensions, processing them in chunks of 666 bytes at a time. However there is no decryption key and the attackers cannot be contacted to negotiate a ransom or any file recovery.</p>
+<p>According to BinaryDefense the files were also configured to only begin encryption after a specific time on October 27th 2022, and include a file infector component which backdoors all executables on the system. This means the ransomware will be run any time a user or process launches one of those files.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221110-kyppzsgdh2">221110-kyppzsgdh2</a></li>
+<li><a href="https://tria.ge/221110-kyxetsacgl">221110-kyxetsacgl</a></li>
+</ul>
+<h2 id="screencap">ScreenCap Keylogger</h2>
+<p>In October <a href="https://www.sentinelone.com/labs/wip19-espionage-new-chinese-apt-targets-it-service-providers-and-telcos-with-signed-malware/">SentinelOne reported</a> on a new Chinese APT that had begun launching campaigns against telecommunications and IT service providers in the Middle East and Asia. The group - assigned the identifier <code>WIP19</code> - has been using a stolen digital signature to sign their malware samples and help them bypass detections, with a few different tools being identified by SentinelOne&rsquo;s research.</p>
+<p>One of these new tools is a keylogger called ScreenCap which has was observed being deployed in a slightly unusual way. Using a rarely exploited but previously known quirk of Windows, the attackers can drop the DLL to the <code>c:\windows\linkinfo.dll</code> path and the Explorer process will load it the next time it launches. To activate the functionality the attackers can manually restart <code>explorer.exe</code> to trigger the loading process.</p>
+<p>The malware carries out both keylogging and screen capture functions:</p>
+<ul>
+<li>The keylogging mainly targets browsers, detecting a running instance of Internet Explorer, Chrome or Opera and recording all input to a local file.</li>
+<li>The screen recording aspect will capture the user&rsquo;s screen as a video file and store it locally, again with the aim of using it to extract useful credentials etc.</li>
+</ul>
+<p>SentinelOne reports that the family is often very targeted with clear indications of the intended recipient included in the binaries. It seems that it is used manually as part of a larger infection chain.</p>
+<p>We have taken a look at the available sample and implemented initial detections.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221110-kz8t9agea6">221110-kz8t9agea6</a></li>
+</ul>
+<h2 id="ratmilad">Ratmilad Android Spyware</h2>
+<p>Ratmilad was <a href="https://www.zimperium.com/blog/we-smell-a-ratmilad-mobile-spyware/">reported by Zimperium</a> labs in early October, having been seen targeting Android devices in the Middle East. It is distributed via direct APK downloads and has not been spotted on any appstores, with download links distributed via social media and messaging apps.</p>
+<p>The payloads reported by Zimperium have been concealed as apps supposedly intended to spoof mobile phone numbers to help with verifying social media accounts. They require the user to grant very extensive permissions on the device, and once enabled the app will sideload the Ratmilad spyware.</p>
+<figure><img src="../../static/images/blog/tt-2022-11-10/ratmilad_perms.png">
+</figure>
+
+<p>According to Zimperium&rsquo;s report the app can access the following data once fully installed:</p>
+<ul>
+<li>Device MAC address</li>
+<li>Contact list</li>
+<li>Text messages</li>
+<li>Call logs</li>
+<li>Account names and permissions</li>
+<li>Clipboard data</li>
+<li>GPS location data</li>
+<li>SIM information – mobile number, registered country, IMEI, and SIM state</li>
+<li>File list</li>
+<li>List of the installed applications, along with their permissions</li>
+<li>Device hardware information – model, brand, buildID, Android version, and manufacturer</li>
+</ul>
+<p>It can also:</p>
+<ul>
+<li>Read, write, and delete files</li>
+<li>Record sound</li>
+<li>Upload files to C2</li>
+<li>Modify application permissions.</li>
+</ul>
+<figure><img src="../../static/images/blog/tt-2022-11-10/ratmilad.png">
+</figure>
+
+<p>Based on the public sample we were able to acquire we have implemented detection and a configuration extractor to dump C2 for the family, and will update further if needed.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221110-lsyw5sggb3">221110-lsyw5sggb3</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 138: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 139: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Episode 1: Open registration and a busy week of updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/pcapng-https/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 81</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-21/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

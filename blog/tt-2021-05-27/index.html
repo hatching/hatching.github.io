@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-39.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-39.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Android Support Updates and Family Tweaks</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Android Support Updates and Family Tweaks</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-39.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-05-27T00:00:00Z">2021-05-27</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Another week, another Triage Thursday blogpost. This week the focus is on Android, with several background updates which should significantly improve the experience analysing APKs through Triage.</p>
+<p>As usual we also have a few updates for our Windows detections and configuration extractors which we&rsquo;ll introduce as well.</p>
+<p>In addition to our normal update news, we&rsquo;re also announcing a job opening with Hatching. If you like what we&rsquo;re building here and want to be a part of our team, we are currently looking for a senior Go developer to work on some of the long list of feature ideas we would love to bring to our users. Interested? You can find the <a href="https://hatching.io/jobs/senior-go-developer/">full job listing here</a>.</p>
+<p>In the news today:</p>
+<ul>
+<li><a href="#android">Various Android analysis updates and improvements</a></li>
+<li><a href="#cryptbot">New configuration extractor for CryptBot</a></li>
+<li><a href="#dridex">Improved handling for Dridex and its components</a></li>
+<li><a href="#gozi">Updated detection for Gozi RM3</a></li>
+<li><a href="#icedid">Updated detection for recent IcedID samples</a></li>
+</ul>
+<p>As usual, if you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="android">Android Improvements</h2>
+<p>Since initially releasing Android support back <a href="https://hatching.io/blog/triage-for-android/">in August 2020</a> we&rsquo;ve been receiving plenty of feedback. We&rsquo;ve made a range of tweaks over the months, but this week sees a larger update covering a number of aspects which have been mentioned by many of our users.</p>
+<p>We don&rsquo;t want to bore you with all the background technical details, but in this section we&rsquo;ll quickly go over the main ones which should have a noticeable effect on your experience using the platform.</p>
+<h4 id="reporting-of-suspiciousdangerous-app-permissions-during-static-analysis-phase">Reporting of suspicious/dangerous app permissions during static analysis phase</h4>
+<p>In our initial release, our main focus had been on behavioural detection and getting the VMs and basic signatures in place. In this update we are starting to flesh out the static phase further, adding parsing of the application manifest to report on the permissions requested and highlight any which are generally dangerous or potentially malicious.</p>
+<h4 id="added-framework-for-static-extraction-of-ransomnotes">Added framework for static extraction of ransomnotes</h4>
+<p>Continuing the theme of improving on static detection, we have also added ransomnote dumping for the <code>Filecoder</code> family of Android ransomware. In doing so, we have necessarily built the framework to allow us to add support for additional families in the future. This expands on our existing capabilities for configuration extractors to add support for some additional file types/events.</p>
+<h4 id="run-multiple-android-analyses-simultaneously">Run multiple Android analyses simultaneously</h4>
+<p>When Android support was released, Triage could only process a single Android task at a time, unlike other platforms where we support large numbers of parallel analyses. Thanks to some improvements in the background we now support running multiple tasks simultaneously which will greatly decrease wait times when submitting batches of Android files.</p>
+<h4 id="download-dex-payloads-dropped-during-analysis">Download DEX payloads dropped during analysis</h4>
+<p>Triage now automatically dumps executable files created during the course of an analysis, and these can now be downloaded through the web UI just the same as for a Windows submission. They will appear in the <code>Downloads</code> section at the bottom of the report page.</p>
+<h4 id="improved-live-monitor-functionality">Improved Live Monitor functionality</h4>
+<p>Live Monitor is our feature which allows interaction with the analysis VM(s) while running. The initial version of this for Android was fairly basic, allowing interaction but with some limitations. Additionally lag has been an issue, especially in the context of Android where many actions require actions normally carried out on a touchscreen not a mouse and keyboard.</p>
+<hr>
+<p>Taking all of these changes together, we hope that you&rsquo;ll find Android analysis much simpler and more user-friendly. We still have lots more planned, and as always if you have issues or feedback do feel free to reach out to us.</p>
+<h2 id="cryptbot">New CryptBot Configuration Extractor</h2>
+<p>CryptBot has popped up a couple of times in our blogposts this year, <a href="https://hatching.io/blog/tt-2021-02-11/#cryptbot">first in February</a> when we made some updates to behavioural detection and again last month with the addition of some fallback yara rules to ensure detection in as many cases as possible.</p>
+<p>This week we are extending this further with a full configuration extractor for the family based on recent samples observed in Triage.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210527-ar62acaq4a">210527-ar62acaq4a</a></li>
+</ul>
+<h2 id="dridex">Improved Dridex Handling</h2>
+<p>Dridex continues to be a major family across the industry so we are continuing to monitor it and make changes to improve our handling of the family wherever possible. This week we have implemented some additional detections for recent variants, as well as separating out rules for the loader and payload modules to give more informative and detailed feedback in the end report.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210510-ncy7w9kqte">210510-ncy7w9kqte</a></li>
+</ul>
+<h2 id="gozi">Updated Detection for Gozi RM3</h2>
+<p>We released this one earlier in the week but include it here for completeness, or any readers who don&rsquo;t follow our Twitter account.</p>
+<p>Thanks to a report from user <a href="https://twitter.com/fumik0_">@fumik0_</a> we have applied an update for Ursnif/Gozi RM3 to provide better coverage with our configuration extractor.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210525-578q7k73ej">210525-578q7k73ej</a></li>
+</ul>
+<h2 id="icedid">Updated Detection for Recent IcedID Samples</h2>
+<p>IcedID appears again this week with another minor tweak to our detections based on recent samples. In this case, changes to the core loader required some alterations in our Yara rules to properly catch it and trigger processing.</p>
+<p>These new samples were initially brought to our attention by <a href="https://twitter.com/Myrtus0x0">Myrtus0x0</a> - thanks for the feedback as always!</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210525-dxl1sawnra">210525-dxl1sawnra</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 85</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-09-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Hooking VBScript execution in Cuckoo</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/vbscript-hooking/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 103: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-05/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 101: New Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-21/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

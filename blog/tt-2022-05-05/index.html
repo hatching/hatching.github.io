@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-74.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-74.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>SAML Release and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>SAML Release and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-74.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-05-05T00:00:00Z">2022-05-05</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Another week, another Triage Thursday blogpost! As always we have a bundle of new and updated detections to go over, but for our customers we&rsquo;re also happy to announce the release of SAML integration! More on getting started with that below.</p>
+<p>On the detection side of things this week:</p>
+<ul>
+<li><a href="#danabot">New signatures and configuration extractor for Danabot</a></li>
+<li><a href="#sality">New signatures and configuration extractor for Sality</a></li>
+<li><a href="#emotet">Added support for the Emotet spam module</a></li>
+<li><a href="#icedid">Updated IcedID configuration extractor to cover additional fields available in some older versions</a></li>
+<li><a href="#bumblebee">Updated detections and extractor for the BumbleBee family</a></li>
+</ul>
+<p>We have also been doing some work in the background to improve performance on the Private Cloud infrastructure - several users had reported recently that they were experiencing noticeable delays loading some pages, and we have finally managed to track down and fix the elusive bug that was causing it. You should now notice that things are a lot quicker there, but if you come across any more issues let us know.</p>
+<p>As always if you have any comments, suggestions or other feedback about Triage feel free to get in touch with us. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<hr>
+<h2 id="saml-support">SAML Support</h2>
+<p><strong>Note: This feature is only relevant to private cloud customers. Only standard SSO via Google/Github etc. is available on the public cloud</strong></p>
+<p>SAML has, unsurprisingly, been heavily requested over time. We understand the ability to administer SaaS applications from a centralised point is extremely helpful for teams who have to look after complex environments so we&rsquo;re happy to now support this. It will enable you to control authentication for Triage under your existing identity provider, simplifying the process of adding new users and taking away the need to worry about password requirements or MFA.</p>
+<p>Out of the box, our SAML integration supports <strong>Okta</strong>, <strong>Microsoft Azure</strong> and <strong>Google</strong> as providers. If you need any others added please feel free to reach out to us and we&rsquo;ll be happy to discuss adding them in - we aimed to cover the main ones to start with but fully expect there will be others needed.</p>
+<h3 id="how-to-get-started">How to get started</h3>
+<p>By default SAML will be disabled for your organisation, so if you want to continue using the current username/password authentication then you don&rsquo;t need to do anything. If you do want to switch over to SAML then just contact support using the email below and we&rsquo;ll be happy to get that started for you.</p>
+<p>You can find more specific details for each provider <a href="https://private.tria.ge/docs/private-cloud/saml/">in our documentation</a>, and if you have any questions or would like help with any part of the process just reach out to us at <code>support@hatching.io</code>.</p>
+<h2 id="danabot">Danabot</h2>
+<p>Danabot is a banking trojan/stealer which has been in widespread usage <a href="https://www.proofpoint.com/us/threat-insight/post/danabot-new-banking-trojan-surfaces-down-under-0">since mid-2018</a>. The malware itself is modular including functions for browser injections/network sniffing, stealing credentials stored locally by a range of software, and remote access capability.</p>
+<p>The family has gone through several iterations since it first released, and it appeared on this blog <a href="https://hatching.io/blog/tt-2022-01-13/#danabot">back in January</a> with some minor tweaks to its structure. This time we observed a new loader component which was not properly handled by our configuration extractor and appears to have popped up in the wild fairly recently. We&rsquo;ve now updated to address this.</p>
+<figure><img src="../../static/images/blog/tt-2022-05-05/danabot.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220503-p7a1eaheaj">220503-p7a1eaheaj</a></li>
+<li><a href="https://tria.ge/220503-qbdbbshfdk">220503-qbdbbshfdk</a></li>
+<li><a href="https://tria.ge/220503-qbj4wafba7">220503-qbj4wafba7</a></li>
+<li><a href="https://tria.ge/220503-qp34xaabfj">220503-qp34xaabfj</a></li>
+</ul>
+<h2 id="sality">Sality</h2>
+<p>Sality is probably one of the oldest malware familes we&rsquo;ve featured on this blog, with initial versions dating all the way back to 2003. It has however seen regular updates over the years which have kept it relevant, adding features and adjusting its approach to fit with the current landscape.</p>
+<p>The family&rsquo;s functionality is fairly straightforward, basically acting as a remote access trojan/backdoor to allow an attacker to download and install additional malware as well as integrating the machine into a botnet. Early versions were quite advanced for the time, leveraging a now quite dated approach called Entry Point Obscuration (EPO) to hide the infection. In effect this involved adding a jump to a legitimate file&rsquo;s code, so that when that instruction is hit execution will move to the malicious code instead of the actual file. The randomness of the locations for this meant it was quite difficult to locate and remove.</p>
+<p>Modern variants can communicate over peer-to-peer networks with other infected systems as part of the botnet functionality, and they spread by infecting files on the computer so that they will trigger an infection whenever opened - this makes it able to spread via removable media or email attachments quite effectively, often unwittingly carried by the victim without any further actions from the attacker. This is especially effective since in most cases the infection will not be evident to a user, so it could be present on a system for some time without them being aware.</p>
+<figure><img src="../../static/images/blog/tt-2022-05-05/sality.png">
+</figure>
+
+<p>We have been seeing an unusual number of Sality samples appearing lately, so we decided it was time to add dedicated support for those. We have now built signatures and a full configuration extractor for the family which can dump out the C2 addresses being used.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220211-kcsjraeagm">220211-kcsjraeagm</a></li>
+<li><a href="https://tria.ge/200730-t5vy5kfr72">200730-t5vy5kfr72</a></li>
+<li><a href="https://tria.ge/201108-6xnjm1kt5e">201108-6xnjm1kt5e</a></li>
+<li><a href="https://tria.ge/210719-f5wh9xdyp6">210719-f5wh9xdyp6</a></li>
+<li><a href="https://tria.ge/210724-s182c5m3zn">210724-s182c5m3zn</a></li>
+</ul>
+<h2 id="emotet">Emotet</h2>
+<p>We&rsquo;re back on Emotet again this week to continue expanding on our coverage for it. This week we&rsquo;re just adding in dedicated support for the spam module deployed by the family post-infection, so that it will be detected and reported properly if submitted on its own or downloaded by the malware during a normal execution run.</p>
+<p>This module is used to run spam campaigns using email accounts and contact lists from the infected system, leveraging compromised machines to propagate the malware to additional victims. This is not an unusual technique, but is still pretty effective as users tend to put more trust into emails they receive from known contacts than unknown senders.</p>
+<p>We have taken a look at examples we&rsquo;ve come across on Triage lately, and have built new detections for them to augment the existing Emotet support. Most of these we do not have permission to share here, but a public example is below for reference.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220428-d6lvqsbae9">220428-d6lvqsbae9</a></li>
+</ul>
+<h2 id="icedid">IcedID</h2>
+<p>IcedID has appeared on this blog a few times so we won’t go into the background again today. You can find some quick details in an earlier blogpost <a href="https://hatching.io/blog/tt-2022-02-17/#icedid">here</a>, and we also <a href="https://hatching.io/blog/tt-2022-03-03/#icedid">revisited it in March</a> to address a time delay technique affecting the results on Triage.</p>
+<p>This week we&rsquo;re not actually looking at a new variant of change, but going back in time to some earlier versions. A user recently submitted a number of old versions which had more data hardcoded than the current iterations, so to make sure we have comprehensive coverage of the family we took a look at improving our extractor to support the additional fields.</p>
+<figure><img src="../../static/images/blog/tt-2022-05-05/icedid.png">
+</figure>
+
+<p>Some examples of these versions are below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220504-hvm1wadca2">220504-hvm1wadca2</a></li>
+<li><a href="https://tria.ge/220503-am65safgbp">220503-am65safgbp</a></li>
+<li><a href="https://tria.ge/220503-angxaadcc7">220503-angxaadcc7</a></li>
+<li><a href="https://tria.ge/220503-agtmhadad8">220503-agtmhadad8</a></li>
+</ul>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee is currently a very active family, having burst onto the scene quite recently. It has come up in a couple of our recent blogposts so we won&rsquo;t go over the background in detail again here - if you&rsquo;d like more information on that you can check out <a href="https://hatching.io/blog/tt-2022-04-14/#bumblebee">our original post</a> or a writeup by Google&rsquo;s Threat Analysis Group <a href="https://blog.google/threat-analysis-group/exposing-initial-access-broker-ties-conti/">here</a>.</p>
+<p>This week just sees a few improvements to our detections and configuration extractor, including the addition of the GroupID field to the data we are able to display. This field is basically used to identify and link different botnets, and can sometimes have multiple values.</p>
+<figure><img src="../../static/images/blog/tt-2022-05-05/bumblebee.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220504-zynv1shdfj">220504-zynv1shdfj</a></li>
+<li><a href="https://tria.ge/220505-f9t2mafbh9">220505-f9t2mafbh9</a></li>
+<li><a href="https://tria.ge/220504-y95ggahdek">220504-y95ggahdek</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>In-Depth Metasploit Payloads Analysis</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/metasploit-payloads2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 96</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 95</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Extractor Updates and ZLoader Anti-VM</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-25/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

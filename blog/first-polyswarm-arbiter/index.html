@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-6.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-6.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>The First PolySwarm Arbiter</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Making the Call</h5>
+        
+        <h2>The First PolySwarm Arbiter</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-6.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2018-11-27T00:00:00Z">2018-11-27</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=polyswarm">polyswarm</a></p><li><p><a href="/blog/#category=arbiter">arbiter</a></p><li><p><a href="/blog/#category=cuckoo">cuckoo</a></p><li><p><a href="/blog/#category=analysis">analysis</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/ben.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Ben de Graaff &amp; Jurriaan Bremer</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p><img src="../../static/images/blog/polyswarm.png" alt="Polyswarm"></p>
+<h2 id="introduction">Introduction</h2>
+<p>Hatching has integrated Cuckoo Sandbox as <a href="https://polyswarm.io/press/2018/02/26/polyswarm-partners-with-cuckoo-sandbox/">the first Arbiter of PolySwarms
+threat intelligence marketplace</a>. This blog post is the first in a series of
+posts and will touch on basic function of an Arbiter, why PolySwarm selected
+Cuckoo Sandbox as the first Arbiter, how this process works, and finally, what
+we see as the main benefit of being an Arbiter.</p>
+<h2 id="what-is-an-arbiter">What is an Arbiter?</h2>
+<p>Literally, an Arbiter is somebody who is tasked with making difficult decisions
+in light of conflicting interests. In the case of the PolySwarm threat
+intelligence marketplace, that means judging the potential malicious intent of
+file samples: a sort of cat and mouse game between security analysts and
+malware authors. In the end, the verdict of the Arbiters will form what is
+called the Ground Truth, a final decision on the intent of a sample.</p>
+<p>In order to make a valid judgment an Arbiter must utilize the analytical
+resources it has at its disposal and collect evidence regarding the behavior
+and intent of a sample. Over time, the accuracy of verdicts for more difficult
+samples can be improved by learning from judgments made by other Arbiters and
+domain experts and by responding to emerging threats.</p>
+<h2 id="how-did-we-become-the-first-arbiter">How did we become the first Arbiter?</h2>
+<p>PolySwarm picked Hatching as the first Arbiter for the threat intelligence
+marketplace because Hatching has been the driving force behind Cuckoo Sandbox
+over the past few years, the world&rsquo;s leading open source malware analysis
+system. The open source nature of Cuckoo Sandbox aligns with the transparent,
+collaborative spirit that underlies cryptocurrencies, and allows anyone to
+audit and improve the code. Additionally, through its open source nature,
+Cuckoo Sandbox is used by many researchers and organizations around the world.</p>
+<p>As Steve Bassi, CEO of PolySwarm, points out:</p>
+<blockquote>
+<p>Cuckoo Sandbox takes an
+innovative, dynamic approach to malware detection. We’re thrilled to have
+Jurriaan’s team on board as PolySwarm’s first Arbiter. Partnerships with
+marquee teams such as Hatching&rsquo;s are crucial to PolySwarm’s disruption of the
+threat intelligence ecosystem.</p>
+</blockquote>
+<blockquote>
+<p><a href="https://twitter.com/_sbassi">Steve Bassi</a>, Polyswarm CEO</p>
+</blockquote>
+<p>We strongly believe in the community driven approach that PolySwarm is taking
+to revolutionize the antivirus industry. Therefore, we are honored that
+PolySwarm has chosen us as their first Arbiter.</p>
+<h2 id="how-does-it-work">How does it work?</h2>
+<p>Arbiters listen for bounties placed on the PolySwarm network. It fetches file
+samples (artifacts) that belong to the bounty and dispatches them to the
+analysis backends. In some cases, for example when experiencing high volumes,
+there might be a limited period of time in which a vote has to be cast. The
+duration of the analysis and subsequent processing may be limited as well. Our
+Arbiter allows multiple backends to be consulted and is able to vote even if
+not all analyses can be performed in time.</p>
+<p>In rare cases, voting does not result in a satisfactory result, for example if
+the verdicts/scores produced by the analytical backends are not conclusive,
+manual voting may be required. Manual voting requires a human operator to make
+the final call. The operator has access to a dashboard from which they can view
+the detailed analysis reports. This report helps the operator to improve on the
+verdict/scoring, while offering feedback to the marketplace on improving their
+scoring at the same time</p>
+<p>Once the voting window closes and the verdicts are revealed, the Arbiter may
+use different sources of information for the final Ground Truth. The way we’ve
+set this up is by determining our own “vote” - through the various analysis
+backends - and using that as a basis for the ground truth. If it is determined
+that there’s a large gap between our conclusion and that of the network, the
+Arbiter may devote additional effort to verify claims made by Micro-engines and
+Security Experts before pushing out the final Ground Truth, based on which the
+different players in the platform are paid.</p>
+<figure><img src="../../static/images/blog/first-polyswarm-arbiter/process.png">
+</figure>
+
+<h2 id="what-is-the-benefit-of-being-an-arbiter">What is the benefit of being an Arbiter?</h2>
+<p>Apart from the usual business benefits, the real benefit of being an Arbiter is
+actually quite simple: we get to analyze lots and lots of samples.</p>
+<p>Analyzing all these samples allows us to improve the analysis capabilities of
+Cuckoo Sandbox by continuously learning from all the analyses we perform. To
+us, this offers a major R&amp;D advantage as we get the opportunity to continuously
+test and develop our system in a real-world environment.</p>
+<p>For example, when supporting clients that operate a Cuckoo Sandbox environment,
+we aren&rsquo;t always able to use the results of their analyses to further improve
+Cuckoo Sandbox for the community. But as an Arbiter for PolySwarm, we have a
+constant stream of new malware intelligence to work with. This is of great
+importance for the development and ultimately the future of Cuckoo Sandbox.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Becoming PolySwarm’s first Arbiter has been of significance to us, as it
+provides us with the opportunity to contribute to a new paradigm in threat
+protection coverage while at the same time continuously developing the analysis
+capabilities of Cuckoo Sandbox.</p>
+<p>We encourage others to join PolySwarm in their endeavor to revolutionize
+the antivirus market, as more arbiters means more analyses. We are looking
+forward to comparing analyses results, to learn learning from other arbiters
+and to improve the overall results as this all contributes to increasing
+general security while lowering the cost required to do so.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Smokeloader Analysis and More Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-08-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>IQY malspam campaign</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/iqy-malspam/">Read</a>
+        </li>
+      
+        <li>
+          <h3>LimeRAT Extractor and Family Signature Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-01/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Onemon Tweak Plus AtomSilo And STRRAT Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-10-21-triage-thursday/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

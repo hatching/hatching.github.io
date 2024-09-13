@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-68.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-68.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Family Detections and MHT File Support</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Family Detections and MHT File Support</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-68.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-03-03T00:00:00Z">2022-03-03</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we give a quick rundown of any and all updates made to the sandbox over the last week.</p>
+<p>We&rsquo;ve got a good few families to go through today, as well as the addition of a new file format to the list of supported types:</p>
+<ul>
+<li><a href="#emotet">Fix for Emotet configuration extractor (mostly related to Epoch4)</a></li>
+<li><a href="#pony">Updated Pony stealer configuration extractor</a></li>
+<li><a href="#icedid">Updated IcedID handling for changes to the loader component</a></li>
+<li>Added new detections for the <a href="#outsteel">Outsteel</a> and <a href="#saintbot">SaintBot</a> families which have been used against Ukraine recently</li>
+<li><a href="#44caliber">Added detections for the 44caliber stealer</a></li>
+<li><a href="#mht">Added support for MHT files</a></li>
+</ul>
+<p>As always, if you discover any issues or missing detections while using Triage please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="emotet">Emotet Fix</h2>
+<p>Emotet has been making tweaks again lately so this week we&rsquo;ve had to make some updates to handle samples where the keys and botnet IDs were not being properly extracted. These issues were mostly with Epoch4 samples and were due to some overly strict parsing on our end - this has now been updated to account for a wider variation.</p>
+<p>As always with this family we&rsquo;ll continue to update as needed. We don&rsquo;t expect it&rsquo;ll be too long before it makes another appearance in the blog, and in the meantime a massive thank you to everyone who passes us samples like this.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220225-w6p69sacdq">220225-w6p69sacdq</a></li>
+<li><a href="https://tria.ge/220225-xajkaaacfk">220225-xajkaaacfk</a></li>
+<li><a href="https://tria.ge/220226-lyxk9sach5">220226-lyxk9sach5</a></li>
+<li><a href="https://tria.ge/220226-q81swscddr">220226-q81swscddr</a></li>
+</ul>
+<h2 id="pony">Pony Stealer</h2>
+<p>Pony has been a staple of the malware world for years, going back all the way to 2011 for its first versions. Also known as Fareit, it is consistently one of the main choices for those looking for a stealer even now with powerful credential theft capabilities built in.</p>
+<p>Like most infostealers it covers a range of software targets including web browsers like Chrome or Firefox; email clients like Outlook; common FTP applications; and of course cryptocurrency wallets. With such a long history there have been many different versions and variants over the years - especially after the source code for one version was leaked online - with each bringing new fixes, improvements, and expansions on the supported software and credentials.</p>
+<p>The family includes some functionality to deploy additional payloads, meaning that it can form part of a larger infection chain leading on to other types of malware. Infected machines are also incorporated into a botnet which can be leveraged to mount further attacks.</p>
+<p>Last week we updated our configuration extractor to support more versions and correctly dump their C2. There are some further changes to come in relation to our memory dumping strategies which should improve this further - we&rsquo;ll provide an update on that when available.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220214-gs4p6sffc3">220214-gs4p6sffc3</a></li>
+<li><a href="https://tria.ge/220214-db6lnadhc3">220214-db6lnadhc3</a></li>
+</ul>
+<h2 id="icedid">IcedID</h2>
+<p>IcedID has appeared on this blog a few times so we won&rsquo;t go into the background today. You can find some quick details in our previous blogpost <a href="https://hatching.io/blog/tt-2022-02-17/#icedid">here</a>.</p>
+<p>Last week we revisited the family to improve our handling of the core loader component, which seems to have gone through some changes lately.</p>
+<p>Since then, we have also noticed some versions using a known time delay technique, presumably to make sandbox analysis more difficult. As you can see from the screenshots in our tweet below it seems to be leveraging API and instruction hammering to prevent any significant activity from taking place for several minutes. Since most sandboxes - like Triage - default to a timeout of 5 minutes or less this tends to cause benign results since nothing malicious was observed, and it also bypasses the main countermeasures in place which can e.g. intercept and skip calls to the Sleep or similar APIs.</p>
+<p>We&rsquo;re looking into technical solutions for this, but in the meantime we still get good analysis results if you just turn the timeout up to 10+ minutes.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220228-lvldtsdhg4">220228-lvldtsdhg4</a></li>
+<li><a href="https://tria.ge/220218-vsggjacga7">220218-vsggjacga7</a></li>
+<li><a href="https://tria.ge/220217-szdm4sbdg3">220217-szdm4sbdg3</a></li>
+<li><a href="https://tria.ge/220129-rjaqvaccg2">220129-rjaqvaccg2</a></li>
+</ul>
+<h2 id="outsteel">OutSteel Stealer</h2>
+<p>OutSteel is a new malware family which was first spotted in early 2022. It was deployed in targeted phishing campaigns against Ukrainian organisations in the lead up to the invasion by Russia, as a continuation of a prolonged campaign which had been running <a href="https://unit42.paloaltonetworks.com/ukraine-targeted-outsteel-saintbot/">since at least March 2021</a>.</p>
+<p>According to <a href="https://cert.gov.ua/article/18273">an advisory published by the Ukrainian CERT</a> the family was distributed using mass email spam pretending to be from the National Health Service of Ukraine (although other sources have also been reported, such as the national Police force), with the payload itself distributed from a Discord download link. The targets appeared to be Ukrainian state organisations in general.</p>
+<p>OutSteel itself is a file stealer, but clearly with a different focus than most mainstream families. Whereas most are looking to automatically hoover up as many different sets of credentials, cryptocurrency wallets, and other easily monetisable bits of data this family is interested in actual files, based on their file type. We have observed samples looking for <code>.doc</code>, <code>.pdf</code>, and <code>.csv</code> files mainly. The intention seems to be to collect sensitive information about these organisations which can then be analysed at the attackers&rsquo; leisure.</p>
+<p>We have taken a look at files available from the last few weeks and implemented initial behavioural detections for them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220228-dwbl1sdac8">220228-dwbl1sdac8</a></li>
+<li><a href="https://tria.ge/220228-dvy1xsdac5">220228-dvy1xsdac5</a></li>
+<li><a href="https://tria.ge/220228-dvv92adac4">220228-dvv92adac4</a></li>
+<li><a href="https://tria.ge/220228-dvsh5seeap">220228-dvsh5seeap</a></li>
+<li><a href="https://tria.ge/220228-dvmynaeeam">220228-dvmynaeeam</a></li>
+</ul>
+<h2 id="saintbot">SaintBot</h2>
+<p>SaintBot was also brought to our attention by the current war in Ukraine, although it actually goes back quite a bit further than OutSteel above. It was first reported on by MalwareBytes <a href="https://blog.malwarebytes.com/threat-intelligence/2021/04/a-deep-dive-into-saint-bot-downloader/">in April 2021</a> being used against Georgia, another common target for Russian state-sponsored actors.</p>
+<p>The family is a downloader often used to drop stealers - it has recently been delivering OutSteel mentioned above, and is flexible enough to feasibly deploy any type of payload. More details on the recent usage can be found in <a href="https://unit42.paloaltonetworks.com/ukraine-targeted-outsteel-saintbot/">PaloAlto&rsquo;s blogpost</a>.</p>
+<p>As with many other families currently it tends to use Discord as the download point for additional payloads, abusing the fact that these URLs are often trusted by security platforms due to their legitimate uses.</p>
+<p>We have added some static and behavioural detections for the family, and will make any updates as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220301-mmv4qshgd2">220301-mmv4qshgd2</a></li>
+<li><a href="https://tria.ge/220228-dwgg9seebj">220228-dwgg9seebj</a></li>
+<li><a href="https://tria.ge/220228-dqzfwsedfn">220228-dqzfwsedfn</a></li>
+<li><a href="https://tria.ge/220228-dqkbzadaa6">220228-dqkbzadaa6</a></li>
+<li><a href="https://tria.ge/220228-dqgwvadaa5">220228-dqgwvadaa5</a></li>
+</ul>
+<h2 id="44caliber">44Caliber</h2>
+<p>44Caliber is another stealer, but with a more standard set of functionality than OutSteel above. It is open-source, first being made available on Github back in February 2021 with the usual nonsense about being for &rsquo;educational purposes only'.</p>
+<p>Again, the family uses Discord for its communications, this time not just for downloading files but as a full C2 communication channel. Logs are sent back to Discord via the webhooks functionality as shown in the screenshot below, taken from the project readme file.</p>
+<figure><img src="../../static/images/blog/tt-2022-03-03/44caliber_discord.png">
+</figure>
+
+<p>It is based on the older Reborn Stealer, which is also available open-source.</p>
+<p>We have reviewed available samples and implemented detections and a configuration extractor which dumps the C2 details for quick access.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220301-wvg2hsbba2">220301-wvg2hsbba2</a></li>
+<li><a href="https://tria.ge/220301-wvf48abah9">220301-wvf48abah9</a></li>
+<li><a href="https://tria.ge/220301-wve7xsbah8">220301-wve7xsbah8</a></li>
+<li><a href="https://tria.ge/220301-wvc3kacffp">220301-wvc3kacffp</a></li>
+<li><a href="https://tria.ge/220301-wvb59scffn">220301-wvb59scffn</a></li>
+</ul>
+<h2 id="added-support-for-mht-files">Added support for MHT files</h2>
+<p>MHT (or MHTLM) are a web archive format which can reproduce an entire webpage offline. It bundles up all resources normally accessed during page load like HTML files, images, CSS sheets etc. so that the page can be viewed at any time.</p>
+<p>This format is generally used with a web browser or a dedicated HTML editor, but of more interest to us is the fact that they are also supported by Microsoft Word. This makes them a possible format for things like phishing attacks, which caused some of our users to request support for them to be added into Triage.</p>
+<p>This has now been done, adding to the extensive list of formats already supported by Triage (you can find that list in our docs <a href="https://tria.ge/docs/cloud-api/filetypes/">here</a> - note that it hasn&rsquo;t been updated for MHT yet but we will be fixing that soon).</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 92</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-01-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Privacy policy</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/legal/policy/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 137: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Warzone Extractor and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-18/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

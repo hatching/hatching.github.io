@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Family Additions</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Family Additions</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-77.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-06-16T00:00:00Z">2022-06-16</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Another week has passed (somehow), and it&rsquo;s time for some more updates! We&rsquo;ve got some updates to a couple of familiar families like Emotet, but apart from that we have quite a few new additions to introduce across Windows and Linux (new to Triage at least). Let&rsquo;s get into it!</p>
+<ul>
+<li>Updated key extraction for current Emotet samples (big thanks to everyone who reported samples to us)</li>
+<li><a href="#panda">Added configuration extractor for Panda Stealer</a></li>
+<li><a href="#netdooka">Added detections and a configuration extractor for NetDooka RAT</a></li>
+<li><a href="#recordbreaker">Added detections for RecordBreaker family</a></li>
+<li><a href="#svcready">Added detections for SVCReady loader</a></li>
+<li><a href="#windealer">Added detections for WinDealer stealer</a></li>
+<li><a href="#tsunami">Updated detections for Kaiten/Tsunami Linux botnet</a></li>
+<li><a href="#abstractemu">Added detection for AbstractEmu Android family</a></li>
+</ul>
+<p>As always if you find any problems with the Triage platform or the detections in it, please do let us know. Community input is a vital part of tracking and keeping up to date with the rapidly evolving malware landscape and is extremely helpful in making these updates possible. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<hr>
+<h2 id="panda-stealer">Panda Stealer</h2>
+<p>Panda Stealer has been around for about a year now but for whatever reason has not really come onto our radar until recently. It was reported on in May 2021 <a href="https://www.trendmicro.com/en_nl/research/21/e/new-panda-stealer-targets-cryptocurrency-wallets-.html">by TrendMicro</a> who had initially picked up on it during April of that year - it reportedly involved fairly typical email spam campaigns primarily going after targets in the US, Australia, Japan and Germany. It appears to be a fork of the DCStealer/Collector Stealer family, a similar trojan of Russian origin.</p>
+<p>Samples tend to make use of macros and Powershell to carry out an initial fileless infection, fetching the end Panda payload from web-based sources - early examples reported by TrendMicro in their report made use of the <code>paste.ee</code> service for this purpose.</p>
+<p>It mainly goes after cryptocurrency and related data stored locally - Dash, Bytecoin, Litecoin and Ethereum wallets have been reported as targets among others. However it also has the common stealer functionality of dumping out passwords and stored data from browsers, and stealing credentials from applications like Telegram, Discord, Steam or NordVPN.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-16/pandastealer.png">
+</figure>
+
+<p>We had added some early behavioural signatures around the time the family first appeared but these were based on a fairly limited sample set. This week we have revisited it with more information available, and have built out a full configuration extractor as well as improving our other detections. This can dump out the C2 information and version number for quick reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220609-pf2n2scce3">220609-pf2n2scce3</a></li>
+<li><a href="https://tria.ge/220609-phacksccg2">220609-phacksccg2</a></li>
+<li><a href="https://tria.ge/220418-lapkrahfdn">220418-lapkrahfdn</a></li>
+<li><a href="https://tria.ge/220524-1x8pgaddhr">220524-1x8pgaddhr</a></li>
+<li><a href="https://tria.ge/220502-1dcgxsebbk">220502-1dcgxsebbk</a></li>
+</ul>
+<h2 id="netdooka">NetDooka Loader and RAT</h2>
+<p>NetDooka is a new malware framework <a href="https://www.trendmicro.com/en_us/research/22/e/netdooka-framework-distributed-via-privateloader-ppi.html">reported on in May 2022</a>, again by TrendMicro. The family seems to work on a pay-per-install model where the developers pay others to get them into systems using existing channels, and is a full framework with multiple parts besides the RAT itself - for example a loader, dropper and a kernel-mode protection driver have also been observed.</p>
+<p>Its initial access so far has made use of the existing PrivateLoader family which has been used with a number of other malware over time such as SmokeLoader and Redline, and has well established infection methods. We are still working on analysis and detection for PrivateLoader but we hope to bring those out shortly too - watch this space!</p>
+<p>Going back to NetDooka though, its infections go through multiple stages even after PrivateLoader&rsquo;s role has ended. The first component to be executed is the NetDooka dropper which decrypts, drops and executes the next loader phase. This installs the relevant protection drivers and fetches the next stage from the C2 server, which then leads to the final payload - this process is shown in TrendMicro&rsquo;s diagram below (taken from their blogpost <a href="https://www.trendmicro.com/en_us/research/22/e/netdooka-framework-distributed-via-privateloader-ppi.html">here</a>).</p>
+<figure><img src="../../static/images/blog/tt-2022-06-16/netdooka-trendmicro.png">
+</figure>
+
+<p>The RAT itself is quite capable, being able to respond to commands issued by the remote C2 server effectively giving an attacker full control over the infected machine. It does not appear to specifically go after things like browser data in this case, being generally more interested in using the system as part of a botnet for actions like DDoS attacks. Of course it does include some stealer aspects though - it can extract files from a victim, record the microphone/webcam, and log keystrokes among other things.</p>
+<p>We have analysed available samples of the loader and RAT components and implemented both standard detections and a configuration extractor. Examples of each are provided below for reference.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-16/netdooka.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Loader</th>
+          <th style="text-align: left">RAT</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220610-s2xtrshbb2">220610-s2xtrshbb2</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220610-qvz97sbehp">220610-qvz97sbehp</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220610-s2x5jacfgq">220610-s2x5jacfgq</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220610-qvxjbabehm">220610-qvxjbabehm</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220610-s2wxgahba9">220610-s2wxgahba9</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220610-qvx5vabehn">220610-qvx5vabehn</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220610-s2wlpshba8">220610-s2wlpshba8</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220610-qvw8jsgac3">220610-qvw8jsgac3</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220610-s2wayahba7">220610-s2wayahba7</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220610-qv4mmabfaj">220610-qv4mmabfaj</a></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="recordbreaker">RecordBreaker Stealer</h2>
+<p>RecordBreaker is another new family which reportedly popped up around mid-May 2022.</p>
+<p>Besides the standard stealer functionality it also supports downloading and executing additional files on the infected machine, meaning that it can be a stepping stone to additional infections besides its own operations.</p>
+<p>So far it seems to have mainly spreading via malicious cracks and keygens for legitimate software which are distributed via shareware sites.</p>
+<p>There is limited information available about it online at this time but we have examined samples shared by @_FirehaK above and others, and implemented initial detections and a configuration extractor - this just dumps the C2 URL/domain for quick access.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220611-3nvgladbhm">220611-3nvgladbhm</a></li>
+<li><a href="https://tria.ge/220610-wqa3eaeadj">220610-wqa3eaeadj</a></li>
+<li><a href="https://tria.ge/220612-fsjjkabga7">220612-fsjjkabga7</a></li>
+<li><a href="https://tria.ge/220614-kybs5adadq">220614-kybs5adadq</a></li>
+<li><a href="https://tria.ge/220609-ztaslagec8">220609-ztaslagec8</a></li>
+</ul>
+<h2 id="svcready">SVCReady Loader</h2>
+<p>SVCReady is another new addition to the threat landscape, having been first seen in the wild during April 2022. It was first reported on fully earlier this month by HP&rsquo;s threat research team, who published a detailed blogpost which you can <a href="https://threatresearch.ext.hp.com/svcready-a-new-loader-reveals-itself/">read here</a>.</p>
+<p>In general the family is a pretty standard loader, albeit one of the more professional examples. However it sets itself apart with an unusual initial infection technique based around Office macros - instead of leveraging VBA to launch into Powershell or some other script handler for the next stage, SVCReady uses macros to run shellcode that is embedded directly into the initial Office document. This approach is not unique by any means but is fairly unusual in the wild.</p>
+<p>Once a system has been infected the malware will seek to gather useful information about it, establish persistence, and take steps to check for the presence of analysis tools or virtualisation in general. It will exfiltrate all collected information to its C2 server, and then beacon out at regular intervals to monitor for any new instructions or payloads to install. HP report that they have so far mainly seen RedLine stealer as the final payload.</p>
+<p>We have taken a look at some available samples and implemented static detection for the samples. As always we&rsquo;ll keep an eye on it going forwards and make any necessary alterations or improvements as we find more examples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220607-np1mnsead6">220607-np1mnsead6</a></li>
+<li><a href="https://tria.ge/220607-np1mnsabdk">220607-np1mnsabdk</a></li>
+<li><a href="https://tria.ge/220525-rvpn5sbcf7">220525-rvpn5sbcf7</a></li>
+</ul>
+<h2 id="windealer-stealer">WinDealer Stealer</h2>
+<p>WinDealer is a stealer family aimed at Windows system which is associated with the LuoYu threat actor. This group has been active since around 2008 but without the high profile of some other groups, and are believed to be Chinese in origin. They seem to mainly target users within the SE Asia region covering China, Hong Kong, Japan, Korea and Taiwan with implants for multiple operating systems including Android phones.</p>
+<p>TeamT5 <a href="https://jsac.jpcert.or.jp/archive/2021/pdf/JSAC2021_301_shui-leon_en.pdf">published research into the threat group</a> in January 2021 and suggested that, based on the type of malware being used and the targets seen, the LuoYu group is likely attempting to track and collect information on dissidents against the Chinese government.</p>
+<p>According to a <a href="https://securelist.com/windealer-dealing-on-the-side/105946/">report by Kaspersky</a> earlier this month, WinDealer itself has a range of capabilities intended to give control of an infected device and gather useful, sensitive information:</p>
+<ul>
+<li>File and file system manipulation: reading, writing and deleting files, listing directories, obtaining disk information</li>
+<li>Information gathering: collecting hardware details, network configuration and/or keyboard layout, listing running processes, installed applications and configuration files of popular messaging applications (Skype, QQ, WeChat and Wangwang)</li>
+<li>Download and upload of arbitrary files</li>
+<li>Arbitrary command execution</li>
+<li>System-wide search across text files and Microsoft Word documents</li>
+<li>Screenshot capture</li>
+<li>Network discovery via ping scan</li>
+<li>Backdoor maintenance: set up or remove persistence (via the registry’s RUN key), configuration updates</li>
+</ul>
+<p>We have reviewed several recent samples seen on Triage and implemented some detections for them - examples are below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220610-pp388sbaer">220610-pp388sbaer</a></li>
+<li><a href="https://tria.ge/220610-pp53tsfdf7">220610-pp53tsfdf7</a></li>
+<li><a href="https://tria.ge/220610-pp9q1sfdf9">220610-pp9q1sfdf9</a></li>
+<li><a href="https://tria.ge/220610-pqdd7sbafl">220610-pqdd7sbafl</a></li>
+<li><a href="https://tria.ge/220610-pqgfvsfdg3">220610-pqgfvsfdg3</a></li>
+</ul>
+<h2 id="tsunami">Tsunami</h2>
+<p>Tsunami is a Linux botnet that has been around in some form or another for a few years now. We implemented detections for some earlier samples under the name <code>Kaiten</code> but recently it seems to be more commonly referred to under the <code>Tsunami</code> moniker - however to avoid breaking search functionality for old samples we have decided to stick with the <code>Kaiten</code> name for now, so if you&rsquo;re looking for this family in Triage reports that will be the one to use.</p>
+<p>The family itself is very similar to other IoT/Linux botnets like Mirai (in fact in some cases the payloads are so similar we have some overlap in detections that we&rsquo;ve been unable to separate so far). It uses IRC for C2 communications and can directly receive commands to execute - this basically makes it a full backdoor capable of running shell commands, downloading additional files or performing external actions like DDoS attacks.</p>
+<p>As with many of these botnets detection for all the different variants and samples is quite a tricky task. We&rsquo;ve gone over all the samples we&rsquo;ve managed to get our hands on and have built out appropriate detections, but some future updates may well be needed if we come across other outliers.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220122-qdsh2abbh3">220122-qdsh2abbh3</a></li>
+<li><a href="https://tria.ge/220122-qdsh2abbh3">220122-qdsh2abbh3</a></li>
+<li><a href="https://tria.ge/220331-pea5psbff2">220331-pea5psbff2</a></li>
+<li><a href="https://tria.ge/220331-pea5psbff2">220331-pea5psbff2</a></li>
+<li><a href="https://tria.ge/220416-1jq79sgcfm">220416-1jq79sgcfm</a></li>
+</ul>
+<h2 id="abstractemu">AbstractEmu</h2>
+<p>AbstractEmu popped up in the second half of 2021, gaining attention in October when Lookout Threat Labs identified it in 19 apps available on the Google Play and other third party appstores. All of the apps it was bundled with also included legitimate functionality as stated in order to make the downloads look more legitimate.</p>
+<p>The family gets its name based on its focus on anti-emulation checks to try and get around analysis tools. It is somewhat unusual in the modern mobile malware landscape as it is designed to provide rooting functionality for devices, something which has become quite rare over the last 5 years according to the <a href="https://www.lookout.com/blog/lookout-discovers-global-rooting-malware-campaign">report by Lookout</a>. As the Android ecosystem has matured exploits like this have become less useful, replaced with more targeted attacks against legitimate apps like mobile banking. However that is not to say that AbstractEmu has much of a different end goal - it seems that many of the permissions it grants itself after gaining root access are most likely aimed at gathering financial information.</p>
+<p>The app can receive commands over its C2 infrastructure with the functions being hardcoded into the malware. At the start of the infection - assuming the emulation checks passed - it will gather up a lot of device information and send this back to its C2, and these will then likely inform the next steps to be taken.</p>
+<p>We have now added static detection for the family to Triage based on the samples made available by Lookout.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220616-t5pg8sgagn">220616-t5pg8sgagn</a></li>
+<li><a href="https://tria.ge/220616-t52gssgagp">220616-t52gssgagp</a></li>
+<li><a href="https://tria.ge/220616-t59s6safc8">220616-t59s6safc8</a></li>
+<li><a href="https://tria.ge/220616-t6ez7aafc9">220616-t6ez7aafc9</a></li>
+<li><a href="https://tria.ge/220616-t6kwfagahk">220616-t6kwfagahk</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New UI Features and Additions to Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-01-21/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 145: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 109: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-16/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 125: Easier Upload via Drag &amp; Drop or Copy/Paste</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-03-28/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-55.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-55.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage for Linux</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Triage for Linux</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-55.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-11-24T00:00:00Z">2020-11-24</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=linux">linux</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Team</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Today we&rsquo;re proud to announce the release of a project that we&rsquo;ve been working on for a long time. <strong>Triage now supports analysis of Linux samples!</strong> This means that Triage can now analyse malware on Windows, Linux and <a href="https://hatching.io/blog/triage-for-android/">Android</a> platforms.</p>
+<p>In this blogpost we&rsquo;ll briefly describe the various components that make up our new Linux capability, and showcase a few analyses for known Linux malware.</p>
+<figure><img src="../../static/images/blog/triage-for-linux/general.png">
+</figure>
+
+<p>This is only the first version of this support and we will be expanding it over the coming months. It is now available to all users, so give it a try and let us know what you find! Feedback and more samples will be a great help with future development of the Linux platform.</p>
+<p>Not signed up yet? Visit <a href="https://tria.ge/signup">https://tria.ge/signup</a> to register for a free account!</p>
+<h2 id="linux-analysis-features">Linux Analysis Features</h2>
+<h3 id="custom-kernel-agent">Custom Kernel Agent</h3>
+<p>Similar to our Windows analysis capability, we employ a custom kernel module to perform Linux malware analyses. This module, called <code>stahp</code>, is partially inspired by the <a href="https://en.wikipedia.org/wiki/SystemTap">STAP</a> functionality in the Linux kernel.</p>
+<h3 id="supports-multiple-architectures">Supports Multiple Architectures</h3>
+<p>In order to accommodate the different platforms on which the OS can be run, our Linux capability <strong>supports AMD64 (x86 and x64), ARM, and MIPS platforms</strong> (including big endian MIPS, MIPSBE). Upon request PowerPC and SPARC are possible too.</p>
+<h3 id="live-vm-interaction">Live VM Interaction</h3>
+<p>We made sure that performing a Linux analysis feels similar to our Windows and Android analysis capabilities, therefore it&rsquo;s possible to interact with the Linux VMs! During an analysis a root shell is provided, allowing one to run a number of commands. It should be noted that our VMs are not configured as a &ldquo;desktop environment&rdquo; and as such won&rsquo;t have a graphical interface similar to what you&rsquo;d expect during Windows analyses.</p>
+<h3 id="varied-detection-techniques">Varied Detection Techniques</h3>
+<p>Triage includes support for a wide range of detection techniques to identify malicious samples at multiple stages of their execution. As with our Windows support, the platform can dump memory, detect file system and commandline actions, and monitor network activity. We also support Yara analysis during static and dynamic phases. We will be continuing to expand and improve our detection support in the future.</p>
+<h2 id="using-triage-for-linux-analysis">Using Triage for Linux Analysis</h2>
+<p>Submitting a Linux file works in the same way as Windows or Android. Simply select/drag and drop a file into the <a href="https://tria.ge/submit">Submit page</a>. The Automatic profile will detect the file type and automatically launch the relevant virtual machines.</p>
+<figure><img src="../../static/images/blog/triage-for-linux/submit.png"><figcaption>
+      <h4>The architecture names are shown down the left of the Monitor view</h4>
+    </figcaption>
+</figure>
+
+<p>During behavioural analysis you will be presented with a root terminal session on each VM which you can use for live interaction. Note that we do not include a graphical UI for the machines.</p>
+<h3 id="fetching-the-event-log-via-api">Fetching the Event Log via API</h3>
+<p>At the moment our signature detection for Linux is limited as this is an early version of the feature. If you want to investigate samples more closely yourself it is possible to access the entire event log which the kernel agent records during analysis. Similar to Windows analyses and the <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidtaskidlogsonemonjson">onemon.json</a> file, Triage produces the <code>stahp.json</code> file which can be fetched through a new API - simply replace <code>onemon.json</code> with <code>stahp.json</code> in the request:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_ACCESS_KEY&gt;' \
+  'https://api.tria.ge/v0/samples/{sampleID}/{taskID}/logs/stahp.json' \
+  --output log.json
+</code></pre>
+<hr>
+<h2 id="examples">Examples</h2>
+<h3 id="evilgnome-installation-script">EvilGnome Installation Script</h3>
+<p>EvilGnome is unusual amongst Linux malware in that it targets desktop users rather than the more common server or embedded platforms. In terms of functionality it is a fairly typical stealer allowing <a href="https://www.intezer.com/blog/linux/evilgnome-rare-malware-spying-on-linux-desktop-users/">taking screenshots, capturing microphone audio, and stealing local files</a>. It also acts as a backdoor for further access to run additional modules or install further malware.</p>
+<p><strong>Analysis:</strong> <a href="https://tria.ge/201124-yfsf7l7s3s">201124-yfsf7l7s3s</a></p>
+<p>In Triage, the family has been detected during the <a href="https://tria.ge/201124-yfsf7l7s3s/static1">static phase</a> by a Yara rule.</p>
+<figure><img src="../../static/images/blog/triage-for-linux/evilgnome_static.png">
+</figure>
+
+<p>We can also see a number of signatures detecting file actions in the behavioural report.</p>
+<figure><img src="../../static/images/blog/triage-for-linux/evilgnome_sigs1.png"><figcaption>
+      <h4>Writes executable to /usr/bin folder</h4>
+    </figcaption>
+</figure>
+
+<figure><img src="../../static/images/blog/triage-for-linux/evilgnome_sigs2.png"><figcaption>
+      <h4>Enumerates filesystem resources</h4>
+    </figcaption>
+</figure>
+
+<figure><img src="../../static/images/blog/triage-for-linux/evilgnome_sigs3.png"><figcaption>
+      <h4>Writes files to system temp directory</h4>
+    </figcaption>
+</figure>
+
+<h3 id="ebolachan-file-injector">EbolaChan File Injector</h3>
+<p>EbolaChan injects itself into various system files so that it is run any time they are opened or executed. It also uses cron to persist on the system and rerun the base script every hour.</p>
+<p><strong>Analysis:</strong> <a href="https://tria.ge/201124-38cax1ssh2/behavioral1">201124-38cax1ssh2</a></p>
+<p>In this example Triage has detected the specific architecture of the binary and selected the appropriate Linux VM - AMD64.S</p>
+<p>We can see a signature reporting a file change caused by the new Cron task the malware adds.</p>
+<figure><img src="../../static/images/blog/triage-for-linux/ebolachan_sigs1.png"><figcaption>
+      <h4>Registers new hourly Cron job</h4>
+    </figcaption>
+</figure>
+
+<p>It&rsquo;s also evident that it drops a file to the system temp directory and then executes it.</p>
+<figure><img src="../../static/images/blog/triage-for-linux/ebolachan_sigs2.png"><figcaption>
+      <h4>Drops temp file and runs it</h4>
+    </figcaption>
+</figure>
+
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-09-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Integrations, Updated DLL Handling and New Family Classifications</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-29/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 88</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-10-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 141: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-25/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

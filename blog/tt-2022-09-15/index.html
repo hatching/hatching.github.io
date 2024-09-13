@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-84.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-84.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 85</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 85</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-84.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-09-15T00:00:00Z">2022-09-15</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! We&rsquo;ve missed a few weeks due to holidays and other things going on but we&rsquo;re pleased to be back again this week with the normal set of update notes.</p>
+<p>Of course just because there hasn&rsquo;t been a blog doesn&rsquo;t mean there have been no updates over the last few weeks! There has been new support added for many different stealers, ransomware and Android banker families including the addition of configuration extractors for Sharkbot, IceXLoader, Gandcrab, and a few different Mirai variants. We have also updated and improved existing coverage for Nymaim, Raccoon, PandaStealer, and BluStealer based on recent samples and feedback.</p>
+<p>Moving on to the news from this week, we have made the following detection changes:</p>
+<ul>
+<li><a href="#moisha">New signatures for Moisha ransomware</a></li>
+<li><a href="#blackbasta">New signatures for BlackBasta ransomware</a></li>
+<li><a href="#asbit">New signatures and configuration extractor for Asbit RAT</a></li>
+<li><a href="#ffdroider">New configuration extractor for FFDroider stealer</a></li>
+<li><a href="#bumblebee">Update for Bumblebee rules and configuration extractor</a></li>
+<li><a href="#mirai">New signatures for more Mirai architectures and cleaned up some old rules causing false-positives</a></li>
+<li>Improvements for ransomnote handling to reduce false-positives</li>
+</ul>
+<p>Something else you&rsquo;ll likely have noticed by now is that we&rsquo;ve deployed a new UI update which significantly changes the appearance of Triage. This is mostly cosmetic and does not affect functionality, and is meant to bring the styling inline with Recorded Future&rsquo;s other products - we&rsquo;ll be continuing to tweak and improve on it over the coming weeks and months. If you come across any issues with the new UI or have any feedback please feel free to reach out!</p>
+<p>As always you can contact us any time directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="moisha">Moisha ransomware</h2>
+<p>Moisha is a new ransomware family which was first reported on Twitter in August 2022, by <a href="https://twitter.com/malwrhunterteam/status/1560962574245679104">MalwareHunterTeam</a>.</p>
+<p>The family is a fairly standard ransomware which uses the double-extortion approach to pressure victims into paying. Like many similar threats it will initially go through a predefined list of processes and try to kill them - this generally includes security software like Windows Defender as well as applications which may have a lock on important files that would prevent their encryption.</p>
+<p>Interestingly it does not actually rename files or change their extensions, unlike the vast majority of other ransomware. It does however drop .txt ransomnotes to the system - these include a company name in the header suggesting the family is used in targeted attacks rather than more generalised campaigns.</p>
+<p>We have limited samples available currently but have built out initial detections and will make any necessary tweaks in future as we come across more.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220826-jwaydaaeg2">220826-jwaydaaeg2</a></li>
+</ul>
+<h2 id="blackbasta">BlackBasta Ransomware</h2>
+<p>Like Moisha, the Black Basta family also uses the double-extortion technique and exfiltrates sensitive data before beginning file encryption. It first appeared in April 2022 and has been very active since then, with <a href="https://unit42.paloaltonetworks.com/threat-assessment-black-basta-ransomware/">Unit42 reporting over 75 compromised companies</a> as of late August 2022.</p>
+<p>It has a large focus on speed of encryption to try and make sure it can accomplish its purpose before triggering any defences. As part of this it uses an unusual technique where it only encrypts segments of 64 bytes and leaves gaps of 128 bytes, to minimise the time needed while still rendering the files unusable.</p>
+<p>The family is written in C++ and has versions for both Windows and Linux. Unit42 also report that a version specifically targeting VMware ESXi virtual machines was observed in June 2022. We&rsquo;ve built out detections for both platforms.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li>Windows samples:
+<ul>
+<li><a href="https://tria.ge/220427-2g3nysegfq">220427-2g3nysegfq</a></li>
+<li><a href="https://tria.ge/220427-2fxrbaafg4">220427-2fxrbaafg4</a></li>
+<li><a href="https://tria.ge/220426-y4d3bsaadq">220426-y4d3bsaadq</a></li>
+<li><a href="https://tria.ge/220503-rmtm5ahaa7">220503-rmtm5ahaa7</a></li>
+</ul>
+</li>
+<li>Linux samples:
+<ul>
+<li><a href="https://tria.ge/220609-psw94acde7">220609-psw94acde7</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="asbit">Asbit RAT</h2>
+<p>At the end of August <a href="https://blogs.juniper.net/en-us/threat-research/asbit-an-emerging-remote-desktop-trojan">Juniper reported a new Chinese RAT</a> they were increasingly seeing in the wild. Called Asbit, the earliest samples they could fine go back to May 2021 suggesting it has been active for some time while escaping mainstream attention.</p>
+<p>The family includes a few evasion techniques including using DNS-over-HTTPS (DOH) to try and evade network monitoring. It also sets up a proxy to enable it to man-in-the-middle all browser traffic. Infection generally involves a few stages, going from a malicious installer to a DLL that then downloads and deploys the final payload. Downloaded files are named and stored in a way meant to resemble .NET libraries to reduce suspicion.</p>
+<p>The RAT itself provides full remote control of the infected system including directly controlling it via a remote desktop, as well as prebuilt functions for things like screenshot capture, file download, and command execution. It is still in active development and has seen several versions since the initial release discovered by Juniper - it seems likely it will continue to evolve in the future so we&rsquo;ll keep an eye open and update detections as needed.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220912-n6xx4sghgr">220912-n6xx4sghgr</a></li>
+</ul>
+<h2 id="ffdroider">FFDroider</h2>
+<p>FFDroider first popped up around April 2022 and we quickly added basic support for the family to Triage. However we have continued to see samples hitting the public and private clouds so this week decided to revisit it and build out a full configuration extractor which can dump the hardcoded C2 address.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-15/ffdroider.png">
+</figure>
+
+<p>The family&rsquo;s base functionality is pretty familiar and in fact more limited than many of its competitors in the infostealer space - it seems to restrict itself to stealing credentials stored on the infected machine by web browsers like Chrome, Firefox and Edge rather than the much more extensive target lists common in other stealers. However its end goal is a bit different to most.</p>
+<p>Rather than just directly monetising data stolen from the victim, like stealing cryptocurrency wallets, this family is going after social media accounts specifically. These accounts are then accessed to extract information about them, with a focus on relevant advertising networks on those platforms which can then be used to run malicious ad campaigns using accounts already verified and setup to do so. Interestingly this process is mostly automated with the malware itself carrying out checks of credentials in real time from the victim’s PC, and extracting personal and financial information from any successful login attempts which is sent back to the C2 server for further use.</p>
+<p>According to <a href="https://www.zscaler.com/blogs/security-research/ffdroider-stealer-targeting-social-media-platform-users">ZScaler’s report on the family</a> FFDroider goes after credentials for the following websites:</p>
+<ul>
+<li>www[.]facebook[.]com</li>
+<li>www[.]instagram[.]com</li>
+<li>www[.]amazon[.]ca/cn/eg/fr/de/in/it.co.jp/nl/pl/sa/sg/es/se/ae/co.uk/com/com.au/com.br/mx/tr</li>
+<li>www[.]all-access.wax[.]io</li>
+<li>www[.]ebay[.]com</li>
+<li>www[.]etsy[.]com</li>
+<li>www[.]twitter[.]com</li>
+</ul>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220718-w8w3laecdk">220718-w8w3laecdk</a></li>
+<li><a href="https://tria.ge/220909-te3l6scchn">220909-te3l6scchn</a></li>
+<li><a href="https://tria.ge/220909-lrmgqaghd9">220909-lrmgqaghd9</a></li>
+<li><a href="https://tria.ge/220801-fn5agacacm">220801-fn5agacacm</a></li>
+<li><a href="https://tria.ge/220730-ebadwsgddm">220730-ebadwsgddm</a></li>
+</ul>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee is a loader which quickly rose to prominence back in April 2022 - we&rsquo;ve written about it a few times on this blog since then as it has been actively developed and has seen a few updates since release which affected our detections or configuration extractor.</p>
+<p>So far it has formed part of the toolkit of an Initial Access Broker group called EXOTIC LILY, who gain access to systems and networks which they can then sell on to other groups like ransomware gangs rather than directly exploiting it themselves. For example BumbleBee was seen early on distributing Conti ransomware and CobaltStrike payloads.</p>
+<p>On a technical level it is a fairly typical example of its type, using WMI to harvest general information about the system and report it back to the C2 infrastructure which then issues commands for the next steps. This task can vary but mainly revolves around deploying code and payloads onto the system. You can find a full writeup of the family from Google’s Threat Analysis Group here.</p>
+<p>In our update this week we have tweaked our configuration extractor to handle a new variant we&rsquo;ve started seeing in the wild. These samples appear to include fake/decoy C2 addresses within the configuration to throw off analysis so we&rsquo;ve improved handling to filter these out and only return the real C2s.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220912-y9xfvsebc4">220912-y9xfvsebc4</a></li>
+<li><a href="https://tria.ge/220912-zve4psebf4">220912-zve4psebf4</a></li>
+</ul>
+<h2 id="mirai">Mirai</h2>
+<p>As probably the most widespread IoT malware ever Mirai probably doesn&rsquo;t need much introduction. The family was one of the first Linux-based threats we added support for, but the family is huge and sprawling with an amazing number of different versions, variants and spinoffs out there in the wild. Over the last few weeks we&rsquo;ve been reviewing the family and trying to tidy up our many different detection rules, including addressing some which were incorrectly identifying samples as other IoT threats based on shared codebase/functionality.</p>
+<p>This detection update is aimed at providing support for a number of variants aimed at different CPU architectures. We do not have VM images for all of these but even if the file doesn&rsquo;t run properly there is generally something we can do with static techniques to return a result anyway, so that is the focus here. The list of analyses below includes a few for each of the newly supported architectures for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li>SPARC
+<ul>
+<li><a href="https://tria.ge/220912-w8h6qshfal">220912-w8h6qshfal</a></li>
+<li><a href="https://tria.ge/220912-w8jghadgh6">220912-w8jghadgh6</a></li>
+<li><a href="https://tria.ge/220912-w8kdssdgh8">220912-w8kdssdgh8</a></li>
+<li><a href="https://tria.ge/220912-w8kpkahfan">220912-w8kpkahfan</a></li>
+<li><a href="https://tria.ge/220912-w8la4adha2">220912-w8la4adha2</a></li>
+</ul>
+</li>
+<li>PowerPC
+<ul>
+<li><a href="https://tria.ge/220915-tbee6sdec6">220915-tbee6sdec6</a></li>
+<li><a href="https://tria.ge/220915-tbnnvahbhk">220915-tbnnvahbhk</a></li>
+<li><a href="https://tria.ge/220915-tbsb2ahbhl">220915-tbsb2ahbhl</a></li>
+<li><a href="https://tria.ge/220915-tbxlradec8">220915-tbxlradec8</a></li>
+<li><a href="https://tria.ge/220915-tbee6sdec6">220915-tbee6sdec6</a></li>
+</ul>
+</li>
+<li>Renesas
+<ul>
+<li><a href="https://tria.ge/220912-w8f2dadgh3">220912-w8f2dadgh3</a></li>
+<li><a href="https://tria.ge/220912-w8gmxahfaj">220912-w8gmxahfaj</a></li>
+<li><a href="https://tria.ge/220912-w8gynsdgh4">220912-w8gynsdgh4</a></li>
+<li><a href="https://tria.ge/220912-w8hj7sdgh5">220912-w8hj7sdgh5</a></li>
+<li><a href="https://tria.ge/220912-w8hvzahfak">220912-w8hvzahfak</a></li>
+</ul>
+</li>
+<li>Motorola
+<ul>
+<li><a href="https://tria.ge/220915-tcmg6sdec9">220915-tcmg6sdec9</a></li>
+<li><a href="https://tria.ge/220915-tcq6cshbhm">220915-tcq6cshbhm</a></li>
+<li><a href="https://tria.ge/220915-tcwe3shbhn">220915-tcwe3shbhn</a></li>
+<li><a href="https://tria.ge/220915-tczshaded3">220915-tczshaded3</a></li>
+<li><a href="https://tria.ge/220915-tc5czshbhp">220915-tc5czshbhp</a></li>
+</ul>
+</li>
+<li>ARC
+<ul>
+<li><a href="https://tria.ge/220915-tda6jahbhq">220915-tda6jahbhq</a></li>
+<li><a href="https://tria.ge/220915-tdk1qshcaj">220915-tdk1qshcaj</a></li>
+<li><a href="https://tria.ge/220915-tdq7rahcal">220915-tdq7rahcal</a></li>
+<li><a href="https://tria.ge/220915-tdvvyaded7">220915-tdvvyaded7</a></li>
+<li><a href="https://tria.ge/220915-td1feshcam">220915-td1feshcam</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Submitting URLs as QR Codes</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/qr-codes/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Dashboard Update and Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-01-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>LimeRAT Extractor and Family Signature Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-01/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Greater Filetype Support, Family Updates, and New Coniguration Extractors</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-03-10/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

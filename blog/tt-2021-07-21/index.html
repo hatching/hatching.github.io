@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-45.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-45.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Suricata Integration, New Extractors, and Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Suricata Integration, New Extractors, and Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-45.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-07-21T00:00:00Z">2021-07-21</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another week of Triage Thursday updates! We had a bit of a break from the blogging last week due to summer holidays but we&rsquo;re back and ready with a bunch more updates for you.</p>
+<p>This week we&rsquo;d also like to give a big shout out to the team over at <strong>Sekoia.io</strong>, who have been working hard the last few weeks to integrate Triage with their Cyber Threat Intelligence platform. They have published a blogpost on their own site today <a href="https://www.sekoia.io/en/hatching-triage-to-enhance-sekoia-io-cyber-threat-intelligence/">which you can find here</a> which you should check out for more information.</p>
+<p>With regard to Triage updates, we have several things to take a look at from the last couple of weeks:</p>
+<ul>
+<li><a href="#suricata">Suricata integration</a></li>
+<li>New configuration extractors for <a href="#xpertrat">XpertRAT</a> and <a href="#orcusrat">OrcusRAT</a> families</li>
+<li><a href="#biopass">New behavioural detections for Biopass RAT</a></li>
+<li><a href="#cryptbot">Updated detection for new Cryptbot variant</a></li>
+<li><a href="#darkside">Updates for Darkside ransomware detection</a></li>
+<li><a href="#hellokitty">New detection for the Linux variant of the HelloKitty ransomware</a></li>
+</ul>
+<p>In other news, we are also still looking to add a new Go developer to the Hatching team.  If you&rsquo;d like to be involved in the next steps of Triage&rsquo;s journey - or know someone who might be - you can find the full job listing <a href="https://hatching.io/jobs/senior-go-developer/">here</a>. Feel free to reach out with any questions.</p>
+<p>As always we also welcome any feedback or questions about our changes or just samples you come across during your analysis. If you notice anything not behaving as expected please do reach out and report it to us. You can contact us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="suricata-integration">Suricata Integration</h2>
+<p>Suricata is an open source IDS/IPS widely used across the IT industry. It focuses on network monitoring, detecting threats via signatures and heuristics within internet traffic passing through the IDS. It is a powerful tool and something which we believe can add a lot of value in terms of detecting and identifying malware families in a dynamic sandbox setting.</p>
+<p>For some time we have been working on integrating Suricata into Triage to enable us to implement more advanced network rules and leverage the significant pool of existing knowledge around the product. Today we are pleased to announce that version 1 of our integration is now live for use by all Public Cloud users. For Private Cloud users this feature will be available in a few weeks once we have thoroughly tested the feature and fleshed out the signature support.</p>
+<figure><img src="../../static/images/blog/tt-2021-07-22/suricata.png">
+</figure>
+
+<p>Suricata rules are run against the PCAPs Triage generates during analysis, <strong>including the fully decrypted SSL/TLS HTTPS traffic</strong>, giving us excellent visibility into the malware&rsquo;s network communications.</p>
+<p>An example analysis with a Suricata result can be seen here for reference: <a href="https://tria.ge/210722-3rszfk8km6/behavioral2">210722-3rszfk8km6</a>.</p>
+<h2 id="xpertrat">New XpertRAT Configuration Extractor</h2>
+<p>XpertRAT is a stealer family written in Delphi which has been around for a quite a few years, dating back to around 2011. It features fairly standard stealer functionality, while also working as a direct backdoor into compromised systems which the attacker can exploit to carry out any additional actions they wish.</p>
+<p>The malware is modular, and generally includes a core loader component with additional functions added as needed.</p>
+<figure><img src="../../static/images/blog/tt-2021-07-22/xpertrat_cfg.png">
+</figure>
+
+<p>We added basic detection for the family back in <a href="https://hatching.io/blog/tt-2020-08-27/#xpertrat">August last year</a>, but we have recently reviewed samples to expand this into a full configuration extractor. Some examples are available below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210713-2ypekd8gbj">210713-2ypekd8gbj</a></li>
+<li><a href="https://tria.ge/210713-42v32k3b52">210713-42v32k3b52</a></li>
+<li><a href="https://tria.ge/210713-qg3jwrd32n">210713-qg3jwrd32n</a></li>
+<li><a href="https://tria.ge/210713-nrzh4f9wpx">210713-nrzh4f9wpx</a></li>
+</ul>
+<h2 id="orcusrat">New OrcusRAT Configuration Extractor</h2>
+<p>Orcus is a fairly advanced remote access trojan with an extensive feature set targeted towards data theft and remote control. It has been available for purchase through forums since at least 2016, and includes support for custom plugins enabling end users to easily extend or target its abilities to their use case.</p>
+<figure><img src="../../static/images/blog/tt-2021-07-22/orcus_cfg.png">
+</figure>
+
+<p>Triage has featured support for the family for some time, but this week sees the implementation of a full configuration extractor for the family. As usual we&rsquo;ll be monitoring the results and making tweaks as needed for any outlying versions.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210712-c9zwaz3llj">210712-c9zwaz3llj</a></li>
+<li><a href="https://tria.ge/210629-3betpwy4qj">210629-3betpwy4qj</a></li>
+<li><a href="https://tria.ge/210629-sadww5wyyx">210629-sadww5wyyx</a></li>
+<li><a href="https://tria.ge/210627-txnqrvge6e">210627-txnqrvge6e</a></li>
+</ul>
+<h2 id="biopass">Detection for New Biopass RAT Family</h2>
+<p>BioPassRAT is a new malware family <a href="https://www.trendmicro.com/en_us/research/21/g/biopass-rat-new-malware-sniffs-victims-via-live-streaming.html">reported earlier in July by TrendMicro</a>. It has mainly been observed targeting Chinese online gambling companies via watering hole attack, masquerading as an installer/updated for common software applications like Flash.</p>
+<p>It follows many of the patterns typical of general stealers/RATs, including backdoor access and several tactics for harvesting information from local software like browser passwords etc. Where it sets itself apart from others is the addition of a screen recording feature which abuses the widely used OBS (Open Broadcaster Software) to capture the screen contents and stream it to the attacker&rsquo;s infrastructure in real time.</p>
+<p>For full details on the family, check out Trend Micro&rsquo;s blogpost <a href="https://www.trendmicro.com/en_us/research/21/g/biopass-rat-new-malware-sniffs-victims-via-live-streaming.html">here</a>.</p>
+<p>We have taken a look at initial samples reported and implemented behavioural signatures to classify it correctly. Some examples are available below, and you can use the <code>family:biopass</code> search query to locate additional samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210712-yxk37n5r9x">210712-yxk37n5r9x</a></li>
+<li><a href="https://tria.ge/210712-wkkvyz6vax">210712-wkkvyz6vax</a></li>
+<li><a href="https://tria.ge/210712-xdmk74rq6n">210712-xdmk74rq6n</a></li>
+<li><a href="https://tria.ge/210712-k4cgzbmf2n">210712-k4cgzbmf2n</a></li>
+</ul>
+<h2 id="cryptbot">Updated Signatures for New CryptBot Variant</h2>
+<p>CryptBot is an info-stealer which has been active in the wild since early 2019. It is often distributed alongside legitimate software which acts as its lure, often affecting users installing cracked versions of software downloaded from torrent sites.</p>
+<p>The family has featured on this blog a few times this year already, as it is still actively developed and regularly pushes updated versions. We recently observed another such variant which we have now tweaked our signatures to properly detect.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210715-21y5jt3x16">210715-21y5jt3x16</a></li>
+<li><a href="https://tria.ge/210715-3jq5yv8dr2">210715-3jq5yv8dr2</a></li>
+<li><a href="https://tria.ge/210715-hm11l7wxv2">210715-hm11l7wxv2</a></li>
+<li><a href="https://tria.ge/210715-jxbafj4kxn">210715-jxbafj4kxn</a></li>
+<li><a href="https://tria.ge/210714-kylez5326j">210714-kylez5326j</a></li>
+<li><a href="https://tria.ge/210712-b4g536k7ka">210712-b4g536k7ka</a></li>
+</ul>
+<h2 id="darkside">Updated Darkside Ransomware Detection</h2>
+<p>Darkside first appeared on the scene in late 2020. It is a ransomware family primarily used in targeted attacks rather than being distributed indiscriminately. Since it&rsquo;s appearance we have observed several versions in the wild, likely relating to individual campaigns. More information is available in the BleepingComputer article from just after the family&rsquo;s first appearance which can be found <a href="https://www.bleepingcomputer.com/news/security/darkside-new-targeted-ransomware-demands-million-dollar-ransoms/">here</a>.</p>
+<p>Ransom demands and exact deployment techniques generally vary from organisation to organisation, but like many modern ransomwares the deployment generally follows a previous breach whereby attackers were able to extract sensitive information about the company to use as leverage to pay the ransom.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210529-mc7edj4l9j">210529-mc7edj4l9j</a></li>
+<li><a href="https://tria.ge/210513-58ef37q8ce">210513-58ef37q8ce</a></li>
+<li><a href="https://tria.ge/210512-7y9jvkwby6">210512-7y9jvkwby6</a></li>
+<li><a href="https://tria.ge/210512-tkcgmzmj9n">210512-tkcgmzmj9n</a></li>
+</ul>
+<h2 id="hellokitty">New Signatures for Linux Variant of HelloKitty Ransomware</h2>
+<p>HelloKitty burst onto the scene at the start of 2021 when they successfully breached the well-known game developer CD Projekt Red - the creators of the (at the time) highly anticipated Cyberpunk 2077 and the popular Witcher franchise.</p>
+<p>Although so far they haven&rsquo;t risen to front page news again since then, the family has continued to be very active (and successful) in the wild. Now they seem to be following the <a href="https://hatching.io/blog/tt-2021-07-01/#sodin">example set by REvil/Sodinokibi</a> and have released Linux variants of their ransomware. This was recently reported on twitter by <a href="https://twitter.com/malwrhunterteam/status/1415403132230803460">@MalwareHunterTeam</a>, and it seems that the samples likely date back at least to March 2021.</p>
+<p>We have added some rules to cover these Linux versions, and you can find reports for some examples below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210719-5znrb7htha">210719-5znrb7htha</a></li>
+<li><a href="https://tria.ge/210719-8ywefz9qwj">210719-8ywefz9qwj</a></li>
+<li><a href="https://tria.ge/210719-ba83bb78xx">210719-ba83bb78xx</a></li>
+<li>[210719-sedwsye5le](<a href="https://tria.ge/210719-sedwsye5le">https://tria.ge/210719-sedwsye5le</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 105: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-19/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Analyzing Metasploit Payloads</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/metasploit-payloads/">Read</a>
+        </li>
+      
+        <li>
+          <h3>LNK HTA Polyglot</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/lnk-hta-polyglot/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Network Simulation and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-19/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-64.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-64.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Emotet Epoch 5 and other version updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Emotet Epoch 5 and other version updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-64.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-01-20T00:00:00Z">2022-01-20</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we take a look at the changes made during the week and introduce new features.</p>
+<p>Today we have a few updates to address new versions of families which have appeared recently, including Emotet returning with its Epoch 5 variant. We also have a new family and some false-positive fixes:</p>
+<ul>
+<li><a href="#static">Added more information to static reports</a></li>
+<li><a href="#emotet">Updated detections and extractor for new Emotet Epoch 5 samples</a></li>
+<li><a href="#redline">Tweaked rules to handle new Redline stealer variant</a></li>
+<li><a href="#flubot">Fixed detections to work with new version of the Flubot Android banker</a></li>
+<li><a href="#onlylogger">Added rules for new OnlyLogger variant</a></li>
+<li><a href="#babadeda">Created initial detections for Babadeda crypter</a></li>
+<li>Fixed false-positives resulting in incorrect Redline and Mimikatz detections</li>
+</ul>
+<p>As always if you discover any issues or missing detections while using Triage, please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="static">Expanded static reports</h2>
+<p>As part of our plans for 2022 we intend to expand on the information Triage makes available during the static analysis phase, moving toward including a more detailed breakdown of the file and its contents as available at that stage.</p>
+<p>We have deployed the first step of that this week, although currently it is only available to users of the API. With this new update, the following additional fields are included:</p>
+<ul>
+<li>Imphash details</li>
+<li>Authenticode validation</li>
+<li>Countersigned timestamp validation</li>
+<li>PE section information</li>
+</ul>
+<p>Note that these are included in the static report only - you can find information on that <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidreportsstatic">in the documentation</a>. We&rsquo;ll be adding support for this new data in the web UI in a coming update, so stay tuned for that!</p>
+<h2 id="emotet">Emotet Epoch 5</h2>
+<p>Over the last week or so we have received a lot of reports about the new Emotet version referred to as Epoch 5. We&rsquo;d like to thank everyone who reached out with samples - it helps us a lot with turning these things around quickly.</p>
+<p>In this case the update has been a bit more complicated than usual as the changes required some tweaks to internal components which affect our memory dumping capabilities. However these have now been implemented, and the rules and configuration extractor have been updated to properly handle these samples.</p>
+<figure><img src="../../static/images/blog/tt-2022-01-20/emotet_e5.png">
+</figure>
+
+<p>If you reported an analysis to us you should find that that has been reprocessed to reflect the change, and any new submissions will have the updated handling.</p>
+<p>It&rsquo;s a pretty safe bet this will not be the last time Emotet appears on this blog, and we&rsquo;ll be keeping an eye out for any future changes as usual. Some Epoch 5 examples are listed below for reference - you can find others using <a href="https://tria.ge/s?q=botnet%3Aepoch5">Search</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220118-bswrnsfad4">220118-bswrnsfad4</a></li>
+<li><a href="https://tria.ge/220118-bsxzqsfad5">220118-bsxzqsfad5</a></li>
+<li><a href="https://tria.ge/220118-bszhkafad6">220118-bszhkafad6</a></li>
+</ul>
+<h2 id="redline">Redline Stealer</h2>
+<p>Redline is a long-running infostealer which is currently extremely common in the wild. It is actively developed and has appeared on this blog fairly regularly since we added initial support for it.</p>
+<p>We last visited the family back in <a href="https://hatching.io/blog/tt-2021-07-29/#redline">July last year</a> when a change to their C2 communications affected detection, but at the start of 2022 we observed another new variant which has been getting past our extractor.</p>
+<p>We have reviewed a significant number of samples and updated our detections accordingly, so all Redline samples should be properly handled again.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220119-pkf8xahfd7">220119-pkf8xahfd7</a></li>
+<li><a href="https://tria.ge/220119-pabknshehp">220119-pabknshehp</a></li>
+<li><a href="https://tria.ge/220119-mkyrvahad4">220119-mkyrvahad4</a></li>
+<li><a href="https://tria.ge/220119-mg4tpahadr">220119-mg4tpahadr</a></li>
+<li><a href="https://tria.ge/220119-lbxmragfa7">220119-lbxmragfa7</a></li>
+</ul>
+<h2 id="flubot">Flubot</h2>
+<p>Flubot is an Android trojan/infostealer first discovered in late 2020. Spread mainly via SMS phishing it gained attention at the start of 2021 after carrying out large scale spam campaigns against European users. The family was a major follower of an overall trend with mobile malware since the start of the pandemic where it makes use of lures related to package delivery services like FedEx, DHL and Correos.</p>
+<p>We made some improvements to our Flubot detections in our <a href="https://hatching.io/blog/2021-review/#flubot">last blogpost of 2021</a>, but this time we&rsquo;re addressing a brand new variant reported to us by a user earlier this week. This version was completely bypassing our family detection, so we have applied updates to make sure that it is handled properly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220119-nkj45ahcg6">220119-nkj45ahcg6</a></li>
+<li><a href="https://tria.ge/220119-nge11ahce2">220119-nge11ahce2</a></li>
+</ul>
+<h2 id="babadeda">Babadeda Crypter</h2>
+<p>Babadeda is a new crypter observed in late 2021 and reported on at some length <a href="https://blog.morphisec.com/the-babadeda-crypter-targeting-crypto-nft-defi-communities">in a blogpost by Morphisec</a>. Crypters are a class of malware which sit on the line between a standard packer and a first-stage loader, using encryption to obfuscate and hide the true contents of the final payload.</p>
+<p>In Babadeda&rsquo;s case it is doing this very successfully, getting very low/non existent detections on most anti-virus solutions. This makes it a significant threat as even well known and documented payloads can leverage this to bypass all defences and gain access to systems.</p>
+<p>So far it appears to have been mainly used in attacks against the cryptocurrency and NFT communities, with threat actors distributing their campaigns via Discord spam. A detailed look at these campaigns and the attack chain can be found in the <a href="https://blog.morphisec.com/the-babadeda-crypter-targeting-crypto-nft-defi-communities">Morphisec blogpost</a>.</p>
+<p>We have added some initial detections to report the presence of this crypter, and will continue to look at ways to get the most out of analyses where it is present.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220119-t2qk5abeck">220119-t2qk5abeck</a></li>
+<li><a href="https://tria.ge/220119-t2pzlabeh4">220119-t2pzlabeh4</a></li>
+<li><a href="https://tria.ge/220119-t22y6abeh8">220119-t22y6abeh8</a></li>
+<li><a href="https://tria.ge/220119-pabknshehn">220119-pabknshehn</a></li>
+<li><a href="https://tria.ge/220119-t22cmabeh7">220119-t22cmabeh7</a></li>
+</ul>
+<h2 id="onlylogger">OnlyLogger</h2>
+<p>OnlyLogger is, despite the name, a small loader module which was reported on Twitter in mid 2021. We added some detections for it in December but have since noticed some additional samples not fully covered by those. As such we have revisited to update and improve the detections to better support the entire family.</p>
+<p>Although the name suggests it is a keylogger or similar, it actually just comes from debug paths embedded in the original samples. It is really a first stage loader, using the web service IPLogger to verify the IP of the infected machine and fetch additional payloads.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220116-p5sgnsfdf9">220116-p5sgnsfdf9</a></li>
+<li><a href="https://tria.ge/220115-tp8wyaegg3">220115-tp8wyaegg3</a></li>
+<li><a href="https://tria.ge/220115-kkxhnsdham">220115-kkxhnsdham</a></li>
+<li><a href="https://tria.ge/220115-khlcmadggr">220115-khlcmadggr</a></li>
+<li><a href="https://tria.ge/220115-kgnrcsdggm">220115-kgnrcsdggm</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 143: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Onion Support and Signature Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Accessing Dropped Files on Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/dropped-files/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Detection updates for macOS and Windows</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-24/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

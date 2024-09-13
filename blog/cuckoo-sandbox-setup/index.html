@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-11.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-11.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Cuckoo Sandbox Setup for People in a Hurry</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Cuckoo Sandbox Setup for People in a Hurry</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-11.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2019-07-03T00:00:00Z">2019-07-03</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blog%20post">blog post</a></p><li><p><a href="/blog/#category=cuckoo">cuckoo</a></p><li><p><a href="/blog/#category=sandbox">sandbox</a></p><li><p><a href="/blog/#category=installation">installation</a></p><li><p><a href="/blog/#category=guide">guide</a></p><li><p><a href="/blog/#category=cuckoo">cuckoo</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/ricardo.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Alwin Peppels and Ricardo van Zutphen</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>This blog post aims to provide a straightforward install for Cuckoo that is
+easy to follow, using as much of the built-in automation as possible.</p>
+<p>The first part of the guide will be setting up a basic install that should be
+sufficient for a single-user setup with a low number of machines.</p>
+<p>For people who want to run Cuckoo on more resources, or run a production web
+interface for multiple people, some different dependencies have to be used.
+When using parallel results processing and multiple VMs, SQLite should be
+replaced with a DBMS such as Postgres, which handles multiple processes more
+reliably. The development web server can be replaced with uWSGI + nginx. This
+is discussed in the <em>Cuckoo Web Interface</em> section of this blog post.</p>
+<p>This setup guide is tested to work on a clean install of Ubuntu 18.04 LTS, on
+other distros your mileage may vary.</p>
+<p>We will install VirtualBox, set up a virtualenv for Python and create a
+low-privilege user for cuckoo. Then create the analysis VMs using <a href="https://vmcloak.readthedocs.io/en/latest/index.html">VMCloak</a>
+to automatically install Windows 7, software, and to create snapshots, after
+which we will use the built-in &lsquo;cuckoo machine&rsquo; command to add them to the
+configuration.</p>
+<p>First of all, let&rsquo;s get our package manager up-to-date, install virtualenv, and
+make sure we have the right core tools installed:</p>
+<pre><code>sudo apt-get update
+sudo apt-get -y install python virtualenv python-pip python-dev build-essential
+</code></pre>
+<p>Secondly, we will create a new user to run Cuckoo under. Running Cuckoo under
+a separate user is important for a safe setup, we&rsquo;re dealing with malware; if
+a vulnerability is found and exploited it will be harder to compromise the
+whole machine from a low-privileged user:</p>
+<pre><code>sudo adduser --disabled-password --gecos &quot;&quot; cuckoo
+</code></pre>
+<p>The user should be able to create network dumps during Cuckoo analyses, so we
+give it permission to do so:</p>
+<pre><code>sudo groupadd pcap
+sudo usermod -a -G pcap cuckoo
+sudo chgrp pcap /usr/sbin/tcpdump
+sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+</code></pre>
+<p>One more step before we start, we need a Windows 7 ISO. Let&rsquo;s download one that
+we found and know that it works. After downloading, we have to mount the ISO to
+be used at a later step:</p>
+<pre><code>wget https://cuckoo.sh/win7ultimate.iso
+mkdir /mnt/win7
+sudo mount -o ro,loop win7ultimate.iso /mnt/win7
+</code></pre>
+<h2 id="installing-virtualbox">Installing VirtualBox</h2>
+<p>We will install VirtualBox from the VirtualBox repository, as this allows for
+easier upgrading to newer releases. It is important to install updates for the
+virtualization layer, as they might include security updates. Especially for
+VirtualBox, which has seen numerous 0day vulnerabilities in the last years,
+it&rsquo;s important to run the latest version of VirtualBox 5 or VirtualBox 6 (at
+the time of writing, this would be either 5.2.30 or 6.0.8).</p>
+<p>First, we add the repository keys:</p>
+<pre><code>wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+</code></pre>
+<p>Adding the VirtualBox repository:</p>
+<pre><code>sudo add-apt-repository &quot;deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib&quot;
+</code></pre>
+<p>Let&rsquo;s update the package list and download VirtualBox. Doing so will allow us
+to install the latest version of VirtualBox 5.2 or 6.0, whichever is
+preferable. After the installation, we add the cuckoo user to the vboxusers
+group:</p>
+<pre><code>sudo apt-get update
+sudo apt-get install virtualbox-5.2
+sudo usermod -a -G vboxusers cuckoo
+</code></pre>
+<p>Or for VirtualBox 6.0:</p>
+<pre><code>sudo apt-get update
+sudo apt-get install virtualbox-6.0
+sudo usermod -a -G vboxusers cuckoo
+</code></pre>
+<h2 id="cuckoo-and-vmcloak-installation">Cuckoo and VMCloak installation</h2>
+<p>Before we install Cuckoo and VMCloak, the installation of multiple packages is
+required. These are dependencies VMCloak or Cuckoo require to function.</p>
+<p>VMCloak and Cuckoo required packages:</p>
+<pre><code>sudo apt-get -y install build-essential libssl-dev libffi-dev python-dev genisoimage
+sudo apt-get -y install zlib1g-dev libjpeg-dev
+sudo apt-get -y install python-pip python-virtualenv python-setuptools swig
+</code></pre>
+<p>Now that the dependencies have been installed, we can install Cuckoo and VMCloak.
+Start by switching to the cuckoo user and creating a new virtualenv:</p>
+<pre><code>sudo su cuckoo
+virtualenv ~/cuckoo
+. ~/cuckoo/bin/activate
+</code></pre>
+<p>The virtualenv will allow us to install dependencies within our home directory and to prevent interference with other, globally installed, Python packages.</p>
+<p>Install both VMCloak and Cuckoo Sandbox within the same virtualenv:</p>
+<pre><code>pip install -U cuckoo vmcloak
+</code></pre>
+<h3 id="automatic-vm-creation">Automatic VM creation</h3>
+<p>Manually installing Windows, required software, editing registry keys, etc is a
+lot of work. Luckily, we don&rsquo;t have to do that because we will use
+<a href="https://vmcloak.readthedocs.io/en/latest/index.html">VMCloak</a>!</p>
+<p>First, start by defining and instantiating a VirtualBox Host-Only network
+adapter for the VMs to use:</p>
+<pre><code>vmcloak-vboxnet0
+</code></pre>
+<p>To set up a Windows VM, we will use the ISO that we mounted earlier. VMCloak
+will try /mnt/win7 (and /mnt/win7x64) by default. The following step will
+create the VM and automatically install Windows. This step will take
+approximately 15 to 20 minutes. A Cuckoo analysis VM should have at least 2GB
+of memory and preferably two or more CPU cores.</p>
+<p>The syntax of the command we will use is: <code>vmcloak init &lt;os flag&gt; &lt;vmname&gt; &lt;options&gt;</code>:</p>
+<pre><code>vmcloak init --verbose --win7x64 win7x64base --cpus 2 --ramsize 2048
+</code></pre>
+<p>After VMCloak is finished we can start installing software that should be
+present in VM snapshots. When we have created snapshots of an image, it can no
+longer be changed, therefore we clone the cleanly installed base image so we
+can install software on the clone and snapshot that:</p>
+<pre><code>vmcloak clone win7x64base win7x64cuckoo
+</code></pre>
+<p>VMCloak supports the installation of multiple software packages. A full list of
+supported packages and versions can be listed:</p>
+<pre><code>vmcloak list deps
+</code></pre>
+<p>A software package can be installed with the following syntax: <code>vmcloak install &lt;image name&gt; &lt;package&gt;</code>.
+A specific version or a serialkey can be provided by adding:
+<code>package.version=X</code> or <code>package.serialkey=X</code>. If no version is
+selected, the default version will be picked. We will be installing some basic
+software packages:</p>
+<pre><code>vmcloak install win7x64cuckoo adobepdf pillow dotnet java flash vcredist vcredist.version=2015u3 wallpaper
+</code></pre>
+<p>Optional step: installing Internet Explorer 11:</p>
+<pre><code>vmcloak install win7x64cuckoo ie11
+</code></pre>
+<p>Optional step: Installing a Microsoft Office version so that Office document
+can be analyzed. Office 2007 is most likely to work, some builds of higher
+versions of Office sometimes cause issues with the <a href="https://cuckoo-monitor.readthedocs.io/en/latest/">Cuckoo Monitor</a>:</p>
+<pre><code>vmcloak install win7x64cuckoo office office.version=2007 office.isopath=/path/to/office2007.iso office.serialkey=XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
+</code></pre>
+<p>When finished with installing software packages, we can create the VM
+snapshots. VMCloak will register a VirtualBox VM for each snapshot created.
+After snapshotting, it is no longer possible to change the image. The syntax
+of the snapshot command is: <code>vmcloak snapshot &lt;options&gt; &lt;image name&gt; &lt;vmname&gt; &lt;ip to use&gt;</code></p>
+<p>Using the <code>--count</code> parameter, we can create multiple snapshots at once.
+Let&rsquo;s create four:</p>
+<pre><code>vmcloak snapshot --count 4 win7x64cuckoo 192.168.56.101
+</code></pre>
+<p>This command will create VMs <code>win7x64cuckoo1-4</code> with IPs <code>192.168.56.101-104</code>.</p>
+<p>After VMCloak is finished, the VMs can be listed using:</p>
+<pre><code>vmcloak list vms
+</code></pre>
+<h3 id="configuring-cuckoo">Configuring Cuckoo</h3>
+<p>Cuckoo loads its configuration files, signatures, and other user-changeable
+files from its <em>Cuckoo Working Directory</em> (CWD). By default this will be
+<code>$USERHOME/.cuckoo</code>. Before we can use Cuckoo, we first have to create
+this directory:</p>
+<pre><code>cuckoo init
+</code></pre>
+<p>If a custom CWD is desired, the <code>--cwd &lt;path&gt;</code> option must be used upon
+creation and must be supplied when using Cuckoo commands, e.g.:</p>
+<pre><code>cuckoo --cwd /tmp/cuckoo init
+</code></pre>
+<h2 id="postgres-as-dbms">Postgres as DBMS</h2>
+<p>You can skip this section and jump to [Adding VMs][Adding VMs] if you are not using more
+than a couple of analysis VMs and will not be using Cuckoo processing instances.</p>
+<p>First, start by installing Postgres if it is not already installed:</p>
+<pre><code>sudo apt-get postgresql postgresql-contrib
+</code></pre>
+<p>Then we install the Postgres database driver for Cuckoo:</p>
+<pre><code>pip install psycopg2
+</code></pre>
+<p>Now let&rsquo;s create a user and database for Cuckoo to use:</p>
+<pre><code>sudo -u postgres psql
+CREATE DATABASE cuckoo;
+CREATE USER cuckoo WITH ENCRYPTED PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE cuckoo TO cuckoo;
+\q
+</code></pre>
+<p>After that, we have to tell Cuckoo to use Postgres instead of SQLite. Open the
+<code>$CWD/conf/cuckoo.conf</code> file and find the <code>[database]</code> section.
+Change the <code>connection =</code> line to:</p>
+<pre><code>connection = postgresql://cuckoo:password@localhost/cuckoo
+</code></pre>
+<h2 id="adding-vms">Adding VMs</h2>
+<p>We are using VirtualBox in our setup, this is the default <a href="https://cuckoo.sh/docs/installation/host/configuration.html#machinery-conf">Machinery module</a> that Cuckoo uses. We have to remove some default settings from its
+configuration file <code>virtualbox.conf</code>.</p>
+<p>All Cuckoo configuration files can be found at <code>$CWD/conf/</code>. Open
+<code>$CWD/conf/virtualbox.conf</code> and remove the entries in the
+<code>machines = cuckoo1</code> line.</p>
+<p>Time to add the created VMs to Cuckoo. We will use the <code>cuckoo machine --add &lt;vm name&gt; &lt;ip&gt;</code> to tell Cuckoo to add the machine to its configuration. This has to be done for each machine, so let&rsquo;s make life easier and use <code>vmcloak list vms</code>:</p>
+<pre><code>while read -r vm ip; do cuckoo machine --add $vm $ip; done &lt; &lt;(vmcloak list vms)
+</code></pre>
+<p>To install the Cuckoo signatures and latest monitor, we run the following command:</p>
+<pre><code>cuckoo community --force
+</code></pre>
+<h2 id="network-configuration">Network configuration</h2>
+<p>Next, providing analysis VMs with an internet connection.</p>
+<p>Internet on the VMs is not required, however, not having an internet connection restricts malware from retrieving data such payloads and instructions. This can affect the accuracy of the analysis results.</p>
+<p>Configuring traffic forwarding can be done globally or on a per-analysis basis. The latter requires more steps, so we will start with the global forwarding rules.</p>
+<p>First, switch to an account that has root privileges and enable forwarding. Do
+this for the <code>vboxnet0</code> interface and the outgoing interface. We will be
+using <code>eth0</code> as a dummy value here. Replace it with your outgoing
+interface (which can be identified through, e.g., <code>ifconfig</code>):</p>
+<pre><code>sudo sysctl -w net.ipv4.conf.vboxnet0.forwarding=1
+sudo sysctl -w net.ipv4.conf.eth0.forwarding=1
+</code></pre>
+<h3 id="global-forwarding-rules">Global forwarding rules</h3>
+<p>To enable global routing for all VMs connected to the vboxnet0 interface, use the following rules:</p>
+<pre><code>sudo iptables -t nat -A POSTROUTING -o eth0 -s 192.168.56.0/24 -j MASQUERADE
+sudo iptables -P FORWARD DROP
+sudo iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -s 192.168.56.0/24 -j ACCEPT
+</code></pre>
+<h3 id="per-analysis-routing---advanced">Per-analysis routing - Advanced</h3>
+<p>Cuckoo allows for <a href="https://cuckoo.sh/docs/installation/host/routing.html#per-analysis-network-routing-options">multiple types</a> of per-analysis routes,
+among which are &lsquo;internet&rsquo; and &rsquo;none&rsquo;. The route can be specified whens
+submitting an analysis.</p>
+<p>To accomplish per-analysis routing, Cuckoo uses the
+<a href="https://cuckoo.sh/docs/usage/rooter.html">Cuckoo Rooter</a>. This is a separate process that runs with root
+privileges and is able to execute pre-defined commands.</p>
+<p>We start by creating a Cuckoo Rooter process. This creates a UNIX socket owned
+by root and giving the &lsquo;cuckoo&rsquo; group permission to use it. <strong>Do not run these
+commands with sudo</strong>. The <code>--sudo</code> flag will take care of this:</p>
+<pre><code>cuckoo rooter --sudo --group cuckoo
+</code></pre>
+<p>Since Cuckoo is installed in a virtualenv, and the Cuckoo user should not have root privileges, we can do the following from a root privileged user:</p>
+<pre><code>/home/cuckoo/cuckoo/bin/cuckoo rooter --sudo --group cuckoo
+</code></pre>
+<p>Next, we have to edit <code>$CWD/conf/routing.conf</code> to tell Cuckoo what our
+outgoing interface is. Open routing.conf and change <code>internet = none</code> to
+<code>internet = eth0</code>.</p>
+<p>This config file also contains a <code>route = none</code> line. This is the
+default routing it will use. This can be changed to <code>internet</code> to give
+each analysis internet access, unless a different routing option is provided
+upon sample submission. A command line submission example:
+<code>cuckoo submit &lt;file path&gt; --options &quot;route=internet&quot;</code>.</p>
+<p>Note: if the routing configuration is changed to support per-analysis routing,
+Cuckoo requires the Cuckoo Rooter to be running and will not start otherwise.</p>
+<h2 id="the-cuckoo-web-interface">The Cuckoo Web Interface</h2>
+<p>The Cuckoo web interface can be used to submit new tasks and view analysis results. It requires MongoDB to be installed and enabled in the <code>reporting.conf</code>.</p>
+<p>If MongoDB is not installed, start by installing it:</p>
+<pre><code>sudo apt-get install mongodb
+</code></pre>
+<p>The web interface can be used by starting the built-in development server or by configuring a uWSGI + NGINX setup for a production environment.</p>
+<p>Results will only show if they have been processed after MongoDB has been
+enabled. As Cuckoo will not store them in there by default.</p>
+<p>We start by opening <code>$CWD/conf/reporting.conf</code> and find the
+<code>[MongoDB]</code> section. Change <code>enabled = no</code> to
+<code>enabled = yes</code>.
+No further configuration changes are required, unless your MongoDB setup
+requires a user, runs on a non-standard port, or runs remotely.</p>
+<p>The built-in web server</p>
+<p>This server should not be used for production environments. It is a development server. It can be used for small setups, but should not be exposed to the internet.</p>
+<p>The server can be started by running:</p>
+<pre><code>cuckoo web --host 127.0.0.1 --port 8080
+</code></pre>
+<p>We can now submit tasks and view results in the web interface. Cuckoo must be
+running for analyses to start, otherwise tasks will remain on the <em>pending</em>
+status.</p>
+<h3 id="using-uwsgi-and-nginx---advanced">Using uWSGI and nginx - Advanced</h3>
+<p>Cuckoo web can be set up to be served by nginx. This greatly increases the
+maximum amount of users a Cuckoo web interface can have at one time, and
+allows for the usage of TLS.</p>
+<p>To run Cuckoo web with uWSGI, we must first install the <code>uwsgi</code> Python dependency in the virtualenv where we installed Cuckoo:</p>
+<pre><code>pip install uwsgi
+</code></pre>
+<p>After this, ensure the following packages are installed:</p>
+<pre><code>sudo apt-get install uwsgi uwsgi-plugin-python nginx
+</code></pre>
+<p>Cuckoo can generate the configurating files for uWSGI and nginx. First, let&rsquo;s set up uWSGI:</p>
+<pre><code>cuckoo web --uwsgi &gt; cuckoo-web.ini
+sudo cp cuckoo-web.ini /etc/uwsgi/apps-available/cuckoo-web.ini
+sudo ln -s /etc/uwsgi/apps-available/cuckoo-web.ini /etc/uwsgi/apps-enabled/cuckoo-web.ini
+</code></pre>
+<p>Ensure that the <code>www-data</code> user can read the Cuckoo web files by adding it to the cuckoo group:</p>
+<pre><code>sudo adduser www-data cuckoo
+sudo systemctl restart uwsgi
+</code></pre>
+<p>Second, let&rsquo;s set up nginx. The generated nginx configuration contains values that you might want to change, such as the listening IP and port:</p>
+<pre><code>cuckoo web --nginx &gt; cuckoo-web.conf
+sudo cp cuckoo-web.conf /etc/nginx/sites-available/cuckoo-web.conf
+sudo ln -s /etc/nginx/sites-available/cuckoo-web.conf /etc/nginx/sites-enabled/cuckoo-web.conf
+sudo systemctl restart nginx
+</code></pre>
+<p>The web interface should be served by nginx now.</p>
+<h2 id="starting-cuckoo">Starting Cuckoo</h2>
+<p>When Cuckoo starts for the first time, it creates the required database tables in the configured database type. By default this is SQLite.</p>
+<p>Let&rsquo;s start Cuckoo now. If we enable debug mode, we can see all the steps it
+takes along the way of starting:</p>
+<pre><code>cuckoo --debug
+</code></pre>
+<p>After starting, it will either start analyzing submitted files or display <em>waiting for analyses..</em>.</p>
+<h3 id="cuckoo-processing-instances---advanced">Cuckoo processing instances - Advanced</h3>
+<p>When using 4+ VMs, it is recommended to use Cuckoo processing instances. These
+are separate processes that perform all results processing and reporting.</p>
+<p>Normally, the processing is part of the analysis flow and performed by the main
+Cuckoo process. Having a lot VMs can cause a large backlog of analysis results
+to be processed. By moving this process to multiple dedicated processes, this
+problem is prevented. For more information about this, see the <a href="https://cuckoo.sh/docs/usage/utilities.html#cuckoo-process">processing
+instance documentation</a>.</p>
+<p>Before starting processing instances, we must first configure Postgres (see
+[Postgres as DBMS][Postgres as DBMS].) and disable processing of results in the
+main Cuckoo process. Open the <code>cuckoo.conf</code> and change <code>process_results = yes</code>
+to <code>process_results = no</code>.</p>
+<p>We can now start one or more processing instances. The syntax of the command is <code>cuckoo process &lt;instance name&gt;</code>:</p>
+<pre><code>cuckoo process p1
+</code></pre>
+<p>The instance(s) will process tasks that reach the <em>completed</em> status.</p>
+<h3 id="starting-cuckoo-in-the-background---advanced">Starting Cuckoo in the background - Advanced</h3>
+<p>It might be desirable to run Cuckoo and supporting processes in the
+background. This is possible with <code>supervisord</code>. Cuckoo generates a
+<code>supervisord.conf</code> file for this in the CWD. This configuration starts
+Cuckoo and 4 processing instances, no other Cuckoo components. This
+configuration assumes the required changes in <code>cuckoo.conf</code> has already
+been made. For the full documentation on this, see the <a href="https://cuckoo.sh/docs/usage/start.html#cuckoo-in-the-background">cuckoo supervisord</a>
+docs.</p>
+<p>To start setting up Cuckoo with supervisord, let&rsquo;s start by installing supervisord:</p>
+<pre><code>sudo apt-get install supervisord
+</code></pre>
+<p>We start by telling supervisord what configuration to use:</p>
+<pre><code>supervisord -c /home/cuckoo/.cuckoo/supervisord.conf
+</code></pre>
+<p>Now we can now start Cuckoo as a background process and stop it when we want:</p>
+<pre><code>supervisorctl start cuckoo:
+supervisorctl stop cuckoo:
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>After following the above steps, one may now enjoy a fully functional Cuckoo
+Sandbox setup with multiple VMs, network routing capabilities, the Cuckoo Web
+Interface, and potentially more goodies. Don&rsquo;t forget to check out the
+extensive <a href="https://cuckoo.sh/docs/">Cuckoo Sandbox documentation</a> and let us know if there are
+questions and/or feedback.</p>
+<p>Looking for Cuckoo Sandbox support? <a href="https://hatching.io/solutions">Check our solutions</a>.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage for macOS</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-for-macos/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Accessing Dropped Files on Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/dropped-files/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 131: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updated Gozi Detection and Gootkit Extractor</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-04/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-5.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-5.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>LNK HTA Polyglot</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>LNK HTA Polyglot</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-5.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2018-11-12T00:00:00Z">2018-11-12</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=hooking">hooking</a></p><li><p><a href="/blog/#category=monitor">monitor</a></p><li><p><a href="/blog/#category=lnk">lnk</a></p><li><p><a href="/blog/#category=hta">hta</a></p><li><p><a href="/blog/#category=polyglot">polyglot</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/alwin.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Alwin Peppels</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>A little while ago, we came across an interesting attack vector using a polyglot LNK/HTA delivery <a href="http://blog.sevagas.com/?Advanced-USB-key-phishing">mechanism</a>. We were interested to see how it would fare under Cuckoo, so we built one and ran it through the analysis.</p>
+<p>In this blogpost, we will be examining the construction of the polyglot, its properties and its detectability. Polyglotism is a property of files that have been engineered to be valid when run or viewed in two or more programs. This can be used to vary the behavior of the file depending on what runs it. For a great talk about polyglots, check out <a href="https://youtu.be/hdCs6bPM4is">Funky File Formats</a> by Ange Albertini.</p>
+<p>Shortcuts with the .lnk extension have a lot of beneficial properties when it comes to stealth; <a href="https://en.wikipedia.org/wiki/Shortcut_(computing)#Microsoft_Windows">they are an exception</a> from the Windows setting to show or hide file extensions. Even when &ldquo;hide known file extensions&rdquo; is disabled, explorer.exe will only show the name, allowing us to let it end in &ldquo;.jpeg&rdquo;. A major downside is that they only allow 1024 characters for the whole command they execute.</p>
+<p>Here we will be using polyglotism between the <a href="https://msdn.microsoft.com/en-us/library/dd871305.aspx">Shell Link</a> format and that of a <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2005/10/31/how-can-i-start-an-application-from-an-hta/">HyperText Application</a> to circumvent this restriction and build a stageless delivery of a simple <a href="https://www.offensive-security.com/metasploit-unleashed/msfvenom/">MSF shell</a>.</p>
+<h2 id="construction">Construction</h2>
+<p>First, we needed a DLL to have executed in the background. To simulate some malicious behavior, we’ve used a simple bind shell from the Metasploit Framework:</p>
+<pre><code>$ msfvenom -p windows/shell/bind_tcp -f dll -o shell.dll
+</code></pre>
+<p>This gives us our payload to be executed by rundll32.exe. By default, it will listen on port 4444.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/shell_options.png">
+</figure>
+
+<h3 id="hta">HTA</h3>
+<p>The back part of the file is the HTA that does all the heavy lifting.
+As an extra stealth feature, we will embed a normal JPEG that gets opened while the shell runs in the background.
+After that, the HTA will replace the polyglot with the embedded picture.</p>
+<p>When mshta.exe gets called to open the polyglot, it will first encounter the binary Shell Link data.
+However, the HTA is written in HTML, which has a very forgiving syntax. This will cause the HyperText engine to silently ignore its inability to interpret LNK files, and function properly when it encounters the HTA.</p>
+<p>With the <a href="https://github.com/sevagas/macro_pack">macro_pack tool</a>, we&rsquo;ll be making two HTA files:</p>
+<pre><code>C:\&gt; echo DllMain | .\macro_pack.exe --template=EMBED_DLL --embed=shell.dll --obfuscate -G shell.hta
+C:\&gt; echo &quot;doge.jpg&quot; | .\macro_pack.exe -t EMBED_EXE --embed=doge.jpg -o -G doge.hta
+</code></pre>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/macro_pack.png">
+</figure>
+
+<p>Once that’s done, we can copy them into a single HTA application.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/hta_original.png">
+</figure>
+
+<p>Then we edit it as to first drop and open the picture, run the shell, and finally delete the polyglot, leaving behind the picture it pretended to be.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/hta_edit.png">
+</figure>
+
+<h3 id="lnk">LNK</h3>
+<p>The beginning of the polyglot is binary LNK data.
+Windows explorer.exe will see this as a shortcut, and stop reading at the end of the Shell Link format, ignoring the HTA.
+We will want to use a shortcut because explorer.exe&rsquo;s default behavior is to never show its file extension.
+This is controlled by the <em>NeverShowExt</em> option in <em>HKEY_CLASSES_ROOT\lnkfile</em>.</p>
+<p>Furthermore, LNK files allow us to change the icon, setting it to what the shortcut would normally look like when pointing to an image. The only thing suggesting that this might not be the image it pretends to be is the little, curved arrow betraying it&rsquo;s a shortcut.</p>
+<p>We set the target of the LNK to run the polyglot with mshta, and append the HTA application to make it all work.
+We make the shortcut look like the picture that is dropped so the person executing it might be none the wiser. By giving the “-G” flag to macro_pack we can create an LNK shortcut:</p>
+<pre><code>C:\&gt; .\macro_pack.exe -G .\doge.jpg.lnk
+</code></pre>
+<p>I had some trouble getting the .lnk file to call itself; macro_pack did not set the “start in” folder properly for me, so I had to set this to %CD% manually once the .lnk file was made.</p>
+<h3 id="putting-it-altogether">putting it altogether</h3>
+<p>We can simply append two files by using the <em>copy</em> command in <em>cmd</em>:</p>
+<pre><code>C:\&gt; copy /b doge.jpg.lnk+shell.hta doge.jpg.lnk
+</code></pre>
+<p>The result is a shortcut that looks like a JPEG and leaves you with an actual JPEG, but is most definitely not a JPEG.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/explorer_doge.png">
+</figure>
+
+<p>Let’s run it through Cuckoo to find out how it all works.</p>
+<h2 id="analysis">Analysis</h2>
+<p>So now we&rsquo;ve made a nifty way of fooling a user into running code, how well does it get detected?
+At the moment of writing, our file gets a VirusTotal detection of <a href="https://www.virustotal.com/#/file/7bbc4c19429479d246ff2bfd64a00174f47a7c05ba1732557fefaec6cb760ab0/detection">7/55</a>.
+As it turns out, 8 out of the <code>top 10</code>_ Windows AV products give the polyglot a clean bill of health when scanned this way.</p>
+<p>After we submit it to Cuckoo for analysis, the file runs, and a command shell is opened on the VM. We can reach it by netcat-ing to the port on the VM during the analysis, like the attacker would connect to a victim. To get to know the environment, we issue the systeminfo command.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/shell_recieve.png">
+</figure>
+
+<p>Right after the analysis has processed we can see the behavior set off quite a few alarm bells.
+The signatures have triggered a 10/10 danger rating, and Cuckoo has recognized it as a shortcut item containing command line arguments being started with a hidden window.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_summary.png">
+</figure>
+
+<p>If we take a look at the process tree, it is immediately obvious that way too much activity has taken place for something that pretends to be (a link to) an image:</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/file-tree.png">
+</figure>
+
+<p>We see cmd.exe being launched by the LNK, cmd.exe running mshta.exe with the LNK as argument, and finally rundll32.exe being called to load and execute a weird .asd file.</p>
+<p>This gives us a quick first impression of the dangers we face by opening this file if it comes from an untrusted source. But when looking to understand the specific dangers, there are the signatures to comment on the behavior. First Cuckoo alerts us to suspicious processes being started via a cmd.exe command:</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_sig_suspicious_process.png">
+</figure>
+
+<p>&hellip;then it notices an executable being dropped to the Temp folder. Note that .asd is normally used for Microsoft Word autosaved documents, but here contains the DLL with the bind shell.
+Rundll32.exe ignores the extension and continues to run as long as the file structure is valid.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_sig_dropped_pe.png">
+</figure>
+
+<p>And finally, we can see shell commands with the shell windows being hidden. First, the picture is opened to minimize suspicion, then the executable is called.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_sig_hidden_window.png">
+</figure>
+
+<p>Aside from the processes and their arguments, the signatures also tell us the network activity undertaken by the processes. Here we can see the shell binding to port 4444, and listening to all incoming connections.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_sig_listen_port.png">
+</figure>
+
+<p>A file deleting itself is handy it is when it comes to hiding the malicious original, and makes analysis harder when the damage is already done. But when it is caught, it can be a telltale sign of danger.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_sig_deletes_executed.png">
+</figure>
+
+<p>Under the “network” tab, we see Cuckoo has isolated the network traffic caused by opening the file, and we can readily see the command shell sending the opening message and working directory to us when we connected, and the commands that came from us.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_net_shell.png">
+</figure>
+
+<p>In the case of malware receiving stages or commands, we would now be able to size up the damage. For further analysis and attribution, we can see the files dropped by the polyglot, and all its child processes.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_dropped.png">
+</figure>
+
+<p>The .asd file containing our shell is listed as an executable in DLL form, available for download, along with the decoy .jpg.</p>
+<figure><img src="../../static/images/blog/lnk-hta-polyglot/cuckoo_dopped_filetype.png">
+</figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Visually, this attack vector is quite devious. Even an experienced user might fall prey to infection through this method.
+A security-conscious user might have configured Windows to show file extensions, training them to look at (and trust) the filetype being displayed. The file does what you expect it to; open a picture.</p>
+<p>So then, can we rely on traditional antivirus software to protect us? One could make the case that with our specific sample, detection by traditional scanners was far from comprehensive. Also, note that we have not used any obfuscation apart from what our tools provided by default.
+Seeing as we&rsquo;ve submitted a sample which hasn&rsquo;t been seen before, and which uses an uncommon format, AV products have to rely on static heuristics to come up with a verdict.</p>
+<p>But no matter how obfuscated, obscure or obsolete the format, the actions of the program have an effect. When those actions are logged properly under dynamic analysis, the problem that the &lsquo;freshness&rsquo; of malware presents is all but mitigated. We can clearly see the inner workings of our handiwork, along with the consequences of accidentally running it. Where malware uses novel execution techniques, tailored payloads, and visual stealth, Cuckoo excels.</p>
+<p>Nevertheless, the only good defense is awareness and good safety habits. People who know that spearphishing is one of the most lucrative angles for attackers might still get suspicious at the few visual clues we can&rsquo;t iron out, like the shortcut icon arrow and the file suddenly getting a thumbnail after being run.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Smokeloader Analysis and More Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-08-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>URLScan Integration and Updates for Emotet and Zloader</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-09-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Support for Eternity Project and EnemyBot, Plus Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Families and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-11/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-73.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-73.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Insights: Octo Android Banker</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Insights</h5>
+        
+        <h2>Triage Insights: Octo Android Banker</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-73.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2023-12-14T00:00:00Z">2023-12-14</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=octo">octo</a></p><li><p><a href="/blog/#category=malware">malware</a></p><li><p><a href="/blog/#category=guide">guide</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/junwei.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />JunWei Song</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to our brand new blog series, Triage Insights!</p>
+<h3 id="what-is-this-new-series-about">What is this new series about?</h3>
+<p>In this series, we would like to pick some latest/trending/interesting malware based on our currently supported platforms and conduct some hands-on malware analysis through our lovely Triage Sandbox.</p>
+<p>By studying malware, we can gain insight into their behaviors, tactics, potential targets, and other factors. In addition, we will also provide some ideas and tips from a malware analyst&rsquo;s perspective on how to perform further in-depth analysis of malware and speed up the whole process of malware analysis, making malware analysis easier.</p>
+<h3 id="what-is-this-series-aiming-for">What is this series aiming for?</h3>
+<p>In the field of malware analysis, static and dynamic analysis are essential and complementary techniques. Static analysis involves dissecting large and intricate codebases, which can be laborious and time-intensive for analysts. Dynamic analysis, on the other hand, demands substantial setup effort, configuring virtual environments, and tweaking settings while also considering potential impacts on the analyst&rsquo;s own system due to malware behavior.</p>
+<p>In response to these challenges, an online sandbox emerges as a comprehensive solution. We aim to share what can be achieved with Triage Sandbox, alleviating the complexities associated with both static and dynamic analyses.</p>
+<p>If you have limited knowledge about malware but wish to examine whether an unknown file has the potential to behave maliciously, simply upload the file to Triage Sandbox. We&rsquo;ll identify any suspicious activity and give you a risk score, so you can determine if the file is up to no good.</p>
+<p>Triage Sandbox has also proven invaluable to those in the field of malware analysis. It speeds up the initial analysis by providing multiple customizable settings, high interactivity, easy one-click access to download payloads and network packets, and easy-to-read reports. Best of all, it&rsquo;s free for individual users and researchers on the Triage public cloud!</p>
+<h3 id="how-do-we-pick-malware">How do we pick malware?</h3>
+<p>Malware will be picked for this series based on a set of criteria, including but not limited to:</p>
+<ul>
+<li>Recently popular.</li>
+<li>The old family reappears.</li>
+<li>Any new findings or interesting behaviors we&rsquo;ve discovered</li>
+</ul>
+<p>If you come across any interesting things regarding malware on Triage that you&rsquo;d like to share, or if you&rsquo;re interested in learning more about Triage, please feel free to let us know. We are passionate about working with you to explore and fight malware.</p>
+<hr>
+<p>Now, let&rsquo;s begin our very first Triage Insight series.</p>
+<p>In today&rsquo;s blog, we&rsquo;ll explore the Octo malware family – an Android banking trojan initially discovered by <a href="https://www.threatfabric.com/blogs/octo-new-odf-banking-trojan">ThreatFabric</a> on underground forums. <a href="https://hatching.io/blog/tt-2022-06-23/#octo">In the last year</a>, we&rsquo;ve added detections and implemented a configuration extractor to dump its C2 (Command and Control) information.</p>
+<p>Notably, we have recently observed a significant number of Octo samples appearing in the public Triage cloud, accompanied by numerous new C2 domains and targeting more applications such as banking, payment, and crypto wallets. It seems that this malware is still continually being developed and distributed. As a result, we want to pick this malware family as our first target to go over a thorough step-by-step analysis via our Triage Sandbox.</p>
+<hr>
+<h1 id="octo-malware-analysis">Octo Malware Analysis</h1>
+<h2 id="targeted-sample-information">Targeted Sample Information</h2>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%201.png">
+</figure>
+
+<blockquote>
+<p>SHA256: b38019f9e80c2166a4e09eed0cd15bad651263f0ff3ea26199a08896ffd8e1fc</p>
+<p>Report Link: <a href="https://tria.ge/231101-1wx7cadf5y">https://tria.ge/231101-1wx7cadf5y</a></p>
+</blockquote>
+<p>To get this sample or other related ones from Triage, simply search for the hash or malware family name on the Triage cloud. For detailed search guidelines, you can refer to the <a href="https://tria.ge/s?q=">search page</a>.</p>
+<h2 id="sample-submission">Sample Submission</h2>
+<p>To submit a sample to Triage, there are three options:</p>
+<ol>
+<li>Upload the file directly via Web UI.</li>
+<li>Fetch the file from a given URL.</li>
+<li>Use Triage API, for more information about API check out our <a href="https://tria.ge/docs/">official documentation</a>.</li>
+</ol>
+<p>If you want to submit a file again from an existing sample, no worries! You can simply resubmit it without worrying about messing up your environment.</p>
+<p>On the submission page, you can customize settings for the analysis on the right-hand side. If you don&rsquo;t select, Triage will automatically detect the file type and launch an Android VM. Custom settings include various operating systems (Windows, macOS, Android, Linux), the language used by the system, network settings, timeout, and default browser.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%202.png">
+</figure>
+
+<blockquote>
+<p>Analyst Tip</p>
+<p>When selecting the Android platform, we offer four different OS options with different architectures: Android 10 (x64), Android 11 (x64-arm64), Android 13 (x64-arm64), and Android 9 (x86-arm). It is recommended to select all four operating systems during analysis, as most Android mobile phones use the ARM architecture as their CPU. If only the x64 architecture is selected, some applications may fail to run due to unsupported CPU architecture.</p>
+</blockquote>
+<h2 id="interacting-in-triage-monitor">Interacting in Triage Monitor</h2>
+<p>Once you start the analysis, you will get into Triage Live Monitor. From there, you can control the virtual hosts you selected and simulate behaviors like typing or scrolling the screen. You can also enter text or click more screens in the application to trigger hidden malware behaviors.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%203.png">
+</figure>
+
+<p>You can switch between different Android VMs by clicking on the tabs above or the virtual machine windows in the Live Monitor on the left-hand side.</p>
+<blockquote>
+<p>Analyst Tip</p>
+<p>For the Android platform, Triage allows the malware to perform all dangerous behaviors by automatically granting requested permissions without human interaction.</p>
+</blockquote>
+<h2 id="reports">Reports</h2>
+<p>Upon completion of all VMs, you can access the overview report, static report, and individual analysis report for each selected VM.</p>
+<h3 id="overview-report">Overview Report</h3>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%204.png">
+</figure>
+
+<p>Let&rsquo;s start with the overview report.</p>
+<h4 id="general">General</h4>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%205.png">
+</figure>
+
+<p>The General section shows some basic information about the target file, including file name, file size, hash, and SSDEEP. Additionally, on the right, there will be the risk score for the file and the tags associated with the file. If there is a red tag, it means it is a known malware family, just like OCTO in this analysis.</p>
+<blockquote>
+<p>Analyst Tip</p>
+<p>Sometimes, you may notice that a malware sample may be associated with more than one malware family. It suggests that the malware may have originated from an earlier malware family or shared code with another malware family. This information is useful for malware analysts as it helps them research the evolution of the malware and its similarities with other malware families.</p>
+</blockquote>
+<h4 id="malware-config">Malware Config</h4>
+<p>In the Malware Config section, you can find configurations regarding the particular malware family, such as its Command and Control (C2), version number, botnet number, encryption method (with its key), User-Agent, and other relevant attributes. Our team of analysts has created a handy way to extract these malware configurations, enabling Triage to quickly retrieve malware configurations once it detects a known malware family.</p>
+<p>Let&rsquo;s take a look at Octo. We&rsquo;ve extracted all the potential C2 and the encryption key for AES. If you want to explore this malware further and conduct further analysis, like figuring out what kind of data exactly is being sent to the C2 or decrypting encrypted files or strings, having this information is super useful.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%206.png">
+</figure>
+
+<h4 id="targets">Targets</h4>
+<p>Moving on to the Targets section, it not only displays the malware family that Triage identifies but also shows all the malicious activities performed by malware in all VMs. It provides a comprehensive overview of the malware&rsquo;s intentions.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%207.png">
+</figure>
+
+<p>As shown in the above image, we can see that Octo can make use of the framework&rsquo;s Accessibility service and query a list of all the installed applications on the device, which is very common in banking trojans, because theys will look for the target banking applications that the user has installed and attempt to overlay a fake login page on top of it to intercept the user&rsquo;s credentials.</p>
+<p>Octo also has the capability to read phone information and acquire the wake lock to keep the device awake, enabling continuous execution of malicious activities such as data stealing or sending sensitive data to the C2.</p>
+<p>Also, disabling battery optimizations and removing a system notification are both indicators that this malware wants to perform malicious activities without the user&rsquo;s knowledge.</p>
+<p>Last but not least, it is important to note that loading dropped Dex/Jar files is a significant indicator of potential malware. It is because it involves loading extra files/codes during runtime, which is often a technique called <a href="https://attack.mitre.org/techniques/T1407/">dynamic code loading (DCL)</a>, used by threat actors to conceal their payloads from malware analysts and anti-virus software. According to a <a href="https://services.google.com/fh/files/blogs/gcat_threathorizons_full_jul2023.pdf">threat trends report</a> by the Google Cloud security team earlier this year, malware authors commonly use this way to sneak malicious payloads into the Google Play Store.</p>
+<blockquote>
+<p>Analyst Tip</p>
+<p>In Triage, we will list these additional payloads for you to download, and you can easily download them with one click in each VM report that has this behavior.</p>
+</blockquote>
+<h3 id="static-report">Static Report</h3>
+<p>Next is the Static Report, where you can find static information for a given file you are analyzing. It can give you broad ideas to help you conduct further analysis of the malware.</p>
+<h4 id="signatures">Signatures</h4>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%208.png">
+</figure>
+
+<p>In the Signatures section, Triage displays all the dangerous framework permissions that have been requested. It gives an overview of the type of actions the malware is attempting to perform. For instance, in this Octo sample, there are 5 requested permissions, which include:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Description</th>
+          <th style="text-align: left">IOC</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Allows an application to receive SMS messages.</td>
+          <td style="text-align: left">android.permission.RECEIVE_SMS</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Allows an application to read SMS messages.</td>
+          <td style="text-align: left">android.permission.READ_SMS</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Allows an application to send SMS messages.</td>
+          <td style="text-align: left">android.permission.SEND_SMS</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Allows read only access to phone state, including the current cellular network information, the status of any ongoing calls, and a list of any PhoneAccounts registered on the device.</td>
+          <td style="text-align: left">android.permission.READ_PHONE_STATE</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Allows an application to initiate a phone call without going through the Dialer user interface for the user to confirm the call.</td>
+          <td style="text-align: left">android.permission.CALL_PHONE</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>Analyst Tip</p>
+<p>By checking the permission information listed here, you can check whether the Android APIs corresponding to these permissions are being utilized in the malware codebase. It helps to verify if the malware is abusing these permissions, making it easier for analysts to discover any code evidence related to malicious behaviors.</p>
+</blockquote>
+<h4 id="files">Files</h4>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%209.png">
+</figure>
+
+<p>In the Files section, you can find a list of the Activities, Receivers, and Services associated with the application. This information can be greatly useful for identifying any malicious behaviors in the code during static analysis. It can help you determine the entry point of the application, where SMS is being sent or received, where AccessibilityService is being utilized, etc.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2010.png">
+</figure>
+
+<p><em><strong>Activities section of the static report</strong></em></p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2011.png">
+</figure>
+
+<p><em><strong>Receivers section of the static report</strong></em></p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2012.png">
+</figure>
+
+<p><em><strong>Services section of the static report</strong></em></p>
+<p>However, if you attempt to open Octo&rsquo;s APK directly with a reverse engineering tool such as Jadx (see image below), you will find that the above code under <code>com.broughtbluea</code> class is missing. It indicates that its code is most likely dynamically loaded at runtime, a common evasion technique used by malware to evade static analysis. But there is no need to worry, as we will show you how to overcome it with the help of Triage in the following sections.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2013.png">
+</figure>
+
+<h3 id="vm-report">VM Report</h3>
+<p>For every VM that you have selected, there will be separate reports available that provide details about its network, signature, processes, replay monitors, and downloads.</p>
+<p>Let&rsquo;s take a look at the first <a href="https://tria.ge/231101-1wx7cadf5y/behavioral1">VM</a> result for its Signatures section:</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2014.png">
+</figure>
+
+<h4 id="signatures-1">Signatures</h4>
+<p>From here, you can see the malware family along with its description, as well as the Octo payload detected by our Yara rules, which indicate that these payloads are using the DCL technique we mentioned earlier, and then all detected by Triage.</p>
+<p>After expanding the IoCs <code>Loads dropped Dex/Jar</code>, you can get the names of all payloads, and download the corresponding payloads from the <code>Downloads</code> section at the bottom according to these names.</p>
+<h4 id="network">Network</h4>
+<p>In the Network section, you can easily view the comprehensive flow of network requests, including TCP and UDP. Such information will help analysts further validate the C2 and the data the malware is trying to send as well as how it interacts with the C2 server in this particular environment.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2015.png">
+</figure>
+
+<p>In this Octo sample, it will use <code>h[xx]ps://pakuxxxnatationclass2[.]net/Njk4Zjk4YjdjODY3/</code> as its C2 server.</p>
+<p>If you wish to analyze the entire network packet, you can utilize tools like Wireshark. To do so, you can download either PCAP or PCAPNG from the top left corner of the page for further analysis.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2016.png">
+</figure>
+
+<p>In addition, Triage Sandbox provides easy access to decrypted HTTPS traffic. To access the traffic, all you need to do is download the PCAPNG (PCAP Next Generation) file that contains the full decrypted SSL/TLS traffic dump with HTTPS already decrypted. To inspect the traffic, simply open it using Wireshark/TShark (version 3 or later).</p>
+<p>Now, let&rsquo;s figure out what data Octo is trying to send or receive through HTTPS traffic. After opening the PCAPNG with Wireshark, it is clear that all HTTPS traffic has been decrypted.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2017.png">
+</figure>
+
+<p>However, it seems that the data is encrypted additionally somehow and cannot be accessed easily. To find out the content of the data, we must have a look at the DEX payload (you can find it in the <code>Downloads</code> section) and analyze how it is encrypted. After digging into the code, we found that Octo uses the <code>Cgoto.m140try</code> method to encrypt all JSON data before transmitting it. The <code>m140try</code> method definition indicates that the way of the encryption is AES with ECB mode and then encoded via Base64.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2018.png">
+</figure>
+
+<p><em><strong>The method used for communicating with the C2 server</strong></em></p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2019.png">
+</figure>
+
+<p><em><strong>The method used for encrypting the JSON data</strong></em></p>
+<p>To obtain the AES key value, the malware first decrypts the encrypted string using RC4 and then hashes the result using MD5. After that, the AES key value is <code>54569d2aaae7176335a67bf72e86736f</code>. It&rsquo;s interesting to note that the hexadecimal format of this value is exactly the same as the AES key value extracted from the previous malware config section, which is <code>3534353639643261616165373137363333356136376266373265383637333666</code>.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2020.png">
+</figure>
+
+<p>Once we have the AES key in hand, we can use tools like CyberChef to decrypt the data that has been encrypted and hidden in the HTTPS traffic. After decryption, we can explore the contents and figure out what it&rsquo;s all about.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2021.png">
+</figure>
+
+<h4 id="replay-monitor">Replay Monitor</h4>
+<p>With the help of Replay Monitor, you can review all the past operations on this VM and observe the behaviors of this malware throughout the entire process. Taking Octo as an example, we can see that after requesting multiple dangerous permissions, the user is constantly prompted to turn off Google Play Protect scanning to prevent detection by Google Play.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2022.png">
+</figure>
+
+<h4 id="downloads">Downloads</h4>
+<p>Within the Downloads section, you can find files used by this application in the sandbox environment. It includes the payload that has been dropped and any files that have been generated or downloaded during the application&rsquo;s execution. You can also resubmit these files from this section.</p>
+<p>In the image below, you can find the name corresponding to the <code>Loads dropped Dex/Jar</code> behavior mentioned in the Signatures section. One of the Indicators of Compromise (IOCs) is <code>/data/user/0/com.broughtbluea/cache/pxcpq</code>, By clicking this download button, you can obtain the DEX payload designed for Octo&rsquo;s dynamic loading, which contains the code concealed by the malware author.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2023.png">
+</figure>
+
+<p>Let&rsquo;s open this file with Jadx again, then you can find that the concealed code mentioned earlier will be brought to light here.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep1/fig%2024.png">
+</figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>By leveraging Triage in malware analysis, analysts can benefit from more than just malware detection. Triage offers valuable guidance during both static and dynamic analysis, allowing analysts to focus on the most critical aspects of the targeted malware. Furthermore, Triage simplifies virtual machine settings, making it possible to analyze most malware by using default settings. Best of all, there is no need to worry about malware affecting your environment.</p>
+<p>During our analysis of Octo, we found that the majority of malicious code was not available through static analysis of the APK file itself. To obtain the dropped DEX payloads, analysts had to set up a virtual machine or use a real Android phone as the execution environment and manually extract the dropped payloads. However, with the use of Triage, this process becomes much smoother and more efficient.</p>
+<p>Triage also comes in handy when dealing with a vast amount of malware that needs to be analyzed. It provides quick access to configurations like C2 and encryption keys, along with dynamically dropped payloads and network packets. It greatly accelerates the thorough analysis process and minimizes the effort and time put in by malware analysts.</p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="targeted-apps-found-in-the-sample-231101-1wx7cadf5y-we-analyzed-for-this-blog">Targeted apps (found in the sample <code>231101-1wx7cadf5y</code> we analyzed for this blog)</h3>
+<ul>
+<li><a href="https://hatching.io/static/files/octo-banker/octo_targeted_apps__231101-1wx7cadf5y_only.txt">Download as <code>.txt</code></a></li>
+</ul>
+<h3 id="iocs">IOCs</h3>
+<p>All Octo sha256 from public Triage:</p>
+<ul>
+<li><a href="https://hatching.io/static/files/octo-banker/all_octo_sha256.txt">Download as <code>.txt</code></a></li>
+</ul>
+<p>All Octo C2 extracted from our config extraction:</p>
+<ul>
+<li><a href="https://hatching.io/static/files/octo-banker/all_octo_c2.txt">Download as <code>.txt</code></a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 104: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Warzone Extractor and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>A Few Weeks of Configuration Extractor and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 80</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-14/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

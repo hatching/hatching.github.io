@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-87.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-87.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 88</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 88</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-87.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-10-27T00:00:00Z">2022-10-27</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! We&rsquo;ve had a bit of a hiatus lately due to time constraints making it hard to get these blogs out but rest assured that the updates have been flowing nonetheless. We&rsquo;ll summarise some of the more notable ones here along with this week&rsquo;s updates.</p>
+<p>Going forwards we&rsquo;ll be doing our best to keep to our weekly schedule for the update blogs but for at least a while things might continue to be a bit irregular. Either way keep that feedback coming in, and we&rsquo;ll be continuing to push out new updates in the background!</p>
+<p>In the news this week:</p>
+<ul>
+<li>Fixes, updates and refactoring for Ramnit</li>
+<li>Updated Lokibot configuration extractor</li>
+<li>Small fixes for CryptBot v1 configuration extractor and updates for v2</li>
+<li>Fixes to avoid Masslogger and Zloader false-positives</li>
+<li><a href="#meow">New signatures for Meow ransomware</a></li>
+<li><a href="#beatdrop">New signatures for Beatdrop downloader</a></li>
+<li><a href="#gozi">New signatures and configuration extractor for new Gozi LDR4 variant</a></li>
+<li><a href="#furball">New signatures and configuration extractor for Furball Android spyware</a></li>
+</ul>
+<p>On top of the most recent updates, the following have been deployed over the last couple of weeks where we didn&rsquo;t release a blogpost:</p>
+<ul>
+<li>Added support for Quantum ransomware</li>
+<li>Added support for Prestige ransomware</li>
+<li>Added signatures and configuration extraction for DarkCloud stealer</li>
+<li>Added signatures and configuration extraction for BruteRatel C2 framework</li>
+<li>Added signatures and configuration extraction for Rekoobe Linux trojan</li>
+<li>Updated Qakbot detections to handle new variant of its string decryption algorithm</li>
+<li>Updated Oski configuration extractor to avoid garbage C2 output</li>
+<li>Added new configuration extractor for CrimsonRAT</li>
+<li>Added signatures for Lgoogloader</li>
+<li>Added signatures for Mafiaware666 ransomware</li>
+<li>Added signatures for Harly Android trojan</li>
+</ul>
+<p>As always you can contact us any time directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="meow">Meow Ransomware</h2>
+<p>Meow is a new ransomware family that has popped up in October 2022, reported online by a few researchers. It appears to be a <a href="https://twitter.com/MalGamy12/status/1583528509028253698">new variant</a> of the Conti family using many of the same techniques.</p>
+<p>It does not seem to have any relation to the 2020 wiper attacks that also became known as Meow.</p>
+<p>The samples have pretty distinctive behaviour so we have implemented some rules and made sure the ransomnote is properly dumped wherever available.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221027-tm2pvacfh9">221027-tm2pvacfh9</a></li>
+</ul>
+<h2 id="beatdrop">Beatdrop Downloader</h2>
+<p>BeatDrop first appeared in early 2022, <a href="https://www.mandiant.com/resources/blog/tracking-apt29-phishing-campaigns">reported by Mandiant</a> as part of an investigation into the activity of the APT29 threat group. It is a malware downloader that is distributed via email phishing campaigns with an apparent focus on government/diplomatic entities.</p>
+<p>Many of the lures observed are based around fake administrative notices related to certain embassies, and compromised email accounts are used to make the emails look more trustworthy.</p>
+<p>The main interesting feature of the family is the fact that it uses <a href="https://trello.com/">Trello</a> as its C2 infrastructure - this is done via the service&rsquo;s API. Data is logged to boards, and these can also be queried to make sure that the infected organisation is not already compromised.</p>
+<p>We have added static detection for the family, and may revisit it in future if it continues to show up in our analyses.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221027-tmnszscfh6">221027-tmnszscfh6</a></li>
+<li><a href="https://tria.ge/221027-tmrjwacggm">221027-tmrjwacggm</a></li>
+<li><a href="https://tria.ge/221027-tmvxascfh8">221027-tmvxascfh8</a></li>
+</ul>
+<h2 id="gozi">Gozi LDR4</h2>
+<p>The Gozi family - often called Ursnif - is a messy collection of variants and forks which are regularly updated by a wide variety of developers and threat actors. These range from close forks with strong similarities, to more distant variations like RM3 with much more significant changes. As such trying to keep track of the various branches of the family tree can be quite tricky in itself.</p>
+<p>This week we&rsquo;re adding support for yet another variant of this family which has become known as LDR4. This was reported on earlier this month <a href="https://www.mandiant.com/resources/blog/rm3-ldr4-ursnif-banking-fraud">by Mandiant</a>. We&rsquo;ve long had configuration extractors for Gozi and these have now been updated for this variant, along with our other detections.</p>
+<p>We&rsquo;ve also made the decision to refactor the way we define the different variants in an attempt to make our tags more useful for automation - going forwards instead of having entirely separate family names for each variant all samples will be identified as simply <code>Gozi</code>, and then behavioural tags will be applied to give detail on the exact version. For anyone harvesting the data automatically this will mean you just need to filter for the Gozi family name rather than all the different options.</p>
+<figure><img src="../../static/images/blog/tt-2022-10-27/gozi.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221027-tjtvtscger">221027-tjtvtscger</a></li>
+<li><a href="https://tria.ge/221027-tjzfbacfg5">221027-tjzfbacfg5</a></li>
+<li><a href="https://tria.ge/221027-tj34hacgfk">221027-tj34hacgfk</a></li>
+<li><a href="https://tria.ge/221027-tj656acfg7">221027-tj656acfg7</a></li>
+<li><a href="https://tria.ge/221027-tj9w2scfg8">221027-tj9w2scfg8</a></li>
+</ul>
+<h2 id="furball">Furball Android Spyware</h2>
+<p>Furball is used as part of a long term mass surveillance campaign called Domestic Kitty that goes back to at least 2016. The malware itself has seen a few versions over time, and seems to be solely used by the APT-C-50 threat group and developed on top of the commercial stalkerware &lsquo;KidLogger&rsquo;.</p>
+<p>The surveillance campaign is directed against users in Iran, distributed via fake websites mimicking legitimate resources for Farsi-speakers. Depending on the exact version the family has a range of functionality options:</p>
+<ul>
+<li>Access clipboard contents</li>
+<li>Read device location</li>
+<li>Access SMS messages</li>
+<li>Steal contact list</li>
+<li>View call logs</li>
+<li>Record calls</li>
+<li>Read the content of notifications</li>
+<li>List installed and running apps</li>
+<li>Harvest device information</li>
+</ul>
+<p>Furball came to our attention after a recent update brought out a new version that gained some attention online. <a href="https://www.eset.com/int/about/newsroom/press-releases/research/masquerading-as-a-translation-app-furball-spyware-goes-after-iranian-citizens-eset-research-finds/">According to ESET</a> the latest version only requests access to contacts via the app permissions so it cannot access the full list of features above, but it&rsquo;s unclear if that&rsquo;s just due to it only being part of the overall infection or if it&rsquo;s just a change to reduce detection. This latest update does generally seem to have focused on stealth with a new obfuscation layer to make static detection harder.</p>
+<figure><img src="../../static/images/blog/tt-2022-10-27/furball.png">
+</figure>
+
+<p>We have added basic detections and a configuration extractor which can dump the C2 information from the samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221027-tgchrscgdq">221027-tgchrscgdq</a></li>
+<li><a href="https://tria.ge/221027-tgem5acff6">221027-tgem5acff6</a></li>
+<li><a href="https://tria.ge/221027-tghd1scgdr">221027-tghd1scgdr</a></li>
+<li><a href="https://tria.ge/221027-tgl27scff7">221027-tgl27scff7</a></li>
+<li><a href="https://tria.ge/221027-tgqemacff8">221027-tgqemacff8</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Release of Cuckoo-compatible onemon Windows kernel driver</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/onemon-cuckoo-release/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Submitting Zip Files to Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/archive-submissions/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 112: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-12-07/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 138: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-04/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

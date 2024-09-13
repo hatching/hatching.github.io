@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-81.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-81.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 82</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 82</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-81.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-07-28T00:00:00Z">2022-07-28</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we go over all the changes deployed to the sandbox over the course of the past week. We&rsquo;ve got another long list today so let&rsquo;s dive in:</p>
+<ul>
+<li><a href="#warzone">Updated Warzone RAT signatures and extractor for a new variant</a></li>
+<li><a href="#bandook">New configuration extractor for Bandook RAT</a></li>
+<li><a href="#raccoon">Updated signatures and extractor for another variant of Raccoon v2</a></li>
+<li><a href="#blackmoon">New signatures for BlackMoon banker</a></li>
+<li><a href="#brata">New signatures for BRATA Android banker</a></li>
+<li><a href="#merlin">New signatures for Merlin C2 framework</a></li>
+<li><a href="#darkylock">New signatures for DarkyLock ransomware</a></li>
+<li><a href="#crylock">New signatures and extractor for CryLock ransomware</a></li>
+</ul>
+<p>As always if you have any feedback, questions or issues about Triage feel free to reach out to us any time - knowing what is important to our customers and users is very helpful in such a rapidly changing environment. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="warzone">Warzone RAT</h2>
+<p>Warzone is a popular RAT with an extensive feature list which is sold as a service for others to use in their own campaigns. It has its own branded website which presents it as a legitimate remote administration tool instead of selling solely via underground forums.</p>
+<p>The malware uses its own DNS server to ensure reliable service, and includes a number of evasion techniques to disable Defender and gain persistence. A full writeup of the family, including details of features like its UAC bypasses, can be found in <a href="https://research.checkpoint.com/2020/warzone-behind-the-enemy-lines/">Checkpoint’s blog from February 2020</a>.</p>
+<p>We recently started seeing some new versions of Warzone which have changed the way they protect their hard-coded configuration. Previous versions used a standard RC4 algorithm for encryption, but the recent ones seems to have moved to a custom implementation which changes things up a bit - a snipping of this is shown below.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-28/custom_rc4.png">
+</figure>
+
+<p>This change of course broke our configuration extraction since our existing code couldn&rsquo;t parse them correctly, so we have now updated this to make sure both approaches are properly handled.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220728-tvg1eahhbm">220728-tvg1eahhbm</a></li>
+<li><a href="https://tria.ge/220726-tgs6hsbdam">220726-tgs6hsbdam</a></li>
+<li><a href="https://tria.ge/220728-tvr6dahhbn">220728-tvr6dahhbn</a></li>
+<li><a href="https://tria.ge/220726-jjnnpsfccp">220726-jjnnpsfccp</a></li>
+<li><a href="https://tria.ge/220725-rsz24aehcn">220725-rsz24aehcn</a></li>
+</ul>
+<h2 id="bandook">Bandook RAT</h2>
+<p>Bandook has a long history as a family, going all the way back to 2007 in its original form. It was mostly inactive for some years, only appearing occasionally in specific campaigns during 2015 (Operation Manul) and 2017 (Dark Caracal), but then popped up again in 2020 with a few new variants. It was seen carrying out a spate of attacks against various entities, <a href="https://digital.nhs.uk/cyber-alerts/2020/cc-3684">including the UK’s National Health Service</a> at the end of 2020. Since the original release - later traced to a Lebanese citizen going by the alias PrinceAli - the source code for several versions of the RAT has been leaked resulting in a large number of customisations and variations in the payloads seen in the wild.</p>
+<p>It is a RAT/backdoor capable of receiving commands from C2 infrastructure, effectively providing full remote access to infected machines supported by automated processes to simplify usage. Delivery mechanisms vary somewhat, but mostly revolve around malicious Office documents distributed via phishing emails. These then lead to a Powershell loader which in turn deploys Bandook. For a more detailed look at the technical capabilities, including a breakdown of the commands generally supported, take a look at <a href="https://research.checkpoint.com/2020/bandook-signed-delivered/">Checkpoint’s blogpost from 2020</a>.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-28/bandook.png">
+</figure>
+
+<p>We added detection support for the family back in March this year after a bit of a rise in samples appearing on Triage, but as this trend has continued we&rsquo;ve revisited it this week to add a full configuration extractor to dump out C2 information.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220720-vhh8dacddr">220720-vhh8dacddr</a></li>
+<li><a href="https://tria.ge/220728-tv84wshcb7">220728-tv84wshcb7</a></li>
+<li><a href="https://tria.ge/220624-raj8xsfeb2">220624-raj8xsfeb2</a></li>
+<li><a href="https://tria.ge/220710-y5araschbp">220710-y5araschbp</a></li>
+<li><a href="https://tria.ge/220624-q4th1sfdf7">220624-q4th1sfdf7</a></li>
+</ul>
+<h2 id="raccoon">Raccoon Stealer</h2>
+<p>Raccoon was a well established family up until March 2022, when operations were shut down after a key developer was killed in the Russian invasion of Ukraine. It remained inactive until early June when the operators resumed posting on the underground forums and began to push a version 2 of the malware.</p>
+<p>The new version appears to have involved rewriting significant sections of the malware but currently the overall flow and functionality is mostly unchanged. According to <a href="https://medium.com/s2wblog/raccoon-stealer-is-back-with-a-new-version-5f436e04b20d">a post by S2W</a> it claims some improvements like an expanded list of targets from which to harvest data, cross-compatibility with 32 and 64 bit systems, string encryption, and a fully automated payload builder.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-28/raccoon.png">
+</figure>
+
+<p>We&rsquo;ve recently started to see some new samples which continue the changes introduced for version 2 of the family, so today&rsquo;s updates just tweak the signatures and extractor a bit to ensure reliable coverage.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220718-hpsdeaabe2">220718-hpsdeaabe2</a></li>
+<li><a href="https://tria.ge/220716-thc6padfel">220716-thc6padfel</a></li>
+<li><a href="https://tria.ge/220715-c8rnbsfhb6">220715-c8rnbsfhb6</a></li>
+<li><a href="https://tria.ge/220714-g4ev7acge9">220714-g4ev7acge9</a></li>
+</ul>
+<h2 id="blackmoon">BlackMoon Banker</h2>
+<p>BlackMoon is a fairly old family with the first detections going back to 2014. <a href="https://www.proofpoint.com/us/threat-insight/post/Updated-Blackmoon-Banking-Trojan">Based on reports</a> it is entirely focused on stealing financial information from victims in South Korea, targeting online banking for a number of banks in the country. Although multiple versions have been seen over the years since this has remained a common theme across them all.</p>
+<p>The malware is generally dropped via drive-by download, exploiting issues in outdated browsers/browser plugins to install itself. It is also often seen being delivered as a fake software update for things like Java or Flash - although the effectiveness of this has diminished in Europe and the US in South East Asia it is more common to find consumers using dated browsers like Internet Explorer. A breakdown of versions seen in more recently is available in <a href="https://www.subexsecure.com/pdf/malware-reports/february-2021/blackmoon-a-banking-trojan.pdf">this report from February 2021</a>.</p>
+<p>We have reviewed a number of samples for the family and implemented initial static detection for them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220725-kbamjsbeck">220725-kbamjsbeck</a></li>
+<li><a href="https://tria.ge/220722-pea5psfccn">220722-pea5psfccn</a></li>
+<li><a href="https://tria.ge/220725-kh522aagg8">220725-kh522aagg8</a></li>
+<li><a href="https://tria.ge/220624-mg3lmabfdq">220624-mg3lmabfdq</a></li>
+<li><a href="https://tria.ge/220710-qc7xbsbegj">220710-qc7xbsbegj</a></li>
+</ul>
+<h2 id="brata">BRATA Banker</h2>
+<p>BRATA is a banking trojan for Android operating systems that was first observed in November 2021. At first it was going after data from Italian banks but it has seen a few evolutions since then to expand its target list and supported functionality - it now also supports banks in the UK, Poland and Latin America. Back in January 2022 <a href="https://www.cleafy.com/cleafy-labs/how-brata-is-monitoring-your-bank-account">Cleafy published a blogpost summarising the new versions</a> which they narrowed down to 3 main payloads with slightly different capabilities. These have begun to move away from purely banking-based information theft and include things like GPS tracking of the device, forced factory reset, and the ability to download a 2nd payload during runtime to bypass static detection.</p>
+<p>The banker part itself follows a common pattern for this on Android, abusing the accessibility service to effectively gain full visibility on the user&rsquo;s actions. The malware can be directly controlled by the attacker using a number of predefined commands such as <code>get_screen</code> which makes it start to capture screenshots and send them back to the C2 server.</p>
+<p>This week we have reviewed available samples and implemented initial detection for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220728-tzl5xshce2">220728-tzl5xshce2</a></li>
+<li><a href="https://tria.ge/220728-tztj1ahhel">220728-tztj1ahhel</a></li>
+<li><a href="https://tria.ge/220728-tzx77ahhep">220728-tzx77ahhep</a></li>
+<li><a href="https://tria.ge/220728-tz6jkahhfn">220728-tz6jkahhfn</a></li>
+<li><a href="https://tria.ge/220728-t1c9eahce6">220728-t1c9eahce6</a></li>
+</ul>
+<h2 id="merlin">Merlin C2 Framework</h2>
+<p>Merlin is a post-exploitation framework for stealthy C2 communication which was developed for use in red-team exercises/pentests. It <a href="https://github.com/Ne0nd0g/merlin">is available on Github</a> and supports encrypted network communication across a few different HTTP protocols which can be used to slip under the radar of common detections.</p>
+<p>Although not a malware family it&rsquo;s still not something you&rsquo;d want to find on your network so we&rsquo;ve added some quick detections to classify it properly in future reports. It is written in Golang and makes the most of its cross-compilation features with support for Linux, Windows and macOS versions.</p>
+<p><strong>Analyses:</strong></p>
+<p>Linux:</p>
+<ul>
+<li><a href="https://tria.ge/220728-t14flahhgl">220728-t14flahhgl</a></li>
+<li><a href="https://tria.ge/220728-t19ydahhgn">220728-t19ydahhgn</a></li>
+</ul>
+<p>Windows:</p>
+<ul>
+<li><a href="https://tria.ge/220728-t2e5dshcf5">220728-t2e5dshcf5</a></li>
+</ul>
+<p>MacOS:</p>
+<ul>
+<li><a href="https://tria.ge/220728-t2pntshhgp">220728-t2pntshhgp</a></li>
+</ul>
+<h2 id="darkylock">DarkyLock Ransomware</h2>
+<p>DarkyLock is a new variant of the old Babuk ransomware family. It first popped up a few weeks ago and is (currently) easy to tell apart from others due to its use of the <code>.darky</code> file extension and clearly labelled ransomnote.</p>
+<p>Babuk itself first appeared at the start of 2021 and saw some success across a number of large companies, culminating in the middle of the year with an attack against the Metropolitan Policy Department of Washington D.C. in April of that year. Although fairly low-tech the family has functional encryption which so far has not made it possible to decrypt files without working with the ransomware operators.</p>
+<p>In July 2021 after a period of internal troubles within the developer group a member of the team uploaded the source code publicly, leading to other offshoots like DarkyLock.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-28/darkylock.png">
+</figure>
+
+<p>The ransomware was already well detected on the platform but we have added some family name definitions to make sure it gets tagged properly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220716-vdzpkadhdq">220716-vdzpkadhdq</a></li>
+<li><a href="https://tria.ge/220716-vdzpkadhdr">220716-vdzpkadhdr</a></li>
+</ul>
+<h2 id="crylock">CryLock Ransomware</h2>
+<p>Like DarkyLock CryLock is also an evolution of an older family - in this case Cryakl which first appeared back in 2014. It is often deployed by other malware families, or in some cases is directly downloaded from malicious websites disguised as legitimate applications.</p>
+<p>Ransom negotiation is quite manual with victims having to email the operators directly - no price is listed in the note, and is instead issued directly. They also offer to decrypt up to 3 files as proof that they can.</p>
+<p>We have added standard detections for the family, and also a configuration extractor which can dump out RSA public keys used by the sample as well as the raw HTML ransomnote.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-28/crylock.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220728-t3rvkshhhq">220728-t3rvkshhhq</a></li>
+<li><a href="https://tria.ge/220728-t6bb1ahda2">220728-t6bb1ahda2</a></li>
+<li><a href="https://tria.ge/220728-t6m1ssaabp">220728-t6m1ssaabp</a></li>
+<li><a href="https://tria.ge/220728-t6rc8ahda6">220728-t6rc8ahda6</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Onemon Tweak Plus AtomSilo And STRRAT Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-10-21-triage-thursday/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-29/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 148: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-09-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 113: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-04/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

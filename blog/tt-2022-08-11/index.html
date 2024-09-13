@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-82.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-82.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 83</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 83</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-82.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-08-11T00:00:00Z">2022-08-11</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another Triage Thursday blogpost, where we look at the recent updates to the sandbox and its detections. Today we&rsquo;ve got a couple of weeks of changes since we didn&rsquo;t have time to put out a post last week, so let&rsquo;s get straight to it:</p>
+<ul>
+<li><a href="#eternity">Updated configuration extractor for new Eternity samples</a></li>
+<li><a href="#lightning">Added Linux detections for Lightning framework</a></li>
+<li><a href="#revive">Added signatures for Revive Android banker</a></li>
+<li><a href="#spynote">Added signatures for Spynote Android RAT</a></li>
+<li><a href="#xtremerat">New configuration extractor for XtremeRAT</a></li>
+<li><a href="#gootloader">Added new signatures for Gootloader</a></li>
+<li>Added support for new Lockbit ransomnote format</li>
+</ul>
+<p>In addition to the specific family updates this week the team have also been starting a review of our general Linux behavioural signatures to flesh those out and cover more suspicious actions. You will see a few new ones already appearing in reports, and we&rsquo;re aiming to continue working on that in the background to make further improvements.</p>
+<p>As always if you have any feedback, questions or issues about Triage feel free to reach out to us any time - knowing what is important to our customers and users is very helpful in such a rapidly changing environment. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="eternity">Eternity</h2>
+<p>We initially covered the Eternity project back in June this year when we added detections for the modules that we had come across. If you missed that blogpost the family is a recent malware-as-a-service offering which aims to give a lot of flexibility to its users - instead of focusing on just 1 type of malware Eternity has a number of different modules including an infostealer, cryptocurrency miner, clipper stealer, a fully featured ransomware, and a worm spreader. Each is sold separately and buyers can customise their own specific payload via a Telegram bot which requires no technical knowledge to use.</p>
+<p>The framework seems to be in active development, and this week we&rsquo;ve updated our configuration extractor to properly handle a new encryption algorithm seen in the latest samples. The algorithm change is fairly straightforward - it appears to have just switched from using a mix of base64 and AES to simple XOR-based encryption.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220727-am7rbabba6">220727-am7rbabba6</a></li>
+</ul>
+<h2 id="lightning">Lightning Framework</h2>
+<p>A few weeks ago <a href="https://www.intezer.com/blog/research/lightning-framework-new-linux-threat/">Intezer published a blogpost</a> about a new Linux-based malware framework that was seeing poor detection across the board. Named Lightning, it is an advanced threat with a highly modular design that can install different types of rootkit and deliver custom plugins. It&rsquo;s also reported to have quite complex communication methods with the C2 infrastructure with a few different options for both active and passive approaches depending on stealth requirements.</p>
+<p>Check out Intezer&rsquo;s blogpost linked above for a comprehensive technical breakdown of the available modules and their functionality.</p>
+<p>The samples available currently are limited and do not include all aspects of the malware, but we&rsquo;ve reviewed the files we can get our hands on and have implemented some initial detections. As always we&rsquo;ll revisit the family if/when needed to keep it up to date.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220811-szns3sbcb4">220811-szns3sbcb4</a></li>
+<li><a href="https://tria.ge/220811-szrvqsbcb5">220811-szrvqsbcb5</a></li>
+</ul>
+<h2 id="revive">Revive Android Banker</h2>
+<p>Revive is a new Android banking trojan first discovered in June 2022 by the team at Cleafy - their report on it is <a href="https://www.cleafy.com/cleafy-labs/revive-from-spyware-to-android-banking-trojan">available here</a>. Currently it is more targeted than most bankers, only going after users of the BBVA bank in Spain, but the base functionality it uses is still very familiar from other Android threats. The versions reported by Cleafy impersonate a legitimate 2FA app from the bank and heavily base their lures around that brand but this may change and expand as the family develops past these initial versions.</p>
+<p>Under the hood we see the same techniques used by most other Android bankers - especially abuse of the Accessibility Services to log all keystrokes and intercept text messages to/from the device. This allows them to bypass the 2FA implementation by acquiring the original credentials and intercepting the one-time password that is then sent out via SMS.</p>
+<p>Cleafy suggest this could just be early days for the new family so we may have to revisit in future, but for now we have reviewed some samples and implemented detection.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220811-s3e1cabcf3">220811-s3e1cabcf3</a></li>
+</ul>
+<h2 id="spynote">SpyNote Android RAT</h2>
+<p>SpyNote is an older Android threat, going back to at least 2016 when it popped up imitating legitimate paid apps to try and convince users to install the &lsquo;free&rsquo; version from non-Google Play sources. In 2020 it came back into focus after researchers at <a href="https://www.lookout.com/blog/nation-state-mobile-malware-targets-syrians-with-covid-19-lures">Lookout identified a surveillance campaign</a> seemingly being run by the Syrian Electronic Army (a state-sponsored group) against targets in Syria.</p>
+<p>The malware has a range of features including:</p>
+<ul>
+<li>Extraction of contact information</li>
+<li>Remote access to the device&rsquo;s microphone and camera</li>
+<li>GPS tracking</li>
+<li>Deploy additional payloads</li>
+<li>Exfiltrate files from the device to C2</li>
+<li>Dump out device info like carrier details, IMEI number, etc.</li>
+</ul>
+<p>Unlike some of its contemporaries SpyNote does not seem to try and get itself listed on the Google Play store, instead relying on users to sideload it from 3rd party sources. We have analysed a number of available samples and implemented initial detections.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220811-s4mrkshadn">220811-s4mrkshadn</a></li>
+<li><a href="https://tria.ge/220811-s4rqjahadp">220811-s4rqjahadp</a></li>
+<li><a href="https://tria.ge/220811-s4wpgshaek">220811-s4wpgshaek</a></li>
+<li><a href="https://tria.ge/220811-s42whabch2">220811-s42whabch2</a></li>
+</ul>
+<h2 id="xtreme">XtremeRAT</h2>
+<p>XtremeRAT is stealer family which is thought to have first appeared around 2010. Written in Delphi, it shares sections of its code base with some other families which popped up around the same time such as SpyNet, Cerberus and Cybergate.</p>
+<p>It is a fairly standard stealer with functionality you’d generally expect from this kind of family:</p>
+<ul>
+<li>Direct interaction with infected systems via remote shell</li>
+<li>Upload or download files</li>
+<li>Terminate running processes and services</li>
+<li>Capture screenshots</li>
+<li>Record audio and/or video from connected webcams and microphones</li>
+</ul>
+<p>A detailed analysis of the family can be found in Mandiant&rsquo;s 2014 blogpost about it available <a href="https://www.mandiant.com/resources/xtremerat-nuisance-or-threat">here</a>.</p>
+<figure><img src="../../static/images/blog/tt-2022-08-11/xtremerat.png">
+</figure>
+
+<p>We added detections for the family last year, but this week we revisited it to include a full configuration extractor to dump the hardcoded C2 domains.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220811-s48ztahaem">220811-s48ztahaem</a></li>
+<li><a href="https://tria.ge/220811-s5dkasbch6">220811-s5dkasbch6</a></li>
+<li><a href="https://tria.ge/220811-s5lkxabda5">220811-s5lkxabda5</a></li>
+<li><a href="https://tria.ge/220811-s5qvmahafr">220811-s5qvmahafr</a></li>
+<li><a href="https://tria.ge/220708-h7pegahag3">220708-h7pegahag3</a></li>
+</ul>
+<h2 id="gootloader">Gootloader</h2>
+<p>Gootloader is a multi-stage dropper built in Javascript which has been around since late 2020. Its early versions deployed their own end payload called Gootkit from which the loader took its name, but since then the actors have diversified to start delivering other families primarily. The &lsquo;multi-stage&rsquo; part refers to the family splitting the infection process up into small modules to make detection harder, and this is augmented by the fact the family loads these modules directly into memory to limit artifacts on the disk which might be picked up.</p>
+<p>The family went quiet for a while after many defenders started using some open-source tooling to quickly decrypt the malware and easily detect it. However in mid-2022 it has <a href="https://blogs.blackberry.com/en/2022/07/gootloader-from-seo-poisoning-to-multi-stage-downloader">appeared in the wild again</a> with a new version that gets around this detection method, and campaigns dropping things like CobaltStrike have begun to be seen.</p>
+<p>We&rsquo;ve had signatures and a configuration extractor for Gootkit, the initial payload, for a couple of years now but had not added specific detections for the loader since the 2 traditionally came as a package. However with that changing, and a new version starting to appear again, we have revisited it to add new detections based on the available samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220802-qrqatsfcf5">220802-qrqatsfcf5</a></li>
+<li><a href="https://tria.ge/220802-xhw6cabcgr">220802-xhw6cabcgr</a></li>
+<li><a href="https://tria.ge/220728-tgsvrahbb3">220728-tgsvrahbb3</a></li>
+<li><a href="https://tria.ge/220728-msbmaaehf6">220728-msbmaaehf6</a></li>
+<li><a href="https://tria.ge/220727-rnvltaeffp">220727-rnvltaeffp</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-26/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New extractors, expanded family support and Android analysis</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-08-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 85</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-09-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>A Few Weeks of Configuration Extractor and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-02/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

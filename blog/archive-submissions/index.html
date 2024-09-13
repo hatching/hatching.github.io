@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-16.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-16.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Submitting Zip Files to Triage</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Short Guides</h5>
+        
+        <h2>Submitting Zip Files to Triage</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-16.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-01-24T00:00:00Z">2020-01-24</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=archive">archive</a></p><li><p><a href="/blog/#category=submit">submit</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p>Malware can be deployed in a huge variety of ways, not all of which make analysis as simple as running a single file. Whether it is a DLL, configuration file, or data resource many samples need to have certain content available on the system in order to function properly. This can especially be true for samples recovered during Incident Response, as the initial dropper may not be available while the 2nd stage malware itself is spread across multiple files.</p>
+<p>This short blog post will cover how to submit multiple files to Triage for analysis at the same time, as well as a couple of examples on leveraging this to give more control over the way in which a sample is executed.</p>
+<h2 id="submitting-multiple-files-via-web-ui">Submitting Multiple Files via Web UI</h2>
+<p>In order to submit the files in one go, create a zip file containing everything you want to end up on the Virtual Machine for analysis. <a href="https://tria.ge/submit">Submit it to Triage</a> and you will be presented with a page like this:</p>
+<figure><img src="../../static/images/blog/archive-submissions/submit-picker.png">
+</figure>
+
+<p>Each executable file will have a checkbox next to it in the table on the left - selecting the box for a file will create a new analysis where the chosen file is executed by the agent on the VM. <strong>For each analysis spawned all files in the archive will be extracted onto the machine as well as the chosen file</strong>. This means that in most cases the sample will be able to find them if it needs access to them during execution. The files can be found in the Local AppData folder at <code>C:\\Users\\Admin\\AppData\\Local\\Temp</code>:</p>
+<figure><img src="../../static/images/blog/archive-submissions/appdata-view.png">
+</figure>
+
+<h2 id="submitting-with-custom-options">Submitting with custom options</h2>
+<p>Sometimes a sample might look at a particular path for a file, or require certain command-line parameters to run properly. There are multiple ways to do this, but due to the functionality outlined above it is relatively easy to customize the execution process by creating a PowerShell script to perform the actions you need and submit it in a zip, selecting only the .ps1 file as above. For example:</p>
+<pre><code>Move-Item -Path &quot;example-dll-1.dll&quot; -Dest &quot;C:\System32\sample-dll.dll&quot;
+Start-Process -FilePath &quot;example-sample.exe&quot; -ArgumentList &quot;-t&quot;,&quot;-x&quot;
+</code></pre>
+<p>The above .ps1 script will copy a DLL to the System32 folder and then execute the sample with specific options.</p>
+<figure><img src="../../static/images/blog/archive-submissions/ps1-process-list.png">
+</figure>
+
+<h2 id="submitting-multiple-files-via-console-api">Submitting Multiple Files via Console API</h2>
+<p>It is also possible to choose which file is executed when submitting via the API. If your account is registered as part of a company on Triage, you will have access to Profiles. You can use these to customize launch options when submitting via API, including defining a particular file in an archive which should be run by the Virtual Machine.</p>
+<p>The following command allows you to submit an archive and choose an analysis target:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;API-KEY&gt;' \
+  -X POST \
+  -F 'file=@&lt;LOCAL PATH TO ARCHIVE&gt;' \
+  -F '_json={&quot;profiles&quot;:[{&quot;pick&quot;:&quot;&lt;TARGET FILEPATH IN ARCHIVE&gt;&quot;,&quot;profile&quot;:&quot;&lt;PROFILE ID&gt;&quot;}],&quot;kind&quot;:&quot;file&quot;,&quot;interactive&quot;:false}' \
+  'https://api.tria.ge/v0/samples'
+</code></pre>
+<p>Note that we choose the file to be run using the <code>pick</code> field of the <code>profiles</code> object. The path entered here should be relative to the root of the archive itself. If we do not specify this when submitting an archive, Triage will create a separate analysis for each file it supports.</p>
+<p>You can get a list of your available profile IDs for the above command via the <code>/profiles</code> API endpoint:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;API-KEY&gt;' https://api.tria.ge/v0/profiles
+</code></pre>
+<p>If we then check the status of the sample, we can see that a single task has been created for the specified file:</p>
+<pre><code>curl -s -H 'Authorization: Bearer &lt;API-KEY&gt;' 'https://api.tria.ge/v0/samples/&lt;SAMPLE-ID&gt;'
+{
+  &quot;id&quot;: &quot;&lt;SAMPLE-ID&gt;&quot;,
+  &quot;status&quot;: &quot;reported&quot;,
+  &quot;kind&quot;: &quot;file&quot;,
+  &quot;filename&quot;: &quot;example-2.zip&quot;,
+  &quot;private&quot;: true,
+  &quot;tasks&quot;: [
+    {
+      &quot;id&quot;: &quot;task1&quot;,
+      &quot;status&quot;: &quot;reported&quot;,
+      &quot;target&quot;: &quot;example-ps1.ps1&quot;
+    }
+  ],
+  &quot;submitted&quot;: &quot;2020-01-14T16:18:55.746135Z&quot;,
+  &quot;completed&quot;: &quot;2020-01-14T16:20:09Z&quot;
+}
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>We hope this guide will help you to get the most out of Triage sandbox. Further information on the API, including command examples, can be found in the <a href="https://tria.ge/docs/">official documentation</a>. If you have any further questions about this or other topics, feel free to reach out to us using the information at the bottom of this page and we will do our best to help.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 86</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-09-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-09-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Extractor Updates, New Families, and LZMA Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 106: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-26/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

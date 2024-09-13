@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-36.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-36.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage for Android</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Android</h5>
+        
+        <h2>Triage for Android</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-36.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-08-11T00:00:00Z">2020-08-11</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=android">android</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/muhammed.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Muhammed Ziad</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We are extremely excited to announce the release of Triage for Android, a
+project we&rsquo;ve been working on for some time. This major update expands our
+Hatching Triage sandbox to also support Android analysis, enabling automated
+behavioral analysis of mobile malware samples. The new module can:</p>
+<ul>
+<li><strong>Interact in realtime with Android through our UI</strong></li>
+<li>Detect suspicious use of the Android APIs.</li>
+<li>Unpack dynamically loaded <code>.dex</code> files.</li>
+<li>Capture dropped payloads as well as monitor accesses to the filesystem.</li>
+<li>Analyze network traffic.</li>
+<li>Monitor application related processes and services.</li>
+</ul>
+<p>Submitting an Android analysis doesn&rsquo;t need you to do anything special - it is all bundled into the same Triage interface as Windows. Simply submit the APK file using the <code>Automatic</code> profile (selected by default), and Triage will detect the file type and launch and Android VM. You can then interact with this device using Triage Monitor.</p>
+<figure class="portrait"><img src="../../static/images/blog/triage-for-android/interaction.gif">
+</figure>
+
+<p>In this blog post we will use the Anubis Banking Trojan as a case study for
+techniques abusing <strong>overlays</strong>, such as its persistence and infostealing
+functionality. However, as per our Windows analysis capabilities, we support
+many other Android malware families out of the box.</p>
+<h2 id="what-are-overlays">What are overlays?</h2>
+<p>Overlay attacks involve malicious code trying to override the window layout of
+a legitimate application (an &ldquo;on-top&rdquo; behavior) with another &ldquo;fake&rdquo; one,
+usually for the purpose of stealing confidential data or going through the
+process of a payment (as is the case with banking trojans).</p>
+<p>These kinds of attacks take the form of a phishing attempt to lure users to
+enter their credentials or bank card numbers in an interface that resembles that
+of a legitimate app, duping the user into believing that they are dealing
+with the real application or service.</p>
+<h2 id="how-it-works">How it works</h2>
+<p>When started, the malicious code will check the name of the application in the
+foreground, send the result to the C2 server, then download the UI code (or
+web page) specific to the target app. The malicious code will then overlay the
+original window layout of the target app with its fake counterpart.</p>
+<p>To accomplish the first step, a lot of these samples make use of Android&rsquo;s
+<code>AccessibilityService</code>. This service is aimed at people with disabilities to
+help them interact more conveniently with their devices. A user has to enable
+this feature from the <em>settings</em> for an app before it can have access to this
+service/feature.</p>
+<p>Once the app is registered with the accessibility service, it could:</p>
+<ul>
+<li>Read text from the screen.</li>
+<li>Recognize what applications are running in the foreground.</li>
+<li>Write input into text fields.</li>
+<li>Perform gesture recognition.</li>
+<li>Receive events containing actions performed by the user such as clicking on views.</li>
+<li>Seamlessly perform actions on behalf of the user.</li>
+</ul>
+<p>With the basics covered, let&rsquo;s now take a look at Anubis.</p>
+<h2 id="anubis-banker">Anubis banker</h2>
+<p>Anubis is one of the most famous banking trojans that make use of overlays. It
+started out around 2017 and has received regular refinements and updates ever
+since. This particular kind of banking trojan originated back in 2016 with
+a sample called &lsquo;BankBot&rsquo; - this in turn spun off a number of other families
+that are based on the same principle: LokiBot (2017), Razdel (2017), MysteryBot
+(2018), and ComeBot (2019).</p>
+<figure><img src="../../static/images/blog/triage-for-android/anubis_config.png"><figcaption>
+      <h4>Example report with extracted config for Anubis</h4>
+    </figcaption>
+</figure>
+
+<p>Anubis doesn&rsquo;t limit itself to only the use of overlays to steal banking
+credentials, it has additional features and capabilities which can be
+plugged-in at runtime. Once installed Anubis can also:</p>
+<ul>
+<li>Record audio</li>
+<li>Record user screen</li>
+<li>Steal SMS data</li>
+<li>Log keystrokes</li>
+<li>Encrypt storage directories.</li>
+<li>Listen for user location as well as device sensors updates.</li>
+<li>Spread itself through sending messages to the user&rsquo;s contacts.</li>
+</ul>
+<p>The sample would normally start off by setting up its configurations, which is
+done through communicating with the C2 server to set up the initial values. It
+then initiates a session with the C2 through which it can update its payload
+and keep listening for commands to execute based on the current environment.</p>
+<figure><img src="../../static/images/blog/triage-for-android/set_config.png"><figcaption>
+      <h4>Setting the configurations</h4>
+    </figcaption>
+</figure>
+
+<figure><img src="../../static/images/blog/triage-for-android/session_commands.png"><figcaption>
+      <h4>Receiving commands from the C2 server</h4>
+    </figcaption>
+</figure>
+
+<h2 id="runtime-permissions">Runtime permissions</h2>
+<p>Now we will take a look at an excerpt of the <code>AndroidManifest.xml</code> file of an Anubis sample:</p>
+<pre tabindex="0"><code>{
+    &#34;package_name&#34;: &#34;wocwvy.czyxoxmbauu.slsa&#34;,
+    &#34;launcher_activity&#34;: &#34;wocwvy.czyxoxmbauu.slsa.ncec.myvbo&#34;,
+    &#34;permissions&#34;: [
+        &#34;android.permission.ACCESS_FINE_LOCATION&#34;,
+        &#34;android.permission.GET_TASKS&#34;,
+        &#34;android.permission.RECEIVE_SMS&#34;,
+        &#34;android.permission.READ_SMS&#34;,
+        &#34;android.permission.WRITE_SMS&#34;,
+        &#34;android.permission.PACKAGE_USAGE_STATS&#34;,
+        &#34;android.permission.SYSTEM_ALERT_WINDOW&#34;,
+        &#34;android.permission.ACCESS_NETWORK_STATE&#34;,
+        &#34;android.permission.CALL_PHONE&#34;,
+        &#34;android.permission.INTERNET&#34;,
+        &#34;android.permission.SEND_SMS&#34;,
+        &#34;android.permission.WRITE_EXTERNAL_STORAGE&#34;,
+        &#34;android.permission.READ_EXTERNAL_STORAGE&#34;,
+        &#34;android.permission.RECORD_AUDIO&#34;,
+        &#34;android.permission.READ_CONTACTS&#34;,
+        &#34;android.permission.READ_PHONE_STATE&#34;,
+        &#34;android.permission.WAKE_LOCK&#34;,
+        &#34;android.permission.RECEIVE_BOOT_COMPLETED&#34;,
+        &#34;android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS&#34;
+    ],
+    &#34;services&#34;: [
+        {
+            &#34;name&#34;: &#34;wocwvy.czyxoxmbauu.slsa.egxltnv&#34;,
+            &#34;permission&#34;: &#34;android.permission.BIND_ACCESSIBILITY_SERVICE&#34;,
+            &#34;intent_filters&#34;: [
+                &#34;android.accessibilityservice.AccessibilityService&#34;
+            ]
+        },
+
+    ]
+}
+</code></pre><p>We can see that the sample requests the
+<code>android.permission.SYSTEM_ALERT_WINDOW</code> permission, which is needed for it to
+be able to draw on top of other foreground applications. Starting from Android
+6, an app is required to explicitly declare that permission in the manifest.</p>
+<p>In the same screenshot we also see a service with an obfuscated name
+(<code>wocwvy.czyxoxmbauu.slsa.egxltnv</code>) which has the permission:
+<code>android.permission.BIND_ACCESSIBILITY_SERVICE</code>. This just means that only <em>the
+system</em> can bind to that service, and once the user grants it the permission
+from the settings, the malicious app can start to receive <code>AccessibilityEvent</code>s
+accordingly.</p>
+<figure><img src="../../static/images/blog/triage-for-android/on_accessibility_event.png">
+</figure>
+
+<p>In the manifest declaration of the service, a configuration file has to be
+defined which specifies the types of the event that the malicious app is
+interested in receiving:</p>
+<pre tabindex="0"><code>&lt;accessibility-service
+    android:settingsActivity=&#34;com.example.root.myapplication.MainActivity&#34;
+    android:accessibilityEventTypes=&#34;typeWindowContentChanged|typeWindowStateChanged&#34;
+    android:accessibilityFlags=&#34;flagDefault|flagIncludeNotImportantViews|flagReportViewIds&#34;
+    android:canRetrieveWindowContent=&#34;true&#34;
+    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; /&gt;
+</code></pre><h2 id="persistence">Persistence</h2>
+<p>Once it has been granted the permission, the application will monitor attempts
+to uninstall it and effectively prevent the user from completing them:</p>
+<figure><img src="../../static/images/blog/triage-for-android/prevent_uninstall.png">
+</figure>
+
+<p>At this point the malware will be able to know which applications are being
+launched on the device, and once that happens it will report to the C2 server
+which will serve it a web page. This web page will be rendered using a
+<code>WebViewClient</code> that loads a fake interface (specific to the target app) for
+the user to enter their credentials in.</p>
+<figure><img src="../../static/images/blog/triage-for-android/layout_inject.png"><figcaption>
+      <h4>Injection activity</h4>
+    </figcaption>
+</figure>
+
+<p>Further, the app will also ask for the permission to receive SMSs by the
+system, which will enable it to collect OTP messages received as part of the
+payment process.</p>
+<p><em>Interestingly, it should be noted that the malware could simply grant itself
+these permissions at runtime, given that the user had enabled the accessibility
+settings. However such usage was not observed to have been implemented in
+the samples.</em></p>
+<h2 id="triage-analysis">Triage analysis</h2>
+<p>Running the sample through our sandbox can give us some information about what
+it does.</p>
+<p>The malware begins with requesting the accessibility permission (which it will
+usually spam until granted). It does that by sending an intent to the system
+via a call to:</p>
+<p><code>startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));</code></p>
+<p>In the sandboxed environment, we will automatically grant the sample all the
+permissions it requests in order to see how it will behave in those conditions.</p>
+<p>Now, looking at an excerpt of the logs we can see a particular entry for a
+file being read:</p>
+<pre tabindex="0"><code>*droidy.File ts=3363462918 pid=4740 srcpath=/storage/emulated/0/id.txt dstpath= kind=Read
+</code></pre><p>The sample reads an <code>id.txt</code> file from external storage, which contains what
+seems to be an ID of this bot. That file gets dropped by downloading it from
+the C2 server. On application startup, it reads that value which it uses to
+communicate with the C2 server throughout the session.</p>
+<p>We can also examine the <code>SharedPreferences</code> that the application writes to,
+where we will see some entries like:</p>
+<pre tabindex="0"><code>*droidy.SharedPreferences operation=Put key=swspacket value=com.google.android.apps.messaging
+*droidy.SharedPreferences operation=Put key=VNC_Start_NEW value=http://ktosdelaetskrintotpidor.com
+*droidy.SharedPreferences operation=Put key=Starter value=http://sositehuypidarasi.com
+*droidy.SharedPreferences operation=Put key=urls value=ZWViZGQ3NjRjOGZlOWNjMjAzODhhNzFhNzg4MDJi
+*droidy.SharedPreferences operation=Put key=urlInj value=
+*droidy.SharedPreferences operation=Put key=interval value=10000
+*droidy.SharedPreferences operation=Put key=del_sws value=false
+*droidy.SharedPreferences operation=Put key=RequestINJ value=
+*droidy.SharedPreferences operation=Put key=RequestGPS value=
+*droidy.SharedPreferences operation=Put key=save_inj value=
+*droidy.SharedPreferences operation=Put key=getNumber value=false
+*droidy.SharedPreferences operation=Put key=spamSMS value=
+</code></pre><p>This shows an interesting part about the sample as these are the configurations
+stored by the malware for its services to consume. Some of them are initialized
+at startup e.g. the C2 URLs for VNC that it communicates with. While the other
+values will be obtained from the C2 server. Based on the messages exchanged between
+the client and the server, the sample will know which functionalities to enable
+at runtime.</p>
+<figure><img src="../../static/images/blog/triage-for-android/keylogger.png">
+</figure>
+
+<p>Some interesting configurations include:</p>
+<pre tabindex="0"><code>VNC_Start_NEW       --&gt;  URL for the VNC client to use for video streaming.
+del_sws             --&gt;  Flag to delete/ leave the SMS messages sent by the sample.
+network             --&gt;  Flag to enable/ disable location updates through the &#39;network&#39; provider.
+gps                 --&gt;  Flag to enable/ disable listening for location updates.
+save_inj            --&gt;  The list of applications that will trigger the overlay injection.
+getNumber           --&gt;  Flag to get the numbers of the user contacts.
+vnc                 --&gt;  Flag to enable/ disable screen recoder.
+cryptfile           --&gt;  Sets the status of the file system encryption.
+key                 --&gt;  XOR key used for encryption.
+keylogger           --&gt;  Flag to enable/ disable keylogger.
+recordsoundseconds  --&gt;  Flag to enable/ disable sound recorder.
+spamSMS             --&gt;  Flag to do SMS spamming.
+</code></pre><p>The C2 URLs are extracted in the triage report:</p>
+<figure><img src="../../static/images/blog/triage-for-android/config.png">
+</figure>
+
+<h2 id="anti-analysis-techniques">Anti-analysis techniques</h2>
+<p>Many variants of Anubis would not implement any malicious code at all in order
+to defeat static analysis attempts, and as well, bypass Google Play Store’s
+security control. Instead, it will unpack its modules dynamically at runtime.</p>
+<p>When checking the file accesses made by the sample we can see that it drops
+a <code>.jar</code> file and loads it at runtime as shown in:</p>
+<pre tabindex="0"><code>*droidy.File path=/data/user/0/com.xfhrpkcehqn.mqrvmxmd/app_files/xywqetxdjxvi.jar kind=Create
+*droidy.File path=/data/user/0/com.xfhrpkcehqn.mqrvmxmd/app_files/xywqetxdjxvi.jar kind=Write
+*droidy.File path=/data/user/0/com.xfhrpkcehqn.mqrvmxmd/app_files/xywqetxdjxvi.jar kind=Read
+*droidy.File path=/data/user/0/com.xfhrpkcehqn.mqrvmxmd/app_files/xywqetxdjxvi.jar kind=Read
+*droidy.File path=/data/user/0/com.xfhrpkcehqn.mqrvmxmd/app_files/xywqetxdjxvi.jar kind=Delete
+*droidy.File path=/data/user/0/com.xfhrpkcehqn.mqrvmxmd/app_files/xywqetxdjxvi.dex kind=Delete
+</code></pre><p>We can also see that this kind of behavior is detected and reported by a signature in the Triage output.</p>
+<figure><img src="../../static/images/blog/triage-for-android/dropped_dex.png">
+</figure>
+
+<p>When analyzing the dropped payload we found that the dropped Dex has pretty
+much the same malicious services. Roughly, the same components are
+registered in the <code>AndroidManifest.xml</code> across the samples.</p>
+<p>The installed apk loads the dropped <code>.jar</code> file via a <code>ClassLoader</code> instance,
+and overrides the <code>ContextWrapper.attachBaseContext()</code> method which delegates
+all application context related calls to a new <code>Application</code> instance,
+essentially replacing the benign application with a malicious one - this
+is a common technique used by packers.</p>
+<h2 id="analyzed-samples">Analyzed samples:</h2>
+<pre tabindex="0"><code>03e9e52588575c2acbf6811cb06a93bc5365fa20eaf7e9bed497373fde446475
+b44bfa1d1c49d7642aee5b96112f20811bb3f001de519df3d89ed44aa2e6fcd2
+0e33a0200df97e40d691d6f57749ac9584652f832c28fd8ad017154b5f9db2b3
+cb07eaf6e2334e4f406a896572372eb646265893eb9255ede881e60eee1762ec
+0ea083f31822c18ba2905c3aeabd83c7b09237e5443319cc27352bb4a3ac7e13
+cbe3323456aa1f07afda2575e0115390ed6efa9faee3d8c160b4798760b2b44e
+0ffdf82f55912d00705d91f90894abbbc728ecd9bad1b850c4b490f7a0796d45
+cc8a7f8ee12441c01c28dfb48dc5b926694a42f94693cf139dd4208585f3e3f3
+18832427a4a7dd1c2960a40fc13fc0dfc5357ecafdf7dae9f89d721f4138bc25
+cd04470c86979749d70cae2190bee2dbf046bc14963a3f384648e44f6ad30dcd
+230df3d3ce419e7988931c3d99ec0ab538d386f4b2e9d19e4ea639fa574ef294
+cf59967f1a76cf44500e50b59f366748beff7c53227a564c60bd1faa693173a6
+2b6c83dc1f0601e1c29270121eee020e8cd1b74ec61bb619a9c6b8008e587e26
+d284f29b845cc2f73a86c6142f84ee57f6dfeca1a54971cec342ac81d84203dc
+2bcee3c1f3e29927963428a5cea7c6a7ae2bdce1e3ae5ccd6769766c9475ae81
+d906bc2b169d8c6d09a1eb2b77ec4d29e636b65ce6749a4b241d0eeecf8233ce
+35e39edb87400ea0c3bca47748808f0f8d7e0182a36d0fe67b6c1448822e2905
+dad0e376029b0a33e54ce2eab8e8f2b7459982ac2c955bc58938dc667a902dd5
+4c203725a9591a80d8ee1e46d4e92d0d1f446aed02ae29e4d569eda195c53d8d
+e10ecdf92e22bf97fef56382c3e398a2e0700829d645dfbf905911a35643568b
+525f4dd1ca19868391115be0cac96d275581d53a506c030d58a52a214a223ff5
+e2bc0c142624328af7a95cd17adf1fc6c93f7a069e34535f869bd2738203f256
+5fd956642d2bd46108a4314af609b10fa41a19161618e413b9a6fbcf56892670
+e65bed84ac1d140629f470a3bb2631df7a20193906d758bc8a1ecc514a02a7e6
+6292fca792ab35f111b8abcd0e204b575880a2cabd80941ca014a94f63137219
+e81d5f39c0c4da685bbfed9ca6ff079f10c46bd0118b0bd7793e94a9f6d624d2
+6c74f7603d538ee818e79b025c0713e2efbce7e406a78f882b8cb0857f2cc52a
+ea8feca4c616f97d782ccdcaa02f849e3f09021b3b6e09afcf15f2d9d9ea3970
+7b2093d8c6f2fb507d5db2805b95fa6aa490db063924b522d5f83cfa82b9592b
+ec034fc9f5e2d55d5f3581601d33757f7e6570afee463f2869c5ec8fa9920cd7
+7ce509f579c92df91305cdd1f798d4f86edfa738533e746ee82befd52e987c36
+f978b8de2c2c68002c57cab4a1f8dee6a2c2550d1a0a15f9e866fa948dffb7f6
+8523c34321681ef5c63adb0a983adcc703bfdcd5017db50187e44e1e57f354f7
+fa7f19cfa2848158923661d7c4b753ec340645041987b7fa2c3771b168dcb4ad
+9852b3c4e21718089ac9fa0f22283498ead24a8e788626929fe94bdd6b5d37de
+fbc9286c9d5e9135784422aac8b1346b18c05a48fe80224c21f71bc8c24618d6
+9ffca9c9d28592426344789a3d3010cd55c426f5b9db0fd33bd16ec47779472b
+fc2be987f2aae89ed2ee120a1e98cb0a8f4fe4b63489bb464e24ec9eeeca110b
+aa9e58f4b732f91bb63d130e196f66cb97b09e8eed2bc14712812df55d6a99e4
+ab35ff6f9ad9a5fba0687ee9e8ef1dfec0c32efc06d09055a4fe148feee1a637
+af7dc844d3ccbf56aedc0287168dce837d29001db6f520b95487dd06b52adb75
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>Overlay attacks are a threat especially for devices running Android versions
+lower than 10. Starting from Android 10 Google has deprecated overlay behavior,
+although it is still possible for the malware to use the <code>AccessibilityService</code>
+features for other malicious activities as outlined above.</p>
+<p>Triage for Android is now available on the public server at
+<a href="https://tria.ge">tria.ge</a>. We will be expanding on the available detection and
+functionality in future updates, and as usual feedback and suggestions are
+always appreciated. You can reach us using the feedback form on the website or
+via <a href="https://twitter.com/hatching_io">Twitter</a>.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge/">https://tria.ge/</a> and register right away!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 107: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Extractor Updates and ZLoader Anti-VM</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-25/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Improvements</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Advanced Submit Screen and Emotet Powershell Parsing</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-12-02/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

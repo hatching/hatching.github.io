@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-52.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-52.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New and Improved Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New and Improved Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-52.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-09-16T00:00:00Z">2021-09-16</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We&rsquo;re back to Triage Thursday this week after a short break, with plenty of detection updates for you to take a look at. You may already have noticed some of the changes we&rsquo;ll go over today, as we&rsquo;ll be covering things which were deployed last week as well, but we&rsquo;re sure there will still be a few things in here you haven&rsquo;t spotted yet!</p>
+<p>The focus is on detection updates this week, with the following changes available:</p>
+<ul>
+<li><a href="#neshta">Added signatures for Neshta file infector</a></li>
+<li><a href="#xtremerat">New detections for XtremeRAT</a></li>
+<li><a href="#sova">Added rules for SOVA Android banking trojan</a></li>
+<li><a href="#arkei">Improved handling of Arkei stealer</a></li>
+<li><a href="#asyncrat">Updated configuration extractor for AsyncRAT</a></li>
+<li><a href="#ammyy">Added static detection for AmmyyAdmin</a></li>
+<li><a href="#elysium">Added additional signature for Elysium Stealer</a></li>
+<li>Added rules for <a href="#darkcrypt">Darkcrypt</a> and <a href="#lockfile">Lockfile</a> ransomwares</li>
+<li><a href="#danabot">Updated Danabot signature</a></li>
+</ul>
+<p>If you discover any issues or missing detections while using Triage, please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="neshta">Neshta File Injector</h2>
+<p>Neshta belongs to a class of malware which is fairly unusual these days, having been mostly replaced by more up to date infection methods. Known as file infectors, they overwrite sections of executables on the targeted system so that the malware is run every time one of these legitimate binaries is executed.</p>
+<p>Nestha itself goes all the way back to 2005 and was created by developers in Belarus using Delphi. It overwrites the first 41,472 bytes of infected files with its own code, effectively completely overriding the original functionality.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-16/fig3-neshta.png"><figcaption>
+      <h4>Credit to Blackberry Cylance/Tatsuya Hasegawa: https://blogs.blackberry.com/en/2019/10/threat-spotlight-neshta-file-infector-endures</h4>
+    </figcaption>
+</figure>
+
+<p>In addition to the file infection functionality, Nestha also ensures persistence by <a href="https://blogs.blackberry.com/en/2019/10/threat-spotlight-neshta-file-infector-endures">adding a registry entry</a> which causes Windows to launch the malware binary whenever an executable file is run. It renames itself to <code>svchost.com</code> and enters a registry key to abuse the &ldquo;Open With&rdquo; functionality of Windows to sideload itself before any executable is run. To avoid multiple instances of the malware being active simultaneously it creates a mutex to track when a copy is already running.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210706-s12y9abwej">210706-s12y9abwej</a></li>
+<li><a href="https://tria.ge/210709-dplxbpw8y2">210709-dplxbpw8y2</a></li>
+<li><a href="https://tria.ge/210819-t4q7e5jvp6">210819-t4q7e5jvp6</a></li>
+<li><a href="https://tria.ge/210912-tkm4nscdg7">210912-tkm4nscdg7</a></li>
+</ul>
+<h2 id="xtremerat">XtremeRAT</h2>
+<p>XtremeRAT is another family written in Delphi, and shares sections of its code base with some other families which popped up around the same time <a href="https://www.fireeye.com/blog/threat-research/2014/02/xtremerat-nuisance-or-threat.html">such as SpyNet, Cerberus and Cybergate</a>.</p>
+<p>Thought to have first appeared around 2010, XtremeRAT is a fairly standard stealer with functionality you&rsquo;d generally expect from this kind of family:</p>
+<ul>
+<li>Direct interaction with infected systems via remote shell</li>
+<li>Upload or download files</li>
+<li>Terminate running processes and services</li>
+<li>Capture screenshots</li>
+<li>Record audio and/or video from connected webcams and microphones</li>
+</ul>
+<p>A detailed analysis of the family can be found in <a href="https://www.fireeye.com/blog/threat-research/2014/02/xtremerat-nuisance-or-threat.html">Fireeye&rsquo;s 2014 blogpost</a> about it. It is still actively used in 2021, and we have this week taken a look at some recent examples in order to implement detections to properly classify them using static and behavioural signatures.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200729-r3t8er9v4n">200729-r3t8er9v4n</a></li>
+<li><a href="https://tria.ge/201015-64xwy9lv4j">201015-64xwy9lv4j</a></li>
+<li><a href="https://tria.ge/210228-tsm847fmqj">210228-tsm847fmqj</a></li>
+<li><a href="https://tria.ge/210914-hdg4asabcp">210914-hdg4asabcp</a></li>
+</ul>
+<h2 id="sova">SOVA Android Banker</h2>
+<p>Earlier this month <a href="https://www.threatfabric.com/blogs/sova-new-trojan-with-fowl-intentions.html">ThreatFabric announced</a> a new Android banking trojan they had detected in the wild in early August. They named it SOVA based on the name its own creators use, and which was found in the C2 panel by researchers.</p>
+<p>Believed to still be in the early stages of development SOVA follows many of the patterns now common in Android malware, centred around using overlay attacks to intercept information being entered into certain sensitive apps like mobile banking and payment programs. It additionally deploys a keylogger to intercept credentials more widely, and can use fake notifications to encourage infected users to take additional actions and grant further access. In addition to this, ThreatFabric reports that it includes a more unusual capability to dump and steal session cookies, granting access to valid sessions without needing credentials at all.</p>
+<p>According to the roadmap set out by the developer of SOVA, future updates will see it expand its functionality to also include ransomware modules, DDoS support, and man-in-the-middle network interception.</p>
+<p>We have taken a look at the samples identified by ThreatFabric and implemented our own initial detections. Bearing in mind that this appears to be early in development we&rsquo;ll also be monitoring for any new samples in future and will make adjustments as required.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210910-nrxc2adbck">210910-nrxc2adbck</a></li>
+<li><a href="https://tria.ge/210910-nsawesdbcl">210910-nsawesdbcl</a></li>
+<li><a href="https://tria.ge/210909-2bx7aacael">210909-2bx7aacael</a></li>
+</ul>
+<h2 id="arkei">Arkei Stealer</h2>
+<p>Arkei is not a hugely common sight these days, having been mostly surpassed by its younger spinoffs <a href="https://hatching.io/blog/tt-2020-10-08/#vidar">Vidar</a> and Baldr. However it still shows up from time to time, and we recently observed a sample on Triage that wasn&rsquo;t properly detected which prompted us to include it in this week&rsquo;s updates.</p>
+<p>The family is a fairly typical infostealer, having first gained attention in mid 2018 embedded within legitimate software packages available on Github. It focuses on data stored on the local filesystem, exfiltrating browser information (saved passwords etc.) and cryptocurrency wallets.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210830-jf66awadzx">210830-jf66awadzx</a></li>
+</ul>
+<h2 id="asyncrat">AsyncRAT</h2>
+<p>AsyncRAT is an open-source RAT available on <a href="https://github.com/NYAN-x-CAT/AsyncRAT-C-Sharp/">Github</a>. It claims to be for legitimate remote administration purposes only, but is commonly used by criminals looking for an easy to use, adaptable RAT.</p>
+<p>We added a configuration extractor for the family <a href="https://hatching.io/blog/tt-2020-10-29/#asyncrat">back in October 2020</a>, but we recently observed a slight change in samples submitted to Triage which was causing it some issues. We have now reviewed it and made some changes which should make it far more reliable, especially regarding the extraction of botnet IDs. These samples also included a change to the way they handle their <code>salt</code> values, used in C2 communications, so we have adjusted to now extract these dynamically to better support the new approach.</p>
+<p>Some examples of the new variant are listed below for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210903-hnnntsfghk">210903-hnnntsfghk</a></li>
+<li><a href="https://tria.ge/210902-xy8lse9wmx">210902-xy8lse9wmx</a></li>
+<li><a href="https://tria.ge/210830-hk8fbggb2e">210830-hk8fbggb2e</a></li>
+<li><a href="https://tria.ge/210828-ek5qm622vj">210828-ek5qm622vj</a></li>
+<li><a href="https://tria.ge/210827-864jr6cf9x">210827-864jr6cf9x</a></li>
+</ul>
+<h2 id="ammyy">AmmyyAdmin</h2>
+<p>AmmyyAdmin is a remote administration toolkit which has, for many years, been developed as an easy-to-setup solution for individuals and companies. Quite unusually for RATs, this one actually is intended for legitimate use and over the years the developers have attempted to take steps to curb malicious usage, but this has not stopped it seeing widespread popularity as a tool for cold-call scams and similar. It is also sometimes used on its own as an automated payload.</p>
+<p>The codebase has also formed the foundations of other malware families like FlawedAmmyy, which used leaked sourcecode to build a stealer using some of the advanced features contained within the original software.</p>
+<p>We are generally more interested in genuinely malicious software, and Ammyy&rsquo;s design means that unmodified versions of the software are rarely used as-is in malicious campaigns, but we have this week added some static detection based on recent submissions to Triage in order to clearly mark when it is identified in an analysis.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210907-gwjt6sfcbk">210907-gwjt6sfcbk</a></li>
+<li><a href="https://tria.ge/210907-gwjt6scaa4">210907-gwjt6scaa4</a></li>
+<li><a href="https://tria.ge/210906-he9vpsdfhm">210906-he9vpsdfhm</a></li>
+<li><a href="https://tria.ge/210906-he9vpsdfhl">210906-he9vpsdfhl</a></li>
+<li><a href="https://tria.ge/210903-k1l2wacgh5">210903-k1l2wacgh5</a></li>
+</ul>
+<h2 id="elysium">ElysiumStealer</h2>
+<p>Elysium Stealer - previously known as Zeromax - was reported via Twitter in July 2020 by <a href="https://twitter.com/3xp0rtblog/status/1278747903520116736">@3xp0rtblog</a>.</p>
+<p>It is mainly oriented towards the theft of financial information, targeting web logins for common banking and ecommerce websites.</p>
+<p>We recently noticed some samples being shared on Twitter which resembled Elysium but with a few minor changes that were evading our signatures. We have now addressed these and the family should be properly detected again.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210903-k1l2wacgh5">210913-nevcxagfan</a></li>
+</ul>
+<h2 id="lockfile">Lockfile Ransomware</h2>
+<p>Initially reported by researchers at Sophos, LockFile was first observed in July 2021 leveraging the ProxyShell vulnerability in Microsoft Exchange servers to gain initial access to networks. After a foothold has been gained, it then uses an NTLM relay attack to spread throughout the domain.</p>
+<p>The family includes a number of interesting features which somewhat set it apart from many other ransomwares, which have a tendency to be rather straightforward. Chief among these is a unique encryption system designed to evade common ransomware protection solutions: instead of encrypted the entire file contents, LockFile only encrypts every other 16 bytes. Sophos refer to this technique as &lsquo;intermittent encryption&rsquo;, and as the end result is far more similar to the original document than if the whole thing had been encrypted it can allow the family to slip by ransomware protection which checks the entropy of file buffers during writing.</p>
+<p>It also attempts to minimise the file operations carried out during encryption by leveraging a technique called memory mapped input/output, which effectively allows the encryption to take place entirely in memory with just a single write operation to flush it to disk once complete. This approach is still unusual but has been observed before in families like WastedLocker and Maze.</p>
+<p>Finally, LockFile also operates entirely in isolation without and C2 communications. This again helps it avoid detection by reducing the general noise it makes during infection and limiting the places it could be detected by analysts or monitoring solutions in a live environment.</p>
+<p>A detailed breakdown of the family can be found on Sophos&rsquo;s blog <a href="https://news.sophos.com/en-us/2021/08/27/lockfile-ransomwares-box-of-tricks-intermittent-encryption-and-evasion/">here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210828-vech6r1ktj">210828-vech6r1ktj</a></li>
+<li><a href="https://tria.ge/210828-4864w5kqna">210828-4864w5kqna</a></li>
+</ul>
+<h2 id="darkcrypt">Darkcrypt Ransomware</h2>
+<p>The exact ancestry of DarkCrypt is a little foggy, but it seemingly goes back to WannaCryFake samples seen in early 2020. According to <a href="https://twitter.com/demonslay335/status/1213208630180352008">Michael Gillespie</a> - the creator of ID Ransomware - it and several other minor families are little more than reskins of a family which imitated the well known WannaCry campaign, with only minor changes around the encryption and key generation functions.</p>
+<p>We have added some initial signatures to classify the family, and ransomnotes etc. should be extracted as normal.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200701-p8b29476wn">200701-p8b29476wn</a></li>
+</ul>
+<h2 id="danabot">Danabot</h2>
+<p>Danabot is a banking trojan/stealer which has been seen in widespread usage <a href="https://www.proofpoint.com/us/threat-insight/post/danabot-new-banking-trojan-surfaces-down-under-0">since mid-2018</a>. The malware itself is modular including functions for browser injections/network sniffing, stealing credentials stored locally by a range of software, and remote access capability.</p>
+<p>The family has gone through a few changes over the years, with some significant new versions being observed throughout 2021. It has featured in our update blogposts a few times recently as modifications have meant we&rsquo;ve had to update our signatures and configuration extractor, and it&rsquo;s back this week with some more minor tweaks to make our support more robust and reliable. We&rsquo;ll continue to monitor samples and make any changes as required.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210914-pg6z6aafgk">210914-pg6z6aafgk</a></li>
+<li><a href="https://tria.ge/210914-nswg5aafdm">210914-nswg5aafdm</a></li>
+<li><a href="https://tria.ge/210914-kw2a1afde8">210914-kw2a1afde8</a></li>
+<li><a href="https://tria.ge/210913-q947psdgf5">210913-q947psdgf5</a></li>
+<li><a href="https://tria.ge/210911-e7874aeabl">210911-e7874aeabl</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 127: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-04-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-07/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Custom Yara Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/custom-yara/">Read</a>
+        </li>
+      
+        <li>
+          <h3>macOS Announcement and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-04-22/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-51.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-51.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-51.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-09-02T00:00:00Z">2021-09-02</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we introduce all the changes made to the platform over the last week.</p>
+<p>Today we have a few significant feature updates to share along with our usual detection changes:</p>
+<ul>
+<li><a href="#language">Added language options for analysis VMs</a></li>
+<li><a href="#extend">Extend or terminate analyses while they&rsquo;re running</a></li>
+<li><a href="#geoip">New geoIP mapping for extracted C2 URLs/IPs</a></li>
+<li><a href="#djvu">Updated DJVU ransomware detection</a></li>
+<li><a href="#sidoh">New signatures for Sidoh family (aka Ryuk Stealer)</a></li>
+<li><a href="#mespinoza">Mespinoza ransomware detection</a></li>
+<li><a href="#vidar">Updated Vidar rules</a></li>
+</ul>
+<p>In other news we are still looking for a Go developer to join the Hatching team. If you&rsquo;d like to be involved in the next steps of Triage&rsquo;s journey - or know someone who might be - you can find the full job listing <a href="https://hatching.io/jobs/senior-go-developer/">here</a>. Feel free to reach out with any questions.</p>
+<p>If you discover any issues or missing detections while using Triage, please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="language">Language VM Options</h2>
+<p>Many malware samples out in the wild use geolocation checks to limit the machines they will infect. The most common of these - and the easiest to get around - involve a blocklist for Russia and other former Soviet states which prevents the malware running there at all. The more interesting ones are where the malware has a list of countries of interest, and will not run if it detects that it&rsquo;s in any other region - for example they may only target Italy or South Korea. These are a bit trickier to carry out automated behavioural analysis on, as unless their list includes the Netherlands (or the country you have your own on-premises environment set up) the malware will simply exit almost immediately.</p>
+<p>To get around these limitations, we have for some time been planning a series of features which will allow users of Triage to &lsquo;pretend&rsquo; that the analysis is being run in a specific country. This week we are pleased to be releasing the first part of this, allowing our users to select the language settings for a virtual machine before analysis begins.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/win10-jp.png">
+</figure>
+
+<p>In this initial release we are only making support for German, French and Japanese language settings available, but we will be extending on this in the weeks to come. We&rsquo;ll also be looking to add additional features - such as network proxying - to allow better location spoofing.</p>
+<p>If you have specific requests or use-cases feel free to send us some feedback - the more samples we have to test against the better.</p>
+<h4 id="how-to-use-vms-with-different-languages">How to use VMs with different languages</h4>
+<p>The option to select a different language has been added to the VM selection options, which can be accessed either directly during the submission process or included in Profiles.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/submit-vms.png">
+</figure>
+
+<p>As usual with VM selection, you can choose multiple different versions/languages and each will spawn a separate task within the analysis.</p>
+<h2 id="extend">Extend or Terminate Running Analyses</h2>
+<p>A common feature request we receive is to allow customisation of the duration of analyses while they are actively running. It was previously possible to terminate an analysis early simply by shutting down the VM via the guest OS, but this was not necessarily evident and is not really optimal regardless. There was also no way to extend the duration once a file had been submitted.</p>
+<p>We have now addressed this with some additions to the user interface in the Live Monitor, where users can interact with the VMs during analysis. While the sample is running there is now the option to extend the timeout by 1 minute, or terminate the task immediately. Note that these buttons affect each task individually, so if a sample is being run in more than one operating system each can be controlled independently.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/monitor.png">
+</figure>
+
+<h2 id="geoip">GeoIP Mapping of C2 URLs/IPs</h2>
+<p>Another aspect we&rsquo;re keen to work on in the coming months is improving the way we display data in the UI. One of our main goals with Triage is to ensure that reports remain concise and uncluttered, but even so we feel there are areas where we could make better use of the information available to improve its usefulness to end users.</p>
+<p>As part of this we are today releasing a new visualisation for all extracted C2 URLs/IPs, mapping them based on geographical location to give an overview of the countries hosting malicious infrastructure for these campaigns.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/map.png">
+</figure>
+
+<p>This feature is powered by our new partners at <a href="https://ipinfo.io/">ipinfo.io</a>, who provide a range of powerful lookup services for IP addresses. We are currently only leveraging their geoIP checks but that is only part of the information available through their APIs.</p>
+<h2 id="djvu">DJVU Ransomware</h2>
+<p>DJVU is a huge ransomware family which, although it&rsquo;s never achieved quite the mainstream fame of the likes of REvil or Gandcrab, has reliably been one of the most widespread and successful families observed in the wild. First seen in December 2018, only around a year later <a href="https://blog.emsisoft.com/en/34375/emsisoft-releases-new-decryptor-for-stop-djvu-ransomware/">Emsisoft reported</a> that the family included 160 variants with a confirmed total of around 116,000 victims globally (and an estimated total of nearly half a million).</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/djvu.png">
+</figure>
+
+<p>The family is itself a variant of the STOP ransomware. Early versions had flaws which enabled victims to often decrypt their systems without paying the ransom. Emsisoft published a decryptor in late 2019 which had good coverage on versions up to that point, but since then the creators have make some updates to strengthen the encryption routines.</p>
+<p>Triage has included detection for DJVU for some time, but this week we&rsquo;ve made some tweaks to better handle some variants observed in the last few weeks.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210826-e8sr1erfbn">210826-e8sr1erfbn</a></li>
+<li><a href="https://tria.ge/210826-r3j56qpnjj">210826-r3j56qpnjj</a></li>
+<li><a href="https://tria.ge/210604-q1mqz6zlf2">210604-q1mqz6zlf2</a></li>
+<li><a href="https://tria.ge/210610-mx8jqg69zn">210610-mx8jqg69zn</a></li>
+<li><a href="https://tria.ge/210318-q7klqt2js2">210318-q7klqt2js2</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">managerhelper@airmail[.]cc</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">manager@mailtemp[.]ch</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">helpteam@mail[.]ch</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">helpmanager@airmail[.]cc</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxps://we[.]tl/t-ykQaS2tRyB</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxps://we[.]tl/t-NuEqGxqRg2</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxps://we[.]tl/t-B0FsLNO3fN</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">*.orkf</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="sidoh">Sidoh Stealer</h2>
+<p>Sidoh - otherwise known as Ryuk Stealer - is a toolkit generally observed alongside Ryuk ransomware infections. <a href="https://www.crowdstrike.com/blog/sidoh-wizard-spiders-mysterious-exfiltration-tool/">Reportedly created by</a> the WIZARD SPIDER APT group (to whom the popular Trickbot banking trojan is also attributed), the family searches infected machines looking for files containing keywords matching a predefined list. Once a match is identified the relevant file is exfiltrated to the attackers via FTP upload.</p>
+<p>According to Crowdstrike the keywords identified suggest an interest in government, military and financial sectors. Although no direct link to ransomware-related extortions has so far been identified it&rsquo;s use - and the fact that its codebase appears to borrow extensively from the Ryuk ransomware family - suggests that this may be at least one use for the malware.</p>
+<p>We have analysed some example of the malware observed recently on Triage and implemented some initial detections.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210831-x1cztynsqn">210831-x1cztynsqn</a></li>
+<li><a href="https://tria.ge/210831-w4aec2gl7n">210831-w4aec2gl7n</a></li>
+<li><a href="https://tria.ge/210831-71sxe9pw2a">210831-71sxe9pw2a</a></li>
+<li><a href="https://tria.ge/210831-4b94bjqqrn">210831-4b94bjqqrn</a></li>
+<li><a href="https://tria.ge/210717-bcvrgm8qqj">210717-bcvrgm8qqj</a></li>
+</ul>
+<h2 id="mespinoza">Mespinoza Ransomware</h2>
+<p>Mespinoza, often called Pysa, <a href="https://id-ransomware.blogspot.com/2019/10/mespinoza-ransomware.html">first popped up in the wild around October 2019</a>, although its activity remained quite low until about a year later. Like many modern ransomware families it carries out exfiltration of sensitive data as well as the usual encryption activities, using this as leverage in ransom payment negotiations. A public leak site is run where files are published in the event of non-payment.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-02/mespinoza.png">
+</figure>
+
+<p><a href="https://unit42.paloaltonetworks.com/gasket-and-magicsocks-tools-install-mespinoza-ransomware/">According to PaloAlto</a> the operators also commonly install a backdoor - known as Gasket - to maintain access to infected systems/networks as an additional insurance policy to try and force payment.</p>
+<p>We have added detection for the family, as well as a configuration extractor to reliably dump the ransomnote as configured within the executable. You can find some examples below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201125-gybfy944n2">201125-gybfy944n2</a></li>
+<li><a href="https://tria.ge/210105-re1v9glf3s">210105-re1v9glf3s</a></li>
+<li><a href="https://tria.ge/210408-c3ymknrznn">210408-c3ymknrznn</a></li>
+<li><a href="https://tria.ge/210408-dyxmbfkmtn">210408-dyxmbfkmtn</a></li>
+<li><a href="https://tria.ge/210408-m4swb7bm4e">210408-m4swb7bm4e</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">*.pysa</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">jonivaeng@protonmail[.]com</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">domenikuvoker@protonmail[.]com</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">\REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\legalnoticetext</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">\REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\legalnoticecaption</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="vidar">Vidar Stealer</h2>
+<p>Vidar is a widely used stealer family which was first discovered in late 2018. It began as a fork of the popular Arkei stealer and bears significant similarities in terms of code and string reuse.</p>
+<p>The family is still very active in 2021, with new versions appearing regularly. It is often deployed alongside other threats, as well as being used in its own campaigns. In mid-2019 <a href="https://go.crowdstrike.com/rs/281-OBQ-266/images/Report2020CrowdStrikeGlobalThreatReport.pdf">Crowdstrike reported</a> that it was being dropped with Gozi IFSB payloads by malicious Office documents.</p>
+<p>In July 2021 <a href="https://hatching.io/blog/tt-2021-07-08/#vidar">we added a configuration extractor</a> for the family, and this week we are just making some minor tweaks to this to properly handle recent variants observed among Triage submissions.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210902-zag4e9bt4a">210902-zag4e9bt4a</a></li>
+<li><a href="https://tria.ge/210902-wfdk8d7byx">210902-wfdk8d7byx</a></li>
+<li><a href="https://tria.ge/210902-wkbr19ge5j">210902-wkbr19ge5j</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">hxxps://lenko349[.]tumblr[.]com/</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxps://bandakere[.]tumblr[.]com/</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/1008</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/freebl3.dll</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/mozglue.dll</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/msvcp140.dll</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/nss3.dll</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/softokn3.dll</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">hxxp://49[.]12[.]198[.]69/vcruntime140.dll</td>
+      </tr>
+  </tbody>
+</table>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 113: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Family Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-16/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox Architecture</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-architecture/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Suricata Integration, New Extractors, and Family Detections</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-07-21/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

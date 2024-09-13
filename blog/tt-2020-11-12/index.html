@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-43.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-43.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Configuration Extractor Improvements</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Configuration Extractor Improvements</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-43.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-11-12T00:00:00Z">2020-11-12</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to today&rsquo;s Triage Thursday update blogpost. We&rsquo;ve been carrying out a bit of a review of past samples on the public server this week, as we&rsquo;ve made some improvements to our indexing and search abilities for the public Triage server which have made it easier to identify samples which aren&rsquo;t behaving as expected.</p>
+<p>Below are brief descriptions of several small updates and tweaks we&rsquo;ve made, aimed at improving our configuration extractors&rsquo; coverage of several families.</p>
+<ul>
+<li><a href="#azorult">Added new AZORult extractor</a></li>
+<li><a href="#trickbot">Updated Trickbot extractor</a></li>
+<li><a href="#dridex">Updated Dridex extractor</a></li>
+<li><a href="#smokeloader">Updated Smokeloader URL parsing</a></li>
+<li><a href="#remcos">Updated Remcos RAT C2 extraction</a></li>
+</ul>
+<p>Stay tuned here and <a href="https://twitter.com/hatching_io">on Twitter</a> for all the latest updates and changes - we&rsquo;ve got some cool new things in the pipeline which we can&rsquo;t wait to get out to you.</p>
+<p>Not signed up yet? Visit <a href="https://tria.ge/signup">https://tria.ge/signup</a> to sign up for a free account!</p>
+<h2 id="splunk-phantom-and-cortex-xsoar-integration">Splunk Phantom and Cortex XSOAR Integration</h2>
+<p>We are always looking for new ways to make the information generated by Triage more accessible and useful to organisations. As such we are pleased to share that Triage integration is now available for <a href="https://www.splunk.com/en_us/software/splunk-security-orchestration-and-automation.html">Splunk Phantom</a> and <a href="https://www.paloaltonetworks.com/cortex/xsoar">Cortex XSOAR</a>.</p>
+<p>We will publish a blogpost covering these integrations in more detail in the next few days, so keep an eye on our Twitter and blog for more information!</p>
+<h2 id="azorult">New AZORult Configuration Extractor</h2>
+<p>AZORult is a stealer which has been around in some form since 2016. It has the capability to harvest information from a wide range of applications, such as browsers, email clients and messaging platforms like Skype, cryptocurrency wallets, and the Steam gaming platform. It also enables remote access for an attacker, and can act as a dropper for other malware.</p>
+<p>Triage has supported family identification of AZORult since very early in development, but we have recently revisited it to implement a configuration extractor based on samples we recently observed. This will extract the C2 IP/URL regardless of whether or not the sample ran successfully or the C2 is still active.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-12/azorult_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201112-6rs9rfsesa">201112-6rs9rfsesa</a></li>
+<li><a href="https://tria.ge/201111-efjc1ll17x">201111-efjc1ll17x</a></li>
+<li><a href="https://tria.ge/201111-8rdzx5n4bn">201111-8rdzx5n4bn</a></li>
+<li><a href="https://tria.ge/201030-mt68k9ra42">201030-mt68k9ra42</a></li>
+</ul>
+<h2 id="trickbot">Trickbot Extractor Update</h2>
+<p>Trickbot has once again made its way into our todo list, with another update that interfered with our configuration extractor. This change introduced a fake C2 IP/port combination intended to throw off analysis. We&rsquo;ve updated the extractor to account for this and only report the legitimate C2 addresses.</p>
+<p>Some specific examples are listed below, but you can find more using the search query <a href="https://tria.ge/s?q=botnet%3Atar2">botnet:tar2</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201111-hzx91hs1ja">201111-hzx91hs1ja</a></li>
+<li><a href="https://tria.ge/201109-28h8hb5dsx">201109-28h8hb5dsx</a></li>
+<li><a href="https://tria.ge/201109-txtk4hb582">201109-txtk4hb582</a></li>
+</ul>
+<h2 id="dridex">Dridex Extractor Update</h2>
+<p>While reviewing older samples we came across some Dridex versions which were not being processed by our configuration extractor. Most of these were not recent, but we have updated our Yara rules to make the extractor support a wider range of samples.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-12/dridex_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201112-e66449gfaj">201112-e66449gfaj</a></li>
+<li><a href="https://tria.ge/201112-zgphfxrh7s">201112-zgphfxrh7s</a></li>
+<li><a href="https://tria.ge/201112-3n1lwad24a">201112-3n1lwad24a</a></li>
+<li><a href="https://tria.ge/201111-4hb2jxlssa">201111-4hb2jxlssa</a></li>
+<li><a href="https://tria.ge/201111-h4v2l73s2e">201111-h4v2l73s2e</a></li>
+</ul>
+<h2 id="smokeloader">Smokeloader Update</h2>
+<p>Smokeloader continues to be highly active, and we have observed a number of different campaigns over recent weeks. A new version seen in the last few days changed up the URL decryption function and evaded the extractor, so we&rsquo;ve reviewed the samples and pushed an update to correct this.</p>
+<p>We&rsquo;ve also noticed that in many cases Smokeloader is deploying several different payloads in a single analysis. However this is not always completed in the default 2 minute timeout, so it is recommended to submit these for 5 minutes or longer to get the full report.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201107-lxpdbv9h4n">201107-lxpdbv9h4n</a> (2 minute timeout)</li>
+<li><a href="https://tria.ge/201110-tjrd82d9ee">201110-tjrd82d9ee</a> (5 minute timeout)</li>
+</ul>
+<h2 id="remcos">Remcos Extractor Update</h2>
+<p>Remcos RAT is a remote administration tool available for purchase through a company called BreakingSecurity. It is a highly customisable and fully featured RAT which provides backdoor and stealer functionality.</p>
+<p>We have pushed a small update to our existing Remcos configuration extractor to handle some samples we identified which were previously slipping through. Some of these samples are listed below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201112-4zdwhgymtx">201112-4zdwhgymtx</a></li>
+<li><a href="https://tria.ge/201112-hb5kh49eys">201112-hb5kh49eys</a></li>
+<li><a href="https://tria.ge/201112-lvcvqj3rd2">201112-lvcvqj3rd2</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Updates for ZLoader, Netwalker, QNodeService and WSHRAT</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-07/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 111: Support for Windows 11 &amp; Android 13</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-30/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Integrations, Updated DLL Handling and New Family Classifications</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-29/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

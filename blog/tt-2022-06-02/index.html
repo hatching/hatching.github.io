@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-76.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-76.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>A Few Weeks of Configuration Extractor and Detection Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>A Few Weeks of Configuration Extractor and Detection Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-76.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-06-02T00:00:00Z">2022-06-02</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! We&rsquo;re sorry for the lack of communication in recent weeks - it&rsquo;s been an unusually long gap for us as things have been a bit hectic and we&rsquo;ve been short of time to publish these posts, so today we&rsquo;ll go back over all the main changes since our previous post on May 12th to bring you up to speed.</p>
+<p>Without further ado, let&rsquo;s get into it:</p>
+<ul>
+<li><a href="#amadey">Updated Amadey detections to support credstealer module</a></li>
+<li><a href="#bpfdoor">Added detections for BPFDoor Linux family</a></li>
+<li><a href="#clop">Updated detections for Clop ransomware</a></li>
+<li><a href="#xorddos">Added detections and a configuration extractor for the XorDdos family</a></li>
+<li><a href="#colibri">Added detections for Colibri loader</a></li>
+<li><a href="#eternity">Added support for Eternity Project samples</a></li>
+<li><a href="#nerbian">Added detecions for Nerbian RAT</a></li>
+<li><a href="#netwire">Updated support for Netwire RAT</a></li>
+<li><a href="#magniber">Updated detections for Magniber ransomware</a></li>
+<li><a href="#dcrat">Updated detections for DCRAT</a></li>
+</ul>
+<p>We should be back to our regular schedule for the foreseeable future, but blogposts or not you can always reach out to us. If you have any comments, suggestions or other feedback about the platform and its detections we&rsquo;d love to hear from you! You can find us <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or by using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="amadey">Amadey Stealer</h2>
+<p>Amadey was first reported back in early 2019. It is a trojan/botnet which targets non-Russian users and is available for sale through online forums.</p>
+<p>Infected machines are incorporated into a botnet which is then used for spam email campaigns and carrying out DDoS attacks. The family can also deploy additional payloads on a system - for example in May 2020 <a href="https://www.zscaler.com/blogs/security-research/latest-version-amadey-introduces-screen-capturing-and-pushes-remcos-rat">ZScaler reported</a> that it was being used to push the Remcos RAT.</p>
+<p>We most recently wrote about Amadey on this blog <a href="https://hatching.io/blog/2021-10-14-triage-thursday/#amadey">back in October 2021</a> when it added support for a couple of new software applications, including Microsoft Outlook and a GUI tool used to administer MikroTik routers and network devices.</p>
+<p>We have recently noticed some examples of a credstealer module for the family being uploaded to Triage on their own, and these tend to get past the family naming we&rsquo;ve previously implemented for the main payload. We&rsquo;ve extended our rules to cover this as well.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220517-wkpzdaaccq">220517-wkpzdaaccq</a></li>
+<li><a href="https://tria.ge/220516-nnbl6ahgc7">220516-nnbl6ahgc7</a></li>
+<li><a href="https://tria.ge/220508-h3vqpadffn">220508-h3vqpadffn</a></li>
+<li><a href="https://tria.ge/220507-g6l3aaegfk">220507-g6l3aaegfk</a></li>
+</ul>
+<h2 id="bpfdoor">BPFDoor</h2>
+<p>BPFDoor is a backdoor family first reported in early May 2022. However indications are that it has been actively used for at least 5 years to infect and access Linux and Solaris systems and had gone unnoticed until that point.</p>
+<p>The family was initially openly reported by PwC in their annual cyber threat report for 2021 (available <a href="https://www.pwc.com/gx/en/issues/cybersecurity/cyber-threat-intelligence/cyber-year-in-retrospect/yir-cyber-threats-report-download.pdf">here</a>), where they attribute its activity to a Chinese threat actor they refer to as <code>Red Menshen</code>. This group has mainly been targeting telecommunication providers and government entities in the Middle East and Asian regions over the course of 2021 and into 2022. BPFDoor is a small backdoor which just provides full remote access to the Linux shell.</p>
+<p>The end result may be pretty standard for a backdoor but the family does have a couple of unusual tricks up its sleeve. Chief among these is the fact that it does not need to open any ports (and as such, does not need to modify firewall rules or similar protections). It is able to piggy-back off existing services, communicating over the same port(s) as web apps which are already running for both outgoing and incoming communications, which makes it extremely difficult to spot using standard network monitoring. To achieve this is uses a Berkeley Packet Filter (BPF) which gave the family its name.</p>
+<p>We have reviewed the samples available to us and implemented initial detections for the family. For more reading on the technical details you can find an excellent writeup by Kevin Beaumont on his blog <a href="https://doublepulsar.com/bpfdoor-an-active-chinese-global-surveillance-tool-54b078f1a896">here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220602-vb6p4acdhn">220602-vb6p4acdhn</a></li>
+<li><a href="https://tria.ge/220602-vceb8sceam">220602-vceb8sceam</a></li>
+<li><a href="https://tria.ge/220602-vch1escean">220602-vch1escean</a></li>
+<li><a href="https://tria.ge/220602-vcl23sghc2">220602-vcl23sghc2</a></li>
+<li><a href="https://tria.ge/220602-vcrybsceap">220602-vcrybsceap</a></li>
+</ul>
+<h2 id="clop">Clop ransomware</h2>
+<p>Triage has supported Clop for a few years now, but as usual the family insists on making changes. We&rsquo;ve revisited it the last couple of weeks to extend our support and ensure we have detection for the latest samples in the wild. We&rsquo;ve also extended detection into the static analysis stage as well as based on system actions to try and make the rules a bit more resilient.</p>
+<p>Clop has been one of the most heavily used ransomware variants over the last 3 years or so and has gained quite a bit of attention over time for some of its higher profile successes such as E-Land, the largest ecommerce company in South Korea. It follows the double extortion approach, with a leak website where confidential data stolen from the victims will be made public in the event of a refusal to pay the ransom.</p>
+<p>The operators and developers of the family took a bit of a hit in mid-2021, when a law enforcement operation by the South Korea, United States, and Ukrainian police raided and arrested several people suspected of being part of the gang behind it. However it has not stopped operations, or even appreciably slowed them down - <a href="https://www.trendmicro.com/vinfo/us/security/news/ransomware-spotlight/ransomware-spotlight-clop">TrendMicro reports</a> seeing pretty constant activity from January 2021 through to January 2022.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220602-vdqrnacear">220602-vdqrnacear</a></li>
+<li><a href="https://tria.ge/220602-vdzdsscebj">220602-vdzdsscebj</a></li>
+<li><a href="https://tria.ge/220602-vd71yaghc4">220602-vd71yaghc4</a></li>
+</ul>
+<h2 id="xorddos">XorDdos</h2>
+<p>Going back to Linux again, XorDdos is an older trojan which was first reported back in 2014. It got its name from - probably unsurprisingly - the fact that it uses XOR-based encryption for its C2 traffic and was often used to carry out DDoS attacks from infected machines.</p>
+<p>Among its arsenal is the ability to spread to other machines by bruteforcing SSH services - once access is gained it will use root permissions to download and deploy the main payload. It also includes quite a few features aimed at stealth and evasion (SSH bruteforcing aside), and multiple persistence mechanisms aimed at a range of different Linux distributions. You can find a full technical writeup <a href="https://www.microsoft.com/security/blog/2022/05/19/rise-in-xorddos-a-deeper-look-at-the-stealthy-ddos-malware-targeting-linux-devices/">in this blogpost</a> by Microsoft.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-02/xorddos.png">
+</figure>
+
+<p>We have reviewed a number of available samples, and implemented standard detection and a configuration extractor for them. Some examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220602-vesbwacebm">220602-vesbwacebm</a></li>
+<li><a href="https://tria.ge/220602-vewz3aghc6">220602-vewz3aghc6</a></li>
+<li><a href="https://tria.ge/220602-ve1cgscebn">220602-ve1cgscebn</a></li>
+<li><a href="https://tria.ge/220602-ve6t9scebq">220602-ve6t9scebq</a></li>
+<li><a href="https://tria.ge/220602-vfcmtaghc7">220602-vfcmtaghc7</a></li>
+</ul>
+<h2 id="colibri">Colibri loader</h2>
+<p>Colibri Loader - not to be confused with the <a href="https://developer.toradex.com/windows-ce/knowledge-base/colibri-loader/?gclid=CjwKCAjwv-GUBhAzEiwASUMm4mkZiVD6e8U5EQbX6XqofETJfhWeYus1rZ9lgoen0V9AOBK70j6biRoCI7UQAvD_BwE">old Windows XP/7 tool</a> for updating the bootloader and OS image which seems to be unrelated - was first seen appearing on forums in August 2021. <a href="https://blog.malwarebytes.com/threat-intelligence/2022/04/colibri-loader-combines-task-scheduler-and-powershell-in-clever-persistence-technique/">MalwareBytes report</a> that they have seen it being used to deliver Mars Stealer payloads in Q1 2022.</p>
+<p>The malware consists of the loader component and a PHP-based web panel for the attacker to use to administer the implants. It is offered online as malware-as-a-service, with licenses provided on a weekly or monthly basis.</p>
+<p>A detailed writeup of the family by Fr3d.hk can be found <a href="https://fr3d.hk/blog/colibri-loader-back-to-basics">on their blog</a> if you&rsquo;d like more technical details. We have reviewed samples and added signatures and a configuration extractor, and of course will keep an eye on the family for any future changes which may require a revisit.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-02/colibri.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220524-ph5hqaabc2">220524-ph5hqaabc2</a></li>
+<li><a href="https://tria.ge/220524-ph3n5aabb6">220524-ph3n5aabb6</a></li>
+<li><a href="https://tria.ge/220523-tnabzsefc2">220523-tnabzsefc2</a></li>
+<li><a href="https://tria.ge/220522-1cf4qaedcm">220522-1cf4qaedcm</a></li>
+<li><a href="https://tria.ge/220203-rvqansade6">220203-rvqansade6</a></li>
+</ul>
+<h2 id="eternity">Eternity Project</h2>
+<p>The Eternity Project is a new malware-as-a-service with a bit of a twist. Instead of focusing on a single type of malware this team offers a customised toolkit with modules tailored to the specific attack(s) being carried out.</p>
+<p>According to the <a href="https://www.bleepingcomputer.com/news/security/eternity-malware-kit-offers-stealer-miner-worm-ransomware-tools/">report by BleepingComputer</a> among the modules currently on offer is an info-stealer, a coin miner; a clipper, a fully functional ransomware, a worm spreader, and soon a bot for carrying out DDoS attacks. The modules are sold separately, with customers using a Telegram bot to automatically build their binaries based on the features they have selected.</p>
+<p>We have got hold of samples of most of these components and developed detections for them, and if we come across any more we&rsquo;ll add updates as needed.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Stealer</th>
+          <th style="text-align: left">Worm</th>
+          <th style="text-align: left">Clipper</th>
+          <th style="text-align: left">Ransomware</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220517-nb4geabab9">220517-nb4geabab9</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-np5lmadhck">220517-np5lmadhck</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-n63hlabeb8">220517-n63hlabeb8</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220516-hnmfrsfeb6">220516-hnmfrsfeb6</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220517-nb8q5abac5">220517-nb8q5abac5</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-np9wcabcb7">220517-np9wcabcb7</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-n63tcseber">220517-n63tcseber</a></td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220517-nbxc4adfek">220517-nbxc4adfek</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-npsxtsdhbr">220517-npsxtsdhbr</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-n79y3abec9">220517-n79y3abec9</a></td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220517-nbz4zsbab7">220517-nbz4zsbab7</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-npz15sdhcj">220517-npz15sdhcj</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220516-hnmfrsfeb7">220516-hnmfrsfeb7</a></td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://tria.ge/220517-ncbg1sdfep">220517-ncbg1sdfep</a></td>
+          <td style="text-align: left"><a href="https://tria.ge/220517-nq347abcd4">220517-nq347abcd4</a></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="nerbian">Nerbian RAT</h2>
+<p>Nerbian is another new addition to the malware scene, first appearing in May 2022. It is written in Golang with a heavy reliance on open-source libraries to try and make its codebase look as generic as possible. It has so far been seen making significant use of lures related COVID-19 and the World Health Organization in its campaigns.</p>
+<p>Code reuse is not this family&rsquo;s only way to minimise its chances of detection. According to <a href="https://www.proofpoint.com/us/blog/threat-insight/nerbian-rat-using-covid-19-themes-features-sophisticated-evasion-techniques">analysis by Proofpoint</a> it leverages multiple anti-analysis techniques across several stages of the including multiple encryption routines for C2 traffic. For many of these it makes use of the open-source <a href="https://github.com/p3tr0v/chacal">Chacal framework</a>, which is promoted as a Golang anti-VM framework for redteamers and pentesters. A complete list can be found in their <a href="https://github.com/p3tr0v/chacal">readme on Github</a>, but it includes things from checking standard hypervisor strings to looking for signs of any hooks to monitor memory on the machine.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220602-vhy9lacecp">220602-vhy9lacecp</a></li>
+<li><a href="https://tria.ge/220602-vh5rdaghd5">220602-vh5rdaghd5</a></li>
+<li><a href="https://tria.ge/220602-vjftmscedj">220602-vjftmscedj</a></li>
+</ul>
+<h2 id="netwire">Netwire</h2>
+<p>Netwire is an old family which has been around since as far back as 2014. It is a file stealer which targets sensitive information stored by local applications. It has seen many versions over the years but remains an active and capable threat in 2021.</p>
+<p>Triage has supported family detection for it for years, and we extended this with a configuration extractor <a href="https://hatching.io/blog/tt-2021-04-22/#netwire">back in April 2021</a>. However we have recently started seeing some x64 versions of the family passing through Triage, so we have now revisited it to bring our detections up to date with this. At the same time we have reviewed many of the other latest variants and made a few tweaks to tighten things up in general.</p>
+<figure><img src="../../static/images/blog/tt-2022-06-02/netwire.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220503-ahx2badag7">220503-ahx2badag7</a> (64 bit version)</li>
+<li><a href="https://tria.ge/220505-vf8p9abahk">220505-vf8p9abahk</a></li>
+<li><a href="https://tria.ge/220505-vf8p9agdc5">220505-vf8p9agdc5</a></li>
+<li><a href="https://tria.ge/220504-k56l3sdee7">220504-k56l3sdee7</a></li>
+<li><a href="https://tria.ge/220504-fx5ycsdba4">220504-fx5ycsdba4</a></li>
+</ul>
+<h2 id="magniber">Magniber</h2>
+<p>Magniber ransomware has been around for a few years, initially solely targeting users in South Korea and then expanding to cover additional South-East Asian countries. The malware is traditionally spread via the Magnitude Exploit Kit which like many modern EKs also mainly operates in the APAC region. The ransomware itself also originally included extensive checks to ensure that it only ran on machines in that area, though it moved away from this last year.</p>
+<p>The family’s name comes from this relation with the Magnitude EK, and some code similarities to the successful Cerber ransomware.</p>
+<p>Our old detections for the family were mostly based around the ransomnotes, so to make the results more reliable we have revisited it to add more robust detections for the payload itself and carry out a general review of the available samples. You should find coverage for samples new and old is more reliable now.</p>
+<h1 id="dcrat">DCRat</h1>
+<p>DarkCrystal RAT, or DCRat, was first reported in late 2019. It provides an extensive set of remote administration functions, triggered by specific commands received from the C2 server. These range from file transfer, keylogging, and data theft to opening and closing the CD drive or interacting with the Windows speech synthesizer. In addition to the builtin commands it can also run shell commands and pipe the output to the remote C2 server.</p>
+<p>A detailed analysis of the family can be found in<a href="https://www.fireeye.com/blog/threat-research/2020/05/analyzing-dark-crystal-rat-backdoor.html"> FireEye’s report from May 2020</a>, in which they breakdown the samples and all supported commands.</p>
+<p>This week doesn&rsquo;t bring major changes to the family - after spotting some recent samples not being correctly identified we have taken a look at our old rules and made some improvements to provide better coverage. Some relevant examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220513-epmldaccb8">220513-epmldaccb8</a></li>
+<li><a href="https://tria.ge/220513-1c14wsbhb8">220513-1c14wsbhb8</a></li>
+<li><a href="https://tria.ge/220428-ysvwpscbcj">220428-ysvwpscbcj</a></li>
+<li><a href="https://tria.ge/220505-fypmrsfbf9">220505-fypmrsfbf9</a></li>
+<li><a href="https://tria.ge/220507-xsl35acha3">220507-xsl35acha3</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Updates for IcedID, Mercurial, Allcome and Qakbot</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-02-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Release of Cuckoo-compatible onemon Windows kernel driver</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/onemon-cuckoo-release/">Read</a>
+        </li>
+      
+        <li>
+          <h3>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-09-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 133: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-23/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

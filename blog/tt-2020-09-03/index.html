@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-22.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-22.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>CobaltStrike, Trickbot and Other Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>CobaltStrike, Trickbot and Other Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-22.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-09-03T00:00:00Z">2020-09-03</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to Triage Thursday! We have a smaller post this week introducing some new family classifications.</p>
+<ul>
+<li><a href="#cobaltstrike">Improved CobaltStrike configuration extraction</a></li>
+<li><a href="#trickbot">Configuration extraction for new TrickBot samples</a></li>
+<li><a href="#modiloader">ModiLoader signatures</a></li>
+<li><a href="#ardamax">Ardamax signatures</a></li>
+<li>Family signatures for several ransomware:
+<ul>
+<li><a href="#thanos">Thanos ransomware</a></li>
+<li><a href="#cyrat">Cyrat ransomware</a></li>
+<li><a href="#avaddon">New Avaddon version</a></li>
+<li><a href="#hiddentear">HiddenTear variant</a></li>
+<li><a href="#vashsorena">VashSorena ransomware</a></li>
+</ul>
+</li>
+</ul>
+<p>Thanks to everyone who has been trying out the platform and sending us feedback. Since opening up registration last month over 250 new users have joined us, a fine increase from our earlier 100 registrations per month! We&rsquo;ve released numerous updates over this time, the biggest being <a href="https://hatching.io/blog/triage-for-android/">Android analysis</a> support, but we have lot more planned to come. Watch this space!</p>
+<h2 id="cobaltstrike">CobaltStrike x64 Payload Support</h2>
+<p>Improvements have been made to Triage&rsquo;s support for malicious CobaltStrike payloads, especially with regard to x64 versions. This should mean that configuration extraction works correctly on a wider range of variants than before.</p>
+<figure><img src="../../static/images/blog/tt-20-09-03/cobaltstrike_config.png">
+</figure>
+
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200828-nl6ghzal7a/behavioral1">200828-nl6ghzal7a</a></li>
+</ul>
+<h2 id="trickbot">Configuration Extraction for New Trickbot</h2>
+<p>A new version of Trickbot was recently observed which had some changes which meant it didn&rsquo;t trigger configuration extraction. This has been fixed and now supports the latest samples.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200826-ggzfbj5kd2/behavioral1">200826-ggzfbj5kd2</a></li>
+</ul>
+<h2 id="modiloader">ModiLoader Family Signatures</h2>
+<p>ModiLoader, also known as DBatLoader or NatsoLoader, is a dropper first observed in June 2020. It is a 2 stage loader, and has been observed deploying Formbook, Netwire, and Remcos trojans.</p>
+<p>A deep-dive on the first stage is available <a href="https://zero2auto.com/2020/08/20/dbatloader-modiloader-first-stage/">here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200813-rkkl8q1z6a/behavioral1">200813-rkkl8q1z6a</a></li>
+<li><a href="https://tria.ge/200821-5zs2pppeq6/behavioral1">200821-5zs2pppeq6</a></li>
+</ul>
+<h2 id="ardamax">Ardamax Family Signatures</h2>
+<p>Ardamax is a keylogger which can be bought for use through an &lsquo;official&rsquo; website, presenting itself as a legitimate monitoring tool. It has limited capabilities compared to other stealers, only being able to capture keystrokes and screenshots, and is generally <a href="https://medium.com/@MalFuzzer/dissecting-ardamax-keylogger-f33f922d2576">quite noisy</a>.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200626-kch5v2rwf6/behavioral1">200626-kch5v2rwf6</a></li>
+</ul>
+<h2 id="thanos">Thanos Ransomware</h2>
+<p>Thanos is a ransomware-as-a-service which has been sold and marketed through underground forums since late 2019. It gained some attention in June 2020 when new versions added additional evasion and persistence techniques, including likely being <a href="https://threatpost.com/thanos-ransomware-weaponize-riplace-tactic/156438/">the first to weaponise the RIPlace evasion technique</a> to encrypt files without triggering anti-virus/anti-ransomware protections.</p>
+<p>The ransomware itself does not run well in Triage, as it attempts to reboot the machine early in the process which ends the analysis before encryption takes place. However we have added static detection for the family.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200903-c6hj8qcw36/static1">200903-c6hj8qcw36</a></li>
+</ul>
+<h2 id="cyrat">Cyrat Ransomware</h2>
+<p>Cyrat was recently discovered by Karsten Hahn <a href="https://twitter.com/struppigel">(@struppigel)</a> posing as a DLL fixer tool for Windows. It is a compiled Python binary which includes a number of external resources, including the Fernet encryption library and the pyfiglet text rendering library.</p>
+<p>A full breakdown of the sample can be found <a href="https://www.gdatasoftware.com/blog/cyrat-ransomware">on the GData blog</a>.</p>
+<p>When submitted in Triage, the analysis fails due to missing the pyfiglet Python library. However we have added static detection for the family to circumvent this.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200903-lpctvnhxfn/static1">200903-lpctvnhxfn</a></li>
+</ul>
+<h2 id="avaddon">New Avaddon Version</h2>
+<p>Avaddon first appeared in June 2020, actively recruiting distributors through hacking forums to launch campaigns. A new version was recently observed which altered some of the characteristics and evaded our existing family signatures. These have now been updated to work correctly with this change.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200901-9h5c62jr3e/behavioral1">200901-9h5c62jr3e</a></li>
+</ul>
+<h2 id="hiddentear">HiddenTear Ransomware Variant</h2>
+<p>HiddenTear is an open-source ransomware which has been around in various forms since at least 2015. Another sample recently surfaced on Twitter which appears to be a modified version of the family - for example it does not appear to drop any ransom note like HiddenTear would normally.</p>
+<p>Interestingly another version of the same binary was found a day later by <a href="https://twitter.com/raby_mr/status/1301085845349261313">@raby_mr</a>. This appears to be the same file but packed using a demo version of <a href="https://www.obsidium.de/">Obsidium</a>. Note that due to it being a demo version, a popup is shown during execution which must be closed to continue.</p>
+<p>Family detection has been added for this variant, though due to the open-source nature of the ransomware it may have limited scope.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200903-xvmltld6ze/behavioral1">200903-xvmltld6ze</a> (Non-packed)</li>
+<li><a href="https://tria.ge/200903-lr21ndnvna/behavioral1">200903-lr21ndnvna</a> (Packed)</li>
+</ul>
+<h2 id="vashsorena">VashSorena Ransomware</h2>
+<p>VashSorena is a new variant of older ransomware families like Sorena and Ouroboros. A sample of VashSorena was recently submitted to Triage by <a href="https://twitter.com/fbgwls245/status/1299659575486902274">@fbgwls245</a>. Some initial signatures have now been added for the family to identify it.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200829-ft8bp88fdx/behavioral1">200829-ft8bp88fdx</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>IQY malspam campaign</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/iqy-malspam/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 104: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-10-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 111: Support for Windows 11 &amp; Android 13</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-30/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Blogs</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

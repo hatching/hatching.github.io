@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-73.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-73.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Emotet x64 and Other Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Emotet x64 and Other Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-73.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-04-28T00:00:00Z">2022-04-28</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! We didn&rsquo;t have an entry last week as we were busy with other things, so in today&rsquo;s post we&rsquo;ll go over all the major changes made since our last blog on the 14th. As always we have a bunch of new and updated detections across all sorts of families to go over:</p>
+<ul>
+<li><a href="#emotet">Updated Emotet handling for x64 variant</a></li>
+<li><a href="#vidar">Updated Vidar rules for another new version</a></li>
+<li><a href="#blackguard">Tweaks and extended report for BlackGuard stealer</a></li>
+<li><a href="#ffdroider">New detections for ffdroider stealer</a></li>
+<li><a href="#modiloader">New configuration extractor for ModiLoader</a></li>
+<li><a href="#cryptbot">Improvements to CryptBot IoCs/detections</a></li>
+<li><a href="#bumblebee">Fixed C2 issues in BumbleBee configuration extractor</a></li>
+<li><a href="#gimmick">Added support for Gimmick macOS malware family</a></li>
+</ul>
+<p>If you have any feedback, questions or issues about Triage feel free to reach out to us any time - we do our best to respond to all feedback but even if we can&rsquo;t get back to you straight away your files will go into our list of things to review and help us prioritise tasks. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="emotet">Emotet x64</h2>
+<p>It&rsquo;s been nearly 2 whole months since we last mentioned Emotet on this blog and clearly they were starting to feel left out, so we&rsquo;re back this week with updates to address a new version that popped up in the wild around Easter. For the first time the family has started using 64-bit versions of both the loader and stealer modules - as reported by <a href="https://twitter.com/Cryptolaemus1/status/1516261512372965383">@Cryptolaemus</a> below x64 architectures had previously been seen only in very limited use.</p>
+<p>It seems like for now this is limited to the Epoch4 variants and not the newer Epoch5 payloads, but the Cryptolaemus team suggest that this might change in future once the new version has been fully tested out.</p>
+<p>The base functionality of the stealer is seemingly unchanged, so we have updated our detections and handling to properly support these new versions. As always we&rsquo;ll continue to update this as needed, and a huge thank you to everyone who reached out with samples and feedback as this version began to appear online.</p>
+<p><strong>Example:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220418-razzdaadgr">220418-razzdaadgr</a></li>
+</ul>
+<h2 id="vidar">Vidar</h2>
+<p>Vidar is back again this week, this time with a couple of new versions at once which needed some detection updates. The changes are mainly internal but mess with our extractor&rsquo;s parsing of the configuration sections, although we have also observed a change in behaviour for one of them. Vidar uses additional DLLs alongside the main executable, and previously would download these one by one during execution; these latest versions seem to fetch them all at once as a zip archive, extracting them on the machine instead.</p>
+<p>We have made some tweaks to address the observed changes and ensure that IoCs are properly dumped for the samples.</p>
+<p>If you’re not familiar with the family you can find more detail in our <a href="https://hatching.io/blog/tt-2021-07-08/#vidar">blogpost from July 2021</a> where we initially introduced the configuration extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220419-rdt8asfbg5">220419-rdt8asfbg5</a></li>
+<li><a href="https://tria.ge/220419-ls6lzsbcar">220419-ls6lzsbcar</a></li>
+<li><a href="https://tria.ge/220419-lta7gaehe5">220419-lta7gaehe5</a></li>
+<li><a href="https://tria.ge/220419-gn6c7sbef7">220419-gn6c7sbef7</a></li>
+<li><a href="https://tria.ge/220418-rzttnabfhp">220418-rzttnabfhp</a></li>
+</ul>
+<h2 id="blackguard">BlackGuard</h2>
+<p>BlackGuard is a new and currently quite active infostealer, built on the older 44caliber family codebase. We first added detection for it <a href="https://hatching.io/blog/tt-2022-03-10/#blackguard">in early March</a> but at the time limited information and samples were available to us for analysis. We revisited it <a href="https://hatching.io/blog/tt-2022-04-07/#blackguard">in early April</a> to add support for some samples we had missed originally, and this week it is back in our sights again with what appears to be new versions which were slipping past our detections.</p>
+<p>You can find more details on the family in our blogposts linked above, or in ZScaler&rsquo;s blogpost from the end of March which you can <a href="https://www.zscaler.com/blogs/security-research/analysis-blackguard-new-info-stealer-malware-being-sold-russian-hacking">find here</a>.</p>
+<p>The base functionality does not seem to have changed or been added to, but some internal changes prevented our configuration extractor from properly handling the samples. We&rsquo;ve now updated to fix this.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220331-thnx7aedd2">220331-thnx7aedd2</a></li>
+<li><a href="https://tria.ge/220401-fjh7faafgk">220401-fjh7faafgk</a></li>
+<li><a href="https://tria.ge/220401-fjh7faafgj">220401-fjh7faafgj</a></li>
+<li><a href="https://tria.ge/220214-sjtpdsbaep">220214-sjtpdsbaep</a></li>
+<li><a href="https://tria.ge/220331-thnx7aedd2">220331-thnx7aedd2</a></li>
+</ul>
+<h2 id="ffdroider">FFDroider</h2>
+<p>FFDroider is a new addition to the stealer landscape, first popping up online around the start of April 2022. Its base functionality is pretty familiar and in fact more limited than many of its competitors - it seems to restrict itself to stealing credentials stored on the infected machine by web browsers like Chrome, Firefox and Edge rather than the much more extensive target lists common in other stealers - but its end goal is a bit different to most.</p>
+<p>Rather than just directly monetising data stolen from the victim, like stealing cryptocurrency wallets, this family is going after social media accounts specifically. These accounts are then accessed to extract information about them, with a focus on relevant advertising networks on those platforms which can then be used to run malicious ad campaigns using accounts already verified and setup to do so. Interestingly this process is mostly automated with the malware itself carrying out checks of credentials in real time from the victim&rsquo;s PC, and extracting personal and financial information from any successful login attempts which is sent back to the C2 server for further use.</p>
+<p>According to <a href="https://www.zscaler.com/blogs/security-research/ffdroider-stealer-targeting-social-media-platform-users">ZScaler&rsquo;s report on the family</a> FFDroider goes after credentials for the following websites:</p>
+<ul>
+<li>www[.]facebook[.]com</li>
+<li>www[.]instagram[.]com</li>
+<li>www[.]amazon[.]ca/cn/eg/fr/de/in/it.co.jp/nl/pl/sa/sg/es/se/ae/co.uk/com/com.au/com.br/mx/tr</li>
+<li>www[.]all-access.wax[.]io</li>
+<li>www[.]ebay[.]com</li>
+<li>www[.]etsy[.]com</li>
+<li>www[.]twitter[.]com</li>
+</ul>
+<p>We have taken a look at the samples shared online and implemented some initial detections to cover the family. As a new threat we will of course keep an eye on it in the coming weeks and will release any updates as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220424-2x7mvaabc3">220424-2x7mvaabc3</a></li>
+<li><a href="https://tria.ge/220423-dzrgmsecdp">220423-dzrgmsecdp</a></li>
+<li><a href="https://tria.ge/220413-kz39rsagen">220413-kz39rsagen</a></li>
+<li><a href="https://tria.ge/220407-sb6c8aeffl">220407-sb6c8aeffl</a></li>
+<li><a href="https://tria.ge/220411-h3sw4aedg9">220411-h3sw4aedg9</a></li>
+</ul>
+<h2 id="modiloader">ModiLoader</h2>
+<p>ModiLoader, also known as DBatLoader or NatsoLoader, is a dropper first reported in June 2020. It is a 2 stage loader and has been observed deploying Formbook, Netwire and Remcos trojans.</p>
+<p>We added initial support for the family back in <a href="https://hatching.io/blog/tt-2020-09-03/#modiloader">September 2020</a>, and it has stayed mostly unchanged since then except for a small update <a href="https://hatching.io/blog/tt-2022-01-13/#modiloader">at the start of this year</a>. However we recently started seeing some new versions for it with changes that needed addressing, so we have reviewed and updated our existing detections as well as adding a full configuration extractor</p>
+<figure><img src="../../static/images/blog/tt-2022-04-28/modiloader.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220420-q3mzvacac8">220420-q3mzvacac8</a></li>
+<li><a href="https://tria.ge/220420-ewe5wafdaq">220420-ewe5wafdaq</a></li>
+<li><a href="https://tria.ge/220420-ewg98sahe5">220420-ewg98sahe5</a></li>
+<li><a href="https://tria.ge/220420-ewkelafdbl">220420-ewkelafdbl</a></li>
+<li><a href="https://tria.ge/220420-ewlyesahe7">220420-ewlyesahe7</a></li>
+</ul>
+<h2 id="cryptbot">CryptBot</h2>
+<p>CryptBot is an infostealer which has been active in the wild since early 2019. Although its use has expanded over time it is regularly distributed alongside legitimate software which acts as its lure, often affecting users installing cracked versions of software downloaded from torrent sites.</p>
+<p>The family was quite actively developed throughout 2021 with a few new versions and variants appearing over the course of the year, and has carried that into 2022 with a couple of new updates making it into this blog already. This week just sees a few minor changes which required updated behavioural detections for the family, and these have now been deployed to the public cloud. We do not currently have a sample to share publicly for this but it should provide better coverage for the family overall.</p>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee is a loader which has been gaining a lot of attention recently. It has mainly been used by an Initial Access Broker group called EXOTIC LILY who gain access to networks which can later be leveraged to deploy additional malware families - this is then sold on to operators of other campaigns like Conti ransomware or CobaltStrike who can deploy their own payloads easily.</p>
+<p>On a technical level it is a fairly typical example of its type, using WMI to harvest general information about the system and report it back to the C2 infrastructure which then issues commands for the next steps. This task can vary but mainly revolves around deploying code and payloads onto the system. You can find a full writeup of the family from Google&rsquo;s Threat Analysis Group <a href="https://blog.google/threat-analysis-group/exposing-initial-access-broker-ties-conti/">here</a>.</p>
+<p>We added detection for BumbleBee <a href="https://hatching.io/blog/tt-2022-04-14/#bumblebee">in our previous blogpost</a> including a full configuration extractor, but since then have noticed a new version which required some additional tweaks. The issues were around the handling of C2 addresses which turned out to have a wider variety of possible formats and structures than we saw in the samples originally available, so we have now addressed this. As always with these active new families we&rsquo;ll be continuing to push out updates as soon as possible for any new versions or variants, so if you come across anything you think should be BumbleBee but is not being tagged please send us feedback and we&rsquo;ll look into it.</p>
+<p>If you&rsquo;re not familiar with the family, Proofpoint published a new analysis of it earlier today which you can <a href="https://www.proofpoint.com/us/blog/threat-insight/bumblebee-is-still-transforming">find here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220428-tx94zafbc7">220428-tx94zafbc7</a></li>
+<li><a href="https://tria.ge/220428-tyflrabgcj">220428-tyflrabgcj</a></li>
+</ul>
+<h2 id="gimmick">Gimmick</h2>
+<p>Gimmick is a malware family which was originally aimed at Windows machines. Thought to be developed by a Chinese threat group it has been used in the past to attack organisations across Asia but up until now it has not really caught our attention which, due to our current user/customer base, is generally a bit more oriented towards US and European markets.</p>
+<p>Recently though the developers have expanded to also include a macOS version of the implant, and some examples of this quickly made it into our sample set. This version does seem to be a custom rewrite rather than a port, written in Objective C instead of the .NET/Delphi versions seen previously on Windows, but the actual functionality is reportedly all but unchanged. It has quite a complex execution flow which attempts to bypass the main points of detection for persistence etc. - the image below taken from <a href="https://www.volexity.com/blog/2022/03/22/storm-cloud-on-the-horizon-gimmick-malware-strikes-at-macos/">Volexity&rsquo;s in depth report on the new macOS version</a> attempts to break this infection process down:</p>
+<figure><img src="../../static/images/blog/tt-2022-04-28/Volexity_GIMMICK_workflow.png">
+</figure>
+
+<p>As can be seen Gimmick itself is something of a blank slate, capable of processing &rsquo;tasks&rsquo; that can cover a wide variety of purposes and goals. The C2 infrastructure has generally been seen as Google Drive but can be other legitimate hosting services to help the malware blend into normal network traffic - in fact it can be configured to only communicate with the C2 on work days to blend in even more neatly.</p>
+<p>We have added some initial behavioural signatures for the family, and as always will revisit it as necessary.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220323-xxws5aada5">220323-xxws5aada5</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Updates for Flubot, Redline, Bazar, DoubleBack and more</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-05-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 112: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-12-07/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-07/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Using Magic Links</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/magic-links/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

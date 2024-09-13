@@ -1,0 +1,3613 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <link rel="alternate" type="application/json" href="https://hatching.io/blog/index.json" title="Hatching">
+    <title>Blogs</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+  <section class="scheme-6 view-context blog-fold" id="fold" data-set="blog">
+    <article class="view-context__body align-left">
+      <h1>Blog.</h1>
+      <a href="#posts-filter" class="arrow-button single">&nbsp;</a>
+    </article>
+    <div class="background-graphic fold-sequence">
+      <div class="image" style="background-image: url('/static/images/headers/blog/0.jpg');"></div>
+    </div>
+  </section>
+
+  <nav class="search-controls" id="posts-filter">
+    <p mobile-hidden>Filter posts by</p>
+    <div class="search-control">
+      <label class="search-control__label">Category:</label>
+      <a href="#categories" class="search-control__input">
+        <strong class="search-control__value">Triage</strong>
+        <i class="icon-chevron-down"></i>
+      </a>
+      <div class="search-control__overlay" id="categories" hidden>
+        <h4>Categories</h4>
+        
+      </div>
+    </div>
+    <div class="search-control__buttons">
+      <button class="button button-transparent small-capped blue" id="posts-reset" hidden>Reset</button>
+    </div>
+  </nav>
+
+  <section class="scheme-1 content-list" id="articles">
+
+    
+
+    
+      <div class="content-list__item" data-index="0">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-52.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>12-09-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 148: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-09-12/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="1">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-51.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>05-09-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 147: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-09-05/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="2">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-50.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>29-08-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 146: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-08-29/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="3">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-49.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>22-08-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 145: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-08-22/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="4">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-48.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>15-08-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 144: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-08-15/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="5">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-47.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-08-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 143: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-08-08/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="6">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-92.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>07-08-2024</h6>
+          
+            <h5>Triage Insights</h5>
+          
+          <h2>Triage Insights: Detection Evasion In Android APK Headers</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/triage-insights-ep2/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="7">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-46.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>01-08-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 142: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-08-01/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="8">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-45.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>25-07-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 141: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-07-25/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="9">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-44.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-07-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 140: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-07-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="10">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-43.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-07-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 139: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-07-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="11">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-42.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>04-07-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 138: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-07-04/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="12">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-41.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>27-06-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 137: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-06-27/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="13">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-40.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>20-06-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 136: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-06-20/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="14">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-39.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>13-06-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 135: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-06-13/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="15">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-38.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>06-06-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 134: Ubuntu 22.04, RedHat Linux, and French Language Support</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-06-06/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="16">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-37.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>23-05-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 133: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-05-23/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="17">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-36.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>16-05-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 132: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-05-16/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="18">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-35.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>09-05-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 131: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-05-09/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="19">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-34.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>02-05-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 130: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-05-02/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="20">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-33.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>25-04-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 129: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-04-25/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="21">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-32.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-04-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 128: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-04-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="22">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-31.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-04-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 127: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-04-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="23">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-31.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>04-04-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 126: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-04-04/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="24">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-30.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-03-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 125: Easier Upload via Drag &amp; Drop or Copy/Paste</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-03-28/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="25">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-29.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>21-03-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 124: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-03-21/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="26">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-28.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-03-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 123: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-03-14/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="27">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-27.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>07-03-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 122: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-03-07/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="28">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-26.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>29-02-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 121: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-02-29/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="29">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-25.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>22-02-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 120: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-02-22/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="30">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-24.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>15-02-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 119: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-02-15/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="31">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-23.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-02-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 118: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-02-08/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="32">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-22.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>01-02-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 117: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-02-01/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="33">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-21.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>25-01-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 116: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-01-25/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="34">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-20.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-01-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 115: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-01-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="35">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-19.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-01-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 114: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-01-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="36">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-18.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>04-01-2024</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 113: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2024-01-04/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="37">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-73.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-12-2023</h6>
+          
+            <h5>Triage Insights</h5>
+          
+          <h2>Triage Insights: Octo Android Banker</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/triage-insights-ep1/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="38">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-17.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>07-12-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 112: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-12-07/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="39">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-16.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>30-11-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 111: Support for Windows 11 &amp; Android 13</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-11-30/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="40">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-15.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>23-11-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 110: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-11-23/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="41">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-14.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>16-11-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 109: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-11-16/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="42">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-13.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>09-11-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 108: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-11-09/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="43">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-12.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-11-2023</h6>
+          
+            <h5>Short Guides</h5>
+          
+          <h2>Submitting URLs as QR Codes</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/qr-codes/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="44">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-12.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>02-11-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 107: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-11-02/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="45">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-11.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>26-10-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 106: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-10-26/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="46">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-10.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>19-10-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 105: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-10-19/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="47">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-9.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>12-10-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 104: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-10-12/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="48">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-8.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>05-10-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 103: Triage Thursday</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-10-05/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="49">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-7.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-09-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 102: Submission UI Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-09-28/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="50">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-6.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>21-09-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Ep. 101: New Analysis Log View</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-09-21/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="51">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-5.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-09-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 100</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-09-14/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="52">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-5.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>07-09-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 99</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-09-07/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="53">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-4.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>31-08-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 98</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-08-31/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="54">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-3.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>24-08-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 97</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-08-24/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="55">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-2.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-08-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 96</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-08-17/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="56">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-1.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-08-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 95</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-08-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="57">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-92.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>03-08-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 94</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-08-03/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="58">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-88.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-07-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 93</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-07-28/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="59">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-91.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>12-01-2023</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 92</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2023-01-12/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="60">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-90.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>01-12-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 91</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-12-01/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="61">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-89.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>24-11-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 90</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-11-24/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="62">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-88.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-11-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 89</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-11-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="63">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-87.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>27-10-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 88</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-10-27/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="64">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-86.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>29-09-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 87</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-09-29/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="65">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-85.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>22-09-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 86</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-09-22/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="66">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-84.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>15-09-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 85</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-09-15/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="67">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-83.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-08-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 84</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-08-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="68">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-82.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-08-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 83</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-08-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="69">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-81.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-07-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 82</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-07-28/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="70">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-80.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>21-07-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 81</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-07-21/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="71">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-79.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-07-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Thursday Ep. 80</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-07-14/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="72">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-78.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-07-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Acquisition News and Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/acquisition-recorded-future/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="73">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-78.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>30-06-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Raccoon v2 and Other Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-06-30/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="74">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-78.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>23-06-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>BumbleBee Fix and New Extractors</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-06-23/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="75">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-77.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>16-06-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Family Additions</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-06-16/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="76">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-77.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>09-06-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Support for Eternity Project and EnemyBot, Plus Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-06-09/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="77">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-76.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>02-06-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>A Few Weeks of Configuration Extractor and Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-06-02/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="78">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-75.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>12-05-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Qakbot, BumbleBee, Gh0stRAT and Redline Improvements</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-05-12/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="79">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-74.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>05-05-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>SAML Release and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-05-05/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="80">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-73.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-04-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Emotet x64 and Other Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-04-28/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="81">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-72.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-04-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>UPX Unpacking and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-04-14/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="82">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-71.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>07-04-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Configuration Extractor Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-04-07/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="83">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-70.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>31-03-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>ssdeep Support, General Improvements &amp; Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-03-31/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="84">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-70.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-03-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Maldoc Handling Updates and Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-03-17/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="85">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-69.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-03-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Greater Filetype Support, Family Updates, and New Coniguration Extractors</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-03-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="86">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-68.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>03-03-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Family Detections and MHT File Support</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-03-03/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="87">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-67.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-02-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updates for IcedID, Mercurial, Allcome and Qakbot</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-02-17/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="88">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-66.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-02-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Versions and New Families</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-02-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="89">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-65.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>27-01-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updates for AgentTesla, GoldDragon, BlackCat and Trickbot NWorm</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-01-27/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="90">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-64.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>20-01-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Emotet Epoch 5 and other version updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-01-20/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="91">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-63.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>13-01-2022</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Year, New Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2022-01-13/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="92">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-62.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>23-12-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>A Year in Review, Plus Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-review/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="93">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-61.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>09-12-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Backend Updates and Family Detection Improvements</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-12-09/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="94">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-60.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>02-12-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Advanced Submit Screen and Emotet Powershell Parsing</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-12-02/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="95">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-59.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-11-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Emotet Updates, and BazarLoader Emulation</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-11-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="96">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-58.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-11-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>SSO Support and Family Signatures</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-11-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="97">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-57.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>04-11-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>MacOS, TA505 and Other Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-11-04-triage-thursday/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="98">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-56.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>21-10-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Onemon Tweak Plus AtomSilo And STRRAT Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-10-21-triage-thursday/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="99">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-55.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-10-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Configuration Extractors and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-10-14-triage-thursday/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="100">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-54.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>30-09-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Detection Updates for BazarLoader, ERMAC, Jupyter and Vidar</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-09-30-triage-thursday/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="101">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-53.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>23-09-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>SquirrelWaffle and Other Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-09-23-triage-thursday/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="102">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-52.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>16-09-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New and Improved Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/2021-09-16-triage-thursday/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="103">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-51.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>02-09-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-09-02/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="104">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-50.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>26-08-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Configuration Extractors and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-08-26/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="105">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-49.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>19-08-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Network Simulation and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-08-19/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="106">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-48.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>12-08-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Windows 11, TheHive Integration, and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-08-12/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="107">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-47.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>05-08-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updates for Configuration Extractors and Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-08-05/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="108">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-46.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>29-07-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>General Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-07-29/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="109">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-45.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>21-07-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Suricata Integration, New Extractors, and Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-07-21/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="110">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-44.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-07-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Extractor Updates, New Families, and LZMA Support</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-07-08/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="111">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-43.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>01-07-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>LimeRAT Extractor and Family Signature Additions</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-07-01/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="112">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-42.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>24-06-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Detection updates for macOS and Windows</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-06-24/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="113">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-41.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-06-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Onion Support and Signature Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-06-17/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="114">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-40.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-06-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New UI, TOR support, and detection updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-06-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="115">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-77.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>03-06-2021</h6>
+          
+          <h2>Triage for macOS</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/triage-for-macos/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="116">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-39.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>27-05-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Android Support Updates and Family Tweaks</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-05-27/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="117">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-38.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>20-05-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>More Family Updates and Additions</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-05-20/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="118">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-37.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>13-05-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updates for Flubot, Redline, Bazar, DoubleBack and more</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-05-13/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="119">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-36.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>06-05-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Signature Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-05-06/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="120">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-35.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>29-04-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>General Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-04-29/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="121">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-34.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>22-04-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>macOS Announcement and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-04-22/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="122">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-1.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>19-04-2021</h6>
+          
+            <h5>Short Guides</h5>
+          
+          <h2>Using Magic Links</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/magic-links/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="123">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-33.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-04-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Phishing Analysis and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-04-08/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="124">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-32.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>25-03-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Preview of Phishing Analysis</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-03-25/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="125">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-30.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-03-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Triage Knowledge Base</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="126">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-29.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-03-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Family Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-03-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="127">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-29.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>04-03-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Custom Yara Support</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/custom-yara/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="128">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-27.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>25-02-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Extractor Updates and ZLoader Anti-VM</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-02-25/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="129">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-25.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-02-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Warzone Extractor and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-02-18/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="130">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-23.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-02-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Families and Detection Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-02-11/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="131">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-22.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>04-02-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updated Gozi Detection and Gootkit Extractor</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-02-04/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="132">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-13.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-01-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Danabot Update, Android Families, and QoL Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-01-28/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="133">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-38.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>21-01-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New UI Features and Additions to Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-01-21/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="134">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-44.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>14-01-2021</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Dashboard Update and Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2021-01-14/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="135">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-35.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-12-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>A Year of Excel 4.0 Macros</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-12-17/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="136">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-27.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-12-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Search by Platform and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-12-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="137">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-21.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>03-12-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New and Updated Families</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-12-03/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="138">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-38.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>02-12-2020</h6>
+          
+          <h2>Triage Integration with Splunk and Cortex XSOAR</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/triage-splunk-xsoar/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="139">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-47.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>26-11-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-11-26/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="140">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-55.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>24-11-2020</h6>
+          
+          <h2>Triage for Linux</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/triage-for-linux/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="141">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-43.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>12-11-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Configuration Extractor Improvements</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-11-12/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="142">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-36.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>05-11-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Mitre ATT&amp;CK Matrix UI</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-11-05/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="143">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-73.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>29-10-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Integrations, Updated DLL Handling and New Family Classifications</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-10-29/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="144">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-68.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>23-10-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Search, Powershell Deobfuscation, and File Hash Display</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-10-23/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="145">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-67.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>15-10-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updates for ZLoader, Netwalker, QNodeService and WSHRAT</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-10-15/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="146">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-65.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>08-10-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>General Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-10-08/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="147">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-77.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>01-10-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>API Client and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-10-01/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="148">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-55.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>24-09-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Custom Archive Passwords, Dridex Config Extractor and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-09-24/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="149">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-44.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-09-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New Overview Section and Family Updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-09-17/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="150">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-33.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>10-09-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>URLScan Integration and Updates for Emotet and Zloader</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-09-10/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="151">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-22.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>03-09-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>CobaltStrike, Trickbot and Other Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-09-03/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="152">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-17.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>27-08-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Smokeloader Analysis and More Family Detections</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-08-27/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="153">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-62.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>24-08-2020</h6>
+          
+            <h5>Short Guides</h5>
+          
+          <h2>Analysis Profiles</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/analysis-profiles/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="154">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-14.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>20-08-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>Updated family classifications</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-08-20/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="155">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-55.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>13-08-2020</h6>
+          
+            <h5>Triage Thursday</h5>
+          
+          <h2>New extractors, expanded family support and Android analysis</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/tt-2020-08-13/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="156">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-36.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>11-08-2020</h6>
+          
+            <h5>Android</h5>
+          
+          <h2>Triage for Android</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/triage-for-android/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="157">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-41.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>06-08-2020</h6>
+          
+            <h5>Triage Updates</h5>
+          
+          <h2>Triage Thursday Episode 1: Open registration and a busy week of updates</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/pcapng-https/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="158">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-69.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>28-07-2020</h6>
+          
+            <h5>Triage Updates</h5>
+          
+          <h2>File Submission from URL</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/url-file-submission/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="159">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-82.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-06-2020</h6>
+          
+            <h5>Triage Updates</h5>
+          
+          <h2>Dropped files and more goodies</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/dropped-files-ui/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="160">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-82.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>06-05-2020</h6>
+          
+            <h5>Triage Updates</h5>
+          
+          <h2>SMTP/FTP Extraction</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/smtp-ftp-extraction/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="161">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-39.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>15-04-2020</h6>
+          
+            <h5>Office</h5>
+          
+          <h2>More Excel 4.0 XLM Extraction</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/more-excel-xlm-extraction/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="162">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-39.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>09-04-2020</h6>
+          
+            <h5>Office</h5>
+          
+          <h2>Excel 4.0 XLM Extraction</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/excel-xlm-extraction/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="163">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-89.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>20-03-2020</h6>
+          
+            <h5>Short Guides</h5>
+          
+          <h2>Accessing Dropped Files on Triage</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/dropped-files/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="164">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-82.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>09-03-2020</h6>
+          
+            <h5>Triage Updates</h5>
+          
+          <h2>Analysis Log View</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/analysis-log-view/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="165">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-87.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>05-03-2020</h6>
+          
+          <h2>In-Depth Metasploit Payloads Analysis</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/metasploit-payloads2/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="166">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-87.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>03-02-2020</h6>
+          
+          <h2>Analyzing Metasploit Payloads</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/metasploit-payloads/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="167">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-16.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>24-01-2020</h6>
+          
+            <h5>Short Guides</h5>
+          
+          <h2>Submitting Zip Files to Triage</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/archive-submissions/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="168">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-15.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>07-01-2020</h6>
+          
+          <h2>Powershell Static Analysis &amp; Emotet results</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/powershell-analysis/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="169">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-14.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>18-12-2019</h6>
+          
+            <h5>Understanding Ransomware</h5>
+          
+          <h2>Detecting Sodin</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/ransomware-part2/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="170">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-13.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>12-11-2019</h6>
+          
+          <h2>Reversing Qakbot</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/reversing-qakbot/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="171">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-12.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>30-10-2019</h6>
+          
+            <h5>Understanding Ransomware</h5>
+          
+          <h2>General Techniques</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/ransomware-part1/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="172">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-11.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>03-07-2019</h6>
+          
+          <h2>Cuckoo Sandbox Setup for People in a Hurry</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-setup/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="173">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-10.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>07-05-2019</h6>
+          
+            <h5>Making the Call</h5>
+          
+          <h2>Why We Want More Arbiters</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/why-we-want-more-arbiters/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="174">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-9.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>13-03-2019</h6>
+          
+          <h2>Cuckoo Sandbox Architecture</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-architecture/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="175">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-8.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>20-02-2019</h6>
+          
+          <h2>Release of Cuckoo-compatible onemon Windows kernel driver</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/onemon-cuckoo-release/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="176">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-7.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>17-12-2018</h6>
+          
+            <h5>Making the Call</h5>
+          
+          <h2>The Tech Behind Our PolySwarm Arbiter</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/first-polyswarm-arbiter-part-2/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="177">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-6.jpg" />
+          
+          
+            <p class="tag">Series</p>
+          
+        </figure>
+        <div>
+          <h6>27-11-2018</h6>
+          
+            <h5>Making the Call</h5>
+          
+          <h2>The First PolySwarm Arbiter</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/first-polyswarm-arbiter/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="178">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-5.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>12-11-2018</h6>
+          
+          <h2>LNK HTA Polyglot</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/lnk-hta-polyglot/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="179">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-4.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>29-10-2018</h6>
+          
+          <h2>Analysis on Locky dropper mechanisms</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/locky-dropper/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="180">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-3.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>15-10-2018</h6>
+          
+          <h2>IQY malspam campaign</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/iqy-malspam/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="181">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-2.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>03-10-2018</h6>
+          
+          <h2>Hooking VBScript execution in Cuckoo</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/vbscript-hooking/">Read</a>
+        </div>
+      </div>
+    
+      <div class="content-list__item" data-index="182">
+        <figure>
+          
+            <img src="/static/images/backgrounds/thumbs/resized-1.jpg" />
+          
+          
+        </figure>
+        <div>
+          <h6>18-09-2018</h6>
+          
+          <h2>Cuckoo Sandbox 2.0.6 pentest</h2>
+          <a class="button button-small button-variant-3" href="https://hatching.io/blog/cuckoo-206-pentest/">Read</a>
+        </div>
+      </div>
+    
+
+  </section>
+
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

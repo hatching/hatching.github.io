@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-90.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-90.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 91</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 91</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-90.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-12-01T00:00:00Z">2022-12-01</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of our Triage Thursday blog series! In this series we go over the detection and feature updates deployed during the course of the week. This week will be a fairly short one so let&rsquo;s dive straight in:</p>
+<ul>
+<li><a href="#luca">New configuration extractor for Lucastealer</a></li>
+<li><a href="#xworm">New signatures and configuration extractor for XWorm RAT</a></li>
+<li>Updates for <a href="https://hatching.io/blog/tt-2021-12-09/#snake">SnakeKeylogger</a> to handle a new variant</li>
+<li>Updates for <a href="https://hatching.io/blog/tt-2022-09-22/#erbium">Erbium stealer</a> to add detection and extraction for recent samples</li>
+</ul>
+<h2 id="luca">Luca Stealer</h2>
+<p>Luca is an infostealer written in Rust which popped up around the middle of 2022. We initially added support for the family back in August - you can find more details about the family in the relevant <a href="https://hatching.io/blog/tt-2022-08-18/#luca">Triage Thursday blogpost</a>, in the <a href="https://blog.cyble.com/2022/07/25/luca-stealer-source-code-leaked-on-a-cybercrime-forum/">technical breakdown by Cyble</a>, or in <a href="https://blogs.blackberry.com/en/2022/08/luca-stealer-targets-password-managers-and-cryptocurrency-wallets">analysis by Blackberry</a>.</p>
+<p>The support we added in August only covered basic behavioural detections to ensure that samples were properly tagged, but as the family has continued to be active since then we have revisited it to build a full configuration extractor. This is intended to dump out the C2 URL in use, which with this family is generally either based around Telegram or Discord.</p>
+<figure><img src="../../static/images/blog/tt-2022-12-01/lucastealer.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221201-t32psagb59">221201-t32psagb59</a></li>
+<li><a href="https://tria.ge/221201-t345xagb67">221201-t345xagb67</a></li>
+<li><a href="https://tria.ge/221201-t36czagb68">221201-t36czagb68</a></li>
+<li><a href="https://tria.ge/221201-t36nqsbf2v">221201-t36nqsbf2v</a></li>
+<li><a href="https://tria.ge/221201-t36zhabf2w">221201-t36zhabf2w</a></li>
+</ul>
+<h2 id="xworm">XWorm RAT</h2>
+<p>XWorm was first brought to our attention this week by Twitter user <a href="https://twitter.com/0xToxin/status/1597247779084337152">0xToxin</a>.</p>
+<p>The family was identified by researchers at Cyble, as part of an <a href="https://blog.cyble.com/2022/08/19/evilcoder-project-selling-multiple-dangerous-tools-online/">investigation into the EvilCoder project</a>. During their research they identified several families/tools developed by seemingly the same group/individual and available for sale through the dark web, with XWorm being one of these payloads. Users purchase access to a malware builder which can generate a payload to their preferences.</p>
+<p>The family has quite a wide range of functionality covering RAT, stealer and even ransomware operations. Among other things it can download and launch files, carry out DDoS attacks as part of a botnet, and provide a remote desktop connection; steal browser data, FTP credentials, log keystrokes, and intercept cryptocurrency wallet addresses with a clipper; and encrypt/decrypt files on the system.</p>
+<p>It also includes quite a few measures to try and prevent analysis in automated tools and sandboxes especially VMWare, VirtualBox, Sandboxie and Any.Run. None of these are able to detect the Triage VMs though so execution continues.</p>
+<p>We have reviewed samples made available by Cyble and researchers like 0xToxin and implemented both standard detections and a configuration extractor. The extractor can dump out C2 information as well as the mutex in use (where relevant) and the name of the file as defined internally for persistence etc. (if the file had been delivered by a loader as intended).</p>
+<figure><img src="../../static/images/blog/tt-2022-12-01/xworm.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221201-t9a6eacb3s">221201-t9a6eacb3s</a></li>
+<li><a href="https://tria.ge/221201-t9cz1acb3x">221201-t9cz1acb3x</a></li>
+<li><a href="https://tria.ge/221201-t9d73agf68">221201-t9d73agf68</a></li>
+<li><a href="https://tria.ge/221201-t9fqwsgf76">221201-t9fqwsgf76</a></li>
+<li><a href="https://tria.ge/221201-t9gyyscb4t">221201-t9gyyscb4t</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 94</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Support for Eternity Project and EnemyBot, Plus Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 97</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-24/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

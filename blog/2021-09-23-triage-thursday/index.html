@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-53.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-53.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>SquirrelWaffle and Other Detection Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>SquirrelWaffle and Other Detection Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-53.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-09-23T00:00:00Z">2021-09-23</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another week of our Triage Thursday update blogposts! We&rsquo;ve got several new updates and tweaks to introduce - some of them you may have seen go live earlier in the week as we felt it was important to get them into your hands as soon as possible. However we&rsquo;ll be going over them in a bit more detail below.</p>
+<p>In this week&rsquo;s changes:</p>
+<ul>
+<li><a href="#squirrelwaffle">Added family detection and configuration extraction for SquirrelWaffle family</a></li>
+<li><a href="#raccoon">Updated configuration extractor for Raccoon</a></li>
+<li><a href="#qakbot">Updated Qakbot handling</a></li>
+<li><a href="#webmonitor">Added new configuration extractor for Webmonitor RAT</a></li>
+<li><a href="#numando">Added new family detection for Numando LATAM banking trojan</a></li>
+</ul>
+<p>As always, a huge thank you to all those who send us feedback and suggestions - as a small team your comments are invaluable in helping us keep on top of an ever-changing malware landscape. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="squirrelwaffle">SquirrelWaffle Configuration Extractor</h2>
+<p>SquirrelWaffle is a new loader observed in the wild delivering mainly CobaltStrike payloads. First publicly reported by <a href="https://twitter.com/ffforward/status/1437473409542262795">@ffforward</a> on September 13th, it is being widely distributed by the <code>TR</code> botnet which has previously been known for running campaigns distributing Qakbot, CobaltStrike and IcedID.</p>
+<p>So far the family is distributed via malicious Office documents, generally leveraging <code>AutoOpen</code> functionality, <code>cscript.exe</code> and VBS scripts to fetch and install the loader ready to deliver its own payloads - a more detailed breakdown of this infection process can be found in Security Soup&rsquo;s writeup <a href="https://security-soup.net/squirrelwaffle-maldoc-analysis/">here</a>. A 2nd approach has also been observed making use of Excel 4 macros, an old version of VBA support which has long since been replaced but still lingers in most Office products for backwards compatibility (more details can be found <a href="https://isc.sans.edu/forums/diary/Excel+Recipe+Some+VBA+Code+with+a+Touch+of+Excel4+Macro/27864">here</a>)</p>
+<p>SquirrelWaffle itself is a binary executable file which also includes an encrypted configuration defining C2 information for the campaign. Alongside the standard URLs/domains to be used to fetch further instructions and payloads, it also includes an extensive IP blocklist which appears to target various analysis platforms in an attempt to prevent automated detection. Indeed, the list includes our own IP ranges used for the public Triage servers (although you can easily bypass this by using the Tor Routing network option at submission).</p>
+<p>In order to reliably classify the family and extract all available information, we have implemented general detections for it as well as a brand new configuration extractor which can dump the data mentioned above. As a new family we&rsquo;ll of course also be keeping an eye on developments in the coming days and weeks to see if we need to make any tweaks as the samples mature.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-23/squirrelwaffle.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210916-r477vagebj">210916-r477vagebj</a></li>
+<li><a href="https://tria.ge/210922-nsjtbscda8">210922-nsjtbscda8</a></li>
+<li><a href="https://tria.ge/210922-sys2eadbb8">210922-sys2eadbb8</a></li>
+<li><a href="https://tria.ge/210921-zara8safe5">210921-zara8safe5</a></li>
+</ul>
+<h2 id="raccoon">Raccoon Updates</h2>
+<p>Raccoon is a fairly standard infostealer which was first reported in the wild in April 2019. Although relatively simple in its implementation and functionality compared to many of its competitors, it has proved to be popular with threat actors due to its low cost and high reliability. It has been used very widely since it released and remains active in 2021, regularly being among the most common submissions to Triage.</p>
+<p>In terms of functionality it mostly limits itself to just harvesting credentials stored by local web browsers and stealing any cryptocurrency wallets available on the victim machine. It is most often distributed via phishing emails leveraging malicious Office documents for initial infection.</p>
+<p>We&rsquo;ve had to make some updates in the past as the family has released new versions, and we again noticed some slipping by our configuration extractor recently. We have now reviewed these and updated our detection accordingly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210922-fm17esbbb5">210922-fm17esbbb5</a></li>
+<li><a href="https://tria.ge/210922-gd354abeh7">210922-gd354abeh7</a></li>
+<li><a href="https://tria.ge/210922-gqmzmsbfb7">210922-gqmzmsbfb7</a></li>
+<li><a href="https://tria.ge/210922-h2ggnseeep">210922-h2ggnseeep</a></li>
+<li><a href="https://tria.ge/210922-h7srwseegm">210922-h7srwseegm</a></li>
+</ul>
+<h2 id="qakbot">New Qakbot Variant</h2>
+<p>Qakbot likely needs no introduction, but if you&rsquo;re not familiar with the family it is a powerful infostealer/trojan which has been in use in various forms since around 2009. It has been repurposed for a few different roles over the years, including a banking trojan attacking Active Directory servers and a stint as a ransomware dropper.</p>
+<p>Triage has long supported both behavioural detection and configuration extraction for the Qakbot family, but as an active and advanced threat it regularly requires minor tweaks to keep our signatures up to date. We recently observed another new variant which was having some issues, so we have made the required changes and reprocessed a few of the available samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210920-v116xaefe8">210920-v116xaefe8</a></li>
+<li><a href="https://tria.ge/210920-vbamnahcgk">210920-vbamnahcgk</a></li>
+<li><a href="https://tria.ge/210920-vbqc4shcgl">210920-vbqc4shcgl</a></li>
+</ul>
+<h2 id="webmonitor">Webmonitor Configuration Extractor</h2>
+<p>WebMonitor is another piece of malware which can be bought online as a legitimate remote administration tool. Published by a Swedish company called RevCode, they claim it is only for legal usage in network administration but fail to account for why that requires it to include built-in functions like dumping live memory; extracting passwords from email software and web browsers; stealing saved Wi-Fi credentials; or intercepting clipboard contents - all of which are advertised on the software&rsquo;s web page.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-23/webmonitor.png">
+</figure>
+
+<p>Interestingly, <a href="https://krebsonsecurity.com/2019/04/whos-behind-the-revcode-webmonitor-rat/">Krebsonsecurity wrote in 2019</a> that the owner of Revcode appeared to be an individual who had previously pleaded guilty to the co-creation of the Blackshades RAT in 2015.</p>
+<p>The family itself is very full-featured and well put together, but although it sees regular usage it has never achieved the success of some of its competitors. We added initial detection for it back in March 2021, and as we have continued to see samples since then we have this week added a new configuration extractor to augment the available data.</p>
+<figure><img src="../../static/images/blog/tt-2021-09-23/webmonitor2.png"><figcaption>
+      <h4>Example of the features advertised through WebMonitor&#39;s website</h4>
+    </figcaption>
+</figure>
+
+<p>We have included a couple of examples below, and you can find additional ones using Search: <a href="https://tria.ge/s/family:webmonitor">family:webmonitor</a></p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210923-q2y1qaedfr">210923-q2y1qaedfr</a></li>
+</ul>
+<h2 id="numando">Numando Banker</h2>
+<p>Numando is a recent banking trojan which mainly targets the Latin American region - though it has also been observed infecting some targets in Spain as well. <a href="https://www.welivesecurity.com/2021/09/17/numando-latam-banking-trojan/">ESET report</a> that it is operated by a threat actor with a history of using similar threats to target the same region, such as Mekotio and Grandoreiro. Numando has not achieved the same level of success as these families however, affecting a much smaller number of victims.</p>
+<p>Samples are written in Delphi and leverage fake overlays to trick users into entering sensitive information. In addition to automated stealer functionality, the family also acts as a backdoor providing manual interaction with the infected machine such as screenshot capture, process termination, machine shutdown/reboot, and simulated mouse and keyboard activity. Some versions are fully self-contained, whereas others include an additional DLL which holds resources such as the images used when generating the fake overlays.</p>
+<p>We have reviewed some initial samples and implemented static detection to classify the family correctly. Some examples are available below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210919-n3f57acab7">210919-n3f57acab7</a></li>
+<li><a href="https://tria.ge/210919-n3gfysefar">210919-n3gfysefar</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>File Submission from URL</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/url-file-submission/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 137: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>IQY malspam campaign</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/iqy-malspam/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 98</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-31/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

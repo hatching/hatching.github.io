@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-9.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-9.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Cuckoo Sandbox Architecture</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Cuckoo Sandbox Architecture</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-9.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2019-03-13T00:00:00Z">2019-03-13</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=blogpost">blogpost</a></p><li><p><a href="/blog/#category=cuckoo">cuckoo</a></p><li><p><a href="/blog/#category=flow">flow</a></p><li><p><a href="/blog/#category=architecture">architecture</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/ricardo.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Ricardo van Zutphen</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h2 id="introduction">Introduction</h2>
+<p><a href="https://cuckoosandbox.org">Cuckoo Sandbox</a> (<a href="https://github.com/cuckoosandbox/cuckoo">GitHub</a>)
+is a widely used advanced automated malware analysis tool. It consists of
+multiple, modular components which work together to collect and present the behavioral data of the malware
+to the user.</p>
+<p>For example, Cuckoo Sandbox can analyze many different malicious files
+(executables, office documents, pdf files, emails, etc) as well as malicious
+websites under Windows, Linux, Mac OS X, and Android virtualized environments.</p>
+<p>Due to Cuckoo Sandbox&rsquo;s open source nature and extensive modular design, you
+can customize any aspect of the analysis environment, analysis results
+processing, and reporting stage. Cuckoo provides you with all the requirements
+to easily integrate the sandbox into your existing framework and backend in the
+way you want and format you want.</p>
+<p>This blog post is the first in a series of blog posts on the ins and outs of
+Cuckoo Sandbox. We will kick off the series by taking a closer look at the flow
+of an analysis and the responsibilities of all Cuckoo components.</p>
+<h2 id="the-flow-of-an-analysis">The flow of an analysis</h2>
+<p>After a file or URL submission, a new entry will be made in the database and a
+task ID will be generated. The entry contains information on what the target
+(the object to be analyzed) is as well as the configured and specified analysis
+preferences for this new task.</p>
+<p>The Scheduler constantly checks if there are any virtual machines (VMs)
+available. If there are, it will search for any tasks that are pending to be
+analysed. A task will then be selected while taking into account the task
+priority. The selected task is then handed over to the analysis manager.</p>
+<p>The analysis manager will start by selecting one of the available VMs to use
+for this task, after which it will start the analysis.
+As one of the first steps, the result server is informed about the new task, so
+that it can keep track of all collected data that is uploaded to it.</p>
+<p>Before starting the VM, all the auxiliary modules (supporting modules) are
+started.
+Once running, the analyzer, monitor, configuration and the target are uploaded
+to the agent inside the machine by the guest manager, which is responsible for
+communicating with the agent. The analyzer is started by the agent and in turn,
+starts/opens the target and injects it with the monitor.</p>
+<p>While the target is being executed, the monitor and analyzer communicate
+collected behavioral information back to the result server. On the host, the
+analysis manager now waits until the guest manager determines a target is done
+running by checking if the analyzer has stopped, or a critical timeout has been
+reached.</p>
+<p>When the target has finished running, the analysis manager will stop the
+machine and all auxiliary modules. When these are terminated, the processing
+modules come into effect in order to process the collected behavioral
+information and return usable results. These results are then run against all
+the available signatures. The final step is running all reporting modules on
+the results. The reporting modules make sure the results are stored in a useful
+format for the end-user, such as JSON and MongoDB for the web interface.</p>
+<p><img src="/static/images/blog/cuckoo-sandbox-architecture/cuckoo-diagram4.svg" alt="Cuckoo Diagram 4"></p>
+<h2 id="the-components">The components</h2>
+<h3 id="the-scheduler">The Scheduler</h3>
+<p>The Scheduler is one of the components that is continuously running. It is
+responsible for initializing the configured machinery module (VirtualBox,
+VMware, etc.) and starting new tasks that are pending if enough resources, such
+as disk space, are available. It does so while making sure that the configured
+maximum number of VMs started/running is not exceeded. The Scheduler constantly
+checks if there are any VMs available. If this is the case, it will look for
+pending tasks. When it is ready to start a selected task, the task information
+is handed over to the analysis manager.</p>
+<h3 id="the-analysis-manager">The Analysis Manager</h3>
+<p>This component is started by the Scheduler and is responsible for the complete
+analysis flow of a task. The Analysis Manager decides when a machine is started
+or stopped, and if/when other modules should be started. As soon as the
+Analysis Manager is started it will try to find a machine that matches with the
+new task. For example, a task might require its target to run on a specific
+environment or machine. Before starting the machine itself, the Analysis
+Manager will start the required auxiliary modules. At this point, the analysis
+flow is handled by the Guest Manager until the analyzer stops or it hits a
+critical timeout.</p>
+<h3 id="auxiliary-modules">Auxiliary Modules</h3>
+<p>Auxiliary Modules are modules that need to be started before a machine can be
+started. These modules can be responsible for all sorts of tasks that have to
+be completed either before the machine runs or during. For example, mitmdump
+and sniffer could be seen as Auxiliary Modules. Sniffer is used to dump all
+network traffic that is generated inside a running machine.</p>
+<h3 id="machinery-modules">Machinery Modules</h3>
+<p>The Machinery Modules are responsible for interacting with the hypervisor or
+physical machine. These modules start, stop or restore the VM to a clean state.
+One of these modules (VirtualBox by default), is initialized by the Scheduler
+and used to manage all the configured VMs while Cuckoo is running.</p>
+<h3 id="the-guest-manager">The Guest Manager</h3>
+<p>The Guest Manager is responsible for communicating with the agent. It checks
+whether the machine has started yet, after which it uploads everything and
+starts the analyzer. Now that the analyzer has started, the guest manager will
+wait while it is constantly asking the agent if the analyzer has reported it is
+done yet. If a critical timeout is reached, the guest manager will force the
+analyzer to stop.</p>
+<h3 id="the-cuckoo-agent">The Cuckoo Agent</h3>
+<p>The Cuckoo Agent is a simple HTTP server that allows for starting processes and
+uploading files. It resides inside the VM and should be started as soon as the
+operating system starts. The Guest Manager uses the Agent to upload and start
+the Analyzer.</p>
+<h3 id="the-analyzer">The Analyzer</h3>
+<p>The Analyzer is the component that is executed inside the guest VM. It contains all the logic and the supporting modules required for the analysis flow that has to be performed inside the machine. This component differs per platform, as the flow and required modules can also differ per platform. The Guest Manager will select the Analyzer according to the specified platform for the used machine. This is specified in the configuration file.</p>
+<p>Once the Analyzer has been started by the Agent it starts looking for the configuration it has received. This configuration contains information about the target, the URL or a path to a file on the VM that should be executed. A target is executed using an analysis package. This is an instruction on how to open the target. For example, whether a URL should be opened in Internet Explorer or Firefox, or how a certain file, such as a .docx or .jar should be opened.</p>
+<p>The analysis package can be provided while submitting a target. If it was not provided, the analyzer will try to find the best analysis package by using information about the target contained in the configuration.</p>
+<p>Before the target is started, the guest auxiliary modules are started. These are supporting modules that can contain any logic, just like the modules on the host. Examples of guest auxiliary modules are the human module and the screenshot module. These are responsible for simulating human behavior and capturing screenshots.</p>
+<p>When a target is started on Windows, it is injected with the Cuckoo monitor DLL. This DLL will try to log any behavior it sees by hooking functions, following processes, etc. All the collected behavioral data is sent to the result server located on the host.</p>
+<p>The analyzer will run as long as any of the target processes still exist, or the analysis timeout has not been reached.</p>
+<h3 id="the-result-server">The Result Server</h3>
+<p>Before the machine is started, the Analysis Manager registers its IP address
+and the task ID to the Result Server. It is responsible for handling incoming
+data streams and storing these streams in the correct format and correct task
+directory.</p>
+<h3 id="processing-modules-signatures-and-reporting-modules">Processing Modules, Signatures and Reporting Modules</h3>
+<p>Sequentially, after the machine has stopped, the collected behavioral data needs to be processed. Processing in Cuckoo firstly means translating all intercepted behavioral data into data that can be used by the signatures. Secondly, it means making sure that the data can be displayed to the end-user in the form of a report. In order to do this, all the processing modules are run. Examples of processing modules are: translating the collected system calls to a readable/searchable format; performing static analysis; extracting network streams; and finally, searching the process memory dumps. All executed modules contribute to a structured set of results that can be used by the Cuckoo signatures and reporting modules.</p>
+<p>The Cuckoo signatures are run after the processing is completed. If any of the signatures have a match, then the signatures and the indicators of compromise will be added to the set of results. As a final step in the analysis, all reporting modules are run. These modules store the results in various formats with various goals. Two common examples are storing a JSON file and reporting to MongoDB, which is used by the Cuckoo web interface to display results.</p>
+<p>Finally, when reporting has finished, the task is marked as reported and the results are now ready to be interpreted.</p>
+<p>Looking for Cuckoo Sandbox support? <a href="/cuckoo">Check our solutions</a>.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 89</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-11-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Families and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Acquisition News and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/acquisition-recorded-future/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Mitre ATT&amp;CK Matrix UI</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-05/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

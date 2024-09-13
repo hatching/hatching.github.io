@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-25.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-25.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Warzone Extractor and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Warzone Extractor and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-25.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-02-18T00:00:00Z">2021-02-18</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of update news in our Triage Thursday blogpost! As usual we have several detection updates to go over, as well as a few brand new family detections:</p>
+<ul>
+<li><a href="#warzone">New Warzone RAT configuration extractor</a></li>
+<li><a href="#buer">Buer detection update and new configuration extractor</a></li>
+<li><a href="#cobaltstrike">Further CobaltStrike updates</a></li>
+<li><a href="#agenttesla">Updated AgentTesla family detection</a></li>
+<li><a href="#remcos">Updated Remcos RAT detection</a></li>
+<li><a href="#limerat">Updated LimeRAT detection</a></li>
+<li><a href="#elysium">New Elysium Stealer signatures</a></li>
+<li><a href="#balaclava">Balaclava ransomware support</a></li>
+</ul>
+<p>We have also been working on some background changes to Triage itself to give a smoother user experience. Some analyses with large amounts of data were taking a noticeable amount of time to load when accessed through the web UI, with some extreme cases taking that to unusable levels. We have implemented some changes and you should now get much faster load times in general when accessing tasks.</p>
+<p>We have some features coming up that we are looking forward to sharing with you, but that&rsquo;s all from us for this week&rsquo;s post. As usual you can find us <a href="https://twitter.com/hatching_io">on Twitter</a> to keep up with the latest changes throughout the week, and be sure to send us feedback there or using the Feedback buttons in Triage.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="warzone">Warzone RAT Configuration Extractor</h2>
+<p>Warzone is operated as a service, sold to actors to carry out their own campaigns. <a href="https://hatching.io/blog/tt-2020-10-08/#warzone">We added detection for it back in October</a>, but in today&rsquo;s update we have expanded on this by adding a new configuration extractor for the family. This dumps the C2 URL directly from the sample to help with tracking campaigns.</p>
+<figure><img src="../../static/images/blog/tt-2021-02-18/warzone_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210216-lh4ln84a5s">210216-lh4ln84a5s</a></li>
+<li><a href="https://tria.ge/210216-kak53ef67x">210216-kak53ef67x</a></li>
+<li><a href="https://tria.ge/210216-kak53ef67x">210216-kak53ef67x</a></li>
+<li><a href="https://tria.ge/210216-a5wrk4samj">210216-a5wrk4samj</a></li>
+<li><a href="https://tria.ge/210216-5zycf1x33a">210216-5zycf1x33a</a></li>
+</ul>
+<h2 id="buer">Updated Buer Detection and Configuration Extractor</h2>
+<p>We first added detection for Buer Loader <a href="https://hatching.io/blog/tt-2020-10-08/#buer">back in October last year</a>, and pushed some updates <a href="https://hatching.io/blog/tt-2020-12-10/#buer">in December</a>.</p>
+<p>Buer has continued to gain in popularity in the weeks since, and we have been monitoring samples to see where we can make improvements. Based on this we have now implemented a configuration extractor for the family to augment the behavioural results, as well as tweaking some beahvioural rules to better support the newer samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210212-qj1pxv26za">210212-qj1pxv26za</a></li>
+<li><a href="https://tria.ge/210212-y931k5cqtn">210212-y931k5cqtn</a></li>
+</ul>
+<h2 id="cobaltstrike">Further CobaltStrike Updates</h2>
+<p>We introduced some updates for CobaltStrike samples <a href="https://hatching.io/blog/tt-2021-02-11/#cobalt">last week</a> which included a new configuration extractor. This week&rsquo;s update extends this to also support extraction of the x86 reflective DLL loader used by CobaltStrike.</p>
+<p>Some examples of x86 loader samples are listed below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210215-l9vlvv4vv2">210215-l9vlvv4vv2</a></li>
+<li><a href="https://tria.ge/210211-epse3jscqs">210211-epse3jscqs</a></li>
+<li><a href="https://tria.ge/210211-gmrx9hjjsa">210211-gmrx9hjjsa</a></li>
+<li><a href="https://tria.ge/210215-bxqvbbebtn">210215-bxqvbbebtn</a></li>
+<li><a href="https://tria.ge/210215-hzn6eppy4j">210215-hzn6eppy4j</a></li>
+</ul>
+<h2 id="agenttesla">Updated AgentTesla Detection</h2>
+<p>AgentTesla is an infostealer which first appeared in 2014 and has seen widespread usage over the last few years. Written using .NET, it is a full featured stealer which can:</p>
+<ul>
+<li>Steal saved credentials from a wide range of web browsers and email clients</li>
+<li>Collect keys from various SSH/FTP clients</li>
+<li>Log keystrokes</li>
+<li>Harvest data from the clipboard</li>
+<li>Take screenshots and video</li>
+<li>Carry out form-grabbing attacks against login pages for common websites</li>
+<li>Gather saved credentials for known WiFi networks (first seen in early 2020)</li>
+</ul>
+<p>It is openly sold through its own website (the name and location of which has changed over the years) claiming to be a legitimate monitoring program for personal computers, although user guides detailing malicious scenarios and the numerous evasion techniques implemented over the years mean this is clearly not the real intention.</p>
+<p>Triage has supported signatures for AgentTesla for some time, but regular changes to the malware mean that variants have popped up over time which evade our detections. We have been carrying out a review of recent submissions and have implemented changes to improve coverage. We&rsquo;ll be continuing to test these over the coming weeks and will push further updates as required.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="210218-8pde641nde">210218-8pde641nde</a></li>
+<li><a href="210218-bkwfl2wb52">210218-bkwfl2wb52</a></li>
+<li><a href="210217-qm32c46xf2">210217-qm32c46xf2</a></li>
+<li><a href="210217-x2c5z7ym9x">210217-x2c5z7ym9x</a></li>
+<li><a href="210218-1wh16l8yka">210218-1wh16l8yka</a></li>
+</ul>
+<h2 id="remcos">Updated Remcos RAT Detection</h2>
+<p>Remcos is a remote administration tool sold online. Triage has supported family detection and configuration extraction for some time, but as is often the case the family has introduced some changes over time which have made our signatures less effective since <a href="https://hatching.io/blog/tt-2020-11-12/#remcos">we last covered it on the blog</a>.</p>
+<p>We have reviewed recent samples and updated our behavioural detection and configuration extractor to provide more complete coverage.</p>
+<figure><img src="../../static/images/blog/tt-2021-02-18/remcos_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210218-9ss3zgpt1n">210218-9ss3zgpt1n</a></li>
+<li><a href="https://tria.ge/210217-tzlm4actmn">210217-tzlm4actmn</a></li>
+<li><a href="https://tria.ge/210217-mehssfhd7x">210217-mehssfhd7x</a></li>
+<li><a href="https://tria.ge/210217-dvpresj7kj">210217-dvpresj7kj</a></li>
+<li><a href="https://tria.ge/210216-hpedv2zgz2">210216-hpedv2zgz2</a></li>
+</ul>
+<h2 id="limerat">Updated LimeRAT Detection</h2>
+<p>LimeRAT is an open-source remote administration tool which is available <a href="https://github.com/NYAN-x-CAT/Lime-RAT/">on Github</a>. It has an extensive list of supported features and is able to operate as a typical stealer, ransomware, cryptocurrency miner, or a bot for DDoS attacks etc. It also includes some anti-VM and anti-virus evasion techniques to help it remain undetected.</p>
+<p>We have been reviewing observed samples related to the family, and have updated our signatures to better detect them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210211-1ntyqnmrc6">210211-1ntyqnmrc6</a></li>
+<li><a href="https://tria.ge/210205-7n9szstl2s">210205-7n9szstl2s</a></li>
+</ul>
+<h2 id="elysium">New Elysium Stealer Detection</h2>
+<p>Elysium Stealer - previously known as Zeromax - <a href="https://twitter.com/3xp0rtblog/status/1278747903520116736">was reported</a> on Twitter in July 2020 by <a href="https://twitter.com/3xp0rtblog">@3xp0rtblog</a>:</p>
+<p>It is mainly oriented towards financial information theft, targeting web logins for common banking and ecommerce sites.</p>
+<p>We have taken a look at available samples and implemented detections for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200701-kvahplqqmx">200701-kvahplqqmx</a></li>
+<li><a href="https://tria.ge/200707-3xp4drna5a">200707-3xp4drna5a</a></li>
+</ul>
+<h2 id="balaclava">Balaclava Ransomware</h2>
+<p>Balaclava was brought to our attention back in October 2020 by <a href="https://x.com/ReversingLabs/status/1313103454907363328">ReversingLabs</a>.</p>
+<p>The family drops <code>.txt</code> ransomnotes to encrypted directories, and adds a custom extension to files - this often follows the pattern <code>.[word]_New</code>, e.g. <code>.dave_New</code>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210218-yp8hg8yw1j">210218-yp8hg8yw1j</a></li>
+<li><a href="https://tria.ge/210218-e4d3r2qyba">210218-e4d3r2qyba</a></li>
+<li><a href="https://tria.ge/210218-ndr6prtyxe">210218-ndr6prtyxe</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Knowledge Base</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 146: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-29/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for AgentTesla, GoldDragon, BlackCat and Trickbot NWorm</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Integrations, Updated DLL Handling and New Family Classifications</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-29/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

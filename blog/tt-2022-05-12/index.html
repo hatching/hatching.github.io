@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-75.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-75.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Qakbot, BumbleBee, Gh0stRAT and Redline Improvements</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Qakbot, BumbleBee, Gh0stRAT and Redline Improvements</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-75.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-05-12T00:00:00Z">2022-05-12</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! Today we&rsquo;ve just got a quick one to go over a few detection updates, so let&rsquo;s get straight into things:</p>
+<ul>
+<li><a href="#qakbot">Updated Qakbot extractor to handle latest samples</a></li>
+<li><a href="#bumblebee">Updated BumbleBee configuration extractor</a></li>
+<li><a href="#gh0strat">Added detections for recent Gh0stRAT</a></li>
+<li><a href="#redline">Updated Redline extractor to improve coverage</a></li>
+</ul>
+<p>As usual if you have any comments, suggestions or other feedback about Triage feel free to get in touch with us. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="qakbot">Qakbot</h2>
+<p>Qakbot is an infostealer and trojan which goes all the way back to 2009, and has seen many different versions over the years. We&rsquo;ve featured it many times on this blog over time so we won&rsquo;t go into detail again here, but if you&rsquo;d like more information about the family you can find a report on it from CISA <a href="https://www.cisa.gov/sites/default/files/publications/202010221030_QakBot%20TLPWHITE.pdf">here</a>.</p>
+<p>This week&rsquo;s update for the family is fairly small, but widens support for our configuration extractor - we&rsquo;d recently noticed some samples with new resource IDs that were causing some issues. This has now been fixed so you should see better coverage for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220505-vhdmwsgdc7">220505-vhdmwsgdc7</a></li>
+<li><a href="https://tria.ge/220505-ryjx3agcc6">220505-ryjx3agcc6</a></li>
+<li><a href="https://tria.ge/220505-rg9gdsahhl">220505-rg9gdsahhl</a></li>
+<li><a href="https://tria.ge/220505-rgn6fsahhj">220505-rgn6fsahhj</a></li>
+<li><a href="https://tria.ge/220505-rgn6fsahgr">220505-rgn6fsahgr</a></li>
+</ul>
+<h2 id="bumblebee">BumbleBee</h2>
+<p>BumbleBee is a loader generally associated with the EXOTIC LILY Initial Access Group, who have often worked with ransomware gangs like Conti to provide already-compromised systems for them to infect.</p>
+<p>It is a fairly typical loader - it uses WMI to harvest general information about the system and reports that back to the C2, which can issue it a task for the next stage. This task can vary but mainly revolve around deploying code and payloads onto the system. For a fuller writeup of the samples you can find a blogpost about it from Google&rsquo;s Threat Analysis Group <a href="https://blog.google/threat-analysis-group/exposing-initial-access-broker-ties-conti/">here</a>.</p>
+<p>The family has changed a few times already since it first appeared and this week brings some more new versions which need a few tweaks to our handling. We noticed some new samples which are now using RC4 encryption to protect their configuration data meaning our existing code wasn&rsquo;t supporting it - we&rsquo;ve now taken a look at the way they handle this and replicated it so we support both these and the older, plaintext versions. We have also made some improvements to the way the extractor presents data, with a bit more differentiation between some of the output.</p>
+<figure><img src="../../static/images/blog/tt-22-05-12/bumblebee.png">
+</figure>
+
+<p>As it&rsquo;s so active we&rsquo;ll be keeping a close eye on the family going forwards, and will continue to make changes as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220509-3e4nxaedh7">220509-3e4nxaedh7</a></li>
+<li><a href="https://tria.ge/220509-ygys8agghn">220509-ygys8agghn</a></li>
+</ul>
+<h2 id="ghostrat">Gh0stRAT</h2>
+<p>The Gh0stRAT family has a long history, with the core of its code base going all the way back to 2001. However it continues to be relevant today with a bunch of new versions coming out over time, especially with the source code available online.</p>
+<p>It is pretty full-featured with a wide range of functionality supported out of the box. Based on <a href="https://resources.infosecinstitute.com/topic/gh0st-rat-complete-malware-analysis-part-1/">a 2015 report</a> this includes:</p>
+<ul>
+<li>Take full control of the remote screen on the infected bot</li>
+<li>Provide real time as well as offline keystroke logging</li>
+<li>Provide live feed of webcam, microphone of infected host</li>
+<li>Download remote binaries on the infected remote host</li>
+<li>Take control of remote shutdown and reboot of host</li>
+<li>Disable infected computer remote pointer and keyboard input</li>
+<li>Enter into shell of remote infected host with full control</li>
+<li>Provide a list of all the active processes</li>
+<li>Clear all existing SSDT of all existing hooks</li>
+</ul>
+<p>For more details on Gh0stRAT you can check out the link included above, or a detailed SentinelOne report on it and its background <a href="https://www.sentinelone.com/blog/the-curious-case-of-gh0st-malware/">here</a>.</p>
+<p>Although it hasn&rsquo;t come up in the time we&rsquo;ve been publishing these blogs Triage has supported Gh0stRAT since the platform&rsquo;s early days. However we have recently seen samples which appear to be a new version with significant enough changes to require some tweaks to our detections so these have now been implemented, and we&rsquo;ll continue to watch out for any outliers which may need additional tweaks.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220509-zm5pdsecd5">220509-zm5pdsecd5</a></li>
+<li><a href="https://tria.ge/220427-bncs1afad6">220427-bncs1afad6</a></li>
+<li><a href="https://tria.ge/220425-z1573sddd3">220425-z1573sddd3</a></li>
+<li><a href="https://tria.ge/220423-hdggrsaha2">220423-hdggrsaha2</a></li>
+<li><a href="https://tria.ge/220417-zve4pschek">220417-zve4pschek</a></li>
+</ul>
+<h2 id="redline">Redline</h2>
+<p>Redline is a stealer family which has seen a lot of activity since it came to prominence in early 2020. Featuring an extensive feature set for data theft and specialised C2 communications, the family has become a popular choice among cybercriminals. It has been observed to be deployed in a number of different ways including sideloading with legitimate applications, masquerading as applications like Telegram, or regular phishing attacks.</p>
+<p>This week&rsquo;s change is not driven by a new variant or version, but is just intended to widen support for some existing samples which were not being properly covered. We have been improving our memory dumping strategies to provide better data for the extractors etc. and this builds on that to make things more stable and robust. We have reprocessed some examples and these are below for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220509-krmbaafffr">220509-krmbaafffr</a></li>
+<li><a href="https://tria.ge/220509-mkenzafggp">220509-mkenzafggp</a></li>
+<li><a href="https://tria.ge/220509-phstxsdah3">220509-phstxsdah3</a></li>
+<li><a href="https://tria.ge/220509-pje98adah5">220509-pje98adah5</a></li>
+<li><a href="https://tria.ge/220509-sx35zsdff5">220509-sx35zsdff5</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Emotet Updates, and BazarLoader Emulation</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-11-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage for Android</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-for-android/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Analysis on Locky dropper mechanisms</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/locky-dropper/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 112: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-12-07/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

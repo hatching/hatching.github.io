@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-47.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-47.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Updates for Configuration Extractors and Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Updates for Configuration Extractors and Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-47.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-08-05T00:00:00Z">2021-08-05</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of Triage Thursday update news! We&rsquo;ve got quite a list of changes for you this week, with multiple configuration extractor updates and detections for a couple of new families:</p>
+<ul>
+<li><a href="#rustybuer">New configuration extractor for RustyBuer</a></li>
+<li><a href="#mimikatz">Added initial Mimikatz signatures</a></li>
+<li><a href="#bazarloader">Updated BazarLoader detections</a></li>
+<li><a href="#blackmatter">Initial BlackMatter ransomware detection</a></li>
+<li><a href="#blacknet">New BlackNetRAT configuration extractor</a></li>
+<li><a href="#danabot">Updated Danabot configuration extractor</a></li>
+<li><a href="#snake">Updated SnakeKeylogger detection</a></li>
+<li><a href="#shurk">Added family detection for Shurk Stealer</a></li>
+</ul>
+<p>In other news we are still looking for a Go developer to join to Hatching team. If you&rsquo;d like to be involved in the next steps of Triage&rsquo;s journey - or know someone who might be - you can find the full job listing <a href="https://hatching.io/jobs/senior-go-developer/">here</a>. Feel free to reach out with any questions.</p>
+<p>As usual if you have any comments, suggestions or other feedback about Triage feel free to get in touch with us. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="rustybuer">New RustyBuer Configuration Extractor</h2>
+<p>Buer is a malware loader framework which has been active in the wild since late 2019. It is sold through forums as an off-the-shelf downloader and installer for other payloads. The initial version was written in C, but in May 2021 <a href="https://www.proofpoint.com/us/blog/threat-insight/new-variant-buer-loader-written-rust">Proofpoint reported</a> the discovery of a new variant of the family developed using Rust instead. This rewrite was likely just intended to switch up the code base and evade existing detections, although Rust also comes with potential performance and maintainability improvements too.</p>
+<p>Due to it being available as malware-as-a-service, both RustyBuer and its C-based predecessor have been seen in use by a very wide range of families, including Trickbot, BazarBackdoor, Ryuk ransomware, and more recently even CobaltStrike beacons.</p>
+<p>The family is successful for more than just its availability, with an extensive feature set including VM checks, locale restrictions, and robust C2 communications.</p>
+<p>We have featured Buer on this blog a couple of times in the past, when we <a href="https://hatching.io/blog/tt-2020-10-08/#buer">initially added signatures</a> and again when a <a href="https://hatching.io/blog/tt-2020-12-10/#buer">tweak to the payload required a signature update</a>. Today we&rsquo;ve continued our support for it by adding detection for the RustyBuer variant and implementing a full configuration extractor for it.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-05/rustybuer.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210803-vtn7npwxx2">210803-vtn7npwxx2</a></li>
+<li><a href="https://tria.ge/210802-w5yc3bv79x">210802-w5yc3bv79x</a></li>
+<li><a href="https://tria.ge/210723-yzn6xtp67e">210723-yzn6xtp67e</a></li>
+<li><a href="https://tria.ge/210721-3e5c2m3cbe">210721-3e5c2m3cbe</a></li>
+<li><a href="https://tria.ge/210716-jnm8jhv6zj">210716-jnm8jhv6zj</a></li>
+</ul>
+<h2 id="mimikatz">Added Mimikatz Detection</h2>
+<p>Mimikatz is an open-source program for stealing Windows credentials and escalating privileges on a system. Initially created as a proof of concept of flaws in the security of Windows account logins, it has since become an extremely popular tool among cybercriminals. This mainly comes down to 2 reasons - first that the application is extremely effective and stable, but also that its status as a common tool with security/penetration testers it often slips under the radar where custom implementations would not.</p>
+<p>This week we&rsquo;ve added some initial detections for Mimikatz payloads, so that they will be appropriately tagged with the family name in future. As an open source project there are many different versions floating around in the wild, so we&rsquo;ll likely be continuing to expand support for the family in the weeks to come.</p>
+<p>For reference, some examples are available below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210108-e3pqlfsvq2">210108-e3pqlfsvq2</a></li>
+<li><a href="https://tria.ge/210317-yfsynbk6qe">210317-yfsynbk6qe</a></li>
+<li><a href="https://tria.ge/210317-1qsbgchjlj">210317-1qsbgchjlj</a></li>
+<li><a href="https://tria.ge/210108-hwxajwzn3a">210108-hwxajwzn3a</a></li>
+<li><a href="https://tria.ge/210727-8rlzdjgdla">210727-8rlzdjgdla</a></li>
+</ul>
+<h2 id="bazarloader">Updated BazarLoader Detections</h2>
+<p>Since the end of Emotet, the Bazar family has rapidly become one of the most widely used and successful threats of 2021. Initially starting out as a simple loader and backdoor combination, it has since branched out to now include a large number of different versions and rewrites, with  various iterations of the loader module now being heavily used by other families to distribute their own malware. A recent campaign - dubbed BazarCall - has seen the family being used in large spam phonecall campaigns using various social engineering lures to get people to install the loader on their machines.</p>
+<p>The family is constantly changing and evolving, and although our detections continue to be quite reliable for the backdoor elements the changes have piled up in the loader and we recently began noticing that many analyses were no longer properly detected. We have reviewed available samples from Triage and the community, and made some much needed updates to improve detection again.</p>
+<p>There are still a couple of variants in our backlog, so expect more improvements here in the coming days.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210727-v3d6d2mxcs">210727-v3d6d2mxcs</a></li>
+<li><a href="https://tria.ge/210804-2cgqvmlvlx">210804-2cgqvmlvlx</a></li>
+<li><a href="https://tria.ge/210804-8pmmxqpdzn">210804-8pmmxqpdzn</a></li>
+</ul>
+<h2 id="blackmatter">Added Initial BlackMatter Ransomware Detection</h2>
+<p>BlackMatter is a new ransomware which popped up in July 2021, in the aftermath of the successful attack <a href="https://www.vox.com/recode/22428774/ransomeware-pipeline-colonial-darkside-gas-prices">against the Colonial Pipeline</a> in the USA.</p>
+<p>Advertised through cybercrime forums, the ransomware group claim to be incorporating significant elements of the Darkside, Lockbit and REvil families into their new malware and are clearly trying to align themselves as the successor to these families. Whether there is actually a significant overlap in the teams for these projects or if they are just attempting to use the names to gain attention is not currently clear.</p>
+<p>Interestingly unlike many ransomware operators the BlackMatter team are not, at least currently, directly selling access to the malware. Instead they are recruiting cybercriminals who already have access to compromised corporate networks which the ransomware team will seemingly then carry out a targeted attack against.</p>
+<p>They also have very clear rules on which organisation types they will and will not target - likely a precaution triggered by the recent disruption caused by attacks like the Colonial Pipeline. Whether or not they adhere to this limitations only time will tell.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210801-dabbenznwn">210801-dabbenznwn</a></li>
+<li><a href="https://tria.ge/210801-qn7hfrrnb2">210801-qn7hfrrnb2</a></li>
+</ul>
+<h2 id="blacknet">New BlackNetRAT Configuration Extractor</h2>
+<p>BlackNet is an open-source RAT and stealer which first appeared in early 2020. It has been seen mainly exploiting COVID-19 related lures to infect victims, including a fake &ldquo;Corona Antivirus&rdquo; program which - ludicrously - claimed to protect those who installed it from the actual Coronavirus.</p>
+<p>The malware has a good range of functionality including stealing web browser data, logging keystrokes, capturing screenshots, and dumping cryptocurrency wallets. It can also be used to carry out DDoS attacks. As the name suggests the main payload is written in VB.NET, and it comes with a control panel created in PHP.</p>
+<p>We have implemented a new configuration extractor for the family which can dump out C2 information, version numbers, and a range of settings defined at compile time.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-05/blacknet.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210801-tdvy71svp6">210801-tdvy71svp6</a></li>
+<li><a href="https://tria.ge/210731-rmj2vwkh96">210731-rmj2vwkh96</a></li>
+<li><a href="https://tria.ge/210726-bcetdxaqja">210726-bcetdxaqja</a></li>
+<li><a href="https://tria.ge/210801-jhc9j68nns">210801-jhc9j68nns</a></li>
+</ul>
+<h2 id="danabot">Updated Danabot Configuration Extractor</h2>
+<p>Danabot is a common banking trojan/stealer which was <a href="https://www.proofpoint.com/us/threat-insight/post/danabot-new-banking-trojan-surfaces-down-under-0">initially observed by Proofpoint</a> targeting users in Australia in mid-2018.</p>
+<p>The family has continued to be active since then, with new samples and variants still regularly appearing in the wild. At the start of 2021 <a href="https://www.proofpoint.com/us/blog/threat-insight/new-year-new-version-danabot">a new version was released</a> after a period of lower activity which appears to have increased use of the family again. The malware itself is modular including functions for browser injections and network sniffing, stealing local browser credentials, and remote access capability.</p>
+<p>We have support detection and configuration extraction for Danabot for some time now, but recent changes meant that this was no longer catching all versions. We have reviewed the samples and made the necessary changes to bring it back to full support.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210730-je9ehvk8xe">210730-je9ehvk8xe</a></li>
+</ul>
+<h2 id="snake">Updated SnakeKeylogger Detection</h2>
+<p>Snake is a relatively simple keylogger which is operated as malware-as-a-service, being sold through underground forums for fairly low prices. As is common now it is not solely a keylogger, also featuring functionality common to infostealers - theft of browser data, screenshot capture and clipboard interception.</p>
+<p>Triage features behavioural detection and a full configuration extractor for SnakeKeylogger, but again some recent changes meant some samples were not being handled correctly. We have no applied changes to fix that.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-05/snake.png">
+</figure>
+
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210802-j292w36wla">210802-j292w36wla</a></li>
+</ul>
+<h2 id="shurk">Added Family Detection For Shurk Stealer</h2>
+<p>Shurk is a fairly basic infostealer written in C++. While not particularly complex, it is capable of stealing information such as cryptocurrency wallets, browser cookies/passwords and data from local secure messaging applications such as Telegram. The family takes its name from a hardcoded string value within the payloads examined so far.</p>
+<p>Like a few other families Shurk is distributed by the G-Cleaner program, a fake garbage cleaner posing as something similar to CCleaner but in fact just acting as a dropper for various bits of malware. It was brought to our attention at the end of July by a tweet from <a href="https://twitter.com/benkow_">@benkow_</a>:</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210731-11taac5wdx">210731-11taac5wdx</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Search, Powershell Deobfuscation, and File Hash Display</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-23/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 109: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-16/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 102: Submission UI Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/analysis-log-view/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

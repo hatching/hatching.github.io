@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-33.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-33.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Phishing Analysis and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Phishing Analysis and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-33.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-04-08T00:00:00Z">2021-04-08</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=phishing">phishing</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to Triage Thursday! We&rsquo;re back to the normal format this week, with a range of new updates to introduce.</p>
+<p>Chief among these is the release of our Phishing analysis support. You can find more details on that below.</p>
+<p>We also have several detection updates since our last blogpost:</p>
+<ul>
+<li><a href="#onemon">Onemon agent updates</a></li>
+<li><a href="#bazar">Bazar family detection improvements</a></li>
+<li><a href="#campo">New Campoloader/NLoader signatures</a></li>
+<li><a href="#ginp">Ginp Android trojan detection</a></li>
+<li><a href="#gozi">Updated Gozi RM3 configuration extractor</a></li>
+<li><a href="#guloader">Expanded coverage for Guloader</a></li>
+<li><a href="#redline">New Redline stealer variant</a></li>
+<li><a href="#wshrat">WSHRAT signature update</a></li>
+</ul>
+<p>As usual if you have any comments, suggestions or other feedback about Triage feel free to get in touch with us. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="phishing-analysis">Phishing Analysis</h2>
+<p>In our <a href="https://hatching.io/blog/tt-2021-03-25/">last blogpost</a> we took a look at our plans for phishing analysis within Triage. We are pleased to announce today that the first version of this is now available on the public Triage server for all users.</p>
+<p>This is the first iteration of phishing analysis and we will be expanding its coverage significantly in the future. The initial detections available are based around particular brands which are commonly targeted by malicious campaigns (e.g. PayPal, Amazon, Facebook etc.), but we have plans to add heuristic-based signatures which can provide more generalised coverage.</p>
+<figure><img src="../../static/images/blog/tt-2021-04-08/facebook_overall.png">
+</figure>
+
+<p>Phishing-related searches are also supported, to help filter the report list:</p>
+<ul>
+<li><code>tags:phishing</code>: Find all analyses which triggered a phishing-related result.</li>
+<li><code>brand:[name]</code>: e.g. <code>brand:facebook</code>. Filter reports to find phishing analyses which target Facebook accounts.</li>
+</ul>
+<h2 id="onemon">Onemon Agent Improvements</h2>
+<p>In addition to this week&rsquo;s detection updates, we have also been working on some tweaks to the kernel monitor agent itself. The largest of these changes provides Triage with the ability to dump Windows event logs during analysis, making them available for further analysis in existing toolsets/workflows. This is currently not integrated into Triage itself so the logs are inaccessible for now - we&rsquo;ll be fully implementing this feature in the coming weeks.</p>
+<p>We have also made some changes which will better support Excel maldocs, and improved a dumping strategy used by families like IcedID.</p>
+<h2 id="bazar">Bazar Family Update</h2>
+<p>Bazar, especially the loader variant, has somewhat exploded in popularity in recent months and this shows no sign of ending soon. We have been carrying out a detailed review of the family - loader and backdoor - and are releasing revamped detections for it in this update.</p>
+<p>Triage has generally done a good job of identifying new BazarLoader samples where many other solutions have struggled with the changes, but even so a growing number of variants were getting by our signatures. This has now been addressed, and we&rsquo;ll continue keeping an eye out for new variants.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210401-g6tx7bhgde">210401-g6tx7bhgde</a></li>
+<li><a href="https://tria.ge/210401-jr1gbbrtka">210401-jr1gbbrtka</a></li>
+<li><a href="https://tria.ge/210401-s8k19w3r2a">210401-s8k19w3r2a</a></li>
+<li><a href="https://tria.ge/210401-sdp73sx59a">210401-sdp73sx59a</a></li>
+<li><a href="https://tria.ge/210401-st7sfkvavx">210401-st7sfkvavx</a></li>
+</ul>
+<h2 id="campo">CampoLoader/NLoader Detection</h2>
+<p>During our review of Bazar samples, we observed a sample on MalwareBazaar which was being tagged as Bazar but on closer inspection didn&rsquo;t actually appear to be part of the family directly. It appeared to be a different, fairly generic loader.</p>
+<p>Based on reverse engineering of the sample, we initially allocated the name <code>NLoader</code> due to a debug string within the sample. However based on discussion with <a href="https://twitter.com/Cryptolaemus1">@Cryptolaemus</a> it appears to be more widely referred to as <code>Campoloader</code>, based on the C2 URL.</p>
+<p>Although the malware itself is not a variant of BazarLoader, it is clearly related to some degree as it has so far been distributed in Bazar campaigns.</p>
+<p>We have implemented initial detections for the samples which are currently available.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210312-x4rjgt9rcx">210312-x4rjgt9rcx</a></li>
+<li><a href="https://tria.ge/210312-ly4qyrtcc2">210312-ly4qyrtcc2</a></li>
+<li><a href="https://tria.ge/210312-tnk4nwxave">210312-tnk4nwxave</a></li>
+<li><a href="https://tria.ge/210318-qavf9s8tea">210318-qavf9s8tea</a></li>
+</ul>
+<h2 id="ginp">Ginp Android Trojan</h2>
+<p>Ginp is a banking trojan for Android platforms which has been around since late 2019. It began with a fairly standard set of stealer functions: harvesting contacts, intercepting messages, and using overlays to capture sensitive credentials for banking apps.</p>
+<p>However since then the family has seen multiple updates such as creating fake text messages on the infected device and triggering push notifications to make the user open particular apps of interest to the malware.</p>
+<p>We have reviewed samples submitted to Triage and implemented detections and extraction for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210319-abewf1vxbe">210319-abewf1vxbe</a></li>
+<li><a href="https://tria.ge/210319-vxyg8aqfka">210319-vxyg8aqfka</a></li>
+<li><a href="https://tria.ge/210319-y1mp9vlzn2">210319-y1mp9vlzn2</a></li>
+</ul>
+<h2 id="gozi">Gozi RM3 Configuration Extractor Update</h2>
+<p>At the end of March, <a href="https://x.com/_CPResearch_/status/1375115498598322179">Checkpoint</a> reported that Gozi RM3 had changed the method it uses for encryption from Serpent to AES.</p>
+<p>As Triage&rsquo;s configuration extractor decrypts data before reporting it, this meant that it did not work with the new version. We have now made the necessary changes and deployed them to Triage.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210325-fk36nwc2h6">210325-fk36nwc2h6</a></li>
+<li><a href="https://tria.ge/210325-e3xzs3jeqn">210325-e3xzs3jeqn</a></li>
+</ul>
+<h2 id="guloader">Guloader Configuration Extractor Update</h2>
+<p>Guloader is always coming up with new ways to make more work for us, and recently we again observed samples which were not being properly detected and handled by the family configuration extractor.</p>
+<p>We have reviewed the samples and extended our detection to cover this variant. We have also implemented some improvements in the backend which should enable Triage to better handle the anti-VM techniques in use by Guloader - we&rsquo;ll be testing and fully integrating these in the coming weeks.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210224-wjh9ttr4hj">210224-wjh9ttr4hj</a></li>
+<li><a href="https://tria.ge/210223-zcmcwfz8xj">210223-zcmcwfz8xj</a></li>
+<li><a href="https://tria.ge/210224-c54m5adla2">210224-c54m5adla2</a></li>
+<li><a href="https://tria.ge/210224-wwesv3t4zn">210224-wwesv3t4zn</a></li>
+</ul>
+<h2 id="redline">New Redline Stealer Variant</h2>
+<p>We have recently made some improvements to our Redline and AgentTesla detections in Triage. As usual, immediately afterwards we have noticed a new variant doing the rounds which gets by the existing signatures.</p>
+<p>Redline makes use of the SOAP network protocol for its C2 communications, and a few weeks ago <a href="https://hatching.io/blog/tt-2021-03-11/#soap">we added support</a> for parsing of these headers to Triage. The new variant still uses SOAP but abuses different aspects of the protocol.</p>
+<p>We have updated our signatures to include this variant.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210403-gtexn6kycs">210403-gtexn6kycs</a></li>
+<li><a href="https://tria.ge/210403-8j7qxf1122">210403-8j7qxf1122</a></li>
+<li><a href="https://tria.ge/210402-hwstjrzxrj">210402-hwstjrzxrj</a></li>
+<li><a href="https://tria.ge/210401-qmxmygyems">210401-qmxmygyems</a></li>
+<li><a href="https://tria.ge/210331-jyyb1v5l1j">210331-jyyb1v5l1j</a></li>
+<li><a href="https://tria.ge/210331-33amgtwf6n">210331-33amgtwf6n</a></li>
+</ul>
+<h2 id="wshrat">WSHRAT Update</h2>
+<p>WSHRAT has been around in various forms since as far back as 2013. It has changed over time, moving away from its initial highly-targeted attacks towards more standard and less centralised campaigns. It is now available to purchase through cybercrime forums.</p>
+<p>We last covered WSHRAT back in October 2020, when first introduced family signatures for it to Triage. This week&rsquo;s update extends that coverage to include additional samples observed since then.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210318-5xn7x1l69e">210318-5xn7x1l69e</a></li>
+<li><a href="https://tria.ge/210316-144qqm6zqa">210316-144qqm6zqa</a></li>
+<li><a href="https://tria.ge/210215-yvsb7dxpx6">210215-yvsb7dxpx6</a></li>
+<li><a href="https://tria.ge/210202-3gpqsqppmj">210202-3gpqsqppmj</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Updates for AgentTesla, GoldDragon, BlackCat and Trickbot NWorm</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Warzone Extractor and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for IcedID, Mercurial, Allcome and Qakbot</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-02-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 136: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-20/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

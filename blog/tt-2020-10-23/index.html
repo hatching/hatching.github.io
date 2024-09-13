@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-68.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-68.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Search, Powershell Deobfuscation, and File Hash Display</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Search, Powershell Deobfuscation, and File Hash Display</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-68.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-10-23T00:00:00Z">2020-10-23</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=update">update</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our weekly Triage <del>Thursday</del> Friday blog series. We&rsquo;re a day late with the blog this week, as we&rsquo;ve been working to put the finishing touches to a major new feature. Today we are pleased to introduce Triage&rsquo;s new <strong>Search functionality</strong>, a major update we&rsquo;ve been working on for quite some time. It allows filtering analysis reports based on a range of Triage metadata (e.g., family names and tags) and behavioural IoCs.</p>
+<p>Search has been heavily requested by users and we have done our best to accommodate as many use-cases as possible in this initial release. We&rsquo;ll go into more detail on the new feature below. Currently it is only available on our public cloud at <a href="https://tria.ge/">tria.ge</a> - we will be rolling it out to private cloud instances over the coming weeks.</p>
+<p>Alongside Search we are also releasing a couple of other new features. Firstly another widely requested feature, <strong>visible hashes for dropped files</strong>. These can be found in the Download section at the bottom of each report, and include MD5, SHA1, SHA256 and SHA512 hashes for each file (note that this does not include memory dumps).</p>
+<figure><img src="../../static/images/blog/tt-2020-10-23/download_hashes.png">
+</figure>
+
+<p>Secondly, we have been working to expand Triage&rsquo;s support for Powershell scripts. In today&rsquo;s update, <strong>Powershell</strong> detected during analysis is now <strong>deobfuscated</strong> and made visible directly through the report UI, making it easier to compare code and find similar analyses.</p>
+<figure><img src="../../static/images/blog/tt-2020-10-23/deobf_powershell.png">
+</figure>
+
+<p>We hope these new features help you to find data more easily and get more out of Triage. We&rsquo;re looking forward to hearing your feedback on them - you can get in touch <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option in the Triage UI.</p>
+<hr>
+<h2 id="triage-search">Triage Search</h2>
+<p>We wanted Search to enable users to carry out some basic threat hunting, rather than just locating specific files. To this end the initial version supports a range of filters and logical operators to build complex queries based on analysis results.</p>
+<figure><img src="../../static/images/blog/tt-2020-10-23/search_general.png">
+</figure>
+
+<p>Let&rsquo;s take a look at the available filters:</p>
+<ul>
+<li><code>family</code>: Search for all samples with a particular family name assigned.</li>
+<li><code>tag</code>: Tags are assigned by signatures based on common behaviour. They generally relate to the type of malware - e.g. <code>trojan</code>, <code>backdoor</code>, <code>stealer</code>, <code>ransomware</code>, etc.</li>
+<li><code>url</code>: Search for URLs extracted during analysis. Full support for networking IoCs is still a work in progress. Currently this allows for searching the URLs dumped by configuration extractors, and not those contacted during analysis. This will however be expanded in future updates.</li>
+<li><code>ip</code>: Search based on IP addresses contacted during analysis or extracted from configurations.</li>
+<li><code>wallet</code>: Search for crypto currency wallet addresses extracted from ransomware notes/configurations.</li>
+<li><code>email</code>: Search for email addresses extracted from ransomware notes/configurations</li>
+<li><code>score</code>: Search based on the score assigned by Triage. In general we classify 1-5 as likely benign, 6-7 as likely malicious, 8-9 as malicious, and 10 as a definite, known threat.</li>
+</ul>
+<p>These filters can be combined with logical operators <code>AND</code>, <code>OR</code>, and <code>NOT</code>, to form longer queries as previously shown. You can find some examples to get started on the <a href="https://tria.ge/s">Search page</a>.</p>
+<p>Most prevalently might be the following query, which ignores all Emotet analyses. There are days where <a href="https://tria.ge/">tria.ge</a> processes tens of thousands of Emotet samples, essentially making our UI useless. On those days this query can help you browsing our reports:</p>
+<p><a href="https://tria.ge/s?q=NOT%20family%3Aemotet">NOT family:emotet</a></p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Analysis Profiles</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/analysis-profiles/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Year, New Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Accessing Dropped Files on Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/dropped-files/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Why We Want More Arbiters</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/why-we-want-more-arbiters/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

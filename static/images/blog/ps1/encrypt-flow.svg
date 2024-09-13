@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1131px" height="560px" viewBox="0 0 1131 560" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-18.000000, -19.000000)">
+            <g id="Group-2" transform="translate(19.000000, 19.000000)">
+                <rect id="Rectangle" fill="#FFFFFF" x="28" y="295" width="1088" height="80"></rect>
+                <rect id="Rectangle" fill="#FFFFFF" x="512" y="220" width="298" height="230"></rect>
+                <g id="Group" transform="translate(33.000000, 0.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="1" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="31.12" y="43">1</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="Input" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">Input</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(514.000000, 0.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="2" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.32" y="43">2</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="Strip-header" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">Strip header</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(33.000000, 110.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="3" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.28" y="43">3</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="base64-decode" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">base64 decode</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(514.000000, 110.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="4" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.44" y="43">4</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="utf16-decode" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">utf16 decode</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(33.000000, 490.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="8" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.82" y="43">8</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="utf16-decode" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">utf16 decode</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(515.000000, 490.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="9" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.32" y="43">9</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="Plaintext-output" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">Plaintext output</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(33.000000, 300.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="5" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.32" y="43">5</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="split-“|”" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">split “|”</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(810.000000, 300.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="69.0728477" height="70"></rect>
+                    <text id="7" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="29.2299338" y="43">7</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(84.367550, 35.000000) rotate(-90.000000) translate(-84.367550, -35.000000) " points="119.36755 19.705298 84.3675497 50.294702 49.3675497 19.705298"></polygon>
+                    <text id="AES-(IV,CT)" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="118" y="43">AES (IV,CT) </tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(517.000000, 225.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="6.1" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="22.14" y="43">6.1</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="version" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">version</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(517.000000, 300.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="6.2" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="20.84" y="43">6.2</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="IV-&gt;-base64" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">IV &gt; base64</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(517.000000, 375.000000)">
+                    <rect id="Rectangle" fill="#FCC21C" x="0" y="0" width="70" height="70"></rect>
+                    <text id="6.3" font-family="SpaceGrotesk-Bold, Space Grotesk" font-size="20" font-weight="bold" fill="#000000">
+                        <tspan x="20.8" y="43">6.3</tspan>
+                    </text>
+                    <polygon id="Line" fill="#000000" transform="translate(85.500000, 35.000000) rotate(-90.000000) translate(-85.500000, -35.000000) " points="120.5 19.5 85.5 50.5 50.5 19.5"></polygon>
+                    <text id="CT-&gt;-hex" font-family="SpaceGrotesk-SemiBold, Space Grotesk" font-size="20" font-weight="500" fill="#000000">
+                        <tspan x="121" y="43">CT &gt; hex</tspan>
+                    </text>
+                </g>
+                <circle id="Oval" fill="#000000" cx="832.5" cy="35.5" r="13.5"></circle>
+                <polygon id="Oval" fill="#000000" points="33 159 46 145.5 33 132"></polygon>
+                <path d="M832.5,35 L832.5,90" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M1.07576452,90 L832.5,90" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M1.07576452,90 L1.07576452,145" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M33.5,145 L1.07576452,145" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <circle id="Oval" fill="#000000" cx="832.5" cy="141.5" r="13.5"></circle>
+                <polygon id="Oval" fill="#000000" points="33 349 46 335.5 33 322"></polygon>
+                <path d="M832.5,146 L832.5,200" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M1.07576452,200 L832.5,200" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M1.5,201 L1.5,335" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M33.5,335 L1.07576452,335" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <circle id="Oval" fill="#000000" cx="1116.5" cy="335.5" r="13.5"></circle>
+                <polygon id="Oval" fill="#000000" points="33 539 46 525.5 33 512"></polygon>
+                <path d="M1116.5,341 L1116.5,470" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M1.07576452,470 L1116.5,470" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M1.5,470 L1.5,525" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+                <path d="M33.5,525 L1.07576452,525" id="Line-2" stroke="#000000" stroke-width="3" stroke-linecap="square"></path>
+            </g>
+        </g>
+    </g>
+</svg>

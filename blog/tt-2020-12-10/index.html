@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-27.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-27.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Search by Platform and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Search by Platform and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-27.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-12-10T00:00:00Z">2020-12-10</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of Triage Thursday updates! It&rsquo;s been another fairly quiet week here as we work on upcoming features, but as usual we have a few changes to go over.</p>
+<ul>
+<li><a href="#search">New Search tags for VM operating system</a></li>
+<li><a href="#anchor">Anchor_DNS Backdoor signatures</a></li>
+<li><a href="#xloader">XLoader family detection</a></li>
+<li><a href="#buer">Buer Loader updates</a></li>
+<li><a href="#suncrypt">Suncrypt Ransomware update</a></li>
+</ul>
+<p>We have also been taking a close look at recent ZLoader samples, and are planning to release a blogpost going over these samples next week. Keep an eye here and on our [social media] to catch that.</p>
+<p>If you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="search">Platform Search Tags</h2>
+<p>We&rsquo;re continuing to look for ways to improve Triage&rsquo;s Search feature, and this week have pushed another minor update which enables filtering by target platform.</p>
+<figure><img src="../../static/images/blog/tt-2020-12-10/platform_tags.png">
+</figure>
+
+<p>Just use the new terms <code>tag:linux</code> or <code>tag:android</code> in <a href="https://tria.ge/s">Search</a>.</p>
+<h2 id="anchor">Anchor DNS</h2>
+<p>Anchor_DNS is a backdoor/trojan created by the group which also develops Trickbot. It was <a href="https://www.cybereason.com/blog/dropping-anchor-from-a-trickbot-infection-to-the-discovery-of-the-anchor-malware">first reported towards the end of 2019</a> and has been active throughout 2020, although at a much smaller scale than the main Trickbot payloads. It has been reported to only be deployed on certain high-profile targets compromised by Trickbot campaigns, acting as a remote backdoor for the attackers to manually deploy additional payloads and modules.</p>
+<p>The backdoor gets its name from the use of DNS tunnelling to carry out its C2 communications, which is intended to help it go undetected on an infected network.</p>
+<p>In mid-2020 it was reported that the family had <a href="https://medium.com/stage-2-security/anchor-dns-malware-family-goes-cross-platform-d807ba13ca30">gone multiplatform</a>, with a Linux variant being seen in the wild.</p>
+<p>We have examined available samples and implemented static detection for Linux and Windows variants of the family. As with the main Trickbot payload, Anchor_DNS regularly receives new versions and we will update detections as needed in the future.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201203-34rs5hvrks">201203-34rs5hvrks</a></li>
+<li><a href="https://tria.ge/201203-6qypjx4aje">201203-6qypjx4aje</a></li>
+<li><a href="https://tria.ge/201203-9q57ks7e1s">201203-9q57ks7e1s</a></li>
+<li><a href="https://tria.ge/201203-hmlyed8lax">201203-hmlyed8lax</a></li>
+</ul>
+<h2 id="xloader">XLoader</h2>
+<p>It was recently reported by <a href="https://twitter.com/krabsonsecurity">@KrabsOnSecurity</a> that the Formbook stealer has rebranded to XLoader, although the majority of the payload itself remains the same as before.</p>
+<p>For those not familiar with the Formbook family, it is a strain of infostealers which have been operated as a service since at least 2016. The family generally includes significant anti-VM and anti-analysis techniques which can make it difficult to reliably analyse in a sandbox environment.</p>
+<p>We have examined the new samples, and implemented some initial signatures to differentiate between the 2 variants. Currently some will still receive the Formbook family tag alongside XLoader but this will be fixed in a future update.</p>
+<p>Some samples are listed below, but as usual you can find additional submissions using the search <code>family:xloader</code>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201210-8s8qaddvyn">201210-8s8qaddvyn</a></li>
+<li><a href="https://tria.ge/201210-pb5cft3rlx">201210-pb5cft3rlx</a></li>
+<li><a href="https://tria.ge/201210-glwrnjmapn">201210-glwrnjmapn</a></li>
+<li><a href="https://tria.ge/201209-ep6zekhmkn">201209-ep6zekhmkn</a></li>
+</ul>
+<h2 id="buer">Buer Loader</h2>
+<p>Buer is a loader framework which was first reported in late 2019, sold through forums for use with various payloads. We implemented detection for it <a href="https://hatching.io/blog/tt-2020-10-08/#buer">back in October</a>, but recently observed a variant which had some improvements over earlier versions and was evading our signatures.</p>
+<p>The main change we observed on close inspection was that the original persistence mechanism had been replaced with a stealthier version. We have now updated static detection to cover this variant.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201201-4t8lf6xbr6">201201-4t8lf6xbr6</a></li>
+<li><a href="https://tria.ge/201130-5s697nzqy6">201130-5s697nzqy6</a></li>
+<li><a href="https://tria.ge/201202-w5tyg6mqh2">201202-w5tyg6mqh2</a></li>
+<li><a href="https://tria.ge/201202-kzgp854aba">201202-kzgp854aba</a></li>
+<li><a href="https://tria.ge/201201-w1jd92x2hs">201201-w1jd92x2hs</a></li>
+</ul>
+<h2 id="suncrypt">Suncrypt Ransomware</h2>
+<p>SunCrypt is a ransomware family which appeared in October 2019 but has mainly been active through the 2nd half of 2020. As we mentioned <a href="https://hatching.io/blog/tt-2020-09-17/#suncrypt">in a previous blogpost</a>, it has found some success against organisations such as University Hospital New Jersey and a school district in North Carolina. Since then <a href="https://cyware.com/news/suncrypt-ransomware-takes-extortion-threats-to-next-level-47205250">CyWare have reported</a> that during the breach of an unnamed organisation the SunCrypt operators also carried out a DDoS attack after the ransomware had infected the network, using it as extra leverage to force payment of the ransom.</p>
+<p>We recently observed a sample which wasn&rsquo;t detected by our signatures. We have updated to fix this, but have so far only observed one such sample to test with. We will keep an eye open for future updates and make changes as required.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201210-baq8xykccn">201210-baq8xykccn</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Windows 11, TheHive Integration, and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Submitting Zip Files to Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/archive-submissions/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 88</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-10-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Raccoon v2 and Other Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-30/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

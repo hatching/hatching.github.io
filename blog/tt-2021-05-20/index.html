@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-38.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-38.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>More Family Updates and Additions</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>More Family Updates and Additions</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-38.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-05-20T00:00:00Z">2021-05-20</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>It&rsquo;s Thursday again, and that means it&rsquo;s time for another roundup of the week&rsquo;s Triage updates. We&rsquo;ve released several family detection changes recently, for behavioural signatures and configuration extractors, and we&rsquo;ll go over these below and provide some links for reference.</p>
+<p>In today&rsquo;s post:</p>
+<ul>
+<li><a href="#icedid">Improved support for IcedID</a></li>
+<li><a href="#teabot">Added detection for TeaBot Android malware</a></li>
+<li><a href="#guloader">Updated Guloader handling</a></li>
+<li><a href="#redline">Updated Redline handling for new variant</a></li>
+<li><a href="#snatch">Added detection for Snatch Ransomware</a></li>
+</ul>
+<p>As usual, if you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="icedid">Improved IcedID support</h2>
+<p>Continuing our changes from the <a href="https://hatching.io/blog/tt-2021-05-06/#icedid">last few weeks</a> we have some additional tweaks to extend support for the IcedID family.</p>
+<p>In previous updates we have added and improved detection for the first stages of an IcedID infection, covering the loaders which deploy the malware to an infected host.</p>
+<p>This week we have extended this with new configuration extractors for the core modules - i.e. the 2nd stage loader and the final payload. We have also added static detection based on an element on the core payload&rsquo;s functionality - browser injection. The family injects shellcode into web browser processes and Triage now has dedicated detection for this - both to act as a secondary method of detection if future changes cause issues with any of the others, but also to further enrich the data returned by Triage.</p>
+<p>You can examples below. Under the malware config section there are multiple entries, each referring to a particular part of the infection - one for the loader, 2 for aspects of the payload. Together they now provide a good overview of the sample and its exact configuration.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210406-3zhhrb3h12">210406-3zhhrb3h12</a></li>
+<li><a href="https://tria.ge/210406-5bgafmrjzx">210406-5bgafmrjzx</a></li>
+</ul>
+<h2 id="teabot">Added Detection for TeaBot Android Malware</h2>
+<p>Last week we deployed detection for the <a href="https://hatching.io/blog/tt-2021-05-13/#flubot">Flubot Android trojan</a>, and this week sees the addition of another family in very much the same vein - TeaBot.</p>
+<p>TeaBot - also known as Anatsa or Toddler - was first seen in <a href="https://www.cleafy.com/documents/teabot">early January 2021</a> attempting to steal banking credentials and 2FA SMS messages related to a specific set of banks. Over the months since the family has expanded to include additional institutions, as well as improved capabilities to inject into and interact with apps more directly.</p>
+<p>Cleafly - the original observers of the family in the wild - suggest that TeaBot is likely in early stages of development. Besides the rapid updates, it contains multiple oddities which suggest it is not yet in a stable form. Their initial writeup for the family <a href="https://www.cleafy.com/documents/teabot">can be found here</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/">210511-xpcr2ddy3n</a></li>
+<li><a href="https://tria.ge/">210511-r9hs6ba5fx</a></li>
+<li><a href="https://tria.ge/">210510-n7sfmlz2j6</a></li>
+<li><a href="https://tria.ge/">210511-qpkefsx6gx</a></li>
+<li><a href="https://tria.ge/">210512-5jgegy5786</a></li>
+</ul>
+<h2 id="guloader">Updated Guloader Handling</h2>
+<p>We recently observed some new samples of Guloader which had made some changes to their obfuscation methods. These variants have tweaked their use of the djb2 algorithm and no longer contain any readable strings to hint at the nature of the file.</p>
+<p>We have made some modifications to our detections to catch these samples properly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/">210518-3dszlv75w2</a></li>
+<li><a href="https://tria.ge/">210514-rth89gbrn2</a></li>
+<li><a href="https://tria.ge/">210514-a6k72fg3yn</a></li>
+<li><a href="https://tria.ge/">210514-4jn1brbs5a</a></li>
+</ul>
+<h2 id="redline">Updated Redline Stealer Handling</h2>
+<p>In recent blogposts we have mentioned Redline a few times, as we&rsquo;ve improved our detections and handled some false positives. Since these updates we have been keeping an eye on the family to ensure they are working as expected, and in doing so noticed another new variant this week.</p>
+<p>This one represents a relatively minor change, but does show a continued evolution of the Redline family. These samples have new encryption for their C2 communications, presumably in an attempt to hide some of their more obvious indicators.</p>
+<p>We have reviewed the available samples and implemented changes as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210520-qp6rcgd7ja">210520-qp6rcgd7ja</a></li>
+<li><a href="https://tria.ge/210519-a8jqzs8sv2">210519-a8jqzs8sv2</a></li>
+<li><a href="https://tria.ge/210519-4v4jtnth7x">210519-4v4jtnth7x</a></li>
+<li><a href="https://tria.ge/210518-w542592d32">210518-w542592d32</a></li>
+<li><a href="https://tria.ge/210518-j1epb7f7re">210518-j1epb7f7re</a></li>
+<li><a href="https://tria.ge/210518-7p2mkkbmh2">210518-7p2mkkbmh2</a></li>
+</ul>
+<h2 id="snatch">Added Detection for Snatch Ransomware</h2>
+<p>Snatch ransomware has been around for a few years, and has been on our radar for some time. It initially came to our attention in June 2020 when The DFIR Report published a blogpost covering recent campaigns by the family - this can be found <a href="https://news.sophos.com/en-us/2019/12/09/snatch-ransomware-reboots-pcs-into-safe-mode-to-bypass-protection/">here</a>.</p>
+<p>The ransomware is highly manual in its deployments. Initial access is gained by bruteforcing RDP services, with the attackers then taking over and running various surveillance and information gathering operations before attempting to encrypt machines. The toolkit includes a module capable of capturing and exfiltrating sensitive data from infected networks, and in at least some reported cases additional tools like Advanced Port Scanner have been found during investigations.</p>
+<p>We have added some initial detection for the family this week, and will keep an eye out for any future campaigns which vary from the versions reported last year.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210504-p52l61fr9e">210504-p52l61fr9e</a></li>
+<li><a href="https://tria.ge/210317-6vkqva8c6a">210317-6vkqva8c6a</a></li>
+<li><a href="https://tria.ge/210409-f23139n292">210409-f23139n292</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Kbs</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/kb/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox 2.0.6 pentest</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-206-pentest/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-26/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractors and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-26/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

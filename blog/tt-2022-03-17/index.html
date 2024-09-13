@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-70.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-70.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Maldoc Handling Updates and Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Maldoc Handling Updates and Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-70.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-03-17T00:00:00Z">2022-03-17</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Thank you for joining us for another week of Triage Thursday updates. The focus today is on some new functionality around the handling of Microsoft Office files, including automated decryption and better XLM macro parsing. We also of course have a bunch of family detection additions and updates to introduce, so let&rsquo;s dive straight in!</p>
+<ul>
+<li><a href="#office">Added support for decryption of Office files, and improvements to our emulator for XLM macros</a></li>
+<li><a href="#hermetic">Added detections for HermeticWiper and related payloads</a></li>
+<li><a href="#agenttesla">Updated detections for AgentTesla to cover some recent samples</a></li>
+<li><a href="#jupyter">Updated detections for Jupyter stealer to support new string encryption</a></li>
+<li><a href="#prometheus">Minor tweaks for Prometheus&rsquo;s ransomnote</a></li>
+</ul>
+<p>As always if you find any problems with the Triage platform or the detections in it, please do let us know. Community input is a vital part of tracking and keeping up to date with the rapidly evolving malware landscape and is extremely helpful in making these updates possible. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="office">Office File Updates</h2>
+<p>We&rsquo;re always looking for ways to improve and add to our detection capabilities beyond the standard signatures and configuration extractors that form the bulk of Triage. Over recent weeks we have been working on some improvements to the way we handle various Office files to improve both our static and behavioural analysis of these, and to make sure we can pull as much information from them as possible.</p>
+<p>There are 2 main updates we want to talk about briefly today, and we hope to have more news for you on this front in the future.</p>
+<h4 id="1-decryption-of-password-protected-office-files">1. Decryption of password-protected Office files</h4>
+<p>As you&rsquo;ll almost certainly be aware, Office software includes its own encryption method for files to allow users to password protect their documents from within these applications. For obvious reasons these cause problems when running in an automated environment, so can often be exploited as an anti-sandbox technique malicious files as well as being present in many non-malicious documents and worksheets which users may want to scan.</p>
+<p>Previously if you wanted these files to run they would have to be decrypted before submission to Triage. To simplify this process and better support automated pipelines we have now added support for their decryption to the platform directly. For now this is mainly a framework for future additions in this regard rather than a complete solution, but it opens the doors for us to add some new approaches to handle these and similar files. The main difference you will see currently is just that some additional documents will now be able to run within Triage - for example any samples using the well known <code>VelvetSweatshop</code> default password in Excel can now be handled fully automatically.</p>
+<p>Among other things in future updates we will be adding frontend support for defining specific passwords for this at submission time, as well as more variations for automated decryption.</p>
+<h4 id="2-xlm-emulator-updates">2. XLM emulator updates</h4>
+<p>Back in 2020 we added some functionality to Triage which enabled us to do detailed static analysis of Office files containing XLM macros. You can find detailed blogposts about that capability here: <a href="https://hatching.io/blog/excel-xlm-extraction/">part 1</a> and <a href="https://hatching.io/blog/more-excel-xlm-extraction/">part 2</a>. The tl;dr is that we implemented tooling - including a custom emulator - which can dump, parse and in most cases deobfuscate XLM code present in worksheets at the static analysis phase. This enables us to provide a clear printout of these scripts and associated IoCs, as well as flagging up unusual requirements like specific macro triggers which may pose an issue in an automated behavioural environment.</p>
+<p>However as with most things in the cyber space, 18 months is a long time and we&rsquo;ve increasingly been aware that our system had some limitations which needed addressing. As such we have been revisiting that the last few weeks and making changes and improvements to better support the new techniques being used in malicious XLM macros. The changes are, briefly, as follows:</p>
+<ul>
+<li>The emulator can now follow cross-sheet references, allowing us to support XLM macros which are spread across multiple worksheets of an Excel document.</li>
+<li>Triage can now take account of the data stored in the workbook section <code>definedNames</code>, which can provide aliasing to cell references within formulas. This effectively allows us to bypass another layer of obfuscation where cells are referred to by defined strings instead of the standard row/column definitions.</li>
+<li>Handling of nested branches within the scripts has been improved. This helps with processing some of the more complex scripts.</li>
+<li>The parser has been updated to understand a wider variety of formula notations, because as usual Office products can&rsquo;t just stick with one format.</li>
+<li>The parser/emulator can now also take into account the <code>sharedStringTable</code>, a data structure used for optimisation in Excel which stores some strings from the document.</li>
+</ul>
+<p>The overall effect of these changes is to greatly improve our support for the wide range of maldoc-based attacks relying on XLM macros. Triage can now perform static dumping of almost all XLM documents we&rsquo;ve seen on Triage, and as above over the coming weeks and months we will continue to build and expand on this to make it as robust as possible.</p>
+<p>Note that Triage applies tags to XLM documents, so you can find example using the <a href="https://tria.ge/s/tag:xlm"><code>tag:xlm</code></a> search parameter.</p>
+<h2 id="hermetic">Hermetic Family</h2>
+<p>In the lead up to Russia&rsquo;s invasion of Ukraine a wave of cyber attacks were carried out against Ukrainian digital infrastructure, especially that related to government institutions and major companies like banks. There have been many reports on these campaigns in the weeks since, but among the earliest was <a href="https://www.welivesecurity.com/2022/03/01/isaacwiper-hermeticwizard-wiper-worm-targeting-ukraine/">this ESET blogpost</a> which broke down a number of different payloads which all seemed to be related:</p>
+<ul>
+<li><strong>HermeticWiper</strong>: The &lsquo;main&rsquo; payload seen, which as the name suggests is a destructive wiper which aims to effectively brick computer systems. It does this by using the Windows <code>CryptGenRandom</code> API function to overwrite the following data on an infected machine with random bytes:
+<ol>
+<li>Master Boot Record (MBR)</li>
+<li>Master File Table (MFT)</li>
+<li><code>$Bitmap</code> and <code>$LogFile</code>, files used by NTFS file systems to store metadata aimed at helping with file recovery</li>
+<li>Registry hive files</li>
+<li>Windows logs stored under <code>C:\Windows\System32\winevt\Logs</code></li>
+</ol>
+</li>
+<li><strong>HermeticRansom</strong>: A related ransomware seen targeting many of the same types of organisations from the same attacker infrastructure - for example, the wiper and ransomware both share the same code-signing certificate. It is written in Golang, and saw a much more limited distribution than HermeticWiper although they are clearly related.</li>
+<li><strong>HermeticWizard</strong>: A loader and worm which just serves as the delivery mechanism for HermeticWiper. It can spread the infection across local networks via WMI and SMB. Each sample contains 3 encrypted PE files embedded within them: a copy of HermeticWiper, and 2 DLLs which provide the SMB and WMI spreading capabilities.</li>
+</ul>
+<p>The names for these payloads come from the aforementioned code-signing certificate, which is registered to a Cypriot company called Hermetica Digital Ltd. According to the ESET report this certificate was not stolen, but instead likely obtained by impersonating the company to DigiCert. Although no attribution has been made based on the code itself, it is pretty clear from usage that these families are being deployed by Russian nation-state actors with significant resources behind them. Related to this is ESET&rsquo;s assertion that many of the affected organisations had likely been compromised long in advance of the deployment of these payloads, based on facts like deployment via group policy configurations and PE compilation timestamps.</p>
+<p>In addition to the Hermetic family described above, ESET and others have also observed an additional wiper being used against Ukrainian organisations at around the same time. This has been dubbed IsaacWiper, and although it shows no code similarity with HermeticWiper the method of its use strongly suggests a similar origin. Based on compilation timestamps it is slightly older and less complex, but still capable of being quite destructive. Due to the close similarity in function and usage we are currently including it as part of the same grouping for simplicity.</p>
+<p>Much more detailed writeups for the above can be found in <a href="https://www.welivesecurity.com/2022/03/01/isaacwiper-hermeticwizard-wiper-worm-targeting-ukraine/">ESET&rsquo;s blogpost</a>, as well as in works from other companies over the last few weeks. We have been reviewing these as they have been made available, and have implemented various detections for the different payloads. We&rsquo;ll be continuing to monitor news about them in the future and will update our support as necessary.</p>
+<p><strong>Analyses:</strong></p>
+<p>HermeticWiper</p>
+<ul>
+<li><a href="https://tria.ge/220223-xesczscddl">220223-xesczscddl</a></li>
+<li><a href="https://tria.ge/220224-wrcydscaba">220224-wrcydscaba</a></li>
+<li><a href="https://tria.ge/220224-szzwcadcb9">220224-szzwcadcb9</a></li>
+<li><a href="https://tria.ge/220226-mfpndaadf7">220226-mfpndaadf7</a></li>
+<li><a href="https://tria.ge/220224-tcesbseeem">220224-tcesbseeem</a></li>
+</ul>
+<p>HermeticRansom</p>
+<ul>
+<li><a href="https://tria.ge/220224-dmw7csbgg3">220224-dmw7csbgg3</a></li>
+</ul>
+<p>HermeticWizard</p>
+<ul>
+<li><a href="https://tria.ge/220309-sdwlsscddp">220309-sdwlsscddp</a></li>
+</ul>
+<p>IsaacWiper</p>
+<ul>
+<li><a href="https://tria.ge/220302-wlw43sfgh8">220302-wlw43sfgh8</a></li>
+<li><a href="https://tria.ge/220308-rzqr1afhd3">220308-rzqr1afhd3</a></li>
+<li><a href="https://tria.ge/220304-q7kehseha6">220304-q7kehseha6</a></li>
+<li><a href="https://tria.ge/220304-q7kehseha5">220304-q7kehseha5</a></li>
+<li><a href="https://tria.ge/220303-cracqahab8">220303-cracqahab8</a></li>
+</ul>
+<h2 id="agenttesla">AgentTesla</h2>
+<p>AgentTesla probably doesn&rsquo;t need too much introduction at this point. It has appeared on this blog quite a few times over the last couple of years, and is likely familiar to anyone doing malware analysis regularly. Very briefly, it is an infostealer which targets various bits of data held locally such as browser passwords, FTP and email credentials, cryptocurrency wallets, etc. Some versions use SMTP and/or FTP for data exfiltration.</p>
+<p>The family was one of the earliest supported by Triage and in the time since we have made many updates to account for new versions, most recently to <a href="https://hatching.io/blog/tt-2022-01-27/#agenttesla">add support for the <code>email_to</code> field to our configuration extractor</a> at the start of the year. Today we are revisiting the family to make some tweaks, including support for recent samples/versions observed on Triage and more general improvements to our dumping of SMTP credentials hardcoded into them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220316-gvxdwagbfp">220316-gvxdwagbfp</a></li>
+<li><a href="https://tria.ge/220316-klxj3abce2">220316-klxj3abce2</a></li>
+<li><a href="https://tria.ge/220316-lfmcksbge6">220316-lfmcksbge6</a></li>
+<li><a href="https://tria.ge/220316-n2axsadcf6">220316-n2axsadcf6</a></li>
+<li><a href="https://tria.ge/220316-nl6phsbccr">220316-nl6phsbccr</a></li>
+</ul>
+<h2 id="jupyter">Jupyter Stealer</h2>
+<p>Jupyter was first reported in late 2020 in a <a href="https://blog.morphisec.com/jupyter-infostealer-backdoor-introduction">blogpost by Morphisec</a>. It is a relatively straightforward infostealer which targets data stored by the common Chromium, Firefox, and Google Chrome browsers. It also includes the ability to open a remote backdoor into an infected system giving operators the option of manual intervention if desired.</p>
+<p>The family makes significant use of MSI packages which pretend to be for legitimate programs, in many cases even installing a copy of the legitimate software as a decoy.</p>
+<p>We added detections and a configuration extractor for the family <a href="https://hatching.io/blog/2021-09-30-triage-thursday/#jupyter">in September 2021</a>, but we have recently observed some samples appearing which encrypt their strings and prevent extraction. We have done some reverse engineering and updated our extractor to be able to handle this, using the available data to decrypt the configuration and present it as before. This has been deployed, and as usual we&rsquo;ll keep an eye on the family to see if more changes are made.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220314-cqp2sacab8">220314-cqp2sacab8</a></li>
+<li><a href="https://tria.ge/220312-rpkg8safdj">220312-rpkg8safdj</a></li>
+<li><a href="https://tria.ge/220311-wjky2adfdm">220311-wjky2adfdm</a></li>
+<li><a href="https://tria.ge/220311-3c47nafegk">220311-3c47nafegk</a></li>
+<li><a href="https://tria.ge/220310-ytal6adhhl">220310-ytal6adhhl</a></li>
+</ul>
+<h2 id="prometheus">Prometheus Ransomware</h2>
+<p>Prometheus was first observed in the wild in early 2021, and has been identified as a new variant of the Thanos ransomware family which appeared during 2020. Recently <a href="https://www.sentinelone.com/labs/spook-ransomware-prometheus-derivative-names-those-that-pay-shames-those-that-dont/">SentinelOne has reported</a> that a new family, called Spook, has popped up which appears to be a derivative of Prometheus and has been active since around September 2021. Both Prometheus and now Spook appear to have had a decent amount of success at attacking organisations since they appeared last year.</p>
+<p>We added support for the family <a href="https://hatching.io/blog/tt-2021-06-10/#ransomware">in the middle of last year</a>, but while looking into Spook we noticed a few samples of Prometheus itself which were not being properly handled by Triage - our ransomnote dumping was not making that data available as it should. We&rsquo;ve reviewed these and made a couple of minor tweaks to ensure those are covered. The relevant samples are listed below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210602-fr7h11p5ej">210602-fr7h11p5ej</a></li>
+<li><a href="https://tria.ge/210512-y1glnyls5e">210512-y1glnyls5e</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New Family Detections and MHT File Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-03-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 90</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-11-24/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Improvements</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-11-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 115: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-18/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

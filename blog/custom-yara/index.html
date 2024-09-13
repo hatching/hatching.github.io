@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-29.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-29.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Custom Yara Support</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Custom Yara Support</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-29.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-03-04T00:00:00Z">2021-03-04</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=yara">yara</a></p><li><p><a href="/blog/#category=major%20update">major update</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another entry in our Triage Thursday update blog series. We&rsquo;ve got a bit of a special one today, as we&rsquo;re pleased to be able to announce a major new feature for Triage. In this post we&rsquo;ll take a look at the new feature, and demonstrate how to use it.</p>
+<p>So what is this new feature? Well you&rsquo;ve probably already seen the title but you can now use your own custom Yara rules in Triage analyses! Add your rules through our new in-browser editor, and they will be run against analysis files just like our own built-in rules.</p>
+<p>This feature is available to <strong>all private cloud users</strong>, and to <strong>Researcher accounts only</strong> on the public Triage server.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-04/ui_general.png">
+</figure>
+
+<h2 id="details">Details</h2>
+<p>Triage supports most features of Yara but there are a few things you should be aware of to get the most out of the new system.</p>
+<p>Like the built-in rules, custom Yara is run against not only the submitted sample, but also dropped files and memory dumps created by Triage during behavioural analysis. This allows you to - for example - target the binary after it has been unpacked during execution, or match particular DLLs or secondary payloads downloaded by the initial sample.</p>
+<p>It should also be noted that currently rules can only be run against <strong>new submissions</strong>, and can not be used in Search queries. Support for hunting in existing analyses will be made available in future updates.</p>
+<p>As mentioned above, the custom Yara feature is now available to all Private Cloud users. It is also available free of charge to those with Researcher accounts on the public <a href="https://tria.ge">tria.ge</a> server.</p>
+<p>You can find the Yara editor in the top menu on Triage, replacing the old <code>Profiles</code> option - it will look slightly different depending on whether you are using the private or public cloud.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-04/ui_menu.png">
+</figure>
+
+<p>In this section you will find all available options related to your account and/or Organisation - analysis profiles, user management, and of course Yara.</p>
+<h2 id="creating-custom-rules">Creating Custom Rules</h2>
+<p>Under the <code>Organization</code> tab (private cloud) or <code>Researcher</code> tab (public cloud), select Yara from the submenu and select <code>New Yara Rule</code>. Enter a name for the file and use the editor box to write your rule.</p>
+<figure><img src="../../static/images/blog/tt-2021-03-04/example_rule.png">
+</figure>
+
+<p>In general Triage&rsquo;s Yara support follows the same format as any Yara rule. You can also include any metadata you want, but there are certain values recommended to ensure that the signature is fully displayed in the Triage interface and reports:</p>
+<ul>
+<li><code>description</code>: This field is used as the &rsquo;title&rsquo; of the signature, which appears in the main UI.</li>
+<li><code>triage_description</code>: Optional. This field is used to provide a more detailed description of the signature. In the UI, it is visible in the dropdown section of the signature.</li>
+<li><code>triage_score</code>: Optional - defaults to 1 if not defined. The score value that should be assigned to the signature. As a rough guideline:
+<ul>
+<li>1-4 = Benign/informational</li>
+<li>5-7 = Possibly malicious</li>
+<li>8-9 = Likely malicious</li>
+<li>10 = Known bad</li>
+</ul>
+</li>
+<li><code>triage_tags</code>: Optional. Used to define tags which are applied to the analysis as a whole. These are generally intended to define the class of malware - e.g. <code>dropper</code>, <code>trojan</code>, <code>ransomware</code> etc. These can be used in Search to find samples with these tags applied using the <code>tag:</code> query. Note that these tags are also visible to anyone else who has access to your analyses.</li>
+<li><code>triage_family</code>: Optional. This is used to mark a sample as belonging to a particular malware family. The value defined here appears as a tag in the UI and can be used in Search with the <code>family:</code> query. Note that if this tag is defined then a sample will automatically receive a score of 10 regardless of the value set in <code>triage_score</code>.</li>
+</ul>
+<figure><img src="../../static/images/blog/tt-2021-03-04/ui_output.png">
+</figure>
+
+<p>When finished, select <code>Save</code> in the bottom right of the screen. The editor will notify you of any errors or warnings which might affect your rule - you can make any required modification and click <code>Update</code> to save.</p>
+<p>And that&rsquo;s it! Once it&rsquo;s saved it will be run against any new analyses you create, with the output visible in the Triage UI and usable in Search.</p>
+<hr>
+<p>We hope that this feature will be useful to many of you using Triage, and help you to get more out of the platform. We&rsquo;ll be continuing to expand on this in the future, with support for searching existing analyses with custom Yara already planned.</p>
+<p>If you have any feedback or suggestions about this or other improvements, please do get in touch. You can reach us through the contact form on <a href="https://hatching.io/">our website</a>, on <a href="https://twitter.com/hatching_io">Twitter</a>, or by using the Feedback button within the Triage UI.</p>
+<p>If you would like access to this new feature but currently are not registered as a Researcher, you can apply to have your account upgraded free of charge in the <a href="https://tria.ge/account">account settings page</a> - we will review your application as quickly as possible. We just ask that you provide some additional information through the registration form to help us understand your usage.</p>
+<p>Not signed up yet? Register for your free account <a href="https://tria.ge/signup">here</a>.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>SMTP/FTP Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/smtp-ftp-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet x64 and Other Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Detection Updates for BazarLoader, ERMAC, Jupyter and Vidar</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-09-30-triage-thursday/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Raccoon v2 and Other Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-30/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

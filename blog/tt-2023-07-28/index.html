@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-88.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-88.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 93</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 93</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-88.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2023-07-28T00:00:00Z">2023-07-28</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=updates">updates</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/junwei.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />JunWei Song</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series! It’s been a while since our last post, but our fight with the malware never stops. Today we&rsquo;ll go over the latest updates this week, along with a full list that covers several additions and changes to configuration extractors and also outlines the expansion of our coverage during the first half of this year.</p>
+<p>We’re sure you’ve noticed that we’ve been very quiet over recent months. There’s been a lot to do during the last year but going forwards we will be doing our best to stick to our weekly schedule for the update blogs, though the content will be a scaled back from before. Additionally we&rsquo;re planning some new series focusing on more technical use cases and conducting deep dives into samples/families within our lovely Triage sandbox. Be sure to stay tuned for our upcoming blog posts!</p>
+<p>As always feel free to reach out to us any time directly <a href="https://hatching.io/">through the website</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<p>Let’s get started to take a look at the latest updates this week:</p>
+<p><strong>New Families</strong></p>
+<ul>
+<li>Add detection and extraction for Skuld stealer</li>
+<li>Add detection and extraction for CustomerLoader malware</li>
+<li>Add detection and extractor for WyrmSpy Android spyware used by the APT41 group</li>
+<li>Add detection and extractor for DragonEgg Android spyware used by the APT41 group</li>
+<li>Add rules and extractor for the BrbBot family</li>
+<li>Add detection and extractor for EdgeGuard Stealer</li>
+<li>Add detection for rootkit AuKill</li>
+</ul>
+<p><strong>Updates for Existing Families</strong></p>
+<ul>
+<li>Update detection and extraction for the recent Stealc malware</li>
+<li>Update Joker extractor for more C2</li>
+<li>Fix a botnet issue with Vidar</li>
+<li>Add URL path attributes to GCleaner</li>
+</ul>
+<hr>
+<h3 id="past-updates">Past Updates</h3>
+<p><strong>Deployed July 20th</strong></p>
+<ul>
+<li>Add detection to Legion stealer</li>
+<li>Add detection and extraction to Muggle stealer family</li>
+<li>Add detection and extraction to Phemedrone stealer family</li>
+<li>Add detection for DogeRAT open source Android RAT family</li>
+<li>Add detection and extractor for Letscall Android vishing malware family</li>
+<li>Add new rule for AppleJeus family</li>
+<li>Update detection and extractor for undetected SpyNote Android spyware family</li>
+<li>Fix for missing host in requests when Host header is missing</li>
+</ul>
+<p><strong>Deployed July 13th</strong></p>
+<ul>
+<li>Add detection to Meduza stealer family</li>
+<li>Add detection and extraction to Sapphire stealer and update ransomware detection</li>
+<li>Add detection and extractor for Irata</li>
+<li>Add detection for Lazarus MagicRAT family</li>
+<li>Add new signatures for Derusbi (APT19 backdoor)</li>
+<li>Update detection for Gigabud family for recent samples</li>
+</ul>
+<p><strong>Deployed July 6th</strong></p>
+<ul>
+<li>Add new rule for RustBucket MacOS family</li>
+<li>Update Lumma stealer rules and extractor</li>
+<li>Update extractor for Flytrap to prevent non-c2 from being extracted</li>
+<li>Update extractor for Aberebot</li>
+<li>Update detection rules and extractor for undetected Irata Android family</li>
+<li>Update detection of Nitro Ransomware and extractor</li>
+<li>Fix extraction issue with Raccoon stealer</li>
+</ul>
+<p><strong>Deployed June 29th</strong></p>
+<ul>
+<li>Add detection and extraction for Germinx stealer family</li>
+<li>Add detection and extraction for Babylon RAT family</li>
+<li>Add detection and extraction for 2023 version of GravityRAT Android RAT family</li>
+<li>Add detection and extraction for undetected Cerberus Android family</li>
+<li>Add detection for Daxin rootkit family</li>
+<li>Add detection and extraction for TinyNote malware</li>
+<li>Add detection for Healer Disable Antivirus Dropper</li>
+<li>Add detection PySilon malware using pyinstaller unpacker</li>
+<li>Update rules and condition for recent unextracted Raccoon v2</li>
+<li>Update Strela stealer rules for undetected recent samples</li>
+<li>Update Gootloader signature detection</li>
+<li>Fix Lumma and Raccoon stealer conditions to avoid FP</li>
+</ul>
+<p><strong>Deployed June 22nd</strong></p>
+<ul>
+<li>Add detection rules for undetected Cerberus Android family</li>
+<li>Add detection and extractor for HelloTeacher Android banking trojan</li>
+<li>Add new rule and signature for RomCom trojan</li>
+<li>Add detection for Shinolocker payload and extractor</li>
+<li>Update rules for recent Danabot loader</li>
+<li>Update rules and extractor for recent unextracted FatalRat samples</li>
+<li>Update Lumma rules and extractor for recent undetected samples and avoid FP</li>
+</ul>
+<p><strong>Deployed June 15th</strong></p>
+<ul>
+<li>Add detection for Rhadamanthys v2</li>
+<li>Add detection and extraction for Umbral stealer family</li>
+<li>Add detection for Dynamic Rat malware</li>
+<li>Add config extractor for Dracarys Android Spyware family</li>
+<li>Add detection and extractor for SpyMax spyware family</li>
+<li>Update rules and extractor for recent BlackGuard stealer</li>
+<li>Update Raccoon rules for recent undetected samples and update fallback detection</li>
+</ul>
+<p><strong>Deployed June 8th</strong></p>
+<ul>
+<li>Add Invicta Stealer detection and extraction</li>
+<li>Add new rule for ROKRAT family</li>
+<li>Add rule and extractor for Growtopia stealer</li>
+<li>Add rules and extractor for a new family called EagleRat</li>
+<li>Update rules for Raccoon stealer v2 for recent undetected samples</li>
+<li>Update rules for undetected Amadey v2 recent samples</li>
+<li>Update rules for recent undetected Stealc family</li>
+<li>Update Heuristic for WMIC win32_VideoController</li>
+</ul>
+<p><strong>Deployed June 1st</strong></p>
+<ul>
+<li>Add rules and update extractor for recent Stealc family</li>
+<li>Add rule detections for the recent Pikabot variant</li>
+<li>Add detection and extractor for AhRat Android RAT family</li>
+<li>Add detection and extractor for AhMyth Android RAT</li>
+<li>Update rule for recent unextracted Rhadamanthys</li>
+<li>Update general ransomnote detection</li>
+<li>Update the signature for Fabookie</li>
+<li>Update extractor for covering more Daam Android samples</li>
+<li>Update extractor for new variant of Joker Android family</li>
+<li>Update rules and extractor for Xworm rat new variant</li>
+<li>Fix PlugX fallback detection to avoid FP</li>
+</ul>
+<p><strong>Deployed May 25th</strong></p>
+<ul>
+<li>Add new rule for Kraken family</li>
+<li>Add new version of Xworm stealer</li>
+<li>Update Strela detection</li>
+<li>Update rules and extractor for recent unextracted Lumma stealer</li>
+<li>Update rules for undetected Gurcu/Whitesnake stealer</li>
+<li>Fix Redline fallback detection to avoid FP</li>
+<li>Update extractor for Fakecalls Android malware family</li>
+<li>New signatures for RTM Locker</li>
+<li>New signatures for BianLian ransomware</li>
+</ul>
+<p><strong>Deployed May 18th</strong></p>
+<ul>
+<li>Add detection and extractor for SMSFactory Android SMS trojan</li>
+<li>Add detection for Rootnik Android rooting malware family</li>
+<li>Add detection and extraction for a Warhawk family</li>
+<li>Add new rule for HinataBot family</li>
+<li>Add generic Linux IoC for ESXI manipulation</li>
+<li>Add PoshC2 rules for</li>
+<li>Add rules for Epsilon Stealer family</li>
+<li>Update rules for recent undetected Danabot loader</li>
+<li>Update new detection and extractor for RambleOn Android malware family</li>
+<li>Update detection rules for Fakecalls Android malware family</li>
+<li>Update detection to handle new variant of Linux BPFdoor malware family</li>
+<li>Fix detection for GandCrab family to avoid false-positive</li>
+</ul>
+<p><strong>Deployed May 11th</strong></p>
+<ul>
+<li>Add rules and extraction for Strela stealer v2</li>
+<li>Add detection for FluHorse Android malware family</li>
+<li>Add detection for Chameleon Android banking trojan family</li>
+<li>Add a new rule for PingPull Linux variant</li>
+<li>Add a new rule for Sword2033 Linux family</li>
+<li>Update Redline fallback detection for latest obfuscated samples</li>
+<li>Fix rules to avoid FP in XWorm stealer</li>
+<li>Update rules for unextracted Lumma stealer and avoid FP</li>
+</ul>
+<p><strong>Deployed May 4th</strong></p>
+<ul>
+<li>Add detection and extractor for Drinik Android malware family</li>
+<li>Add new rule for Lobshot family</li>
+<li>Add new rule for BADCALL Linux family</li>
+<li>Added Gurcu V2 yara and extractor</li>
+<li>Fixed FP for bazarBackdoor</li>
+<li>Update rules and extractor for LucaStealer family</li>
+<li>Update extractor for recent DarkCloud samples</li>
+</ul>
+<p><strong>Deployed April 27th</strong></p>
+<ul>
+<li>Add detection and extractor for DAAM</li>
+</ul>
+<p><strong>Deployed April 20th</strong></p>
+<ul>
+<li>Update rules and extractor for the recent Aurora stealer variant</li>
+<li>Update signature and extractor for the latest Laplas clipper variant</li>
+<li>Update detection and extraction for recent Stealc stealer variant</li>
+<li>Fix extractor for recent Gurcu stealer samples</li>
+</ul>
+<p><strong>Deployed April 13th</strong></p>
+<ul>
+<li>Add extraction support to Rhadamanthys stealer family</li>
+<li>Add fallback extraction to obfuscated Cryptbot family</li>
+<li>Add signatures for Linux Golang written botnet called GoBruteforcer</li>
+<li>Add a new rule for Andardoor backdoor</li>
+<li>Add a new rule for Typhon stealer</li>
+<li>Update detection rule for a new variant of RambleOn Android family</li>
+<li>Update rules and extractor for a new variant of Lumma stealer</li>
+</ul>
+<p><strong>Deployed April 6th</strong></p>
+<ul>
+<li>Add detection and extraction for Gurcu stealer family</li>
+<li>Update Yara and extractor for recent Raccoon stealer V2 family</li>
+<li>Update Yara and extractor for recent undetected or extracted DarkCloud stealer samples</li>
+<li>Update new extraction for new variant of the Harly Android family</li>
+<li>Update Nosu rules and extractor to extract more samples</li>
+</ul>
+<p><strong>Deployed March 30th</strong></p>
+<ul>
+<li>Add detection and extraction for FakeCalls Android family</li>
+<li>Add detection and extraction for recent SandroRAT Android RAT</li>
+<li>Add extractor for Gafgyt, updating signatures for undetected variant, and fix FP issue</li>
+<li>Update fallback signature detection for obfuscated Cryptbot samples</li>
+<li>Update extraction for Xorddos, add extraction support to CRC polynomial, and fix parsing errors</li>
+<li>Update detection for new variant of Vultur Android dropper family</li>
+<li>Update yara and extractor for recent Lumma stealer</li>
+<li>Update yara and extractor for new variant of Qakbot</li>
+</ul>
+<p><strong>Deployed March 23th</strong></p>
+<ul>
+<li>Add extractor for MasterFred Android family</li>
+<li>Add detection and extractor for an open source AndroRAT family</li>
+<li>Update extractor for undetected S.O.V.A v5 C2</li>
+<li>Update yara and extractor for undetected Danabot loader</li>
+<li>Update yara and extractor for Stealc recent undetected samples</li>
+<li>Update detection and extraction support to recent Xworm version</li>
+<li>Update detection for Vidar to fix extraction issues with the latest samples</li>
+</ul>
+<p><strong>Deployed March 16th</strong></p>
+<ul>
+<li>Add detection for XMRig crypto miner to cover Linux version</li>
+<li>Add detection for Coper Android malware family</li>
+<li>Add extraction support to Gh0strat family</li>
+<li>Add extraction support to Sakula family</li>
+<li>Add new signatures for Royal Linux ransomware</li>
+<li>Add detection and extraction to Mylobot family</li>
+<li>Add new rule for SoulSearcher family</li>
+<li>Add detection for detecting UPX in ELF</li>
+<li>Add new detection and extractor for xenomorph v3 Android malware family</li>
+<li>Update Raccoon V2 undetected new variant</li>
+<li>Small update for undetected Redline stealer</li>
+<li>Update and support for older Grandorerio variant</li>
+</ul>
+<p><strong>Deployed March 9th</strong></p>
+<ul>
+<li>Add detection and extraction for Chinotto Android spyware</li>
+<li>Fix Emotet C2 extraction issue</li>
+<li>Update ransomnote for Cerber ransomware</li>
+<li>Update yara and extractor for Lumma stealer new variants</li>
+<li>Update yara for undetected recent Kutaki samples</li>
+<li>Update extractor for new variant of S.O.V.A v5 Android banking trojan</li>
+</ul>
+<p><strong>Deployed March 2nd</strong></p>
+<ul>
+<li>Add detection for MosaicLoader family</li>
+<li>Add detection and extraction for GoatRAT Android RAT malware</li>
+<li>Add detection for APT42 Android malware</li>
+<li>Add extracting support for Smokeloader&rsquo;s botnet id</li>
+<li>Add extraction support for FatalRat family</li>
+<li>Update extractor for new variant of GodFather Android malware family</li>
+<li>Update detection for undetected Echelon stealer sample</li>
+<li>Update Vidar for new botnet and fix extractor</li>
+<li>Update Raccoon V2 to extract the new version</li>
+<li>Small update for Laplas IoCs to support extracting more samples</li>
+</ul>
+<p><strong>Deployed February 23th</strong></p>
+<ul>
+<li>Small update to detect and extract Smokeloader version 2022</li>
+<li>Small update to get config of misextracted Warzone samples</li>
+<li>Fix Asyncrat extractor for non-ASCII characters and clean up old signatures generating false-positives</li>
+<li>Update Lumma stealer for a new variant and add fallback detection</li>
+<li>New rule and extractor for stealc family</li>
+<li>New rule and extractor for Aberebot Android banking trojan</li>
+<li>New rule for RambleOn Android spyware</li>
+<li>Small update rules to cover more samples and new extractor for SpyNote variant</li>
+</ul>
+<p><strong>Deployed February 16th</strong></p>
+<ul>
+<li>Added new family called Enigma with detection and extraction and updated Stealerium rules and extractor as core stealer of Enigma</li>
+<li>New rule for Brunhilda Android dropper</li>
+<li>New signature for Batloader</li>
+<li>New rule for HZRat</li>
+<li>New rule for Pikabot</li>
+<li>New signatures for TgToxic Android banking trojan</li>
+<li>Small update Limerat yara rules to get missed samples extracted</li>
+<li>Update for Xworm yara rules and extractor for a new variant</li>
+</ul>
+<p><strong>Deployed February 9th</strong></p>
+<ul>
+<li>Add detection and extraction for new family called Predator stealer</li>
+<li>Generic anti-vm &amp; network signatures ioc-sig-generic</li>
+<li>New rule for CaddyWiper family</li>
+<li>New rule for HeadCrab backdoor</li>
+<li>New signatures for PixPirate Android banking trojan</li>
+<li>New signatures for Turian Chinese backdoor ioc-sig-turian</li>
+<li>New signature for Batloader</li>
+<li>New rule for Brunhilda Android dropper</li>
+<li>New rule for HZRat</li>
+<li>New rule for pikabot</li>
+<li>New rule for Manuscrypt for newly undetected samples ioc-sig-manuscrypt</li>
+<li>Old update in windealer rule</li>
+<li>Small detection update to get the recent Netwire extracted</li>
+<li>Small update for Raccoon&rsquo;s v2 yara rule to detect recent samples</li>
+<li>Small update Limerat yara rules to get missed samples extracted</li>
+<li>Update extractor for GodFather Android banking trojan variant</li>
+<li>Update for Laplas detection and extraction to get config of the new variant</li>
+<li>Update for Xworm yara rules and extractor for a new variant</li>
+<li>Update signatures and extractor for undetected XLoader Android banker</li>
+<li>Update yara rule and extractor for new Bumblebee variant</li>
+</ul>
+<p><strong>Deployed February 2nd</strong></p>
+<ul>
+<li>New signatures for Vultur Android RAT</li>
+<li>New signatures for Pegasus Android spyware</li>
+<li>New extractor for GodFather Android banking trojan variant</li>
+<li>Small update for Jupyter&rsquo;s yara rule to detect recent samples</li>
+<li>Update for Fabookie&rsquo;s yara rule to detect recent samples</li>
+<li>Update for Lumma&rsquo;s yara rule and extractor for recent samples</li>
+<li>Update for Panda&rsquo;s yara rule to detect missed samples</li>
+<li>Add new rule for Mimic ransomware</li>
+<li>Add new signatures for Trigona ransomware</li>
+<li>Add new signatures for SwiftSlicer wiper</li>
+</ul>
+<p><strong>Deployed January 26th</strong></p>
+<ul>
+<li>Small update for Vidar yara rule to detect recent samples</li>
+<li>Small update for Systembc yara rule to detect recent samples</li>
+<li>Small update for Avoslocker iocs to detect recent sample</li>
+<li>Small update for Icarus extractor to prevent garbage config</li>
+<li>Small update for Aurora extractor to support domain extraction</li>
+<li>Updates for Laplas iocs to detect and extract from recent samples</li>
+<li>Updates for Xmrig yara rule to avoid FPs</li>
+<li>New extractor for Strrat</li>
+<li>New signatures and extractor for new Agenttesla variant</li>
+<li>New signatures and extractor for Hook Android banker</li>
+<li>New signatures and extractor for Gigabud android rat</li>
+</ul>
+<p><strong>Deployed January 19th</strong></p>
+<ul>
+<li>Updates for Sectoprat and VjW0rm signatures to detect recent samples</li>
+<li>New signatures and extractor for Nosu stealer</li>
+<li>New signatures and extractor for new Erbium stealer variant</li>
+<li>New signatures and extractor for new Spynote variant</li>
+<li>New signatures and extractor for airavat Android RAT</li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Hooking VBScript execution in Cuckoo</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/vbscript-hooking/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updated Gozi Detection and Gootkit Extractor</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>URLScan Integration and Updates for Emotet and Zloader</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-09-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>More Excel 4.0 XLM Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/more-excel-xlm-extraction/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

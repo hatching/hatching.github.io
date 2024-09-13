@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-58.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-58.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>SSO Support and Family Signatures</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>SSO Support and Family Signatures</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-58.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-11-11T00:00:00Z">2021-11-11</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another week of Triage Thursday update news! We&rsquo;ve got a few updates to signatures and configuration extractors to introduce today:</p>
+<ul>
+<li><a href="#djvu">Added configuration extractor for DJVU ransomware</a></li>
+<li><a href="#nglite">New family signatures for NGLite RAT</a></li>
+<li><a href="#vidar">Updated Vidar detections for new C2 services</a></li>
+<li><a href="#cobalt">Tweaked CobaltStrike handling</a></li>
+</ul>
+<p>We also have an update to the Triage website itself, with new ways to register for and login to your accounts. <a href="#sm-logins">Read on below</a> for more information on using your Google or Github accounts to access Triage!</p>
+<p>As always if you have any feedback about the platform or the samples uploaded there please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account, or reach out to us using the contact form <a href="https://hatching.io/">on our website</a> to find out more about our commercial options.</p>
+<h2 id="sm-logins">Login to Triage via Google and Github</h2>
+<p>Single Sign On (SSO) is a great way to make accessing web services easier and less painful than having to remember or store passwords for every website you use. When you&rsquo;re working with multiple tools it can be much quicker to just login once, and for organisations SSO can also be a useful way to increase security via centralised policies regarding session timeout or password strength.</p>
+<p>As such, we have today released support for 2 major identity providers - Google and Github. You can now register for a Triage account using either service and login without the need for a dedicated username/password combination.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-11/sso.png">
+</figure>
+
+<p>If you&rsquo;ve already registered an account with an email address, you can switch to logging in via SSO anytime as long as the email address matches that of your Google or Github account.</p>
+<p>For our Enterprise customers, we are working on SAML support which should be available in the next few weeks. Watch this space!</p>
+<h3 id="how-to-unlink-a-google-or-github-account-from-triage">How to unlink a Google or Github account from Triage</h3>
+<p>If you&rsquo;ve registered an account via SSO but then want to remove that link, all you have to do is logout of your account and use the <code>Can't login?</code> option to reset your password. Once done, you can access the site with the standard email address/password combination.</p>
+<h2 id="djvu">DJVU Ransomware</h2>
+<p>This week we have revisited the DJVU ransomware family to add a dedicated configuration extractor. This augments our existing detections for the family based around ransomnote dumping and behavioural signatures, and should provide more reliable coverage for the wide range of variants.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-11/djvu_cfg.png">
+</figure>
+
+<p>For those not already familiar with the family, DJVU was first reported in December 2018. Only around a year later <a href="https://blog.emsisoft.com/en/34375/emsisoft-releases-new-decryptor-for-stop-djvu-ransomware/">Emsisoft reported</a> that the family included 160 variants with a confirmed total of around 116,000 victims globally.</p>
+<p>The family itself is a variant of the STOP ransomware. Early versions were poorly made, allowing many victims to decrypt their files without paying a ransom. Emsisoft also published a decryptor in late 2019 which had good coverage of versions up to that time, but since then the creators have tightened up the encryption methods to prevent bypasses.</p>
+<p>We have reprocessed recent DJVU samples which you can find <a href="https://tria.ge/s?q=family%3Adjvu">via Search</a>. We have also listed a few examples below for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211111-pxhbqsgddj">211111-pxhbqsgddj</a></li>
+<li><a href="https://tria.ge/211111-mkap1sgcaj">211111-mkap1sgcaj</a></li>
+<li><a href="https://tria.ge/211111-me1z1sgbhn">211111-me1z1sgbhn</a></li>
+</ul>
+<h2 id="nglite">NGLite RAT</h2>
+<p>NGLite is an open source Chinese-language RAT. The first version was published on Github in May 2021, with an update adding more functionality appearing in July.</p>
+<p>As usual with these open source projects it presents itself as a legitimate remote administration tool, but a quick look at the Readme makes the intentions clear with features such as anonymity and techniques to prevent the program being terminated on a host being prominently promoted.</p>
+<p>It seems that a major use-case for the malware is in the manual exfiltration of data from a network rather than acting as an automated stealer. It boasts of the capability to handle large file transmissions at high speed due to its network architecture, and appears to include few of the other features commonly seen in these applications to automate more general data collection.</p>
+<p>We have observed a few samples appearing on Triage lately, so the team has taken a look and implemented detections for the family. You can find examples of the payload linked below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211109-bk4gjsbdel">211109-bk4gjsbdel</a></li>
+<li><a href="https://tria.ge/211109-bk6a5sbdem">211109-bk6a5sbdem</a></li>
+<li><a href="https://tria.ge/211109-blnsgsbden">211109-blnsgsbden</a></li>
+<li><a href="https://tria.ge/211109-blnsgsbdep">211109-blnsgsbdep</a></li>
+</ul>
+<h2 id="vidar">Vidar Stealer</h2>
+<p>Vidar is a successful infostealer which was initially forked from the older Arkei stealer codebase. We have covered the family a few times on this blog recently so won&rsquo;t go into detail on the background again here - you can find further information in our previous blogposts where we initially <a href="https://hatching.io/blog/tt-2021-07-08/#vidar">added a configuration extractor</a> and then <a href="https://hatching.io/blog/2021-09-30-triage-thursday/#vidar">updated it for additional samples</a>.</p>
+<p>We recently observed some samples on Triage which were making use of new web services for their C2 communications, the details of which were not being properly dumped by our extractor. These are both Mastodon instances, available online as social communities:</p>
+<ul>
+<li>Koyu[.]space, a small social media site trying to position itself as a free-speech alternative to the likes of Twitter</li>
+<li>social[.]chinwag[.]org, a small online community that has been operating since around 2017</li>
+</ul>
+<p>We have now tweaked the extractor to also dump the relevant domains and URLs being used for these services.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211108-xpsfqschd6">211108-xpsfqschd6</a> (koyu.space)</li>
+<li><a href="https://tria.ge/211108-x56cjaaafk">211108-x56cjaaafk</a> (social.chinwag.org)</li>
+</ul>
+<h2 id="cobalt">CobaltStrike</h2>
+<p>CobaltStrike has been a regular visitor to this blog over the last couple of years, as we&rsquo;ve implemented a range of detections and configuration extraction tweaks to ensure the framework is handled as well as possible by Triage. This week we have revisited it with a minor update to address some false-positives that were reported to us. If you&rsquo;ve been noticing files incorrectly identified, the signature should now be more reliable on that front.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211009-x63yssfdep">211009-x63yssfdep</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>GeoIP Mapping, Non-English VMs and Modify Analysis Duration</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-09-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractor Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-07/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 140: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox Setup for People in a Hurry</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-setup/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-49.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-49.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Network Simulation and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Network Simulation and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-49.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-08-19T00:00:00Z">2021-08-19</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another week of update news in our Triage Thursday blog series! This week we have our normal range of detection updates, but there&rsquo;s also an exciting new feature we&rsquo;re finally ready to announce - network simulation. Read on below for the full details on that.</p>
+<p>Of course we&rsquo;ve been busy working on signatures too! Check out the full list of content for today:</p>
+<ul>
+<li><a href="#netsim">Triage Network Simulation</a></li>
+<li><a href="#njrat">Added njRAT configuration extractor</a></li>
+<li><a href="#backmach">New Backdoor-Machine Stealer family signatures</a></li>
+<li><a href="#electro">ElectroRAT family signatures</a></li>
+<li><a href="#mercurial">Mercurial Grabber family signatures</a></li>
+<li><a href="#hive">Hive ransomware detection</a></li>
+<li><a href="#nitro">Nitro ransomware detection</a></li>
+</ul>
+<p>If you have any feedback or suggestions on Triage itself or individual samples feel free to get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="netsim">Triage Network Simulation</h2>
+<p>Writing these blogposts I use words like &ldquo;excited&rdquo; a lot. I&rsquo;m British, so in reality I don&rsquo;t get excited very often and when I do it&rsquo;s just cause for a cup of tea and a quick lie down to think over my disgraceful display of emotion. This week though I can very safely say we&rsquo;re all excited to be finally announcing the start of our new network simulation feature.</p>
+<p>If you&rsquo;ve been following our roadmap at all you&rsquo;ll know that we&rsquo;ve been aiming to add this functionality for some time now, and its turn has come at last. So what exactly is our network simulation all about?</p>
+<h3 id="what-is-it">What is it?</h3>
+<p>If you&rsquo;ve done a lot of malware analysis yourself you&rsquo;ll likely have come across tools like INetSim, FakeNet, or ApateDNS which aim to spoof certain network responses in an attempt to trick malware into revealing more of its operations and functionality. For example, if a C2 domain is no longer active thus preventing a sample moving past its initial beacon action, setting up a tool to spoof a 200 OK response and return some fake data matching the expected file type might enable you to convince it to perform additional actions in your virtual machine.</p>
+<p>Our new feature works in very much the same way, allowing you to configure fake responses to certain types of HTTP/HTTPS network requests in order to make it appear as though the malware successfully (or unsuccessfully as the case may be) contacted its C2 servers.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-19/netsim2.png">
+</figure>
+
+<h3 id="current-state">Current State</h3>
+<p>Today we&rsquo;ve released the first version of network simulation onto the public cloud, for you to play around with and test out. This initial release is a very basic version of what we&rsquo;re aiming for over the coming months and weeks, but it forms the initial groundwork in terms of backend support which we&rsquo;ll be able to add to rapidly.</p>
+<p>This version supports 3 main modes of operation:</p>
+<ol>
+<li><strong>200 Response Simulated</strong>: Will return a <code>200 OK</code> response to any HTTP/HTTPS requests</li>
+<li><strong>404 Response Simulated</strong>: Will return a <code>404 Not Found</code> response to any HTTP/HTTPS requests</li>
+<li><strong>DNS Unavailable Simulated</strong>: Will simulate the failure of all DNS requests as though C2 domains are no longer active. Useful for forcing some families to cycle through their entire configured list of C2 URLs rather than stopping at the first success.</li>
+</ol>
+<h3 id="future-plans">Future Plans</h3>
+<p>At the moment all of the responses provided are empty/blank, with very generic headers presented in all instances. Besides potentially adding some additional modes of operation, our next major focus will be on filling those with something a bit more useful and relevant.</p>
+<p>We are still working out exactly what that looks like, based on initial testing with the feature and discussion with our analysts. If you have any feedback on that side of things too please do feel free to get in touch once you&rsquo;ve had the chance to try out the existing format. However these expansions will generally revolve around making the system a bit more &lsquo;intelligent&rsquo; - e.g. by making it return genuine files of the correct type when specific requests are passed, or providing additional headers etc.</p>
+<p>We will likely also be adding support based on the functionality of specific families, for example returning specific timestamps or geoip results.</p>
+<hr>
+<p>We hope you&rsquo;re as excited about this one as we are, and as mentioned feel free to get in touch with any use-cases you&rsquo;d like to see supported by it.</p>
+<p>Network simulation is <strong>now available for all users on both Private and Public clouds</strong>. Just select it from the options during submission or add it to your Profiles.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-19/netsim.png">
+</figure>
+
+<p>Read on below for this week&rsquo;s detection updates.</p>
+<h2 id="njrat">njRAT Configuration Extractor</h2>
+<p>First observed all the way back in 2013, njRAT continues to be one of the most widely used remote access trojans in the world. Originally a variant of a family called jRAT or Bladabindi, it is a very full-featured platform with functionality ranging from full remote control to automated actions like keylogging, stealing local passwords for web browsers etc., webcam capture and cryptocurrency wallet theft.</p>
+<p>The family also includes a few anti-VM/anti-analysis techniques, including extensive use of packers and the ability to kill processes related to common anti-virus software.</p>
+<p>Triage has included support for njRAT for some time, but our coverage of all the different variants and campaigns was somewhat incomplete. We have been carrying out a review of the family, and this week sees the deployment of improved rules and an entirely new configuration extractor.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-19/njrat.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210817-9tc6t7x62j">210817-9tc6t7x62j</a></li>
+<li><a href="https://tria.ge/210816-eyx93p873x">210816-eyx93p873x</a></li>
+<li><a href="https://tria.ge/210813-a2p51fw96x">210813-a2p51fw96x</a></li>
+<li><a href="https://tria.ge/210813-4xmwbs8hm6">210813-4xmwbs8hm6</a></li>
+<li><a href="https://tria.ge/210811-nsel67kdyj">210811-nsel67kdyj</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">netsh firewall add allowedprogram &ldquo;C:\ProgramData\Window Update.exe&rdquo; &ldquo;Window Update.exe&rdquo; ENABLE</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\18900b42aac048bd9201b12a3ef8c3b4.exe</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="backmach">Backdoor-Machine Stealer</h2>
+<p>Backdoor-Machine is an open-source Python stealer. It was originally listed on Github but was later removed and is now only available through a repository for Python projects specifically. Releases are available here from back in May 2021, but the project has almost certainly been available for longer than that.</p>
+<p>The malware is fairly limited in scope, only going after credentials stored by Google Chrome and Brave browsers. It can also steal tokens from the victim&rsquo;s Discord application. Discord also serves as its C2 infrastructure, with any stolen information being exfiltrated via a webhook to a server controlled by the attacker.</p>
+<figure><img src="../../static/images/blog/tt-2021-08-19/bm.png"><figcaption>
+      <h4>Image of the malware&#39;s webhook output taken from the project readme</h4>
+    </figcaption>
+</figure>
+
+<p>We have added basic detection for the family to Triage to ensure that it is classified properly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210709-w1gprakeqj">210709-w1gprakeqj</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp\chromelogin.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp\chromelogin.enc</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp\bravelogin.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp\bravelogin.enc</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp_MEI18162\brave.py</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp_MEI18162\chrome.py</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="electro">ElectroRAT</h2>
+<p>Back in January <a href="https://www.intezer.com/blog/research/operation-electrorat-attacker-creates-fake-companies-to-drain-your-crypto-wallets/">Intezer published a blogpost</a> about a campaign they&rsquo;d spotted which they estimated to have originally begun in January 2020. This was a widespread effort using social engineering across multiple websites, social media accounts and fake applications aimed at convincing users in the cryptocurrency community to download and install trojanised software.</p>
+<p>At the end of this chain lies ElectroRAT, a cross-platform Golang malware capable of infecting Windows, Linux and macOS systems. It takes its name from the fact that the fake applications it has been seen embedded in are all written using the Electron framework.</p>
+<p>The family&rsquo;s functionality focuses on stealing the private keys and contents of cryptocurrency wallets, but that doesn&rsquo;t mean it can&rsquo;t do anything else. It also includes a wide range of other capabilities commonly seen in stealers, such as keylogging, screen capture, downloading and running additional files, or uploading files from the infected machine.</p>
+<p>For more information check our <a href="https://www.intezer.com/blog/research/operation-electrorat-attacker-creates-fake-companies-to-drain-your-crypto-wallets/">Intezer&rsquo;s full blogpost</a> and the author&rsquo;s <a href="https://x.com/AbbyMCH/status/1346470180247937027">Tweet</a> thread.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210105-qyr5598gna">210105-qyr5598gna</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\systemcl.lnk</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin.systemcl.exe</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="mercurial">Mercurial Grabber</h2>
+<p>Mercurial is yet another &ldquo;for research purposes only&rdquo; malware family which is, to noone&rsquo;s surprise, being used maliciously in the wild. It is available open-source via Github.</p>
+<p>The software is written in C# and has a good range of features, including a couple of slightly unusual targets in that it attempts to steal user accounts for Roblox and Minecraft besides the usual web browsers/Discord. To take the feature list directly from the author&rsquo;s readme:</p>
+<ul>
+<li>Grabs Roblox cookies from Roblox Studio</li>
+<li>Grabs Minecraft sessions</li>
+<li>Grabs Google Chrome passwords</li>
+<li>Grabs Google Chrome cookies</li>
+<li>Grabs Discord token</li>
+<li>Grabs victim machine info</li>
+<li>Grabs Windows product key</li>
+<li>Grabs IP address, geolocation</li>
+<li>Grabs screenshot</li>
+<li>Anti Virtual Machine</li>
+<li>Anti Debug</li>
+</ul>
+<p>As with Backdoor-Machine, Discord generally serves as the C2 infrastructure for the family.</p>
+<p>We recently had a sample of the family reported to us via feedback and have added some initial static detections to tag it correctly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210709-kqt43n2hz6">210709-kqt43n2hz6</a></li>
+</ul>
+<h2 id="hive">Hive Ransomware</h2>
+<p>Hive is a relatively new ransomware first reported in June 2021. Like most modern ransomware families it also exfiltrates data from infected machines/networks before encrypting files, and then leverages this to encourage ransom payment by threatening to release sensitive information. The operators have their own leak site along the same lines as other larger families, and based on the contents on this they appear to be finding some success in breaching companies.</p>
+<p>One of the first companies to be publicly disclosed as suffering a breach was the Altus Group, a company providing commercial real estate software. More recently <a href="https://www.bleepingcomputer.com/news/security/hive-ransomware-attacks-memorial-health-system-steals-patient-data/">they have reportedly breached the non-project Memorial Health System</a> in the US, a small network of hospitals and outpatient services in Ohio and West Virginia.</p>
+<p>We have reviewed a number of samples available publicly and implemented detections as relevant.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210803-axpkkfeyjj">210803-axpkkfeyjj</a></li>
+<li><a href="https://tria.ge/210730-c1d9t8hfgs">210730-c1d9t8hfgs</a></li>
+<li><a href="https://tria.ge/210730-ayejr52vp6">210730-ayejr52vp6</a></li>
+<li><a href="https://tria.ge/210730-1hfhw7fvxs">210730-1hfhw7fvxs</a></li>
+<li><a href="https://tria.ge/210728-qzmb8kv6v6">210728-qzmb8kv6v6</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\Desktop\fwdM_HOW_TO_DECRYPT.txt</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\YCGOr8OKUvVDOVsbzhPuN7zUcfVjtcHtF3cEzeMa7u4.key.w2tnk</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Users\Admin\AppData\Local\Temp\bB9B1encv6.bat</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">[*].w2tnk</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="nitro">Nitro Ransomware</h2>
+<p>From the same developer as Mercurial Grabber, Nitro Ransomware is a new family first released in April 2021. Once again it is available open-source through Github, and is listed for educational purposes only (although the mention of the prebuilt ransom payment system in the same line of the readme seems to contradict that somewhat&hellip;).</p>
+<figure><img src="../../static/images/blog/tt-2021-08-19/nitro.png">
+</figure>
+
+<p>It gets its name from the fact that it is designed to extort payment in the form of Discord Nitro gift codes, although it has been reported that the encryption key is actually included in the executable itself making decryption relatively straight forward without paying the ransom.</p>
+<p>As with some of the other families above, C2 communication is carried out through Discord webhooks.</p>
+<p>We have reviewed a large number of available sample and implemented detection as relevant.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210812-4aatmymnjj">210812-4aatmymnjj</a></li>
+<li><a href="https://tria.ge/210812-4aemc1w4qj">210812-4aemc1w4qj</a></li>
+<li><a href="https://tria.ge/210812-5ardkj6826">210812-5ardkj6826</a></li>
+<li><a href="https://tria.ge/210812-75nmhb2q3x">210812-75nmhb2q3x</a></li>
+<li><a href="https://tria.ge/210812-7cz1383esa">210812-7cz1383esa</a></li>
+</ul>
+<p><strong>Indicators of Compromise:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Indicator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">wmic csproduct get uuid</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C:\Windows\assembly\NativeImages_v4.0.30319_32\NitroRansomware\</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">[*].givemenitro</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">\REGISTRY\USER[s-id]\Software\Microsoft\Windows\CurrentVersion\Run\NR</td>
+      </tr>
+  </tbody>
+</table>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>File Submission from URL</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/url-file-submission/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Overview Section and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-09-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Greater Filetype Support, Family Updates, and New Coniguration Extractors</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-03-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>General Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-10-08/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-57.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-57.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>MacOS, TA505 and Other Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>MacOS, TA505 and Other Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-57.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-11-04T00:00:00Z">2021-11-04</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to the latest entry in our Triage Thursday blog series! We weren&rsquo;t able to publish a post last week so we have a bit to cover today, with changes to a range of families and some under-the-hood improvements to our macOS handling.</p>
+<p>Contents:</p>
+<ul>
+<li><a href="#macos">macOS improvements</a></li>
+<li><a href="#socelars">Added new configuration extractor for Socelars</a></li>
+<li><a href="#blackmatter">Updated detections for version 3 of Blackmatter ransomware</a></li>
+<li><a href="#chaos">Added new detection for Chaos ransomware</a></li>
+<li>New family signatures for <a href="#unicorn">Unicorn stealer</a> and <a href="#blustealer">Blustealer</a></li>
+<li><a href="#ta505">Added classification for TA505 families FlawedGrace RAT, MirrorBlast, and ReflectiveGnome</a></li>
+<li><a href="#connectback">Added signatures for ConnectBack Linux reverse shell</a></li>
+</ul>
+<p>As usual, if you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="macos">macOS Improvements</h2>
+<p>Support for macOS analysis is our <a href="https://hatching.io/blog/triage-for-macos/">most recent platform</a> addition to Triage, having been made available in June this year. We still have a lot of things we want to add to bring it up to the same kind of standard as our Windows support, and this week we have taken a step along that path with a couple of nice additions which should help you get more out of your analyses.</p>
+<p>This set of improvements is all about network processing and web browsers. The most significant change is that <strong>TLS/SSL sessions are now decrypted by Triage</strong>. This has long been supported for Windows but up until now was not possible on macOS. Triage is now able to dump the master key at generation, meaning that all HTTPS traffic can be parsed and analysed in plaintext. Also, like Windows, this is bundled into the PCAPNG file which is available for download on each analysis - open it in Wireshark 3.0 or later and you&rsquo;ll have access to the plaintext traffic just as we do internally.</p>
+<p>Related to this, besides the Safari default we have also added full support for Chrome and Firefox browsers within our macOS analyses.</p>
+<h2 id="blackmatter-ransomware">Blackmatter Ransomware</h2>
+<p>Blackmatter has already appeared on this blog a couple of times recently, when we <a href="https://hatching.io/blog/tt-2021-08-05/#blackmatter">added initial detection</a> for the family and again when we <a href="https://hatching.io/blog/tt-2021-08-26/#blackmatter">created a dedicated configuration extractor</a>.</p>
+<p>However a new version recently appeared - tagged as version 3 - which was slipping past our extractor due to some tweaks in its payload. We have now reviewed this and updated our signatures to handle it properly.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-04/blackmatter.png">
+</figure>
+
+<p>Of course, since this change was pushed internally it would appear that Blackmatter may be stepping back from the ransomware business. Researchers over at <a href="https://twitter.com/vxunderground/status/1455750066560544769">vx-underground</a> reported yesterday that the developers of the malware have announced they are shutting down the operation, offering decryptors to affiliates to enable them to carry out ongoing extortion efforts on their own.</p>
+<p>Whether or not this really is the end of the family only time will tell, but if new versions do pop up in future we&rsquo;ll be sure to add support for those too.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211028-lfcs5sbhh8">211028-lfcs5sbhh8</a></li>
+</ul>
+<h2 id="chaos-ransomware">Chaos Ransomware</h2>
+<p>The Chaos ransomware family is a slightly unusual case. Reported <a href="https://www.trendmicro.com/en_us/research/21/h/chaos-ransomware-a-dangerous-proof-of-concept.html">by TrendMicro</a> to have first appeared in June 2021, its initial versions weren&rsquo;t really a ransomware at all. Seemingly acting as a test for future improvements, the first couple of releases simply overwrote all affected files in a way that completely prevented any form of recovery. Although it did drop notes and make ransom demands in a way recognisable from any other campaigns, there would have been very little incentive for victims to pay up when there was no way for them to recover their files having done so.</p>
+<p>Interestingly the first version also claimed to be a .NET port of the Ryuk family, although analysis suggests that it actually shares very little in terms of implementation.</p>
+<p>However since release additional versions have been made available which do actually encrypt files. The family also now comes with a framework for building decryptors easily, suggesting that it is becoming more mature and nearing the point where it could actually be used in infections.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-04/chaos.png">
+</figure>
+
+<p>We have taken a look at available samples and implemented detections as needed. Examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211027-vp9znsfge8">211027-vp9znsfge8</a></li>
+<li><a href="https://tria.ge/210921-kd7p3aghc3">210921-kd7p3aghc3</a></li>
+<li><a href="https://tria.ge/210906-hhm54safa3">210906-hhm54safa3</a></li>
+<li><a href="https://tria.ge/210902-y2pfaaegbj">210902-y2pfaaegbj</a></li>
+<li><a href="https://tria.ge/210804-n8bjvjgtte">210804-n8bjvjgtte</a></li>
+</ul>
+<h2 id="unicorn-stealer">Unicorn Stealer</h2>
+<p>Unicorn stealer is a small group of samples which were identified by Proofpoint in their Emerging Threats Suricata ruleset. The family takes its name from a log file written to a hardcoded path with the name <code>Unicorn.txt</code>.</p>
+<p>Not much information is available online for this one, but according to our own analysis it appears to be a fairly straightforward stealer. As might be expected, it extracts information stored by local web browsers like Chrome and Firefox and checks for the presence of cryptocurrency wallets at common file paths. Based on the configuration, this includes a good range of browsers including the likes of Brave, Firefox, Chrome and Opera plus several spinoffs from those like Waterfox. In terms of cryptocurrency we observed it targeting Bitcoin, Electrum, Exodus, Coinomi, Jaxx and Atomic wallet files.</p>
+<p>Slightly more unusually it also includes the ability to hook browser DLLs in order to steal information live during use, as well as some form of web injection technique to man-in-the-middle active sessions.</p>
+<p>Finally, it also appears to leverage the Tor network for its C2 communications, proxying its traffic through a number of endpoints around the world.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211012-nae3esccb9">211012-nae3esccb9</a></li>
+</ul>
+<h2 id="ta505">TA505 Families</h2>
+<p>TA505 is one of the most prolific and technically advanced APTs out there in the wild. Involved in both financial crime and seemingly state-sponsored activity, the group has built up a formidable toolkit over time which often makes use of ground-breaking techniques to bypass defences and evade detection.</p>
+<p>This week we have been reviewing a new attack chain in use by the gang, including new and/or updated versions of a few different families. We&rsquo;ll cover them all together here as it can be rather hard to separate them out without a lot of repetition.</p>
+<p>First up is MirrorBlast, a loader which forms the core of many current campaigns being operated by the group. It generally falls in the middle of their execution chain, not dropping the end payload itself but another stage of loaders. Based on <a href="https://www.proofpoint.com/us/blog/threat-insight/whatta-ta-ta505-ramps-activity-delivers-new-flawedgrace-variant">research by Proofpoint</a> it normally leads on to our second family for today, ReflectiveGnome.</p>
+<p>ReflectiveGnome is, as the name suggests, a shellcode loader. This forms almost the final part of the &lsquo;standard&rsquo; TA505 infection process, deploying and executing shellcode which then starts the final payload. It is quite simple in terms of functionality, performing its highly specialised role and nothing more.</p>
+<p>In the recent campaigns reported by Proofpoint in their blogpost, this final loader has been deploying a new variant of the FlawedGrace RAT. This family was <a href="https://www.proofpoint.com/us/threat-insight/post/servhelper-and-flawedgrace-new-malware-introduced-ta505">first observed by Proofpoint back in 2017</a>, but has seen a bit of a revival with this new variant. The main changes of note are based around stealth and evasion, with the addition of string encryption, obfuscated API calls, and a change to the storage and handling of the configuration data.</p>
+<p>We have reviewed a number of samples which have come to our attention through Triage, and have deployed some initial detections. There are still some improvements to come in future, but this should provide coverage for a considerable number of the samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211004-wek38sghaq">211004-wek38sghaq</a></li>
+<li><a href="https://tria.ge/211007-q566haceb3">211007-q566haceb3</a></li>
+<li><a href="https://tria.ge/211013-qec5qsdhgl">211013-qec5qsdhgl</a></li>
+<li><a href="https://tria.ge/211009-x63yssfdep">211009-x63yssfdep</a></li>
+<li><a href="https://tria.ge/211104-q4vfbadhbp">211104-q4vfbadhbp</a></li>
+</ul>
+<h2 id="blustealer">BluStealer</h2>
+<p>BluStealer is a relatively new family which first popped up around the middle of 2021. Reported on Twitter by <a href="https://twitter.com/cocaman">@cocaman</a> it was initially called <code>a310Logger</code> and mostly dismissed as just one of the many low-quality RATs that come and go on underground forums.</p>
+<p>However it seems to have stuck around and has <a href="https://blogs.blackberry.com/en/2021/10/threat-thursday-blustealer-infostealer">recently been reported on again</a>, this time identified as BluStealer. Its main targets are the theft of data stored by web browsers and cryptocurrency wallets, with quite an extensive list of paths defined for the various software packages from the common Chrome, Firefox and Brave all the way down to the unusual 7Star, Chedot and Cent browsers.</p>
+<p>Exfiltration for the family occurs via SMTP connection and/or the Telegram Bot API.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-04/blustealer.png">
+</figure>
+
+<p>We have taken a look at a large number of samples for the family, and have implemented both standard signatures and a dedicated configuration extractor. This can dump out the C2 URL, and in the SMTP cases will also provide the details used for exfiltration including the host, port, username and password.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211026-v2vqhsaac9">211026-v2vqhsaac9</a></li>
+<li><a href="https://tria.ge/211020-n6b1mshaa9">211020-n6b1mshaa9</a></li>
+<li><a href="https://tria.ge/211012-pf2daacccq">211012-pf2daacccq</a></li>
+<li><a href="https://tria.ge/211011-qsy95ahdbl">211011-qsy95ahdbl</a></li>
+<li><a href="https://tria.ge/211011-jz1cfagfdl">211011-jz1cfagfdl</a></li>
+</ul>
+<h2 id="socelars-cfgextr">Socelars cfgextr</h2>
+<p>Socelars is a stealer family which has been around since at least late 2019. It is slightly unusual in its functionality, as it doesn’t target many of the standard data sources focused on by most other stealers. Rather than going after passwords and profile data stored on disk, Socelars is more interested in cookie data with a specific focus on Facebook and Amazon.</p>
+<p>We added detection for the family <a href="https://hatching.io/blog/tt-2021-07-01/#socelars">in July this year</a>, but have revisited it this week to add a dedicated extractor to augment the output. This dumps the full list of C2 IPs or domains which are hardcoded into the sample, to make it easy to pass these into additional tools etc.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-04/socelars.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211104-g6w79afhh9">211104-g6w79afhh9</a></li>
+<li><a href="https://tria.ge/211104-g4dccsfhh8">211104-g4dccsfhh8</a></li>
+<li><a href="https://tria.ge/211104-g19w6adafp">211104-g19w6adafp</a></li>
+<li><a href="https://tria.ge/211104-g18zvsfhg6">211104-g18zvsfhg6</a></li>
+</ul>
+<h2 id="connectback-reverse-shell">ConnectBack Reverse Shell</h2>
+<p>The ConnectBack family is a fairly simple set of backdoors/reverse shells available for Linux. They include almost no in-built functionality, simply opening a remote connection to the attacker so that they have full access to and control of an infected system.</p>
+<p>We have been noticing quite a few of these appearing in our public submissions, so decided it was time to implement some dedicated signatures for them. We have also developed a basic extractor which can dump the remote C2 IP from the payload.</p>
+<figure><img src="../../static/images/blog/tt-2021-11-04/connectback.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211102-j7afzscag6">211102-j7afzscag6</a></li>
+<li><a href="https://tria.ge/211102-j8z32ahadj">211102-j8z32ahadj</a></li>
+<li><a href="https://tria.ge/211102-kaqmdacba3">211102-kaqmdacba3</a></li>
+<li><a href="https://tria.ge/211102-kbaybacbb2">211102-kbaybacbb2</a></li>
+<li><a href="https://tria.ge/211102-j8e3vscag7">211102-j8e3vscag7</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>File Submission from URL</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/url-file-submission/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Preview of Phishing Analysis</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-25/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet x64 and Other Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-28/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 109: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-11-16/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

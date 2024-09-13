@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-35.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-35.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>A Year of Excel 4.0 Macros</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>A Year of Excel 4.0 Macros</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-35.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-12-17T00:00:00Z">2020-12-17</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=xlm">xlm</a></p><li><p><a href="/blog/#category=macros">macros</a></p><li><p><a href="/blog/#category=office">office</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/triage.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Nikolaos Totosis &amp; Thien Nguyen</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to the last Triage Thursday blogpost of 2020! Our main feature this week is Excel macros, where Triage has received a number of updates over the last few days:</p>
+<ul>
+<li>Spoof the height and width values returned by GET.WORKSPACE calls to evade anti-sandboxing.</li>
+<li>Record the arguments passed through <code>=FORMULA</code> and <code>=CALL</code> XLM commands enabling further inspection of macros.</li>
+<li>Spoof the VBAWarning value in order to avoid attempts to detect a sandbox through the macro security settings.</li>
+<li>General improvements in our Yara rules.</li>
+<li>Dump any VBS or TXT files written by the macros in order to enable further
+inspection.</li>
+</ul>
+<figure><img src="../../static/images/blog/tt-2020-12-17/ui_screenshot.png">
+</figure>
+
+<p>In this blogpost we&rsquo;ll also look at the changes we&rsquo;ve seen throughout the course of 2020 which have caused us to implement these features, and show how malicious use of Excel 4.0 macros has evolved since the start of the year.</p>
+<p>Before we get to that though, we do have a couple of other minor Triage updates to mention this week:</p>
+<ul>
+<li>Updated static detection for some Trickbot modules</li>
+<li>Improved distinction between Formbook samples and the newer XLoader variant (check out <a href="https://hatching.io/blog/tt-2020-12-10/#xloader">last week&rsquo;s blogpost</a> for more information on XLoader). Samples should now be tagged as one or other of the families, not both.</li>
+</ul>
+<p>Example reports for XLM 4.0 Excel Macros:</p>
+<ul>
+<li><a href="https://tria.ge/201217-f5b1rz4352">201217-f5b1rz4352</a></li>
+<li><a href="https://tria.ge/201217-wjvrnjhlg6">201217-wjvrnjhlg6</a></li>
+<li><a href="https://tria.ge/201217-zn5dhd2f8s">201217-zn5dhd2f8s</a></li>
+<li><a href="https://tria.ge/201217-a919dkygg2">201217-a919dkygg2</a></li>
+<li><a href="https://tria.ge/201217-fl25lwqv5n">201217-fl25lwqv5n</a></li>
+<li><a href="https://tria.ge/201217-bavzn97yh2">201217-bavzn97yh2</a></li>
+<li><a href="https://tria.ge/201217-fxv9p8zbw6">201217-fxv9p8zbw6</a></li>
+</ul>
+<hr>
+<h2 id="evolution-of-excel-40-macros-in-2020">Evolution of Excel 4.0 Macros in 2020</h2>
+<p>In 2020, we have seen an increase in the number of Office documents which were acting as droppers, employing 4.0 XLM macros to download additional payloads or evade detection. This trend accelerated after the Coronavirus lockdowns began, as actors stepped up phishing campaigns.</p>
+<p>Early in the year <a href="https://hatching.io/blog/excel-xlm-extraction/">we started adding detection</a> for these documents, as well as <a href="https://hatching.io/blog/more-excel-xlm-extraction/">extraction of the macro code itself</a>. Throughout the year though malware authors have improved their game by adding more obfuscation and new tricks in order to evade detection, encouraged by a general lack of good detection of these techniques in many defensive tools.</p>
+<p>Our investigation started from a <a href="https://tria.ge/200409-4eb6rljnsx">sample submitted in April</a>. We saw from the extracted XLM macros that there were some interesting checks regarding the height and width of the screen, as well as the capability to display a messagebox and close the window right after executing the downloaded file. These checks are interesting as, due to resources, many sandboxes have a default resolution of 1024x768, something that we do not generally see in actual computers in this era. As we had the same resolution in our VMs, a few months ago we implemented a mechanism where we spoof the values returned by the <code>GET.WORKSPACE</code> calls to deal with these issues.</p>
+<p>Fast forward to July and <a href="https://twitter.com/abuse_ch/status/1274228292044890113?s=20">abuse.ch</a> tagged us in a tweet, reporting lack of detection in an Excel document equipped with XLM macros. During our manual analysis we discovered that apart from the checks that were mentioned above, some new ones had also been introduced:</p>
+<ul>
+<li>A check in Office path of VBAWarning entry</li>
+<li>Different way of downloading payload, based on OS architecture</li>
+<li>Checks for single stepping mode</li>
+<li>Emulation of Sleep command by using</li>
+</ul>
+<p>In some documents we saw a change of flow: the downloaded payload, instead of being executed right away, would only be executed if the user pressed OK in a displayed dialog box. Later on, we sad additional checks such as if the formula bar is displayed, but also the presence of mouse etc etc.</p>
+<p>Additionally we believe that the check for the <code>VBAWarnings</code> registry value, which indicates whether the warning message of a document equipped with VBA Macros will be shown, is acting as an anti-sandbox check. Organisations would never disable these warning messages and they are enabled by default in all Office installations. In order to automatically execute Office files without interaction, in our VMs this value had been modified thus preventing execution of the document. In order to bypass that we have made some improvements to our kernel monitor spoofing, enabling correct execution of the document while still having the value set to zero to disable the macro warning popup.</p>
+<p>A few weeks later in August we observed some more new <a href="https://tria.ge/201217-f5b1rz4352">samples</a> which have again changed up their anti-analysis checks. For the first time we saw a check observed in PE packers, trying to detect if the arguments in =WAIT() calls were zeroed out, as many sandboxes will intercept and skip any sleep attempts.</p>
+<figure><img src="../../static/images/blog/tt-2020-12-17/waitargcheck.PNG">
+</figure>
+
+<p>In September, apart from the usual Zloader Excel documents following the same execution flow as described above, we saw a <a href="https://tria.ge/201217-zn5dhd2f8s">sample</a> using the <a href="https://lolbas-project.github.io/lolbas/Libraries/Url/">URL.DLL lolbin</a> to download the final payload.</p>
+<figure><img src="../../static/images/blog/tt-2020-12-17/lolbinfileprot.PNG">
+</figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>As mentioned above this will be our final blogpost of 2020. We&rsquo;ll be back in the New Year with information on lots more updates, including some big features we&rsquo;re quite excited to share with you.</p>
+<p>If this is the first time you&rsquo;ve landed on our blog and haven&rsquo;t got an account yet, you can sign up free over at <a href="https://tria.ge">tria.ge</a>.</p>
+<p>Thank you to all of you for your support and feedback over the last year. Triage is almost unrecognisable from the start of 2020 and we can&rsquo;t wait to see what the next 12 months bring!</p>
+<p>Happy holidays, and we&rsquo;ll see you all again in 2021!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>The Tech Behind Our PolySwarm Arbiter</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/first-polyswarm-arbiter-part-2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox Setup for People in a Hurry</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-setup/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Advanced Submit Screen and Emotet Powershell Parsing</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-12-02/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 130: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-02/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-77.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage for macOS</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>Triage for macOS</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-77.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-06-03T00:00:00Z">2021-06-03</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=macos">macos</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>In a blogpost <a href="https://hatching.io/blog/tt-2021-04-22/">back in April</a> we gave a bit of a teaser about our upcoming macOS support. Well, today we are delighted to announce the initial release of Triage macOS analysis!</p>
+<p>This is a very exciting update for us, as it marks the last platform we planned to add support for when we began work on Triage a few years ago. With this we can now run analyses for most relevant file types from Windows, Linux, Android and macOS; all handled in a fully-automated manner with Triage by default recognising the file and launching the most relevant guest VM.</p>
+<p>The new functionality has rolled out to the Public Cloud <a href="https://tria.ge/">tria.ge</a> today, and is available to all public users. We currently plan to deploy it to our Private Cloud customers in a couple of weeks, once it is thoroughly tested and detections have been expanded somewhat.</p>
+<p>In this blogpost we&rsquo;ll give a brief introduction to macOS analysis on Triage, and a brief overview of what you can expect in the future.</p>
+<h4 id="contents">Contents</h4>
+<ul>
+<li><a href="#features">MacOS Analysis Features</a></li>
+<li><a href="#gettingstarted">Getting Started With macOS Analyses</a>
+<ul>
+<li><a href="#api">Fetching the Event Log via API</a></li>
+</ul>
+</li>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#dacls">Dacls RAT</a></li>
+<li><a href="#macfilecoder">Macfilecoder Ransomware</a></li>
+<li><a href="#hiddenlotus">HiddenLotus Backdoor</a></li>
+</ul>
+</li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#futureplans">Future Plans</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="features">MacOS Analysis Features</h2>
+<h4 id="live-vm-interaction">Live VM Interaction</h4>
+<p>Direct mouse and keyboard control for the guest VM during analysis allowing you to run commands, run programs, check file directories, or anything else you may need to do when investigating a sample.</p>
+<h4 id="custom-kernel-agent">Custom Kernel Agent</h4>
+<p>As with our other supported platforms, we have developed an entirely custom kernel agent which is the central controller for analyses. It opens submitted files/URLs, logs all system activity (including tracking system calls), provides anti-VM countermeasures, and much more. Named <code>bigmac</code>, it has all the feature support also included in our original Windows agent.</p>
+<h4 id="support-for-multiple-file-types">Support for Multiple File Types</h4>
+<p>In this initial release, we support the most common file types leveraged in malicious campaigns. These are:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Name</th>
+          <th style="text-align: left">Extension</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Apple Disk Image file</td>
+          <td style="text-align: left">.dmg</td>
+          <td style="text-align: left">Wrapper/container for applications on macOS</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Application Bundles</td>
+          <td style="text-align: left">.app</td>
+          <td style="text-align: left">Apple App bundle containing file/directories needed to run the program</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Installation Package</td>
+          <td style="text-align: left">.pkg</td>
+          <td style="text-align: left">Installation files for macOS</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Macho Object File</td>
+          <td style="text-align: left">.o, .dylib, .bundle etc.</td>
+          <td style="text-align: left">File format for executables, object code, shared libraries etc.</td>
+      </tr>
+  </tbody>
+</table>
+<p>We&rsquo;ll be looking to expand on this list as required in the future. If you have specific requests or suggestions on this front feel free to reach out to us.</p>
+<h4 id="dropped-file-dumping">Dropped File Dumping</h4>
+<p>Many forms of malware will leverage multiple stages in their infection chain, downloading additional payloads or resources as required. To make analysis of these as simple as possible, Triage dumps these dropped files and makes them available for download and submission to Triage themselves, saving you the hassle of identifying and fetching them manually.</p>
+<h4 id="network-analysis-support">Network Analysis Support</h4>
+<p>An important aspect of any malware investigation, Triage includes full support for detecting threats via network activity. All network connections will also be displayed in the interface, and the PCAP can be downloaded as with our other platforms. We will be extending this functionality in future, to include more complex aspects like capturing TLS keys to automatically decrypt HTTPS traffic.</p>
+<h2 id="gettingstarted">Getting Started With macOS Analyses</h2>
+<p>Submitting a macOS file for analysis with Triage doesn&rsquo;t look any different than submitting one to Windows, Linux or Android. Just upload the file, click Analyze, and Triage will select the correct operating system based on file identification. Our standard timeout of 2.5 minutes also applies to macOS.</p>
+<figure><img src="../../static/images/blog/triage-for-macos/submit_screen.png">
+</figure>
+
+<p>Of course, if you want to define the settings manually you can do this using Profiles (available to Researcher accounts or on the Private Cloud). Currently the only option for macOS guest VMs is 10.15 Catalina but this may be expanded in future. You can also choose the default browser, timeout, and network options as normal.</p>
+<figure><img src="../../static/images/blog/triage-for-macos/profile.png">
+</figure>
+
+<h3 id="api">Fetching the Event Log via API</h3>
+<p>This initial release is fairly bare-bones in terms of signature detections for macOS events. Currently we have support for a number of families, and proof-of-concept extractors and ransomnote parsers for a couple of relevant examples. There are no general behaviour rules, but as already mentioned we&rsquo;ll be adding these in the coming weeks.</p>
+<p>In the meantime, you can still use Triage as an analysis platform for macOS samples - event logs and network activity are still available to you for further analysis even if it isn&rsquo;t currently processed into results automatically. Some of these are available via the UI directly - for example PCAP/dropped file downloads - but you can also use the API to access the background event log which we will use to generate matches.</p>
+<p>Following the same structure as the log files from other platforms (for example <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidtaskidlogsonemonjson">onemon.json</a> in the case of Windows analyses), the <code>bigmac.json</code> file contains a record of all system events observed by our kernel agent during behavioural analysis. A new endpoint has been made available to fetch it:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_ACCESS_KEY&gt;' \
+'https://api.tria.ge/v0/samples/{sampleID}/{taskID}/logs/bigmac.json' \
+--output bigmac.json
+</code></pre>
+<hr>
+<h2 id="examples">Examples</h2>
+<h3 id="dacls">1. Dacls RAT</h3>
+<p>Dacls is an implant believed to be associated with the North Korean Lazarus APT. It has been infecting Windows and Linux systems since late 2019, but in May 2020 <a href="https://blog.malwarebytes.com/threat-analysis/2020/05/new-mac-variant-of-lazarus-dacls-rat-distributed-via-trojanized-2fa-app/">researchers from MalwareBytes</a> identified a new macOS variant as well.</p>
+<p><strong>Analysis link:</strong> <a href="https://tria.ge/210603-gxrvff2tan/behavioral1">210603-gxrvff2tan</a></p>
+<p>In Triage as it currently stands, the family is detected through the static phase and by a family rule in the behavioural tasks.</p>
+<p>The samples available are distributed as DMG files which act as containers much like the ISO format on Windows. They are effectively virtual versions of physical storage devices containing all the resources, files and subdirectories required by the application it wraps. If we look at the process listing presented by Triage, we can clearly see as the malware renames and relocates itself to resemble the <a href="https://github.com/MinaOTP/MinaOTP-MAC">MinaOTP software</a>, a legitimate 2 factor authentication app for macOS systems.</p>
+<figure><img src="../../static/images/blog/triage-for-macos/dacls_process_list.png">
+</figure>
+
+<p>If we fetch the <code>bigmac.json</code> file and have a look at the background events, we can see additional signs of the family&rsquo;s activity. For example file actions involving the malware configuration file, which masquerades as an App Store database file:</p>
+<pre><code>{&quot;kind&quot;:&quot;*bigmac.SyscallSI&quot;,&quot;event&quot;:{&quot;arg0&quot;:&quot;/Users/run/Library/Caches/com.apple.appstore.db&quot;,&quot;arg1&quot;:0,&quot;kind&quot;:&quot;access&quot;,&quot;pid&quot;:482,&quot;procid&quot;:0,&quot;ret&quot;:0,&quot;ts&quot;:16306}}
+{&quot;kind&quot;:&quot;*bigmac.SyscallSII&quot;,&quot;event&quot;:{&quot;arg0&quot;:&quot;/Users/run/Library/Caches/com.apple.appstore.db&quot;,&quot;arg1&quot;:1537,&quot;arg2&quot;:438,&quot;kind&quot;:&quot;open_nocancel&quot;,&quot;pid&quot;:482,&quot;procid&quot;:0,&quot;ret&quot;:3,&quot;ts&quot;:16307}}
+</code></pre>
+<p>Looking further we can also identify System Calls related to Dacls&rsquo; persistence method, which leverages the macOS LaunchDaemons/LaunchAgents functionality to start the &lsquo;service&rsquo; after any system reboot.</p>
+<pre><code>{&quot;kind&quot;:&quot;*bigmac.SyscallSII&quot;,&quot;event&quot;:{&quot;arg0&quot;:&quot;/Users/run/Library/Info.plist&quot;,&quot;arg1&quot;:0,&quot;arg2&quot;:0,&quot;kind&quot;:&quot;open&quot;,&quot;pid&quot;:481,&quot;procid&quot;:0,&quot;ret&quot;:0,&quot;ts&quot;:16300}}
+{&quot;kind&quot;:&quot;*bigmac.SyscallSII&quot;,&quot;event&quot;:{&quot;arg0&quot;:&quot;/Users/run/Library/LaunchAgents/com.aex-loop.agent.plist&quot;,&quot;arg1&quot;:1537,&quot;arg2&quot;:438,&quot;kind&quot;:&quot;open_nocancel&quot;,&quot;pid&quot;:481,&quot;procid&quot;:0,&quot;ret&quot;:3,&quot;ts&quot;:16301}}
+{&quot;kind&quot;:&quot;*bigmac.SyscallISII&quot;,&quot;event&quot;:{&quot;arg0&quot;:18446744073709551614,&quot;arg1&quot;:&quot;/Library/Preferences/Logging/com.apple.diagnosticd.filter.plist&quot;,&quot;arg2&quot;:16777476,&quot;arg3&quot;:18446744073431466952,&quot;kind&quot;:&quot;openat&quot;,&quot;pid&quot;:482,&quot;procid&quot;:0,&quot;ret&quot;:0,&quot;ts&quot;:16305}}
+</code></pre>
+<h3 id="macfilecoder">2. MacFileCoder Ransomware</h3>
+<p>MacFileCoder is an old ransomware originating all the way back in the halcyon days of 2014. At the time it was the first ransomware to be discovered targeting Mac systems, although it has turned out to not be the last by any means. A technical report by Securelist from the initial discovery can be found <a href="https://securelist.com/unfinished-ransomware-for-macos-x/66760/">here</a>.</p>
+<p><strong>Analysis link:</strong> <a href="https://tria.ge/210603-ha3r6tyzpj/behavioral1">210603-ha3r6tyzpj</a></p>
+<p>When initially discovered it seemed that the code was not complete, as they only encrypted a couple of files hard coded into the ransomware itself and did not interact with user files in any way. However later versions have appeared to fix this, adding the ability to enumerate and encrypt local files, although its simplistic implementation makes it relatively straightforward to reverse the process.</p>
+<p>Taking a look at the process list again, we can see a large number of actions clearly related to the discovery and encryption of user files on the system. It appears to use the <code>zip</code> utility to encrypt the files using a set password. Once encrypted, the original files are then deleted from disk.</p>
+<figure><img src="../../static/images/blog/triage-for-macos/filecoder_file_processes.png">
+</figure>
+
+<p>We can also clearly see the creation of the sample&rsquo;s ransomnote, which is dropped to multiple directories using commands like the following:</p>
+<pre><code>touch -mt 201002130000 &quot;/Users/run/Documents/README!.txt&quot;
+</code></pre>
+<p>As with Triage&rsquo;s Windows support, the platform can detect and dump ransomnotes created during macOS analysis. These are presented under the Malware Configuration section at the top of the report, and contains relevant information like emails, cryptocurrency addresses etc.</p>
+<figure><img src="../../static/images/blog/triage-for-macos/filecoder_note.png">
+</figure>
+
+<h3 id="hiddenlotus">3. HiddenLotus Backdoor</h3>
+<p>HiddenLotus is an evolution of the older OceanLotus malware, and was originally discovered in November 2017 after Apple added detection for it in a patch and alerted researchers to its existence. A full blogpost of the samples can be found from MalwareBytes <a href="https://blog.malwarebytes.com/threat-analysis/2017/12/interesting-disguise-employed-by-new-mac-malware/">here</a>.</p>
+<p><strong>Analysis link:</strong> <a href="https://tria.ge/210603-wqhytdhkea/behavioral1">210603-wqhytdhkea</a></p>
+<p>The family has a somewhat unusual method of hiding itself which makes what would otherwise be a standard backdoor into a much more interesting specimen. It masquerades as a PDF document file but doesn&rsquo;t use the normal, well documented tricks to hide its true extension. Instead it makes use of what was, at the time at least, a novel trick to manipulate macOS LaunchServices into running the file as an executable.</p>
+<p>It is able to do this because the malware is distributed as a .app file bundle. These are basically folder structures a little like archives such as .zip, but specific to macOS. The <code>d</code> character in the <code>.pdf</code> extension is actually a non-Latin character, making the file extension invalid. When run by the user via double click etc. this causes LaunchServices to examine the app directory structure within the file instead of opening it with a PDF reader, which results in the malicious application being triggered.</p>
+<p>In order to keep up the charade, the malicious app will actually open a fake PDF document at the start of its execution, to make the user believe the file has run as expected and not arouse their suspicions. We can see this during analysis through the Live Monitor/Replay:</p>
+<figure><img src="../../static/images/blog/triage-for-macos/hiddenlotus_pdf.gif">
+</figure>
+
+<p>Triage bypasses this process as file identification recognises the structure as being an app file rather than a true PDF. However the end result is the same, as can be seen above.</p>
+<p>Looking at the process listing, we can see a large number of actions related to the collection of information about the compromised system, including even things like Calendar contents. For example:</p>
+<figure><img src="../../static/images/blog/triage-for-macos/hiddenlotus_stealer.png">
+</figure>
+
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>We hope this post has given you a good overview of Triage&rsquo;s macOS analysis capabilities, and what you can expect from it as we move forwards.</p>
+<p>As already mentioned, this is only the first version of the system we have planned out. We have a number of next steps already in mind, and the list of features will certainly expand as we receive feedback and identify areas which could benefit from improvements or additional support. Below you can find something of a basic roadmap for our macOS support, although the exact order might vary in practice.</p>
+<h3 id="futureplans">Future Plans</h3>
+<ul>
+<li>Flesh out detections, especially in terms of general behavioural detections not specifically linked to a single family.</li>
+<li>Extend file type support, initially targeting bash scripts and Office documents</li>
+<li>Add support for capture/dumping of TLS master secrets to enable decryption of HTTPS network traffic captured during analysis.</li>
+<li>Add ability to log and track Mach and Mig hooks, which are used to inter process communication within macOS.</li>
+<li>Implement human interaction module to allow automatic bypassing of popups, dialog windows etc. which can often be used as a rudimentary anti-sandbox technique.</li>
+</ul>
+<p>We&rsquo;ll be back next week with our usual Triage Thursday update roundup, and that will likely include the first set of detection updates as we work towards getting a good baseline in place for more exciting improvements to come. In the meantime, have a go, play around, and let us know what you think! We&rsquo;re always interested in hearing your use cases and what features would be most valuable to you in getting the most out of the platform.</p>
+<p>You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Analyzing Metasploit Payloads</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/metasploit-payloads/">Read</a>
+        </li>
+      
+        <li>
+          <h3>File Submission from URL</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/url-file-submission/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 137: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox 2.0.6 pentest</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-206-pentest/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-70.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-70.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>ssdeep Support, General Improvements &amp; Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>ssdeep Support, General Improvements &amp; Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-70.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-03-31T00:00:00Z">2022-03-31</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another entry in our Triage Thursday update blog series! This week we have few general improvements to our handling and processing mechanisms which you can <a href="#general">read about below</a>, including the addition of ssdeep fuzzy hashes to reports.</p>
+<p>Of course we also have the usual selection of family updates and additions:</p>
+<ul>
+<li><a href="#monitor">Live and Replay monitor improvements</a></li>
+<li><a href="#blackcat">New Blackcat ransomware variant</a></li>
+<li><a href="#bandook">Added support for Bandook RAT</a></li>
+<li><a href="#plugx">Updated PlugX extractor</a></li>
+<li><a href="#gozi">Fixed bug in Gozi extractor</a></li>
+</ul>
+<p>We missed the blogpost last week due to other commitments, but we still released a few updates besides those shown below. You can find some details on them in our Twitter thread below:</p>
+<p>Also this week we published a <strong>job advert</strong> for a Compliance Officer to work with us on various aspects of the business related to contracting, ISO27001 and privacy laws like GDPR. If you or someone else you know might be interested in this you can find the full listing <a href="https://hatching.io/jobs/compliance-officer/">on our website</a>.</p>
+<p>As always, if you discover any issues or missing detections while using Triage please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<h2 id="general">General Improvements</h2>
+<h2 id="monitor">Live and Replay Monitor improvements</h2>
+<p>After numerous debates internally on the sustainability of our public
+sandboxing environment, which performs millions of analyses per year, we have
+decided to introduce a non-intrusive component to the Live and Replay monitors
+to help us pay our bills. We know our users will appreciate this small
+sacrifice to help us sustain the free business model.</p>
+<h3 id="added-ssdeep-hashes">Added ssdeep hashes</h3>
+<p>This has been requested several times by users, so we&rsquo;re pleased to be bringing this into the reports. You can now find ssdeep hashes for all samples and any files dropped during analysis as part of our reports, both via the API and web interface.</p>
+<p>If you&rsquo;re not familiar with ssdeep, it is a tool for generating hashes which can corelate files even if they have minor changes, which for normal hashing algorithms like SHA would result in entirely different outputs. The approach is officially known as Context Triggered Piecewise Hashing and often referred to as fuzzy hashing, and since release ssdeep has become the defacto standard for this (although some other alternatives do now exist).</p>
+<p>You can find more details on ssdeep itself through their webpage here: <a href="https://ssdeep-project.github.io/ssdeep/index.html">ssdeep-project.github.io</a>.</p>
+<h3 id="ransomnote-handling">Ransomnote handling</h3>
+<p>If you&rsquo;ve ever submitted a ransomware sample to Triage you&rsquo;ll likely be familiar with our ransomnote dumping mechanism, which allows us to display these for most ransomware families and extract relevant IoCs like the web portals or other contact methods used to enable ransom negotiations.</p>
+<p>We recently noticed some issues where we were detecting unrelated files as ransomnotes and reporting them as malicious. On inspection these files turned out to be simple dictionary lists which were incorrectly triggering our ransomnote pattern matching. We&rsquo;ve now reviewed these and made some improvements to our mechanism to exclude results like these and minimise the risk of false-positives.</p>
+<h3 id="added-more-network-signatures">Added more network signatures</h3>
+<p>One of our goals for 2022 is to expand and improve our general behaviour signatures, as a lot of our focus has been directed at specific families over the last couple of years. Tactics and techniques - not to mention Triage&rsquo;s own capabilities - have changed quite a bit since we initially built out the majority of these detections, and we feel it&rsquo;s time for a review to make sure we&rsquo;re as up to date as possible.</p>
+<p>To this end some of the team have begun going over reports and looking for areas where we could add more detail while sticking to our aim of not making them feel cluttered. This week sees the first batch of signatures being deployed, mainly addressing network-related activity. You should start seeing some new rules popping up, and we&rsquo;ll be continuing to work on this and other areas over the coming months.</p>
+<h2 id="blackcat">BlackCat Ransomware</h2>
+<p>BlackCat ransomware has been around since late 2021, having first been reported by <a href="https://twitter.com/malwrhunterteam">MalwareHunterTeam</a> on Twitter. The first such family to be created in the Rust programming language, it uses the double-extortion approach to exfiltrate sensitive data before encryption and leverage it to blackmail victims in paying the ransom. Making the most of the cross-platform nature of Rust, the family had payloads for Windows and a variety of Linux distributions.</p>
+<p>We added detection for the family <a href="https://hatching.io/blog/tt-2022-01-27/#blackcat">back in January</a>, and at the time mentioned that it seemed like the developers were probably launching a long term project rather than one of the many here-today-gone-tomorrow ransomware variants that we see week to week. That seems to have remained true since, and we recently noticed a new version which had changes that got around our existing signatures. We have now addressed this with some rule updates to ensure the samples are tagged correctly, but unfortunately configuration extraction is no longer possible with our existing mechanisms due to using a one-time <code>access_token</code> which is obtained from the C2 infrastructure during execution.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220320-f5fnfahgbr">220320-f5fnfahgbr</a></li>
+<li><a href="https://tria.ge/220317-z3xcysfbe7">220317-z3xcysfbe7</a></li>
+<li><a href="https://tria.ge/220316-zpwjhaeegq">220316-zpwjhaeegq</a></li>
+</ul>
+<h2 id="bandook">Bandook RAT</h2>
+<p>Bandook has a long history as a family, going all the way back to 2007 in its original form. It was mostly inactive for some years, only appearing occasionally in specific campaigns during 2015 (Operation Manul) and 2017 (Dark Caracal), but then popped up again in 2020 with a few new variants. It was seen carrying out a spate of attacks against various entities, <a href="https://digital.nhs.uk/cyber-alerts/2020/cc-3684">including the UK&rsquo;s National Health Service</a> at the end of 2020. Since the original release - later traced to a Lebanese citizen going by the alias PrinceAli - the source code for several versions of the RAT has been leaked resulting in a large number of customisations and variations in the payloads seen in the wild.</p>
+<p>It is a RAT/backdoor capable of receiving commands from C2 infrastructure, effectively providing full remote access to infected machines supported by automated processes to simplify usage. Delivery mechanisms vary somewhat, but mostly revolve around malicious Office documents distributed via phishing emails. These then lead to a Powershell loader which in turn deploys Bandook. For a more detailed look at the technical capabilities, including a breakdown of the commands generally supported, take a look at <a href="https://research.checkpoint.com/2020/bandook-signed-delivered/">Checkpoint&rsquo;s blogpost from 2020</a>.</p>
+<p>Due to the general lack of usage over recent years we have not previously implemented detection, but with it becoming a more common sight in the wild we have now reviewed a cross section of the available samples and implemented detections. For a family as large and old as this it&rsquo;s likely there are variants not covered in these initial signatures but as usual we&rsquo;ll continue to monitor the files we see and will provide updates as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201221-rr228qbfy2">201221-rr228qbfy2</a></li>
+<li><a href="https://tria.ge/210716-bl5g78gves">210716-bl5g78gves</a></li>
+<li><a href="https://tria.ge/220324-pjqqysghd3">220324-pjqqysghd3</a></li>
+</ul>
+<h2 id="plugx">PlugX</h2>
+<p>PlugX has made a couple of appearances lately as we address some new versions and overlaps with other families which complicate detection. It has all the features of a remote access tool and stealer, capable of uploading and downloading files, keylogging, capturing images through attached webcams and running a full cmd.exe shell which can be used by the attacker to execute further commands. Over recent years the family has often been associated with Chinese state threat actors, forming part of a much broader toolset which includes other payloads like Sakula.</p>
+<p>In a <a href="https://hatching.io/blog/tt-2022-03-10/#plugx">blogpost from earlier in the month</a> we made some improvements and mentioned that we would be continuing to work on PlugX and a couple of the other related families in the future. As part of that ongoing process this week we have some improvements to address a couple of issues with the PlugX configuration extractor which should make results more accurate going forwards and help to avoid incorrect tagging for it and the other families. We&rsquo;ll be continuing this going forwards so watch this space!</p>
+<p><strong>Analyses:</strong>
+<a href="https://tria.ge/s?q=family%3Aplugx">Search family:plugx</a></p>
+<h2 id="gozi">Gozi</h2>
+<p>The Gozi family - often called Ursnif - if a messy collection of variants and forks which are regularly updated by a wide variety of developers and threat actors. These range from close forks with strong similarities, to more distant variations like RM3 with much more significant changes. As such trying to keep track of the various branches of the family tree can be quite tricky in itself.</p>
+<p>We&rsquo;ve long had detection and configuration extraction for a number of these variants, but it was recently reported to us that we had a bug in the extractor component which was affecting results. It would appear that for some payloads Triage was extracting incorrect values for the RSA key section so we&rsquo;ve addressed this and made sure that it is now working as intended.</p>
+<p>A huge thank you to the user who pointed this out! If you spot anything like this on Triage please don&rsquo;t hesitate to reach out as it&rsquo;s a huge help to us as well and we&rsquo;re always keen to improve the quality of results wherever possible.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220302-2mppaagdg4">220302-2mppaagdg4</a></li>
+<li><a href="https://tria.ge/220315-qjnr2abee2">220315-qjnr2abee2</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Submitting Zip Files to Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/archive-submissions/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Excel 4.0 XLM Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/excel-xlm-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 118: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-08/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 93</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-07-28/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

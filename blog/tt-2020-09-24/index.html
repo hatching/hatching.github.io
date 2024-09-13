@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-55.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-55.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Custom Archive Passwords, Dridex Config Extractor and Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Custom Archive Passwords, Dridex Config Extractor and Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-55.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-09-24T00:00:00Z">2020-09-24</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>In Triage Thursday this week we take a look at the week&rsquo;s detection updates for a range of families, and <strong>introduce a new feature: custom archive passwords</strong></p>
+<ul>
+<li><strong><a href="#zips">Support for password-protected archive files</a></strong></li>
+<li><a href="#ransomware">DogeCrypt and Zhen ransomware signatures</a></li>
+<li><a href="#dridex">Updated Dridex configuration extractor</a></li>
+<li><a href="#sload">New sLoad family signatures</a></li>
+<li><a href="#ratty">New Ratty family signatures</a></li>
+<li><a href="#matiex">New Matiex family signatures</a></li>
+</ul>
+<p>As usual if you have feedback or suggestions about anything Triage-related don&rsquo;t hesitate to reach out. You can get to us <a href="https://hatching.io/">via the website</a> or <a href="https://twitter.com/hatching_io">on Twitter</a>.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to sign up for a free account!</p>
+<hr>
+<h2 id="zips">Password Protected Archive Files</h2>
+<p>Until now Triage has only supported encrypted archives (e.g. zip files) with common passwords - <code>infected</code>, <code>malware</code> etc. - which are often used when sharing samples with other analysts.</p>
+<p>This update adds full support for encrypted archives, with the ability to specify the password at submission. Triage will then use this to extract the contents and process the files.</p>
+<figure><img src="../../static/images/blog/tt-20-09-24/password_field.png">
+</figure>
+
+<p>This option is also now supported by the API. Simply add a <code>password</code> field to the JSON data included with the submit request. For example:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_ACCESS_KEY&gt;' \
+  -X POST \
+  -F 'file=@&lt;YOUR_SAMPLE_FILE_PATH&gt;' \
+  -F '_json={&quot;kind&quot;:&quot;file&quot;,&quot;password&quot;:&quot;&lt;ARCHIVE_PASSWORD&gt;&quot;,&quot;interactive&quot;:false}' \
+  'https://api.tria.ge/v0/samples'
+</code></pre>
+<p>More information on using the API is available in <a href="https://tria.ge/docs/cloud-api/samples/">the documentation</a>.</p>
+<p><strong>Note:</strong> this password does not remain private - it is displayed on the static report output for all public analyses. This feature is intended for convenience, not submitting private/sensitive files.</p>
+<hr>
+<h2 id="ransomware">Ransomware Updates</h2>
+<p>We have added coverage for a couple of new ransomware families seen in the wild.</p>
+<h3 id="dogecrypt">DogeCrypt</h3>
+<p>DogeCrypt, based on the open-source ransomware <a href="https://github.com/zerod4y/desuCrypt">desuCrypt</a>, was reported on <a href="https://x.com/fbgwls245/status/1306416574476120064">Twitter by a number of researchers</a> earlier this month and a sample submitted to Triage.</p>
+<p>The very brief ransomnote was avoiding our detection mechanism, so we&rsquo;ve added a parser for the family to ensure it is extracted correctly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200917-q7ej2te3gs">200917-q7ej2te3gs</a></li>
+</ul>
+<h3 id="zhen-ransomware">Zhen Ransomware</h3>
+<p>Zhen is another new family that popped up this week. Unlike most ransomware which drop notes as either TXT or HTML/HTA format, this family writes it as <code>read.ini</code> in the <code>C:\ProgramData</code> directory. This seems like an odd choice considering that most users are extremely unlikely to discover the ransom instructions in this location, but apart from this it doesn&rsquo;t have any particularly unusual features.</p>
+<p>Files with the .ini extension are not handled by our ransomnote parser, so the note for this family is not extracted automatically. Note that manually renaming the file to .txt during analysis using Triage Monitor and opening it (e.g. in Notepad) will force dumping of the note.</p>
+<figure><img src="../../static/images/blog/tt-20-09-24/zhen_ransomnote.png"><figcaption>
+      <h4>Contents of read.ini file</h4>
+    </figcaption>
+</figure>
+
+<p>We have added general detection for the family. We will also be reviewing dumping triggers for examples like this in the future.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200920-94a3wvdaln/behavioral1">200920-94a3wvdaln</a></li>
+</ul>
+<hr>
+<h2 id="dridex">Updated Dridex Configuration Extractor</h2>
+<p>Dridex has been quite active lately, distributing a range of payloads. We recently observed that some samples of the family were no longer triggering our configuration extractor. Our yara rules have been tweaked to support the new version and extraction is working properly again.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200924-wfe8bfpfcx/">200924-wfe8bfpfcx</a></li>
+<li><a href="https://tria.ge/200924-dbms9b5bsx/">200924-dbms9b5bsx</a></li>
+<li><a href="https://tria.ge/200924-wlea7y1aq6/">200924-wlea7y1aq6</a></li>
+<li><a href="https://tria.ge/200924-vga9ehvcke/">200924-vga9ehvcke</a></li>
+<li><a href="https://tria.ge/200924-dhbsc5nbg2/">200924-dhbsc5nbg2</a></li>
+<li><a href="https://tria.ge/200924-c9x67vtf3s/">200924-c9x67vtf3s</a></li>
+<li><a href="https://tria.ge/200924-yh1r3zmq62/">200924-yh1r3zmq62</a></li>
+</ul>
+<hr>
+<h2 id="sload">New sLoad Family Signatures</h2>
+<p>sLoad is a malicious loader which has been around since 2018. However in early 2020 it saw a bit of a resurgence after releasing an updated and much improved version referred to as <a href="https://www.microsoft.com/security/blog/2020/01/21/sload-launches-version-2-0-starslord/">&lsquo;sLoad 2.0&rsquo; or &lsquo;StarsLord Loader&rsquo;</a>.</p>
+<p>Initially written in Powershell, the family has evolved over time to make use of a range of different scripts. Early versions generally made use of VBS scripts as a wrapper or stager for the full loader, but the new 2.0 version tends to favour Windows Script Host (WSH) files.</p>
+<p>We have added support for this family to Triage, and will expand this as needed in the future.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200914-scphbgkdms/">200914-scphbgkdms</a></li>
+<li><a href="https://tria.ge/200914-zrracg8djj/">200914-zrracg8djj</a></li>
+<li><a href="https://tria.ge/200914-hpjhrb28l6/">200914-hpjhrb28l6</a></li>
+<li><a href="https://tria.ge/200914-xsgqapabcj/">200914-xsgqapabcj</a></li>
+<li><a href="https://tria.ge/200914-yz28x82wtj/">200914-yz28x82wtj</a></li>
+</ul>
+<hr>
+<h2 id="ratty">New Ratty Family Signatures</h2>
+<p>Ratty is a remote-access trojan (RAT) written in Java. It was open source prior to 2016/17 but multiple clones of the original repo exist.</p>
+<p>The family makes use of an interesting trick to evade some automated detection methods. Although the malware is Java, by appending the Jar file to the end of an MSI file it can fool some static tools into thinking it is a different file type. However the way the Java runtime parses Jar files means that it still functions correctly when opened regardless of the attached MSI. A much more detailed explanation of this mechanism is available in the <a href="https://www.securityinbits.com/malware-analysis/interesting-tactic-by-ratty-adwind-distribution-of-jar-appended-to-signed-msi/">original writeup by Security-in-Bits</a>.</p>
+<p>Due to this trick, Triage recognises the file as MSI and attempts to run it as such. This means that automated analysis doesn&rsquo;t yield behavioural results with default settings (although it is possible to submit the .jar alongside a script to launch it correctly - <a href="https://hatching.io/blog/archive-submissions/">more info in our blogpost here</a>). However we have added static detection to catch these samples regardless.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li>JAR file launched correctly using BAT file - <a href="https://tria.ge/200924-zxrhe9ncan/behavioral2">200924-zxrhe9ncan</a></li>
+<li><a href="https://tria.ge/200628-4rx2t7sta6/behavioral1">200628-4rx2t7sta6</a></li>
+<li><a href="https://tria.ge/200628-8f9kkdbne6/behavioral1">200628-8f9kkdbne6</a></li>
+<li><a href="https://tria.ge/200628-ws5kwspvdj/behavioral1">200628-ws5kwspvdj</a></li>
+</ul>
+<hr>
+<h2 id="matiex">New Matiex Family Signatures</h2>
+<p>Matiex is a keylogger with other infostealer capabilities such as capturing screenshots, recording video/audio, and stealing clipboard contents. It can also harvest stored credentials from a range of installed software.</p>
+<p>The malware is sold openly through a website, operating on a subscription basis with 1 month costing $25.</p>
+<figure><img src="../../static/images/blog/tt-20-09-24/matiex_features.png"><figcaption>
+      <h4>Features advertised on malware web page</h4>
+    </figcaption>
+</figure>
+
+<p>We have added family detection for this family and will keep an eye on new versions as they appear in future.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200902-e85yz8wegj/behavioral1">200902-e85yz8wegj</a></li>
+<li><a href="https://tria.ge/200828-tv8fskg3s6/behavioral2">200828-tv8fskg3s6</a></li>
+</ul>
+<hr>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Onion Support and Signature Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New UI, TOR support, and detection updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Configuration Extractors and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-10-14-triage-thursday/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 130: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-05-02/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

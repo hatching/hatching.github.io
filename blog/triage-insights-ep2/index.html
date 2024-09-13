@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-92.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-92.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Insights: Detection Evasion In Android APK Headers</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Insights</h5>
+        
+        <h2>Triage Insights: Detection Evasion In Android APK Headers</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-92.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2024-08-07T00:00:00Z">2024-08-07</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=android">android</a></p><li><p><a href="/blog/#category=apk">apk</a></p><li><p><a href="/blog/#category=malware">malware</a></p><li><p><a href="/blog/#category=guide">guide</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/junwei.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />JunWei Song</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Recently we&rsquo;ve noticed an increase of errors in our static analysis for Android applications in Triage, preventing the initial handling from working as expected. All of the issues are around parsing the APK file uploaded, which we do as part of the process to extract the manifest and other relevant files to examine. For example:</p>
+<ul>
+<li><code>could not process APK: zip: unsupported compression algorithm</code></li>
+<li><code>could not process APK: unexpected chunk type</code></li>
+<li><code>could not process APK: zip: checksum error</code></li>
+<li><code>could not process APK: unexpected EOF</code></li>
+<li><code>could not decode AXML: unexpected chunk type</code></li>
+<li><code>could not decode AXML: sblock: string with idx 268435468 not found</code></li>
+<li><code>could not decode AXML: EOF</code></li>
+</ul>
+<p>At first we believed the malware author had simply modified some file header in error, causing static analysis to fail, and that dynamic analysis would not be successfully installed and executed as it is not a valid APK. Interestingly however, this specific type of Android application can be installed and executed by the virtual machine. This indicated that the Android device can correctly recognize the content within the APK file despite the apparent malformity, allowing the Android device or the Android virtual machine to run smoothly without any errors. On investigation it became clear that the issue is not at all limited to Triage - that is to say, this technique allows malware to infect Android devices while evading most static analysis tools.</p>
+<p>When attempting to analyze specific APK files using static analysis tools such as apkanalyzer, apktool, or Jadx, you may encounter errors that prevent successful file opening. Even if you try to use a decompression tool to decompress and extract the files inside, you may find that the files cannot be properly decompressed.</p>
+<p>Recent research conducted by <a href="https://www.zimperium.com/blog/over-3000-android-malware-samples-using-multiple-techniques-to-bypass-detection/">Zimperium</a>, <a href="https://securelist.com/soumnibot-android-banker-obfuscates-app-manifest/112334/">Kaspersky</a>, <a href="https://www.fortinet.com/blog/threat-research/android-spynote-moves-to-crypto-currencies">Fortinet</a>, and <a href="https://unit42.paloaltonetworks.com/apk-badpack-malware-tampered-headers/">Palo Alto Networks</a> shows that this particular technique has been in use for several years. Based on the submissions we see to our public Triage platform, there has recently been a rise in its popularity with an increasing number of malware families employing this anti-static analysis technique to evade detection and remain installable on Android devices.</p>
+<p>This kind of anti-static analysis technique commonly targets the APK and AndroidManifest.xml. These files are essential inputs and entry points for analyzing malware behavior and associated information. The use of these techniques poses challenges for malware analysts, as it increases both analysis time and effort and can cause most automatic reverse engineering tools to fail in accessing the content.</p>
+<p>However with the help of the Triage sandbox we can now support these anti-static analysis techniques more effectively, overcoming these challenges and extending our signatures to detect malformed APKs.</p>
+<h2 id="technical-analysis">Technical Analysis</h2>
+<p>This anti-static analysis mainly focuses on two file formats: APK and AXML (Android binary XML).</p>
+<h3 id="malformed-apk">Malformed APK</h3>
+<p>The technique for APK involves modifying specific headers based on the ZIP format, which commonly includes the compression method and other header information. These modifications impact static analysis tools and may cause errors when parsing the APK or the AndroidManifest.xml. Additionally, attempts to decompress and extract the AndroidManifest.xml file for separate analysis also fail due to its malformed headers.</p>
+<h4 id="compression-method-of-the-apk">Compression method of the APK</h4>
+<p>When encountering the <code>unsupported compression algorithm</code> error in an APK analysis, it&rsquo;s typically due to the modification of its compression method. Android devices only recognize two compression methods – <code>DEFLATED (0x0008)</code> or <code>STORED (0x0000)</code> - when installing an APK. If the value of the compression method is neither of these it defaults to STORED, which means no compression. Other static analysis tools may display an error message if the APK includes a non-standard decompression method.</p>
+<h4 id="other-common-fields-that-may-be-modified">Other common fields that may be modified</h4>
+<p>In addition to the compression method field, we also observed that other fields may be modified by malware.</p>
+<p>Local File Header:</p>
+<ul>
+<li>Version needed to extract</li>
+<li>General purpose bit flag</li>
+<li>Compression method</li>
+<li>CRC-32 checksum</li>
+<li>Compressed size</li>
+<li>Uncompressed size</li>
+<li>File name</li>
+</ul>
+<p>Central Directory File Header:</p>
+<ul>
+<li>Version made by</li>
+<li>Version needed to extract</li>
+<li>General purpose bit flag</li>
+<li>Compression method</li>
+<li>CRC-32 checksum</li>
+<li>Compressed size</li>
+<li>Uncompressed size</li>
+<li>File name</li>
+</ul>
+<h3 id="malformed-axml">Malformed AXML</h3>
+<p>The technique for AXML involves modifying some fields in its header within the AndroidManifest.xml file. It includes modifying the magic number, string count in the string pool, unexpected attribute names and attribute size, and inserting invalid data between XML elements. These tricks allow the file to evade static analysis tools while still being readable by the Android system. It works because static analysis tools and the Android system handle it differently, similar to the APK trick. Some fields may be modified by malware as follows:</p>
+<ul>
+<li>Magic number</li>
+<li>StringCount in strPool</li>
+<li>Attribute names</li>
+<li>Attribute size</li>
+<li>Invalid data between XML elements</li>
+<li>Namespace end node size</li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Let&rsquo;s analyze the techniques mentioned above and how they are utilized in real malware that we found from public triage. We found this sample by searching for unsupported compression algorithms. After further investigation, we found that it is actually another obfuscated SpyNote sample. This sample contains an embedded APK that prompts the victim to install it after launching the application. In the static report, we observed two errors that caught our attention and seemed worth investigating.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%201.png">
+</figure>
+
+<p>SHA256: <code>26f0a9ba3832d464e2b26ad4f30b0e431221fbb99081ec0c833fa00976446023</code> (<a href="https://tria.ge/240121-qevpsadbfl">View Report</a>)</p>
+<p>If you attempt to analyze this sample using Jadx or other decompilation tools you may notice that while you can see the decompiled code, the AndroidManifest.xml is not available and most tools fail to open it correctly. However, if you use JEB, it does a great job with this sample and provides a clear output. Since we want to know exactly what&rsquo;s behind it, let&rsquo;s do it the hard way.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%202.png">
+</figure>
+
+<h4 id="obfuscated-directory-name">Obfuscated Directory Name</h4>
+<p>When utilizing the unzip command for the APK, you will notice the first trick: the obfuscated directory name causes errors with the unzip command. The malware attempts to treat AndroidManifest.xml and classes.dex as directories, even though they are actually files.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%203.png">
+</figure>
+
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%204.png">
+</figure>
+
+<p>If you open it with 010Editor, you can easily find this modified filename in the file name fields within both the Local File Header and Central Directory File Header. However since we only need to analyze the AndroidManifest.xml, we can extract it separately using the command below and make sure you get the proper permission for that.</p>
+<pre tabindex="0"><code>unzip -p KrinkoOp.apk AndroidManifest.xml &gt; AndroidManifest.xml
+</code></pre><h4 id="unexpected-attribute-names-and-attribute-size">Unexpected Attribute Names and Attribute Size</h4>
+<p>Moving forward to address the error encountered when attempting to access the AndroidManifest.xml file. In the screenshot from Jadx above we see this error message:</p>
+<pre tabindex="0"><code>Error decode manifest
+java.io.IOException: Decode error: startNS&#39;s attributeSize is not 0x14, position: 0x16fc
+  at jadx.core.xmlgen.CommonBinaryParser.die(CommonBinaryParser.java:39)
+  at jadx.core.xmlgen.BinaryXMLParser.parseElement(BinaryXMLParser.java:269)
+  at jadx.core.xmlgen.BinaryXMLParser.decode(BinaryXMLParser.java:132)
+  at jadx.core.xmlgen.BinaryXMLParser.parse(BinaryXMLParser.java:87)
+</code></pre><p>This tells us that the attributeSize is not 0x14, and the error occurs when the position is read to 0x16fc. Let&rsquo;s use 010Editor to check this position.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%205.png">
+</figure>
+
+<p>The <a href="https://android.googlesource.com/platform/frameworks/base/+/master/libs/androidfw/include/androidfw/ResourceTypes.h#677">ResourceTypes</a> definition states that the attributeSize should be 20 (0x14) bytes. However, it has been changed to 24 bytes, resulting in an error. Additionally, there seems to be an issue with the total size of this element. The header defines the total size of this element as 204 bytes.</p>
+<p>However the header size is 16 bytes, the size of ResXMLTree_attrExt is 20 bytes, and the size of ResXMLTree_attribute is 20 bytes. With 7 attributes here, we can calculate the total size of this element as follows:</p>
+<pre tabindex="0"><code>header + ResXMLTree_attrExt + ResXMLTree_attribute * 7
+</code></pre><p>This equals <code>16 + 20 + (20 * 7) = 176 bytes</code>, which means there are 28 redundant bytes within this element.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%206.png">
+</figure>
+
+<p>After manually fixing the incorrect sizes, we reopened the file using Jadx but encountered the same issue in a different position as stated in the error message below. It seems that more than one element had its size modified.</p>
+<p>After correcting all the modified sizes and reopening the file with Jadx, everything is now functioning properly, as shown in the screenshot below. While some attribute names are missing from Jadx it can still show an overview of AndroidManifest.xml and access most of its contents.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%207.png">
+</figure>
+
+<p>Following the entry point provided by the AndroidManifest.xml, it is clear that there is another APK hidden in the assets/childapp.apk. The first APK will prompt the user to install it after launching.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%208.png">
+</figure>
+
+<h4 id="unsupported-compression-algorithm">Unsupported Compression Algorithm</h4>
+<p>If you are trying to unzip this APK, you may encounter an issue where the AndroidManifest.xml can not be extracted due to the unsupported compression algorithm. If you open it with 010Editor, you will notice that the compression method in the Central Directory File Header and the Local File Header has been modified, which leads to this error with the unzipping tools. The correct value for the compression method should be <code>STORED (0x0000)</code>, and you can simply use 010Editor to correct it.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%209.png">
+</figure>
+
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%2010.png">
+</figure>
+
+<h4 id="incorrect-magic-number">Incorrect Magic Number</h4>
+<p>After solving the previous issue, you should be able to decompress AndroidManifest.xml successfully. However, you may notice that Jadx is still unable to read it properly, and 010Editor cannot recognize this file as AndroidManifest.xml. This usually indicates that the magic number in the file has been modified. According to the <a href="https://android.googlesource.com/platform/frameworks/base/+/56a2301/include/androidfw/ResourceTypes.h#183">definition</a>, this value should be 0x0003.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%2011.png">
+</figure>
+
+<h4 id="incorrect-stringcount-in-strpool">Incorrect stringCount in strPool</h4>
+<p>If 010Editor is still unable to parse the entire file correctly, it may be due to an incorrect <code>stringCount</code> value in the string pool. If the total number of the <code>stringoffsets</code> differs from the value indicated by the <code>stringCount</code>, 010Editor will fail to parse the rest of the content.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%2012.png">
+</figure>
+
+<p>To get the total number of strings (<code>stringCount</code>) in this file, we can do some simple calculations based on the diagram as shown in the screenshot below. The <code>header</code> is 8 bytes, the <code>StringPool_header</code> is 28 bytes, and the first string starts at position 46Ch (1132 bytes). By subtracting the sizes of the <code>header</code> and the <code>StringPool_header</code> from the starting position of the first string, we can get the total size of the <code>stringoffsets</code>. Since each <code>stringoffset</code> is 4 bytes, dividing this total size by 4 gives us the number of <code>stringoffsets</code>, which is the value of the <code>stringCount</code>. The calculation of the <code>stringCount</code> is as follows:</p>
+<pre tabindex="0"><code>stringCount = (starting position of the first string - header - StringPool header) / 4
+
+274 =  (1132 - 8 - 28) / 4
+</code></pre><figure><img src="../../static/images/blog/triage-insights-ep2/image%2013.png">
+</figure>
+
+<p>Next, you may notice the same issue with unexpected attribute sizes that we discussed earlier. Since we&rsquo;ve already covered it in detail above, we won&rsquo;t go over it again here.</p>
+<h4 id="incorrect-size-of-the-namespace-end-node">Incorrect Size of the Namespace End Node</h4>
+<p>In addition to the techniques we discussed in this SpyNote sample, we have found another sample from public Triage that uses a less common technique during our investigation. This specific technique involves changing the size of the namespace end node from 24 to 0. This results in 010Editor continuously generating a large number of namespace end nodes. As a result, this could potentially cause some reverse engineering tools to crash due to running out of memory.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%2014.png">
+</figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this blog, we have delved into several anti-static analysis techniques for the SpyNote sample in detail. These techniques rely on differences in how strictly reverse engineering tools and the Android system interpret the APK and AndroidManifest.xml formats, allowing malware developers to abuse the variations. By abusing these techniques malware can evade most static analysis tools, posing additional challenges for malware analysts while still being able to infect Android devices.</p>
+<p>To mitigate the above techniques, two strategies can be used. First, analyze the APK and AndroidManifest.xml to ensure alignment with the Android system. Second, manually identify the modified places of the malware and make the necessary corrections.</p>
+<p>By leveraging Triage, you can efficiently extract all the necessary information from our static report. We&rsquo;ve already streamlined the process of retrieving content from malformed Android applications, minimizing your effort. It is particularly helpful and handy when dealing with a large volume of malware. Additionally, we now have a static signature for detecting the above anti-static analysis techniques, which can be valuable for flagging and hunting potential malware.</p>
+<figure><img src="../../static/images/blog/triage-insights-ep2/image%2015.png">
+</figure>
+
+<h2 id="iocs">IOCs</h2>
+<p>C2 (found in the sample <a href="https://tria.ge/240121-qevpsadbfl">240121-qevpsadbfl</a> we analyzed for this blog)</p>
+<pre tabindex="0"><code>147.185.221.17:59471
+</code></pre><p>All SpyNote sha256 with unsupported compression algorithm from public Triage (as of July 24th 2024)</p>
+<pre tabindex="0"><code>0b5bf913394d5d9d31faa90a592226dd14743d9413654ac94a3db2c92e7954bb
+1cab0e8d2c1a8665bf293b4046663ab9fda7158883b19087e7c4fa56fd01acf3
+1cf7f29893278dd351f11a658f6c88568738352ffa155f38369fc58bf7391fce
+1e4a3f8cf9fce285d0fcaa00501bfc79a3b1c76417a61751ef2a6a5d04e69479
+23a2728a3ecf335d03f15bb9ac4d1d2a6f8c83c43bc97417fcbbd364de45e82b
+25cdf9a99523090949674110c7d11cba1f4c04b4b58256b4b3a6402316e54423
+26f0a9ba3832d464e2b26ad4f30b0e431221fbb99081ec0c833fa00976446023
+2a5fff5ad2bfcb1aeac3ddb569e46925de0501f666e7ef26c84eeeca7cd3f7cf
+370b6ae6a25f25cca531c30d46e951e04799f0ca8c1e8c635d9bc6c3b4edac49
+3ff998d884cda14fed17a012c566fe04e9607889945b713ea526f3323e95e401
+50ed3f937dd66716c7b87efd3582a67e0f8ab697ebad09bec564de3f8be5baa8
+62dc94aff3ef3bdfc71f6810675da9150e8d63750af6db8573f2924e9e7bd863
+769799932334e5bfbf1c3f62ac1a9ce0b21d112c4d9723f954984f67578d1bc8
+7e24005f8d2db9cc74bac68dccfd671e2262bbbeaed77507f4dadfb4641f3b15
+8ed6f4d9f53493d495da440a24cff2d4145e806f4be2327125b9c5199b87fdc7
+94f4ec6dab1d8f4636a37968fd096b4e0a2857e89c950122796836d1102523ba
+d96c0056cc8e3511759b5682e14ac826242613e8b4cf8fee59541bde6df2ea33
+dbf31c290b84e90673a4253890da1e53fe946ff352b369dabc826df07ad638d5
+e4467183762bafa0735fb45d0ea93678e20fb97d9988fbdaad5032bf2b579ce3
+eda54419b9aceef6b2e5c7c627154976342cdcad860973310d4fa1f85901340a
+eeb07f5f8f2baab9e5888bfad55b66819b5b0ba1c3c516eea0dad165f2146839
+ef970f55ece429903b5b9cbb4f066071c03ebf0423dce069b177f3391f92e3bb
+f36e8eed67bdd992bf9ffa85f7d9fa9dd504ec74f4e0e69f0997f598ca3c8ff6
+fecaa5676e35c4ef767471e9db67b37c700f9ac2903e731817a1cb1cb299796b
+</code></pre>
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Insights: Detection Evasion In Android APK Headers</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-insights-ep2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Detection updates for macOS and Windows</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-24/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 128: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-04-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 145: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-22/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

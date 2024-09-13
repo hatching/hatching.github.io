@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-43.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-43.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>LimeRAT Extractor and Family Signature Additions</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>LimeRAT Extractor and Family Signature Additions</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-43.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-07-01T00:00:00Z">2021-07-01</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Another week has flown by, and it&rsquo;s time for a new Triage Thursday blogpost. Today we have a selection of detection updates to introduce for Windows and Linux, including adding initial support for a couple of families:</p>
+<ul>
+<li><a href="#limerat">New configuration extractor for LimeRAT</a></li>
+<li><a href="#socelars">New Socelars family support</a></li>
+<li><a href="#sodin">Static detection for Sodinokibi/REvil Linux variant</a></li>
+<li><a href="#darkvnc">Added detection for DarkVNC RAT</a></li>
+<li><a href="#golddragon">Initial detections for GoldDragon backdoor</a></li>
+<li><a href="#fatalrat">New family signatures for FatalRAT</a></li>
+</ul>
+<p>In addition to our updates, we are still looking to hire a new Go developer for the Hatching team. If you&rsquo;d like to be involved in the next steps of Triage&rsquo;s journey - or know someone who might be - you can find the full job listing <a href="https://hatching.io/jobs/senior-go-developer/">here</a>. Feel free to reach out with any questions.</p>
+<p>As usual, you can also contact us with any feedback or suggestions about Triage or its analysis results. It&rsquo;s a big world of malware out there and there can always be things we miss! If you notice anything not behaving as expected please do reach out and report it to us. You can contact us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="limerat">New LimeRAT Configuration Extractor</h2>
+<p>LimeRAT is an open-source remote administration tool which is available <a href="https://github.com/NYAN-x-CAT/Lime-RAT/">on Github</a>. It has an extensive list of supported features and is able to operate as a typical stealer, ransomware, cryptocurrency miner, or a bot for DDoS attacks etc. It also includes some anti-VM and anti-virus evasion techniques to help it remain undetected.</p>
+<p>Although the base project hasn&rsquo;t been updated since 2019, the open-source nature of the project means that a number of actors still leverage the tool - or modified variants of it - in their campaigns.</p>
+<figure><img src="../../static/images/blog/tt-2021-07-01/limerat_cfg.png">
+</figure>
+
+<p>Triage has featured behavioural detection for the family for some time, but this week sees the release of a full configuration extractor. This can pull out extensive data on the samples, including C2 information, AES keys, operation settings (whether things like spreading via USB, downloading additional payloads, etc. are enabled or not) and filepaths. We are carrying out reprocessing of the family and you can find some recent examples below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210701-lbnp9djy16">210701-lbnp9djy16</a></li>
+</ul>
+<h2 id="socelars">New Socelars Family Support</h2>
+<p>Socelars is a stealer family which has been around since at least late 2019. It is slightly unusual in its functionality, as it doesn&rsquo;t target many of the standard data sources focused on by most other stealers. Rather than going after passwords and profile data stored on disk, Socelars is more interested in cookie data with a specific focus on Facebook and Amazon.</p>
+<p>We have observed samples of the family being uploaded to Triage regularly, so we have reviewed it and added some initial signatures to properly detect it. Some examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210624-8lp58wzblj">210624-8lp58wzblj</a></li>
+<li><a href="https://tria.ge/210616-b4qq74786j">210616-b4qq74786j</a></li>
+<li><a href="https://tria.ge/210615-r2q1vgtlw2">210615-r2q1vgtlw2</a></li>
+<li><a href="https://tria.ge/210323-h3jpv9d982">210323-h3jpv9d982</a></li>
+</ul>
+<h2 id="sodin">Static Detection for Sodinokibi Linux Variant</h2>
+<p>The Sodinokibi family likely needs no introduction. Also known as REvil, it has been a persistent and highly successful ransomware threat since it stepped into the gap left by Gandcrab&rsquo;s &lsquo;retirement&rsquo; earlier that year. It regularly hits the news for its successful infections of large organisations.</p>
+<p>The family receives regular updates and is still very active in the wild. At the end of June a new variant of the family was reported which widens its scope to include Linux machines for the first time. Earlier this week we released a detection update to catch these samples and ensure they are correctly identified.</p>
+<p>We&rsquo;ll be continuing to keep an eye on developments from Sodinokibi, as it&rsquo;s likely this is just the first iteration of their Linux support.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210628-35r4txhga2">210628-35r4txhga2</a></li>
+<li><a href="https://tria.ge/210628-h91ft82jq2">210628-h91ft82jq2</a></li>
+<li><a href="https://tria.ge/210628-nmx97k3rnn">210628-nmx97k3rnn</a></li>
+<li><a href="https://tria.ge/210628-w2yn7zsh96">210628-w2yn7zsh96</a></li>
+</ul>
+<h2 id="darkvnc">Added Detection for DarkVNC RAT</h2>
+<p>The DarkVNC family was first seen in the wild in 2017 abusing the VNC protocol to provide remote access and control of infected systems. The original release was based on the leaked source code of Cerberp, an old trojan with a history going all the way back to 2019, and was mostly seen being distributed by the exploit kits that were common at the time.</p>
+<p>The family was brought to our attention recently by a tweet from <a href="https://twitter.com/malware_traffic">@malware_traffic</a>, reporting a new sample being deployed alongside Trickbot.</p>
+<p>We have reviewed available examples and deployed some family signatures to properly index them. Thanks to Brad at <a href="https://twitter.com/malware_traffic">@malware_traffic</a> for the samples.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210630-v7fjlnlq2j">210630-v7fjlnlq2j</a></li>
+<li><a href="https://tria.ge/210629-y2vbt41hf6">210629-y2vbt41hf6</a></li>
+</ul>
+<h2 id="golddragon">Initial Detections for GoldDragon Backdoor</h2>
+<p>GoldDragon is a backdoor and loader generally attributed to the Kimsuky APT group from North Korea. Activity is mostly limited to targeting various South Korean companies and government organisations, and GoldDragon itself normally forms just one part of a much larger infection and exploitation chain.</p>
+<p>The family is capable of automatically downloading and installing additional payloads, as well as providing direct backdoor access for the attacker if needed. Some examples were recently reported to us by one of our customers, and we have now deployed initial signatures.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210701-j3mbcd1b5x">210701-j3mbcd1b5x</a></li>
+<li><a href="https://tria.ge/210701-1ax6m5m44j">210701-1ax6m5m44j</a></li>
+</ul>
+<h2 id="fatalrat">New FatalRAT Family Signatures</h2>
+<p>FatalRAT is a new addition to the malware landscape in 2021, with initial reports popping up around late May. Alongside a set of fairly standard stealer functionality, the family includes several evasion and anti-VM techniques which can make it tricky to analyse manually. It can also act as a dropper/loader for additional modules.</p>
+<p>We have investigated some samples uploaded to Triage recently, and today deployed signatures to detect them. An example is available below.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210701-xnbfc8bzks">210701-xnbfc8bzks</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 135: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 86</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-09-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 113: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-04/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Onion Support and Signature Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-17/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

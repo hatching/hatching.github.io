@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-67.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-67.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Updates for IcedID, Mercurial, Allcome and Qakbot</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Updates for IcedID, Mercurial, Allcome and Qakbot</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-67.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-02-17T00:00:00Z">2022-02-17</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another Triage Thursday blogpost, where we take a look at the week&rsquo;s updates. It&rsquo;s only a short one today but we hope you&rsquo;ll find these useful in your analyses:</p>
+<ul>
+<li><a href="#icedid">Updated IcedID detections to handle new variant</a></li>
+<li><a href="#mercurial">Added configuration extractor for Mercurial Grabber</a></li>
+<li><a href="#allcome">Added family detection for AllCome Clipbanker</a></li>
+<li><a href="#qakbot">Tweaked Qakbot configuration extractor for new version</a></li>
+</ul>
+<p>If you discover any issues or missing detections while using Triage, please do send us feedback. It&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<hr>
+<h2 id="icedid">IcedID</h2>
+<p>IcedID, otherwise known as Bokbot, is a banking trojan which targets financial information on infected machines. It&rsquo;s a very active family, receiving regular updates to augment and improve its functionality since it first appeared back in late 2017. It is a relatively advanced stealer containing a wide range of functionality, including:</p>
+<ul>
+<li>Anti-VM/anti-debugging measures</li>
+<li>Web injection/man in the browser</li>
+<li>Full remote access</li>
+<li>VNC module for full UI control of the infected system</li>
+</ul>
+<p>Most recently the family <a href="https://www.cybereason.com/blog/threat-analysis-report-all-paths-lead-to-cobalt-strike-icedid-emotet-and-qbot">has been reported dropping CobaltStrike</a> payloads.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-17/icedid.png">
+</figure>
+
+<p>As part of the latest campaigns we noticed a new variant of the family which had some structural changes which prevented our configuration extractor from dumping out the C2 field. We have reviewed quite a few of these samples and updated our handling to work with them properly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220215-rzy4dafhh8">220215-rzy4dafhh8</a></li>
+<li><a href="https://tria.ge/220215-rxrarahbhq">220215-rxrarahbhq</a></li>
+<li><a href="https://tria.ge/220215-r22x2shcen">220215-r22x2shcen</a></li>
+<li><a href="https://tria.ge/220215-hvfa2addhj">220215-hvfa2addhj</a></li>
+<li><a href="https://tria.ge/220215-hsn56acad4">220215-hsn56acad4</a></li>
+</ul>
+<h2 id="mercurial">Mercurial Grabber</h2>
+<p>Mercurial is a stealer family available openly on Github, being promoted &ldquo;for research purposes only&rdquo;. It is written in C# and has a good range of features, including a couple of slightly unusual targets in that it attempts to steal user accounts for Roblox and Minecraft besides the usual web browsers/Discord. To take the feature list directly from the author’s readme:</p>
+<ul>
+<li>Grabs Roblox cookies from Roblox Studio</li>
+<li>Grabs Minecraft sessions</li>
+<li>Grabs Google Chrome passwords</li>
+<li>Grabs Google Chrome cookies</li>
+<li>Grabs Discord token</li>
+<li>Grabs victim machine info</li>
+<li>Grabs Windows product key</li>
+<li>Grabs IP address, geolocation</li>
+<li>Grabs screenshot</li>
+<li>Anti Virtual Machine</li>
+<li>Anti Debug</li>
+</ul>
+<p>Discord generally serves as the C2 infrastructure for the family, with their webhook functionality being abused to provide a communication channel.</p>
+<p>We added initial detection for Mercurial <a href="https://hatching.io/blog/tt-2021-08-19/#mercurial">back in August last year</a>, but as it has stuck around and continues to pop up regularly in the wild we have now revisited it to add a full configuration extractor too. This can dump out the URL being used for C2 communications.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-17/mercurial.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220204-3z9qnafhal">220204-3z9qnafhal</a></li>
+<li><a href="https://tria.ge/220208-ctdsxscbcn">220208-ctdsxscbcn</a></li>
+<li><a href="https://tria.ge/220211-3rycnafcbk">220211-3rycnafcbk</a></li>
+<li><a href="https://tria.ge/220211-bcrssababr">220211-bcrssababr</a></li>
+<li><a href="https://tria.ge/220212-t9d73achg2">220212-t9d73achg2</a></li>
+</ul>
+<h2 id="allcome">AllCome Clipbanker</h2>
+<p>AllCome Clipbanker is a new stealer family discovered recently being advertised through cybercrime forums. It mainly targets financial assets with a heavy focus on cryptocurrency wallets, with users being able to customise it to go after additional currencies via a builder framework which can be purchased from the developers.</p>
+<p>According to a report by <a href="https://www.gdatasoftware.com/blog/2022/02/37239-allcome-clipbanker-is-a-newcomer-in-malware-underground-forums">GData</a> all current versions use scheduled tasks for persistence, and leverage mutexes to ensure that only a single infection occurs on a machine.</p>
+<p>We have reviewed the samples made available by GData and <a href="https://twitter.com/3xp0rtblog">@3xp0rtblog</a> to implement behavioural detections and a configuration extractor. This can dump out the C2 URL being used for exfiltration, as well as the target wallet addresses where stolen cryptocurrencies are sent.</p>
+<figure><img src="../../static/images/blog/tt-2022-02-17/allcome.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220216-n7pm5achfq">220216-n7pm5achfq</a></li>
+<li><a href="https://tria.ge/220216-n7ne3achfp">220216-n7ne3achfp</a></li>
+<li><a href="https://tria.ge/220216-n7n2labfd7">220216-n7n2labfd7</a></li>
+<li><a href="https://tria.ge/220216-n7mtjachfn">220216-n7mtjachfn</a></li>
+<li><a href="https://tria.ge/220216-n7lw8sbfd6">220216-n7lw8sbfd6</a></li>
+</ul>
+<h2 id="qakbot">Qakbot</h2>
+<p>Qakbot likely needs no introduction, but if you’re not familiar with the family it is a powerful infostealer/trojan which has been in use in various forms since around 2009. It has been repurposed for a few different roles over the years, including a banking trojan attacking Active Directory servers and a stint as a ransomware dropper.</p>
+<p>Triage has long supported both behavioural detection and configuration extraction for the Qakbot family, but as an active and advanced threat it regularly requires minor tweaks to keep our signatures up to date. A version that was evading our configuration extractor was recently reported to us by <a href="https://twitter.com/ffforward/status/1493265048730542083">@ffforward</a> so we have applied some changes to ensure it is properly handled.</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 90</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-11-24/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Insights: Detection Evasion In Android APK Headers</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-insights-ep2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for Flubot, Redline, Bazar, DoubleBack and more</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-05-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>ssdeep Support, General Improvements &amp; Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-03-31/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

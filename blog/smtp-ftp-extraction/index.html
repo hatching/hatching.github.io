@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-82.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-82.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>SMTP/FTP Extraction</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Updates</h5>
+        
+        <h2>SMTP/FTP Extraction</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-82.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-05-06T00:00:00Z">2020-05-06</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>So far Triage has featured relatively minimal processing of network-based data from analyses. This week that is starting to change, with the initial release of SMTP and FTP extraction functionality. You can see the new change in action on the following examples:</p>
+<ul>
+<li><a href="https://tria.ge/reports/200506-5pd5sx2aze/behavioral1">200506-5pd5sx2aze</a> (Hawkeye Reborn)</li>
+<li><a href="https://tria.ge/reports/200506-8b7wef4dwe/behavioral2">200506-8b7wef4dwe</a> (AgentTesla)</li>
+</ul>
+<p>This is the first in a planned series of expansions to the current network handling. Watch this space for more updates!</p>
+<h3 id="smtpftp-in-malware">SMTP/FTP in Malware</h3>
+<p>Malware can use any number of methods to implement C2 communications, with SMTP (Simple Mail Transfer Protocol) and FTP (File Transfer Protocol) being no exception. These are popular protocols to evade common monitoring/filtering efforts as there are many legitimate uses for these technologies in any corporate (or home) network, and separating legitimate use from malicious can be resource intensive and slow at scale.</p>
+<p>Some examples of families which use these protocols are:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">SMTP</th>
+          <th style="text-align: left">FTP</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">AgentTesla</td>
+          <td style="text-align: left">FIN8 Group</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Lazarus Group</td>
+          <td style="text-align: left">HawkEye</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="automatic-packet-dumping-and-decryption">Automatic packet dumping and decryption</h3>
+<p>With the new functionality now on Triage, any SMTP or FTP traffic will be detected and processed to:</p>
+<ul>
+<li>Parse connection info - hostname, port number etc.</li>
+<li>Decrypt the stream if necessary (i.e., uses TLS)</li>
+<li>Extract any SMTP/FTP login credentials submitted by the sample.</li>
+</ul>
+<p>The results of this processing are stored in the JSON report (<code>report_triage.json</code>) with the following layout:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#e6db74">&#34;extracted&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;credentials&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;smtp&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;smtp.yandex.ru&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">587</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;username&#34;</span>: <span style="color:#e6db74">&#34;infokingking88@yandex.ru&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;password&#34;</span>: <span style="color:#e6db74">&#34;kingmoney12345&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>This data is rendered in the web UI under the Malware Configuration section as shown here:</p>
+<figure><img src="../../static/images/blog/smtp-ftp-extraction/smtp-output-example.png"><figcaption>
+      <h4>Example extracted SMTP Credentials in the UI</h4>
+    </figcaption>
+</figure>
+
+<figure><img src="../../static/images/blog/smtp-ftp-extraction/ftp-output-example.png"><figcaption>
+      <h4>Example extracted FTP Credentials in the UI</h4>
+    </figcaption>
+</figure>
+
+<h3 id="conclusion">Conclusion</h3>
+<p>We hope that this feature will be a useful addition to Triage analyses. If you have any feedback about this or other features - or just want to report a sample not working as expected - feel free to get in touch with us using the details at the bottom of the page. Follow us on Twitter (<a href="https://twitter.com/hatching_io">@hatching_io</a>) for news on the latest changes as they are released.</p>
+<blockquote>
+<p>Not signed up yet? Head on over to <a href="https://tria.ge/">https://tria.ge/</a> to request early access to the platform!</p>
+</blockquote>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Ep. 101: New Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-09-21/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 124: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-03-21/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/analysis-log-view/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Cuckoo Sandbox Setup for People in a Hurry</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/cuckoo-sandbox-setup/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-87.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-87.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>In-Depth Metasploit Payloads Analysis</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+        <h2>In-Depth Metasploit Payloads Analysis</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-87.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-03-05T00:00:00Z">2020-03-05</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p><li><p><a href="/blog/#category=metasploit">metasploit</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/niels.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Niels van Gijzen</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <h1 id="analyzing-metasploit-payloads">Analyzing Metasploit Payloads</h1>
+<h2 id="introduction">Introduction</h2>
+<p>In <a href="/blog/metasploit-payloads/">the previous Metasploit blogpost</a> our x86 emulator was introduced along with some
+basic detection and decoding of Metasploit&rsquo;s payloads. This post will explain why we chose the emulator approach, giving a more in-depth look into the techniques payloads use to hinder static analysis.</p>
+<p>(Skip to the end of the blogpost if you&rsquo;re solely interested in the juicy
+analysis results of an in-the-wild Metasploit payload on <a href="https://tria.ge/">tria.ge</a>).</p>
+<h2 id="anti-analysis">Anti-Analysis</h2>
+<p>Shellcode encoders have a few uses - from an exploit development standpoint
+they&rsquo;re useful for circumventing bad characters.</p>
+<p>Now exploit development is of course not the only use for encoders, as stated
+in <a href="/blog/metasploit-payloads/">our previous post</a> they&rsquo;re also great to
+obfuscate the real payload and circumvent some basic AV detection. In other
+words, they&rsquo;re useful for Red Teaming purposes. But besides that it also makes
+reverse engineering the payload a bit harder. We&rsquo;re now going to take a look
+at the <code>call4_dword_xor</code> encoder.</p>
+<h4 id="call4-dword-xor">Call4 Dword XOR</h4>
+<p>If we run this payload through a disassembler we get the following output:</p>
+<pre tabindex="0"><code>$ ndisasm -u call4_dword.bin | head -n20
+00000000  29C9              sub ecx,ecx
+00000002  83E9AA            sub ecx,byte -0x56
+00000005  E8FFFFFFFF        call 0x9
+0000000A  C05E8176          rcr byte [esi-0x7f],byte 0x76
+0000000E  0E                push cs
+0000000F  6AD0              push byte -0x30
+00000011  D807              fadd dword [edi]
+00000013  83EEFC            sub esi,byte -0x4
+00000016  E2F4              loop 0xc
+00000018  96                xchg eax,esi
+00000019  385A07            cmp [edx+0x7],bl
+0000001C  6AD0              push byte -0x30
+0000001E  B88E8FE118        mov eax,0x18e18f8e
+00000023  63E1              arpl cx,sp
+00000025  80E88C            sub al,0x8c
+00000028  38DC              cmp ah,bl
+0000002A  53                push ebx
+0000002B  55                push ebp
+0000002C  7E5B              jng 0x89
+0000002E  AA                stosb
+</code></pre><p>So what are we looking at here? We&rsquo;ve disassembled the payload but we&rsquo;re seeing
+strange things. The assembly looks off and we don&rsquo;t really see it entering a
+decoding loop or something similar. This is what Call4 Dword XOR does, it
+executes fine until it reaches the first call. It calls <code>0x9</code>, but as you can
+see that address falls within the instruction itself. So how does this work?
+Well this is a way to throw you off during static analysis. At address
+<code>0x5</code> it calls <code>0x9</code> basically skipping 4 bytes hence the name <code>call4</code>. So how
+does this look from address <code>0x9</code> onward? Well let&rsquo;s throw this file through
+the disassembler again from offset <code>0x9</code>:</p>
+<pre tabindex="0"><code>$ ndisasm -u call4_dword_9.bin | head -n6
+00000000  FFC0              inc eax
+00000002  5E                pop esi
+00000003  81760E6AD0D807    xor dword [esi+0xe],0x7d8d06a
+0000000A  83EEFC            sub esi,byte -0x4
+0000000D  E2F4              loop 0x3
+0000000F  96                xchg eax,esi
+</code></pre><p>Looking at the disassembly we can now see that we now have our decoding loop!</p>
+<pre tabindex="0"><code>00000003  81760E6AD0D807    xor dword [esi+0xe],0x7d8d06a
+0000000A  83EEFC            sub esi,byte -0x4
+0000000D  E2F4              loop 0x3
+</code></pre><p>As we can see the decoding loop is a rather simple one, it takes a dword
+reading at offset <code>esi+0xe</code> with the XOR key <code>0x7d8d06a</code>. After that
+instruction the payload subtracts -4 from the esi register basically increasing
+it by 4. Then the code loops back to <code>0x3</code> to start this over again. The data
+after this loop is all garbled for now, which will be decoded eventually.</p>
+<p>Now this is an example of a simple encoder trying to throw you off, but after
+going through the simple XOR decoding loop you&rsquo;ll get to the real payload.</p>
+<h4 id="shikata-ga-nai">Shikata Ga Nai</h4>
+<p>So this is the only x86 encoder that isn&rsquo;t named exactly after what it does - if
+we look at the list of available x86 encoders we see that this one is the only
+one listed as being <code>excellent</code>.</p>
+<pre tabindex="0"><code>    Name                          Rank       Description
+    ----                          ----       -----------
+    x86/add_sub                   manual     Add/Sub Encoder
+    x86/alpha_mixed               low        Alpha2 Alphanumeric Mixedcase Encoder
+    x86/alpha_upper               low        Alpha2 Alphanumeric Uppercase Encoder
+    x86/avoid_underscore_tolower  manual     Avoid underscore/tolower
+    x86/avoid_utf8_tolower        manual     Avoid UTF8/tolower
+    x86/bloxor                    manual     BloXor - A Metamorphic Block Based XOR Encoder
+    x86/bmp_polyglot              manual     BMP Polyglot
+    x86/call4_dword_xor           normal     Call+4 Dword XOR Encoder
+    x86/context_cpuid             manual     CPUID-based Context Keyed Payload Encoder
+    x86/context_stat              manual     stat(2)-based Context Keyed Payload Encoder
+    x86/context_time              manual     time(2)-based Context Keyed Payload Encoder
+    x86/countdown                 normal     Single-byte XOR Countdown Encoder
+    x86/fnstenv_mov               normal     Variable-length Fnstenv/mov Dword XOR Encoder
+    x86/jmp_call_additive         normal     Jump/Call XOR Additive Feedback Encoder
+    x86/nonalpha                  low        Non-Alpha Encoder
+    x86/nonupper                  low        Non-Upper Encoder
+    x86/opt_sub                   manual     Sub Encoder (optimised)
+    x86/service                   manual     Register Service
+    x86/shikata_ga_nai            excellent  Polymorphic XOR Additive Feedback Encoder
+    x86/single_static_bit         manual     Single Static Bit
+    x86/unicode_mixed             manual     Alpha2 Alphanumeric Unicode Mixedcase Encoder
+    x86/unicode_upper             manual     Alpha2 Alphanumeric Unicode Uppercase Encoder
+    x86/xor_dynamic               normal     Dynamic key XOR Encoder
+</code></pre><p>You might wonder why that is. One of the reasons is that this encoder uses a
+so-called rotating key. This means that every round of decoding the key
+changes, rendering us unable to extract the key once and decode the whole
+payload with it. To see this in action the source of the emulator was modified
+to print the key every time a XOR instruction is used:</p>
+<pre tabindex="0"><code>$ x86emu revtcp86shik.bin | head -n15
+XORing value: 1604174323  with key: 2741511143  resulting in: 4243972628
+XORing value: 2690549523  with key: 2690516475  resulting in: 33512
+XORing value: 1171777763  with key: 2690549987  resulting in: 3850985472
+XORing value: 243476690   with key: 2246568163  resulting in: 2338635825
+XORing value: 1137154372  with key: 290236692   resulting in: 1384853584
+XORing value: 2005226088  with key: 1675090276  resulting in: 340953868
+XORing value: 1996625659  with key: 2016044144  resulting in: 254309003
+XORing value: 3061095500  with key: 2270353147  resulting in: 824593079
+XORing value: 3645214029  with key: 3094946226  resulting in: 1631366399
+XORing value: 966380749   with key: 431345329   resulting in: 539755132
+XORing value: 954998508   with key: 971100461   resulting in: 17682369
+XORing value: 1746747945  with key: 988782830   resulting in: 1391649479
+XORing value: 2645559522  with key: 2380432309  resulting in: 273845079
+XORing value: 352929159   with key: 2654277388  resulting in: 2335984267
+XORing value: 3389606107  with key: 695294359   resulting in: 3816296780
+</code></pre><p>Compared to the <code>call4_dword_xor</code> the difference becomes clear:</p>
+<pre tabindex="0"><code>$ x86emu call4_dword.bin | head -n 15
+XORing value: 123353238   with key: 131649642   resulting in: 8579324
+XORing value: 2394476650  with key: 131649642   resulting in: 2304770048
+XORing value: 1662574991  with key: 131649642   resulting in: 1690317285
+XORing value: 2364047585  with key: 131649642   resulting in: 2335199371
+XORing value: 1431559224  with key: 131649642   resulting in: 1384844370
+XORing value: 799693694   with key: 131649642   resulting in: 678595348
+XORing value: 563242853   with key: 131649642   resulting in: 642430735
+XORing value: 997470043   with key: 131649642   resulting in: 1017970481
+XORing value: 735751179   with key: 131649642   resulting in: 738360417
+XORing value: 169283914   with key: 131649642   resulting in: 231719200
+XORing value: 4114225003  with key: 131649642   resulting in: 4074948353
+XORing value: 1431537464  with key: 131649642   resulting in: 1384863570
+XORing value: 999447418   with key: 131649642   resulting in: 1011518224
+XORing value: 2143919329  with key: 131649642   resulting in: 2014399627
+XORing value: 3604584585  with key: 131649642   resulting in: 3506522339
+</code></pre><p>Concluding: <code>shikata_ga_nai</code> changes the XOR key every round, while most encoders (like
+<code>call4_dword_xor</code>) use the same key throughout the decoding process.</p>
+<p>Another look we can take at this process is by visualising every iteration,
+<figure><img src="../../static/images/blog/metasploit-part2/metasploit-part2-1.gif"><figcaption>
+      <h4>GIF showing the iterations of Shikata Ga Nai</h4>
+    </figcaption>
+</figure>
+</p>
+<p>Another way Shikata Ga Nai makes itself harder to detect is the sheer number of
+encodings it can have for the same functionality. It uses FPU instructions to figure out where exactly in
+the memory it resides (getpc) so it can decode the payload. But looking at the
+<a href="https://github.com/rapid7/metasploit-framework/blob/master/modules/encoders/x86/shikata_ga_nai.rb#L95">source code</a>
+that generates this encoder, we can see that the amount of FPU instructions the
+framework can choose from is a cool 100 instructions. These are chosen at
+random so the final payload will rarely ever have the same binary
+representation twice.</p>
+<h2 id="putting-it-to-practice">Putting it to practice</h2>
+<p>Now of course all this talk is exactly what it is, but how does it work in
+practice? We noticed the following excellent blogpost on manually
+deobfuscating a shikata ga nai payload. We turned the shellcode referred at
+the end of the blogpost into an executable (since you can&rsquo;t execute shellcode
+directly on Windows) and uploaded it to <a href="https://tria.ge/">tria.ge</a>.</p>
+<p>Turning the shellcode into an executable with three (3) iterations of Shikata
+Ga Nai may look as follows. Note that with ten (10) iterations it would have
+worked as well, but for no apparent reason we did just three.</p>
+<pre tabindex="0"><code>./msfvenom -p- --platform windows -a x86 -e x86/shikata_ga_nai -i3 -f exe &lt; /tmp/9F88A4BBAFF1B8F530EE29F7226B3338 &gt; shikata.exe
+</code></pre><p>Following is the analysis: <a href="https://tria.ge/reports/200305-gbt2r8qgkn/static1">tria.ge/reports/200305-gbt2r8qgkn</a>.</p>
+<p>As you&rsquo;ll notice the behavioral analyses don&rsquo;t report too much interesting
+yet, although we&rsquo;re working on signatures that trigger on the interesting
+situation of &ldquo;nothing&rdquo; happening at all except for one network IOC.</p>
+<p>In the static analysis, however, our engine is going at full force,
+automatically extracting the shellcode, deobfuscating it, and extracting its
+one and only useful IOC (<code>5.61.59.234:8080</code>).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Shellcode and shellcode encoders are an interesting and good way to bypass
+many solutions. In our sandbox we do our very best to automatically and
+correctly extract as much information and malware configuration as possible.</p>
+<p>In our next blog post we&rsquo;ll be covering a number of CobaltStrike samples that
+work rather similar as Metasploit payloads. In the meanwhile, feel free to
+submit us Metasploit and cobaltstrike payloads and perhaps we&rsquo;ll send some
+swag your way and/or cover it in the upcoming blogpost ;-)</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New Family Additions</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-16/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Excel 4.0 XLM Extraction</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/excel-xlm-extraction/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet Updates, and BazarLoader Emulation</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-11-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>A Few Weeks of Configuration Extractor and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-06-02/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

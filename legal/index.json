@@ -1,0 +1,15 @@
+{
+    "content": [
+
+         {
+            "index": 0,
+            "published": "2021-11-10T00:00:00Z",
+            "category": "blog",
+            "subject": "Privacy policy",
+            "description": "\u003ch1 id=\"privacy-policy\"\u003ePrivacy Policy\u003c/h1\u003e\n\u003cp\u003eThis privacy policy will explain how Hatching uses the personal data we collect from you when you use our website and services. It relates to our 2 main public websites - \u003ca href=\"https://hatching.io/\"\u003ehttps://hatching.io/\u003c/a\u003e, which serves as our main company site with information on our organization and products plus a contact form to reach out with enquiries; and our public and private Triage servers \u003ca href=\"https://tria.ge/\"\u003ehttps://tria.ge/\u003c/a\u003e.\u003c/p\u003e\n\u003ch2 id=\"what-data-do-we-collect\"\u003eWhat data do we collect?\u003c/h2\u003e\n\u003cp\u003eWhen you use our websites we may use cookies or similar technology to extract data, including:\u003c/p\u003e",
+            "tags": null,
+            "link": "https://hatching.io/legal/policy/"
+        }
+
+    ]
+}

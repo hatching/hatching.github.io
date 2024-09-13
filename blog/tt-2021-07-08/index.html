@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-44.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-44.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Extractor Updates, New Families, and LZMA Support</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Extractor Updates, New Families, and LZMA Support</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-44.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-07-08T00:00:00Z">2021-07-08</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another entry in our Triage Thursday blogpost series! If you aren&rsquo;t sitting in a dark room with a big box of popcorn watching the ransomware apocalypse, read on below or details on what&rsquo;s been happening with Triage this week - I promise we only mention REvil once (or twice):</p>
+<ul>
+<li><a href="#revil">Updated REvil configuration extractor</a></li>
+<li><a href="#vidar">New Vidar configuration extractor</a></li>
+<li><a href="#lz">Added support for LZMA (.lz) archive files</a></li>
+<li><a href="#lu0bot">Family signatures for the new Lu0bot trojan</a></li>
+<li><a href="#evilquest">Detection tweaks for EvilQuest</a></li>
+</ul>
+<p>In other news, we are also still looking to add a new Go developer to the Hatching team.  If you&rsquo;d like to be involved in the next steps of Triage&rsquo;s journey - or know someone who might be - you can find the full job listing <a href="https://hatching.io/jobs/senior-go-developer/">here</a>. Feel free to reach out with any questions.</p>
+<p>As always we also welcome any feedback or questions about our changes or just samples you come across during your analysis. If you notice anything not behaving as expected please do reach out and report it to us. You can contact us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="revil">Updated REvil Configuration Extractor</h2>
+<p>Not long after the Kaseya incident, we noticed the relevant sample had been uploaded to Triage by one of our users. Although it was being generally well detected as ransomware, our configuration extractor for REvil/Sodinokibi was not triggering properly. We took a look at the sample and realised that the file structure had changed, and the PE sections we expected were no longer present.</p>
+<p>We pushed an update to fix this last weekend, and more recently have made additional tweaks to the extractor based on some more samples we spotted while looking into the family. This increases reliablility quite a bit, so now all Sodinokibi samples should be reported fully again.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210703-cggr9ffskx">210703-cggr9ffskx</a></li>
+<li><a href="https://tria.ge/210706-8174zbq4ne">210706-8174zbq4ne</a></li>
+<li><a href="https://tria.ge/210705-ly6krsr2vn">210705-ly6krsr2vn</a></li>
+<li><a href="https://tria.ge/210705-k42mm78nbe">210705-k42mm78nbe</a></li>
+<li><a href="https://tria.ge/210705-jlkvc9c1be">210705-jlkvc9c1be</a></li>
+<li><a href="https://tria.ge/210705-8z2mdhv34s">210705-8z2mdhv34s</a></li>
+</ul>
+<h2 id="vidar">New Vidar Configuration Extractor</h2>
+<p>Vidar is a widespread stealer family which has been around in the wild since late 2018. It was originally a fork of Arkei stealer and bears significant similarities in terms of code and string reuse. The family is still actively developed and used in 2021, often being deployed alongside other threats as well as in standalone campaigns by various threat groups/actors.</p>
+<p>We added behavioural detection for the family <a href="https://hatching.io/blog/tt-2020-10-08/#vidar">back in October last year</a>, but as it has continued to be highly relevant we recently reviewed available samples to implement a full configuration extractor too. We have reprocessed the samples already on Triage, so you can find plenty of examples using our search feature with <a href="https://tria.ge/s?q=family%3Avidar">&ldquo;family:vidar&rdquo;</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210708-1wteyfgtd6">210708-1wteyfgtd6</a></li>
+<li><a href="https://tria.ge/210708-x4k4zdmcb2">210708-x4k4zdmcb2</a></li>
+<li><a href="https://tria.ge/210707-6wrcfdbyye">210707-6wrcfdbyye</a></li>
+</ul>
+<h2 id="lz">Added Support for LZMA Archives</h2>
+<p>We&rsquo;re always looking to improve our support for relevant files on Triage, and recently support for the LZMA format was requested by one of our users. LZMA - also referred to as Lzip or just LZ - is a file compression and archiving format primarily used by Linux and Mac systems, although it also available on Windows through programs like 7zip.</p>
+<p>We have now implemented support for this format, so you can upload Lzip files just like any other archive.</p>
+<p>If you come across any other file types/formats which you think should be supported but aren&rsquo;t currently, please do feel free to reach out.</p>
+<h2 id="lu0bot">Family Signatures for Lu0bot Trojan</h2>
+<p>Lu0bot appears to likely still be in active development, as the current codebase is extremely messy with large chunks commented out and mostly lacking primary functionality. However it is an interesting addition to the landscape, leveraging Node.js to run various modules and scripts to gather system information.</p>
+<p>However, although it is undeveloped the structure of the malware means that it can be updated in-place on infected systems, with the ability to download new modules or code updates being baked into the base payload. This high level of modularity means that it&rsquo;s very likely one to watch in the coming weeks/months. It is being sold through common forums so will be highly accessible to those looking for a new option.</p>
+<p>We have reviewed available samples and deployed signatures to provide initial coverage. We&rsquo;ll be continuing to keep an eye on this one and will make additional changes as needed to keep up with its own development process.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210630-xqqb1qk7ax">210630-xqqb1qk7ax</a></li>
+<li><a href="https://tria.ge/210629-mgk91xw8e2">210629-mgk91xw8e2</a></li>
+<li><a href="https://tria.ge/210628-qnk3l8amej">210628-qnk3l8amej</a></li>
+<li><a href="https://tria.ge/210628-1xwjb4cala">210628-1xwjb4cala</a></li>
+<li><a href="https://tria.ge/210619-g94lc8jxex">210619-g94lc8jxex</a></li>
+<li><a href="https://tria.ge/210609-8n7clqzzae">210609-8n7clqzzae</a></li>
+</ul>
+<h2 id="evilquest">Detection Tweaks for EvilQuest</h2>
+<p>EvilQuest is a macOS ransomware which generally impersonates legitimate software installers/updaters distributed as cracked software from major torrent sites. Using this distribution approach is quite productive in macOS&rsquo;s closed ecosystem, as users are less cautious of popups about unsigned software when they have already been trying to install a pirated program.</p>
+<p>We added detection for EvilQuest <a href="https://hatching.io/blog/tt-2021-06-24/#evilquest">at the end of June</a>, but we&rsquo;ve since noticed a few versions which weren&rsquo;t being properly handled. This week we&rsquo;ve tweaked our rules to accommodate the observed samples, and as usual will make further changes if/as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210701-11qmbvthda">210701-11qmbvthda</a></li>
+<li><a href="https://tria.ge/210701-e6vksg5sje">210701-e6vksg5sje</a></li>
+<li><a href="https://tria.ge/210701-hwnjzfzkae">210701-hwnjzfzkae</a></li>
+<li><a href="https://tria.ge/210701-wlehtrx49n">210701-wlehtrx49n</a></li>
+<li><a href="https://tria.ge/210701-4j2ae3t22j">210701-4j2ae3t22j</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Accessing Dropped Files on Triage</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/dropped-files/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 92</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-01-12/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 89</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-11-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Detection Updates for BazarLoader, ERMAC, Jupyter and Vidar</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/2021-09-30-triage-thursday/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

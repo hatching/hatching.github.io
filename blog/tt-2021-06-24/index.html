@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-42.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-42.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Detection updates for macOS and Windows</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Detection updates for macOS and Windows</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-42.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-06-24T00:00:00Z">2021-06-24</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another entry in our Triage Thursday update blog series! This week we have another batch of family detection updates for you, covering a selection of Windows and macOS families:</p>
+<ul>
+<li><a href="#icedid">Updated IcedID configuration extractor</a></li>
+<li><a href="#redline">Tweaks to Redline configuration extractor</a></li>
+<li><a href="#gozi">Fix for Gozi configuration extractor</a></li>
+<li><a href="#klingon">New family detection for Klingon RAT</a></li>
+<li><a href="#netfilter">Added detection for Netfilter rootkit</a></li>
+<li><a href="#macos">New detections for several macOS families</a>
+<ul>
+<li><a href="#evilquest">EvilQuest</a></li>
+<li><a href="#gmera">GMera</a></li>
+<li><a href="#gravityrat">GravityRAT</a></li>
+<li><a href="#hydromac">HydroMac</a></li>
+<li><a href="#shlayer">ShLayer</a></li>
+</ul>
+</li>
+</ul>
+<p>If you missed it over the last few weeks, we are also currently hiring a Go developer to join the Hatching team and help build the future of Triage. If you think this might be of interest to you or someone you know, the full job listing can <a href="https://hatching.io/jobs/senior-go-developer/">be found here</a> - feel free to reach out with any questions.</p>
+<p>As usual, you can also contact us with any feedback or suggestions about Triage or its analysis results. It&rsquo;s a big world of malware out there and there can always be things we miss! If you notice anything not behaving as expected please do reach out and report it to us. You can contact us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="icedid">Updated IcedID Configuration Extractor</h2>
+<p>IcedID is a banking trojan which targets financial information on infected machines. It&rsquo;s a family in very active development, with new versions regularly popping up in the wild. As such it has been a regular feature in past blogposts, and reappears this week with another small tweak to account for a variant we&rsquo;ve recently observed in public Triage submissions</p>
+<p>This change should mean that our extractor works as expected on even more examples of the family, and as usual we&rsquo;ll be continuing to monitor for any new versions which aren&rsquo;t parsed correctly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210621-pd63fl26fn">210621-pd63fl26fn</a></li>
+</ul>
+<h2 id="redline">Updated Redline Configuration Extractor</h2>
+<p>Redline is a stealer family which has seen a lot of activity since it came to prominence in early 2020. Featuring an extensive feature set for data theft and specialised C2 communications, the family has become a popular choice among cybercriminals. It has been observed to be deployed in a number of different ways including sideloading with legitimate applications, masquerading as <a href="https://blog.minerva-labs.com/redline-stealer-masquerades-as-telegram-installer">applications like Telegram</a>, or regular phishing attacks.</p>
+<p>We recently observed some samples of the family where the configuration was not being properly extracted by Triage. We have reviewed a large number of Redline analyses and made some tweaks to ensure they correctly trigger the extractor. You can find a selection of examples linked below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210623-v3483mttex">210623-v3483mttex</a></li>
+<li><a href="https://tria.ge/210623-3t9y33wkdj">210623-3t9y33wkdj</a></li>
+<li><a href="https://tria.ge/210623-7qp6s57166">210623-7qp6s57166</a></li>
+<li><a href="https://tria.ge/210616-1spssdy8ja">210616-1spssdy8ja</a></li>
+<li><a href="https://tria.ge/210616-2ex5ctlf1a">210616-2ex5ctlf1a</a></li>
+</ul>
+<h2 id="gozi">Fix for Gozi Configuration Extractor</h2>
+<p>Researcher <a href="https://twitter.com/fumik0_">@fumik0_</a> recently reached out to us reporting that in some recent cases our configuration extractor was returning incorrect values for the RSA key section. On review internally, we discovered that the embedded RSA public key is encrypted and for a couple of specific build versions - 250206 and 250204 - they had introduced a custom 16 byte value used to decrypt the RSA pubkey.</p>
+<p>Additionally, the encryption algorithms in use are not always consistent, with one of the variants mentioned using AES while the other implements the Serpent algorithm.</p>
+<p>We have now made changes to our extractor logic and these variants are handled correctly. Thanks again to Fumik0 for bringing this to our attention.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210622-6le8p5esga">210622-6le8p5esga</a></li>
+<li><a href="https://tria.ge/210621-c2wlrsx18e">210621-c2wlrsx18e</a></li>
+</ul>
+<h2 id="klingon">Family Detection for Klingon RAT</h2>
+<p>Klingon is a new RAT which has appeared in the wild recently, with Intezer <a href="https://www.intezer.com/blog/malware-analysis/klingon-rat-holding-on-for-dear-life/">publishing the first analysis</a> of it just last week, although they suggest that it may have been active since 2019. The family is written in Golang and is generally well-built with robust persistence and privilege escalation methods included. It has an extensive feature set, allowing most interactions up to and including total control of an infected machine.</p>
+<p>In addition to the base payload, the family deploys a handful of 3rd party tools post-infection to handle additional tasks, while slipping under the radar due to being commonly used as legitimate administration tools. These are <code>Lsass</code>, <code>PAExec</code>, and <code>Foxmail</code>. More information is available in the Intezer writeup linked above.</p>
+<p>We have reviewed samples available and implemented initial signatures for the family. You can find examples below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210618-c4magxqr6a">210618-c4magxqr6a</a></li>
+<li><a href="https://tria.ge/210618-f49n1ljv3n">210618-f49n1ljv3n</a></li>
+<li><a href="https://tria.ge/210618-g2yqf53nnj">210618-g2yqf53nnj</a></li>
+<li><a href="https://tria.ge/210618-m32446gmda">210618-m32446gmda</a></li>
+</ul>
+<h2 id="netfilter">Family Detection for Netfilter Rootkit</h2>
+<p>Last week, researcher <a href="https://twitter.com/struppigel/status/1405483373280235520">Karsten Hahn</a> reported a new rootkit which reached out to C2 infrastructure in China. The samples uncovered by Karsten and others are signed by Microsoft, with the earliest examples going back to March 2021.</p>
+<p>Florian Roth has created a spreadsheet with a list of all currently known samples - this can be found on Google Docs <a href="https://docs.google.com/spreadsheets/d/1FYgBmJH8MOli99oIqRsIHJA2XzI3aSdAOb9mZmqj_q0/edit?usp=sharing">here</a>.</p>
+<p>Early analysis suggests that the family is mostly interested in web injection-style attacks, with the main functionality revolving around intercepting and spying on SSL/TLS connections. We have examined the samples which have been reported so far, and implemented initial detection for the family. Examples Triage analyses are available below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210618-3wnsf3rf26">210618-3wnsf3rf26</a> (Dropper)</li>
+<li><a href="https://tria.ge/210618-8ztgznhm72">210618-8ztgznhm72</a> (Dropper)</li>
+<li><a href="https://tria.ge/210618-8snkh9kp1s">210618-8snkh9kp1s</a> (Payload)</li>
+<li><a href="https://tria.ge/210618-mmn1rw4zbj">210618-mmn1rw4zbj</a> (Payload)</li>
+<li><a href="https://tria.ge/210618-scf2g1k15a">210618-scf2g1k15a</a> (Payload)</li>
+</ul>
+<h2 id="macos">New Detections for macOS Families</h2>
+<p>At the start of the month <a href="https://hatching.io/blog/triage-for-macos/">we released the first iteration of macOS analysis</a> support on Triage. Since then we have been looking to expand on the handful of detections we included at launch, with this week seeing 5 more additions to the roster. Below we&rsquo;ll give a quick introduction to each family, and provide links to examples for your reference.</p>
+<h3 id="evilquest">EvilQuest</h3>
+<p>EvilQuest has been around for approximately a year, having been first reported on Twitter in June 2020.</p>
+<p>As stated in the <a href="https://x.com/dineshdina04/status/1277668001538433025">tweet</a>, the family is a ransomware which targets only macOS systems. The initial samples impersonated Google Update software, and were found to be distributed via pirated versions of popular software for macOS available through torrent sites. This has proved to be an effective distribution vector for a few macOS families, as users will generally be less cautious of warnings around unsigned software when they are installing pirated programs.</p>
+<p>A detailed writeup of the family can be found <a href="https://objective-see.com/blog/blog_0x59.html">here</a>.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210624-2gpv6tpede">210624-2gpv6tpede</a></li>
+</ul>
+<h3 id="gmera">GMera</h3>
+<p>GMera is a trojan stealer reported in late 2019. The family was observed being distributed as a fake stock trading application imitating the well-known macOS app <code>Stockfolio</code>.</p>
+<p>The family comes in 2 main variants, using different infection methods but with the same end goal. Both reported versions spoof the Stockfolio app, with a legitimate version of it bundled alongside the malware to run when the sample is launched and give the user the impression that the program is working as expected. However the malware itself also runs in the background.</p>
+<p>A detailed writeup of the family can be found from TrendMicro <a href="https://www.trendmicro.com/en_us/research/19/i/mac-malware-that-spoofs-trading-app-steals-user-information-uploads-it-to-website.html">here</a>.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210624-cj5b6l9rps">210624-cj5b6l9rps</a></li>
+</ul>
+<h3 id="gravityrat">GravityRAT</h3>
+<p>GravityRAT is a cross-platform malware reported on by <a href="https://blog.talosintelligence.com/2018/04/gravityrat-two-year-evolution-of-apt.html">Cisco Talos back in 2018</a>. It exclusively targeted systems operated by the Indian armed forces, and this along with some indicators within available samples has led many to attribute it to Pakistani threat actors.</p>
+<p><a href="https://securelist.com/gravityrat-the-spy-returns/99097/">SecureList reports</a> that the family initially only supported Windows systems and potentially goes back as far as 2015. In 2018 it added support for Android systems, and in 2020 this was extended further to include macOS. A writeup of the macOS variant specifically is available <a href="https://objective-see.com/blog/blog_0x5B.html">on objective-see.com here</a>.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210624-rsc2x1bten">210624-rsc2x1bten</a></li>
+</ul>
+<h3 id="hydromac">HydroMac</h3>
+<p>A much more recent family than those covered so far, HydroMac is a multi-stage malware which functions as a full-featured RAT and backdoor. First reported by <a href="https://blog.confiant.com/osx-hydromac-a-new-macos-malware-leaked-from-a-flashcards-app-2af28f1caa9e">Confiant earlier this month</a>, it targets Apple&rsquo;s M1 computers.</p>
+<p>Thanks to information leaked from a flashcards application, Confiant was also able to discover details of the family&rsquo;s C2 infrastructure and the commands used to carry out actions. More details on that can be found at the link above.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210624-p497fp6ths">210624-p497fp6ths</a></li>
+</ul>
+<h3 id="shlayer">Shlayer</h3>
+<p>Like EvilQuest above, Shlayer is commonly distributed via cracked/pirated software available through popular torrent sites. The samples masquerade as Flash player installers/updates, acting as a downloader for additional payloads via shell scripts. Most of the scripts observed were code-signed, making it easier to get them through mac-based protection mechanisms.</p>
+<p>The family includes no functionality of its own besides its dropper role, but naturally this means that it can pose a significant threat to a system.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210624-ffb6633lvs">210624-ffb6633lvs</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>URLScan Integration and Updates for Emotet and Zloader</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-09-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 123: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-03-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 80</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for IcedID, Mercurial, Allcome and Qakbot</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-02-17/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

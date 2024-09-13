@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-79.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-79.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 80</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 80</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-79.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-07-14T00:00:00Z">2022-07-14</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, where we go over the updates deployed over the last week. In the news today:</p>
+<ul>
+<li><a href="#buer">Fixed Buer extractor to work with latest samples</a></li>
+<li><a href="#kutaki">Added configuration extractor for Kutaki stealer</a></li>
+<li><a href="#sessionmanager">New signatures for SessionManager backdoor</a></li>
+<li><a href="#orbit">New signatures for OrBit Linux backdoor</a></li>
+<li><a href="#joker">New detections and configuration extractor for Joker Android banker</a></li>
+<li><a href="#bahamut">New detections and configuration extractor for Bahamut Android spyware</a></li>
+</ul>
+<p>If you have any feedback, questions or issues about Triage feel free to reach out to us any time - we do our best to respond to all feedback but even if we can&rsquo;t get back to you straight away your files will go into our list of things to review and help us prioritise tasks. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="buer">Buer</h2>
+<p>Buer is a loader framework which was first seen in late 2019. It is operated on a malware-as-a-service model, with the developers selling it to others for use instead of deploying it for operations themselves. It has been seen dropping a wide variety of other families including Trickbot, BazarBackdoor, Ryuk ransomware, and CobaltStrike beacons.</p>
+<p>The original version was written in C, and in 2021 <a href="https://hatching.io/blog/tt-2021-08-05/#rustybuer">a variant was found</a> which used the Rust language instead (and was this named RustyBuer).</p>
+<p>The family is quite popular and has seen several changes since its discovery. <a href="https://hatching.io/blog/tt-2020-12-10/#buer">We have made some tweaks in the past</a> but we have recently started seeing some samples which were not being properly handled by our configuration extractor. We have now made some improvements to handling at the static phase but there is still an issue with results at the behavioural stage - we should have a fix out for that shortly.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220701-f7cdssfgc6">220701-f7cdssfgc6</a></li>
+<li><a href="https://tria.ge/220625-jzxljsefb5">220625-jzxljsefb5</a></li>
+<li><a href="https://tria.ge/220625-ct6tpscge5">220625-ct6tpscge5</a></li>
+<li><a href="https://tria.ge/220625-ne6e6saahl">220625-ne6e6saahl</a></li>
+<li><a href="https://tria.ge/220624-2k1zjaace8">220624-2k1zjaace8</a></li>
+</ul>
+<h2 id="kutaki">Kutaki</h2>
+<p>Kutaki is a stealer which mainly targets acquisition of data from infected systems through keylogging; clipboard harvesting; and recording from webcams, microphones and screens. In some cases it has also been seen dropping secondary utilities like SecurityXploded&rsquo;s BrowserPasswordDump to augment its own native capabilities.</p>
+<p>It features a number of anti-VM and anti-analysis techniques but these appear to have been taken from blogposts dating back to 2010-11, meaning that they are now very much out of date. They can still be effective for simple analysis but are easily bypassed by most modern tools (including Triage of course!).</p>
+<figure><img src="../../static/images/blog/tt-2022-07-14/kutaki.png">
+</figure>
+
+<p>Triage has had detection for Kutaki since August 2020 but we&rsquo;ve revisited it this week to add a configuration extractor which can dump the C2 domains/URLs.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220711-d9b5psgga9">220711-d9b5psgga9</a></li>
+<li><a href="https://tria.ge/220714-s5pybscbc9">220714-s5pybscbc9</a></li>
+<li><a href="https://tria.ge/220714-s5y61acbd2">220714-s5y61acbd2</a></li>
+<li><a href="https://tria.ge/220714-s55nsacbd4">220714-s55nsacbd4</a></li>
+<li><a href="https://tria.ge/220714-s6a6kahdak">220714-s6a6kahdak</a></li>
+</ul>
+<h2 id="sessionmanager">SessionManager</h2>
+<p>SessionManager is a backdoor which targets Microsoft IIS - it is deployed as an addon module and enables attackers to maintain persistent and stealthy access to compromised infrastructure. This kind of approach can be quite effective as the module has access to the standard web traffic being handled as part of the server&rsquo;s normal operations, and can trigger actions based on commands which look like totally benign traffic but are actually carefully crafted. Without prior knowledge of the format it&rsquo;s very hard to detect these as unusual.</p>
+<p>The malware can perform file actions on the compromised system, download and execute additional binaries from its C2, and connect to other network devices for data collection and propagation.</p>
+<p>Since it requires an IIS instance examples of this family will not work properly in an environment like Triage, so we have added some static detection rules to identify it without relying on behavioural actions. Some example files are shown below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220714-s6hkmscbd7">220714-s6hkmscbd7</a></li>
+<li><a href="https://tria.ge/220714-s6mvcscbe7">220714-s6mvcscbe7</a></li>
+<li><a href="https://tria.ge/220714-s6rhjscbe8">220714-s6rhjscbe8</a></li>
+<li><a href="https://tria.ge/220714-s6vj7scbe9">220714-s6vj7scbe9</a></li>
+</ul>
+<h2 id="orbit">OrBit</h2>
+<p>OrBit is a newly discovered Linux backdoor that was first reported <a href="https://www.intezer.com/blog/incident-response/orbit-new-undetected-linux-threat/">by Intezer</a> earlier this month. According to their report it includes quite advanced evasion techniques, effectively working like a rootkit to hook certain APIs and hide any sign of the malware&rsquo;s presence on the machine. It tracks the group identifier (GID) for all resources related to OrBit and inserts a hook which looks that up any time a function is called - if anything else tries to access a known GID directly or indirectly it will intercept and alter the function response to prevent discovery.</p>
+<p>In terms of functionality it can provide full remote access via SSH, harvest credentials stored in local files, and log TTY commands. It directly infects all running processes to make removal difficult.</p>
+<p>As a new threat we have only identified a couple of samples so far but have built out static detections based on these. We will continue to monitor the family and will update if needed as more samples become available.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220714-s61q8ahdam">220714-s61q8ahdam</a></li>
+<li><a href="https://tria.ge/220714-s651yahdan">220714-s651yahdan</a></li>
+</ul>
+<h2 id="joker">Joker</h2>
+<p>Joker has been around in various forms since 2017, hiding in applications which appear to be legitimate downloads and are often listed on the Google Play Store.</p>
+<p>It has something of a dual role, performing actions related to both data theft and click/billing fraud. The exact capabilities vary from app to app but in some cases it has been seen directly uploading contact lists and device information to its C2 infrastructure, and can also be used to download and deploy additional payloads. Its main function though is to carry out fraud by subscribing the infected device to various paid services or calling/texting premium numbers which are controlled by the attacker - this can be quite effective as many users will not notice anything amiss until they receive their phone bill at the end of the month.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-14/joker.png">
+</figure>
+
+<p>Despite being one of the older Android threats it is still widely used so we have added some behavioural and static detections for the family with this update along with a configuration extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220319-jxpg6aebe7">220319-jxpg6aebe7</a></li>
+<li><a href="https://tria.ge/220320-h13zaaaec6">220320-h13zaaaec6</a></li>
+<li><a href="https://tria.ge/220404-s77adsccdl">220404-s77adsccdl</a></li>
+<li><a href="https://tria.ge/220606-nbz4zscabj">220606-nbz4zscabj</a></li>
+<li><a href="https://tria.ge/220613-tmdb9adeb8">220613-tmdb9adeb8</a></li>
+</ul>
+<h2 id="bahamut">Bahamut</h2>
+<p>Bahamut is technically an Advanced Persistent Threat (APT) group but in this case we&rsquo;re referring specifically to their Android spyware implant which was <a href="https://blog.cyble.com/2021/08/10/bahamut-threat-group-targeting-users-through-phishing-campaign/">reported on by Cyble</a> back in August 2021. It recently came back into the news with additional updates and a new attack pattern, now being delivered via carefully crafted phishing websites instead of relying on Google Play.</p>
+<p>The other differences with this new version mainly come down to additional targets for data theft - according to <a href="https://blog.cyble.com/2022/06/29/bahamut-android-malware-returns-with-new-spying-capabilities/">Cyble&rsquo;s post from June 2022</a> the new version now goes after content from various messaging applications where the original was only exfiltrating metadata like contacts, SMS data and call logs.</p>
+<figure><img src="../../static/images/blog/tt-2022-07-14/bahamut.png">
+</figure>
+
+<p>We have reviewed available samples and built standard detections and a configuration extractor which can dump the C2 domain/URL.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220714-s8kg1shdbl">220714-s8kg1shdbl</a></li>
+<li><a href="https://tria.ge/220714-s81t1acbg5">220714-s81t1acbg5</a></li>
+<li><a href="https://tria.ge/220714-s886dacbg8">220714-s886dacbg8</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Analysis Log View</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/analysis-log-view/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 94</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-03/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 117: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-02-01/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 83</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-08-11/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

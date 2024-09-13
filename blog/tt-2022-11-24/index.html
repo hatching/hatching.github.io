@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-89.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-89.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 90</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 90</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-89.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-11-24T00:00:00Z">2022-11-24</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We&rsquo;re back today with another Triage Thursday update blogpost, this time covering updates for the last couple of weeks. Here is the full list of changes, with links to background writeups for the main additions:</p>
+<p>Deployed November 24th:</p>
+<ul>
+<li><a href="#strela">New signatures and configuration extractor for Strela stealer</a></li>
+<li><a href="#rekoobe">Improved signatures and configuration extractor for Rekoobe Linux trojan</a></li>
+<li><a href="#laplas">Added support for Laplas x86 variant</a></li>
+<li>Small fix for Gozi configuration extraction</li>
+<li>Small fix for njRAT configuration extraction to properly display multiple C2s as a list</li>
+<li>Updated <a href="https://hatching.io/blog/tt-2022-06-02/#colibri">Colibri</a> configuration extractor handle embedded RC4 key</li>
+<li><a href="https://twitter.com/reecdeep/status/1593534143274549250">Update for AgentTesla to extract Discord details when used as exfiltration channel</a> (Note: External link to Twitter)</li>
+<li>Update for Phorphiex configuration extractor for recent samples</li>
+<li>Updated Redline stealer fallback rules to improve coverage</li>
+</ul>
+<p>Deployed November 17th:</p>
+<ul>
+<li><a href="#bluefox">New signatures for Bluefox stealer</a></li>
+<li><a href="#tianyspy">New signatures for Tianyspy Android malware</a></li>
+<li>New signatures for Zeon ransomware</li>
+<li>New signatures for Royal ransomware</li>
+<li>New signatures for Venus ransomware</li>
+<li>New signatures and configuration extractor for Laplas clipper</li>
+<li>Updates for Vidar rules to detect recent samples</li>
+<li>Updates for IcedID rules to detect recent samples</li>
+<li>Updates for Amadey extractor to handle new string decryption algorithm</li>
+<li>Updates for Joker android malware to avoid false-positives and improve coverage</li>
+</ul>
+<p>As always you can contact us any time directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="strela">Strela Stealer</h2>
+<p>Earlier this month researchers at DCSO in Germany <a href="https://medium.com/@DCSO_CyTec/shortandmalicious-strelastealer-aims-for-mail-credentials-a4c3e78c8abc">published a report</a> on a previously undocumented stealer malware which they have named &lsquo;Strela&rsquo; based on the label of the main export function.</p>
+<p>It seems to have a narrower selection of targets than most modern infostealers, focusing entirely on data stored by the Outlook and Thunderbird email clients (text below is taken from the <a href="https://medium.com/@DCSO_CyTec/shortandmalicious-strelastealer-aims-for-mail-credentials-a4c3e78c8abc">DCSO blogpost</a>):</p>
+<blockquote>
+<p>For Thunderbird, StrelaStealer searches for <code>logins.json</code> and <code>key4.db</code> in the ``%APPDATA%\Thunderbird\Profiles` directory and sends the file contents to its C2.</p>
+<p>For Outlook, StrelaStealer enumerates the registry key <code>HKCU\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\</code> in order to find the values <code>IMAP User</code>, <code>IMAP Server</code> and <code>IMAP Password</code>. StrelaStealer then decrypts the IMAP Password using <code>CryptUnprotectData</code> before sending the triple to its C2.</p>
+</blockquote>
+<p>The samples themselves are not obfuscated, but do use simple XOR encryption for strings within them based on a hardcoded key.</p>
+<p>Unfortunately due to the DLLs using a specific named export function Triage will not automatically manage to run samples of this family. However we have added static detection and configuration extraction (to dump the C2 domain) to get around this and ensure appropriate scores are assigned.</p>
+<figure><img src="../../static/images/blog/tt-2022-11-24/strela.png">
+</figure>
+
+<p>To make the files run properly it would be necessary to use a custom script alongside the DLL, with the correct launch parameters defined. An example of this can be seen in <a href="https://tria.ge/221124-s79eragg91">this analysis</a> where we use a PowerShell script to call the <code>s</code> entry function. In the events we can then see the attempts to access Thunderbird and Outlook data. For more information on how to use scripts to manipulate launch conditions like this check out our old blogpost on <a href="https://hatching.io/blog/archive-submissions/">Submitting ZIP files</a>.</p>
+<figure><img src="../../static/images/blog/tt-2022-11-24/strela_2.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221124-s79eragg91">221124-s79eragg91</a> (with script to launch <code>s</code> function)</li>
+<li><a href="https://tria.ge/221124-s2dqwsgd7y">221124-s2dqwsgd7y</a></li>
+<li><a href="https://tria.ge/221124-s2eyysgd71">221124-s2eyysgd71</a></li>
+<li><a href="https://tria.ge/221124-s2g4bagd8t">221124-s2g4bagd8t</a></li>
+<li><a href="https://tria.ge/221124-s2jbdagd8w">221124-s2jbdagd8w</a></li>
+</ul>
+<h2 id="rekoobe">Rekoobe Linux Trojan</h2>
+<p>Rekoobe is an older Linux trojan/backdoor which has been around since at least 2015. It is generally associated with China&rsquo;s <a href="https://therecord.media/tag/apt31/">APT31</a> threat group (also known as RedBravo and Zirconium) who have used it as part of their attack chains for a number of different campaigns. Most recently it has been seen in use alongside a <a href="https://decoded.avast.io/davidalvarez/linux-threat-hunting-syslogk-a-kernel-rootkit-found-under-development-in-the-wild/">new Linux rootkit called Syslogk</a>.</p>
+<p>The malware is a fairly bare-bones trojan which provide a C2 channel and little else. Early versions had an embedded configuration file but <a href="https://www.intezer.com/blog/malware-analysis/linux-rekoobe-operating-with-new-undetected-malware-samples/">from around 2020</a> it seems that this has been replaced by simply hardcoding required values into the binaries directly.</p>
+<figure><img src="../../static/images/blog/tt-2022-11-24/rekoobe.png">
+</figure>
+
+<p>The malware is thought to be a fork of the older Tiny SHell trojan, which has been available open-source since around 2012. Improvements since the initial version mostly seem to relate to helping minimise detection, for example by removing a lot of the strings which were clear markers used for detection and by adding a function to rewrite <code>argv[0]</code> in an attempt to change the process name (reportedly used as an indicator by some forensics tools).</p>
+<p>We have added standard detections and an extractor to dump out the C2 IP and port numbers in use.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220911-szq87sbhd4">220911-szq87sbhd4</a></li>
+<li><a href="https://tria.ge/220911-spk97sfegr">220911-spk97sfegr</a></li>
+<li><a href="https://tria.ge/220911-sx3t8abhd2">220911-sx3t8abhd2</a></li>
+</ul>
+<h2 id="laplas">Laplas Clipper</h2>
+<p>Laplas was <a href="https://blog.cyble.com/2022/11/02/new-laplas-clipper-distributed-by-smokeloader/">reported by Cyble</a> at the start of November as a new stealer being distributed by the Smokeloader family. It is specifically targeted at theft of cryptocurrency and doesn&rsquo;t include the usual browser and email features, but does have an interested secondary function of intercepting Steam Trade URLs.</p>
+<p>The family is a clipper rather than a standard infostealer, meaning that it monitors the clipboard for copied text and if it detects cryptocurrency wallet addresses or Steam Trade URLs it will swap them out for predefined data set by the attacker. Thus if a user was copy/pasting the string to make a transaction the transfer will instead be made to the attacker and not the user&rsquo;s intended destination.</p>
+<p>Initial samples observed were based on .NET but according to the Tweet thread above it seems that there is also a Golang build which has been seen in some cases. The malware can be bought on a subscription model with options as low as $29 for a single day of use.</p>
+<p>Last week we added initial detections and configuration extraction for a couple of versions of the family, and then revisited it again this week to extend those rules to also cover x86 builds that we have seen since then.</p>
+<figure><img src="../../static/images/blog/tt-2022-11-24/laplas.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221124-t1lwjsae9x">221124-t1lwjsae9x</a></li>
+<li><a href="https://tria.ge/221124-t5ggmaah3y">221124-t5ggmaah3y</a></li>
+<li><a href="https://tria.ge/221124-t22ndsaf9t">221124-t22ndsaf9t</a></li>
+<li><a href="https://tria.ge/221124-t26x4sfd96">221124-t26x4sfd96</a></li>
+</ul>
+<h2 id="bluefox">BlueFox Stealer</h2>
+<p>BlueFox first appeared on forums in December 2021 but reportedly did not seem to gain a lot of traction with users at first. However <a href="https://blog.sekoia.io/bluefox-information-stealer-traffer-maas/">according to our friends over at Sekoia</a> in September this year version 2 of the family was released which seems to have attracted a lot more attention. The developer has published a few minor updates since then indicating that they are currently quite active and we should expect to see additional changes in future.</p>
+<p>The family is specifically aimed at <a href="https://blog.sekoia.io/traffers-a-deep-dive-into-the-information-stealer-ecosystem/">traffer</a> teams (centralised groups who monetise access via botnets/initial access brokers) with features intended to help with tracking team members activity in much the same way a sales team would want to track leads generated by each individual.</p>
+<p>According to <a href="https://blog.sekoia.io/bluefox-information-stealer-traffer-maas/">Sekoia&rsquo;s analysis</a> the family includes the following main features:</p>
+<ul>
+<li>Stealing passwords, cookies and autocomplete data from common browsers (Chromium and Firefox based browsers: Chrome, Edge, Opera, Mozilla, etc.)</li>
+<li>Targeting of almost all desktop cryptocurrency wallets and cryptocurrency wallets (MetaMask, TronLink, BinanceChain, Yoroi, Coinbase, Jaxx, Ethereum, Electrum, Exodus, etc.)</li>
+<li>Stealing data stored locally by password managers (Bitwarden, 1Password)</li>
+<li>File download and execution</li>
+<li>Exfiltration of files from the infected machine</li>
+<li>Screenshot capture</li>
+<li>System fingerprinting</li>
+</ul>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221124-vef9lsbe2s">221124-vef9lsbe2s</a></li>
+<li><a href="https://tria.ge/221124-vehgnsgb98">221124-vehgnsgb98</a></li>
+<li><a href="https://tria.ge/221124-vejdzabe2y">221124-vejdzabe2y</a></li>
+<li><a href="https://tria.ge/221124-veljbsbe3s">221124-veljbsbe3s</a></li>
+<li><a href="https://tria.ge/221124-vemfmabe3v">221124-vemfmabe3v</a></li>
+</ul>
+<h2 id="tianyspy-mobile-stealer">TianySpy Mobile Stealer</h2>
+<p>TianySpy was spotted <a href="https://www.trendmicro.com/en_us/research/22/a/tianyspy-malware-uses-smishing-disguised-as-message-from-telco.html">in September 2021</a> being used in smishing campaigns, seemingly trying to steal credentials for customers of Japanese telecommunications services. Interestingly the campaign was seen causing malware infections on both iPhones and Android devices which makes it an unusual family, as most mobile malware just sticks to the more vulnerable Android ecosystem. TianySpy was the family being deployed to Apple devices (though it does also have an Android version), with KeepSpy generally being used to Android victims.</p>
+<p><a href="https://www.trendmicro.com/en_us/research/22/a/tianyspy-malware-uses-smishing-disguised-as-message-from-telco.html">According to TrendMicro</a> the family has the ability to read WiFi settings; injecting into specific webpages to falsify and weaponise legitimate websites for telecommunications providers; steal web data via malicious JavaScript; exfiltrate stolen data; and load malicious websites directly.</p>
+<p>We have reviewed a number of Android samples and implemented initial detection for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/221124-vvwn8shb86">221124-vvwn8shb86</a></li>
+<li><a href="https://tria.ge/221124-vvytlacd6y">221124-vvytlacd6y</a></li>
+<li><a href="https://tria.ge/221124-vvz2nahb93">221124-vvz2nahb93</a></li>
+<li><a href="https://tria.ge/221124-vv2kgshb96">221124-vv2kgshb96</a></li>
+<li><a href="https://tria.ge/221124-vv4d3shb99">221124-vv4d3shb99</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Network Simulation and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-19/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Emotet Epoch 5 and other version updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-20/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 144: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 139: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-07-11/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-67.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-67.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Updates for ZLoader, Netwalker, QNodeService and WSHRAT</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Updates for ZLoader, Netwalker, QNodeService and WSHRAT</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-67.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-10-15T00:00:00Z">2020-10-15</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another entry in our weekly Triage Thursday blog series. We have some more family detection updates for you this week:</p>
+<ul>
+<li><a href="#zloader">Fix for ZLoader API hammering</a></li>
+<li><a href="#qnode">QNodeServiceTrojan family update</a></li>
+<li><a href="#netwalker">Netwalker ransomware review</a></li>
+<li><a href="#wshrat">WSHRAT signatures</a></li>
+</ul>
+<p>In other news, earlier this week <a href="https://twitter.com/LibraAnalysis">@LibraAnalysis</a> published a Java library for the Triage API! Big thanks to them for making this publicly available. Find more details <a href="https://maxkersten.nl/2020/10/14/hatching-triage-api-client-in-java/">in their blogpost</a> about the project.</p>
+<p>If you&rsquo;re looking for resources in other languages, don&rsquo;t forget you can find our official Python/GoLang libraries <a href="https://github.com/hatching/triage">on our GitHub</a>. We covered these in more detail in <a href="https://hatching.io/blog/tt-2020-10-01/">last week&rsquo;s blogpost</a>.</p>
+<p>We hope to have more news on some of the bigger features we&rsquo;re working on over the next few weeks. In the meantime keep that feedback coming! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account!</p>
+<hr>
+<h2 id="zloader">ZLoader API Hammering</h2>
+<p>While investigating some recent ZLoader samples which were evading our detection, we noticed that they were using an API hammering technique to create a huge number of events and overwhelm our agent. Initial samples were creating hundreds of thousands of mutex-related events, effectively triggering a denial of service on the kernel agent and preventing it from logging new events/processes.</p>
+<p>We have updated the Triage agent to filter events more effectively as they are generated, preventing the spam entries from being recorded in any logs or reports. This fixes the issue while also helping to keep analysis log sizes down.</p>
+<p>Since these initial samples we have observed other ZLoader analyses using different APIs for their spamming, mainly file creation. There are currently some remaining issues we are working to fix but the majority now function correctly and have successful configuration extraction.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201007-bq47zyvhf2/behavioral1#mutex">201007-bq47zyvhf2</a> - example from before the fix, showing the mutex actions (note: page might take a moment to load)
+<a href="https://tria.ge/201015-fye6cmvw2x">https://tria.ge/201015-fye6cmvw2x</a></li>
+<li><a href="https://tria.ge/201015-lpwpgvvlrx">201015-lpwpgvvlrx</a></li>
+</ul>
+<h2 id="qnode">QNodeService Trojan</h2>
+<p>This trojan family was first observed in early 2020. The malware itself is written using Node.js and is deployed using a Java dropper. It includes a range of stealer functionality including exfiltrating files, stealing data from installed software like browsers, and downloading additional content.</p>
+<p>We have updated our support for this family to cover additional variants based on numerous samples submitted through MalwareBazaar by abuse.ch. Some samples are linked below, and you can find many more on <a href="https://bazaar.abuse.ch/browse/signature/QNodeService/">MalwareBazaar</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201013-bbm61gxc82">201013-bbm61gxc82</a></li>
+<li><a href="https://tria.ge/201013-yx58axbpd2">201013-yx58axbpd2</a></li>
+<li><a href="https://tria.ge/201013-fxymagbgr6">201013-fxymagbgr6</a></li>
+<li><a href="https://tria.ge/201013-mrff78lts6">201013-mrff78lts6</a></li>
+</ul>
+<h2 id="netwalker">Netwalker Ransomware</h2>
+<p>Keeping up with constantly changing families can be tricky. It was recently brought to our attention that we had some conflicting detections around Netwalker/MailTo and variants of the family. We have reviewed our available samples and cleaned up/expanded the signatures to be more consistent.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201006-h5fjza9j9n">201006-h5fjza9j9n</a></li>
+<li><a href="https://tria.ge/201015-cnx7vgt4fa">201015-cnx7vgt4fa</a></li>
+<li><a href="https://tria.ge/201015-d11m2zjdgs">201015-d11m2zjdgs</a></li>
+</ul>
+<h2 id="wshrat">WSHRAT</h2>
+<p>WSHRAT is a trojan which has been around in various forms for several years. Early versions go back as far as 2013, and it has received regular updates and additions since then. Initially written in VBS, current versions generally use Javascript instead.</p>
+<p>As with many such RATs, the family is sold openly as a remote administration tool, claiming to only be intended to legitimate use. It has a range of capabilities including file upload/download, remote code execution and credential theft from installed browsers/email clients. It can also provide a full remote desktop connection to infected machines.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201015-wqwsna7afn">201015-wqwsna7afn</a></li>
+<li><a href="https://tria.ge/201015-maq58vrepn">201015-maq58vrepn</a></li>
+<li><a href="https://tria.ge/201009-pk6qvejm4e">201009-pk6qvejm4e</a></li>
+<li><a href="https://tria.ge/200710-ybcpwfddrn">200710-ybcpwfddrn</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Insights: Octo Android Banker</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-insights-ep1/">Read</a>
+        </li>
+      
+        <li>
+          <h3>New Year, New Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>UPX Unpacking and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-04-14/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 135: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-13/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

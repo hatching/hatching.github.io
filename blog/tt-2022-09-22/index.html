@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-85.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-85.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Ep. 86</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Triage Thursday Ep. 86</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-85.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-09-22T00:00:00Z">2022-09-22</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome to another Triage Thursday blogpost, where we go over all the main updates that have been deployed to the platform over the last week. Today we&rsquo;ve got several additions and changes to configuration extractors, while also expanding our coverage to some new families:</p>
+<ul>
+<li><a href="#erbium">New signatures and configuration extractor for Erbium stealer</a></li>
+<li><a href="#bughatch">New signatures and configuration extractor for BUGHATCH downloader</a></li>
+<li><a href="#zanubis">New signatures and configuration extractor for Zanubis Android banker</a></li>
+<li><a href="#irata">New signatures and configuration extractor for Irata Android RAT</a></li>
+<li><a href="#mars">Updates for a new variant of Marsstealer</a></li>
+<li><a href="#vidar">Updates for a new version of Vidar</a></li>
+<li><a href="#agenttesla">Fixes for AgentTesla configuration extractor to avoid incorrect output</a></li>
+</ul>
+<p>As always you can contact us any time directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="erbium">Erbium Stealer</h2>
+<p>Erbium stealer was first reported publicly by <a href="https://twitter.com/3xp0rtblog">@3xp0rtblog</a> in August 2022 and was brought to our attention by <a href="https://twitter.com/abuse_ch/status/1567126103159889920">Abuse.CH</a> not long after.</p>
+<p>There isn&rsquo;t too much information about the malware available in the community currently, but as usual it shares many features with other stealers. It starts off by gathering system information like hardware specifications, OS version/license details, user account information, etc. The samples then proceed to gather information from a wide range of different applications - although its focus seems to be on cryptocurrency wallets (looking for resources related to over 50 different wallet products) it also goes after the usual selection of web browsers, communication software (like Telegram and Discord), and other sensitive applications like FTP clients or the Steam gaming platform.</p>
+<p>Erbium is provided for sale on forums rather than being used by a single threat group, so actual attack vectors vary depending on the user and their preferred methods. Researchers have been able to find several web admin panels online for the family, and in some cases have been able to access these to see the contents.</p>
+<p>We&rsquo;ve built out detections based on a large number of available samples, and we have also added a configuration extractor which dumps out the hardcoded C2 information. Some examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-vfsc9sfgal">220922-vfsc9sfgal</a></li>
+<li><a href="https://tria.ge/220922-vfw2fsbhg6">220922-vfw2fsbhg6</a></li>
+<li><a href="https://tria.ge/220922-vf11eafgan">220922-vf11eafgan</a></li>
+<li><a href="https://tria.ge/220922-vf4rasfgaq">220922-vf4rasfgaq</a></li>
+<li><a href="https://tria.ge/220922-vga6dabhg7">220922-vga6dabhg7</a></li>
+</ul>
+<h2 id="bughatch">BUGHATCH Downloader</h2>
+<p>BUGHATCH is a malware downloader which was detected by the Elastic security team during a ransomware investigation in early 2022. In September they issued a <a href="https://www.elastic.co/security-labs/bughatch-malware-analysis">dedicated blogpost</a> that brought the family to our attention - we won&rsquo;t repeat all the technical details here, but their post includes a lot of useful information about the observed campaigns.</p>
+<p>The family itself is a fileless implant that is loaded directly into memory by a Powershell script, and includes quite a bit of advanced functionality. It is capable of elevating its permissions (using <code>SeDebugPrivilege</code>), and gathers a lot of information from an infected system before trying to deploy its intended payload. This includes stuff like: uptime (used to generate an encryption key for network communications rather then being an anti-VM technique); network interfaces; domain, username and image path of the current process; and Windows authentication tokens.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-22/bughatch.png">
+</figure>
+
+<p>Based on the findings reported by Elastic we have built out detections and a configuration extractor to dump the C2 information.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-vhg1bafgbj">220922-vhg1bafgbj</a></li>
+<li><a href="https://tria.ge/220922-vhr6aafgbk">220922-vhr6aafgbk</a></li>
+<li><a href="https://tria.ge/220922-vhwtgabhh6">220922-vhwtgabhh6</a></li>
+<li><a href="https://tria.ge/220922-vh1gnabhh7">220922-vh1gnabhh7</a></li>
+<li><a href="https://tria.ge/220922-vh5flsbhh8">220922-vh5flsbhh8</a></li>
+</ul>
+<h2 id="zanubis">Zanubis Android Banker</h2>
+<p>Zanubis is another recent addition to the threat landscape, being reported on in early September by Cyble (find their blogpost <a href="https://blog.cyble.com/2022/09/02/zanubis-new-android-banking-trojan/">here</a>). It is yet another banking trojan targeting Android devices, using overlay attacks to intercept and steal information being entered into legitimate applications.</p>
+<p>According to Cyble&rsquo;s analysis it mainly seems to focus on users in Peru, with the applications it tries to steal data from mainly relating to local banks and organisations (plus a couple of more general ones like WhatsApp and GMail). Notably the C2 commands they have identified are also in Spanish suggesting it was developed in the region.</p>
+<p>Interestingly the list of targets is not hardcoded into the samples like many other Android bankers, and is instead fetched from the C2 during runtime. This presumably enables it to stay up to date and expand its options without needing to update the whole app.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-22/zanubis.png">
+</figure>
+
+<p>We&rsquo;ve added general detections, plus a configuration extractor to dump out the C2 URL/IP in use. Some examples are below as usual.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-vk1v7scaa5">220922-vk1v7scaa5</a></li>
+<li><a href="https://tria.ge/220922-vlzdrsfgcp">220922-vlzdrsfgcp</a></li>
+<li><a href="https://tria.ge/220913-krtqcsfbc9">220913-krtqcsfbc9</a></li>
+</ul>
+<h2 id="irata">Irata Android RAT</h2>
+<p>Irata is a RAT/stealer for Android devices which spreads via SMS phishing from other infected devices. It targets Iranian users, imitating government service websites to lure victims into downloading a malicious application which then hoovers up credit card information and 2FA authentication codes. As a cherry on top the fake government websites also try to trick visitors into paying a fee for the pleasure of being infected.</p>
+<p>Once compromised the affected device is then turned into a bot which can further spread the infection using details received from the C2 server. According to <a href="https://onecert.ir/portal/blog/irata">analysis by OneCert</a> in Iran it can also hide its icon from the device, making it hard for a general user to locate and remove it once infected.</p>
+<figure><img src="../../static/images/blog/tt-2022-09-22/irata.png">
+</figure>
+
+<p>During our analysis we got hold of samples for several different versions, and have built out detection as fully as we can at this stage. As above we have also added a configuration extractor to dump the C2 information.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-vml5tscab5">220922-vml5tscab5</a></li>
+<li><a href="https://tria.ge/220922-vnvtcscac3">220922-vnvtcscac3</a></li>
+<li><a href="https://tria.ge/220922-vnz33sfgcr">220922-vnz33sfgcr</a></li>
+<li><a href="https://tria.ge/220922-vn5csscac4">220922-vn5csscac4</a></li>
+<li><a href="https://tria.ge/220922-vpajtafgdj">220922-vpajtafgdj</a></li>
+</ul>
+<h2 id="mars">MarsStealer</h2>
+<p>We first added support for MarsStealer back in <a href="https://hatching.io/blog/tt-2022-02-10/#mars">February this year</a>, but it goes back a bit further into the middle of 2021. It is promoted as having the ability to steal credentials from a wide range of web browsers as well as a large number of cryptocurrency wallets.</p>
+<p>The family leans heavily towards the cryptocurrency side if things - although it is not unusual to steal some of the more common wallets when available, Mars covers a significant number of products and can bypass some of the techniques used to secure them live on the infected machine.</p>
+<p>According to a <a href="https://3xp0rt.com/posts/mars-stealer">blogpost by the researcher 3xp0rt</a> Mars Stealer is an updated version of the old Oski trojan which was shut down by the developers back in mid-2020. According to them the code base is very similar but with a few notable additions, like the extra cryptocurrency functionality and some more anti-debugging/anti-analysis checks.</p>
+<p>We recently noticed a variant which was not being properly handled by our configuration extractor due to a difference in the way it stores C2 information versus the original samples we analysed. Where those used RC4 to encrypt it, this variant simply stores them in plaintext. We&rsquo;ve updated our extractor to handle both approaches.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-vp5pysfgdn">220922-vp5pysfgdn</a></li>
+<li><a href="https://tria.ge/220922-vqawzacac6">220922-vqawzacac6</a></li>
+<li><a href="https://tria.ge/220922-vqfr8afgdp">220922-vqfr8afgdp</a></li>
+<li><a href="https://tria.ge/220922-vqkq6scac9">220922-vqkq6scac9</a></li>
+<li><a href="https://tria.ge/220922-vq3lzsfgek">220922-vq3lzsfgek</a></li>
+</ul>
+<h2 id="vidar">Vidar</h2>
+<p>The Vidar family continues to receive more updates, so we&rsquo;re back with it again this week to update our rules to ensure the configuration extractor is properly triggered on the latest samples. The changes are fairly minor but should address the current issues.</p>
+<p>If you&rsquo;re not already familiar with Vidar we have covered it a few times on this blog, and there are many reports about it available online. You can find a brief overview from our <a href="https://hatching.io/blog/tt-2021-07-08/#vidar">blogpost from July 2021</a> where we initially introduced the configuration extractor.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220908-fwrdksdfh5">220908-fwrdksdfh5</a></li>
+<li><a href="https://tria.ge/220908-ptf99sefa2">220908-ptf99sefa2</a></li>
+<li><a href="https://tria.ge/220913-hkr7vaagap">220913-hkr7vaagap</a></li>
+<li><a href="https://tria.ge/220911-hh292abbc2">220911-hh292abbc2</a></li>
+<li><a href="https://tria.ge/220911-hj7wxabbc5">220911-hj7wxabbc5</a></li>
+</ul>
+<h2 id="agenttesla">AgentTesla</h2>
+<p>We recently received some feedback about our AgentTesla configuration extractor noting that in some cases C2 details were being incorrectly reported. AgentTesla has a few different options for exfiltrating data depending on the version, including FTP, SMTP and Telegram. In these particular cases the extractor was misidentifying one protocol for another and as such the actual output was invalid since it applied the wrong extraction algorithm.</p>
+<p>Based on the samples reported to us we have taken a look at the extractor and made some improvements which should address the issue. However with a family like AgentTesla it can be hard to ensure every permutation is covered, so if you come across and other issues please do let us know.</p>
+<p>Thanks to <a href="https://twitter.com/0xToxin">0xToxin</a> and others who reported the issue to us!</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220922-larecabad6">220922-larecabad6</a></li>
+<li><a href="https://tria.ge/220922-vt9vgafger">220922-vt9vgafger</a></li>
+<li><a href="https://tria.ge/220921-xj9g3aghe3">220921-xj9g3aghe3</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New Families and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-02-11/">Read</a>
+        </li>
+      
+        <li>
+          <h3>The Tech Behind Our PolySwarm Arbiter</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/first-polyswarm-arbiter-part-2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Knowledge Base</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 147: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-09-05/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

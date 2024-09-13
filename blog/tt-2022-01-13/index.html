@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-63.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-63.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Year, New Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Year, New Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-63.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2022-01-13T00:00:00Z">2022-01-13</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We&rsquo;re a little late, but happy New Year! We hope you had at least some chance to relax and have a break, whether that was celebrating Christmas yourself or just making the most of the peace and quiet without the rest of us getting in the way.</p>
+<p>Here at Hatching we&rsquo;re back up to full speed now, and some of our team have been working hard over the Christmas period to improve on detections and tick off some old todo items. In today&rsquo;s blogpost we&rsquo;ll go over the main changes and, as usual, provide some examples for you to check out yourself.</p>
+<p>In the news today:</p>
+<ul>
+<li><a href="#danabot">Updated for new Danabot version</a></li>
+<li><a href="#pseudo">Added new family detection for PseudoManuscrypt</a></li>
+<li><a href="#rook">Family detection for Rook ransomware</a></li>
+<li><a href="#modiloader">Updated Modiloader signatures</a></li>
+<li><a href="#arkei">Improved coverage for Arkei configuration extractor</a></li>
+<li><a href="#flagpro">New support for FlagPro family</a></li>
+<li><a href="#phoenix">Added detection for PhoenixStealer family</a></li>
+</ul>
+<p>If you discover any issues or missing detections while using Triage, please do send us feedback - it&rsquo;s a big help in deciding what we should be prioritising. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="danabot">Danabot</h2>
+<p>Danabot returns to the blog this week with a new version which required a few changes at our end. We mentioned the family in our <a href="https://hatching.io/blog/2021-review/#danabot">previous blogpost</a> as we expanded the fields dumped by our configuration extractor, and this new tweak sees changes to our background triggers to ensure that it works with the latest samples we&rsquo;ve observed.</p>
+<p>It&rsquo;s only a minor change, but it should mean that all samples are correctly dumped. As usual we&rsquo;ll continue to monitor for any new variants which may interfere with results and will provide updates as needed.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220106-qkhmeabcd2">220106-qkhmeabcd2</a></li>
+</ul>
+<h2 id="pseudo">PseudoManuscrypt</h2>
+<p>PseudoManuscrypt was reported by Kaspersky in December 2021 as a new threat they had been monitoring for some time. According <a href="https://ics-cert.kaspersky.com/reports/2021/12/16/pseudomanuscrypt-a-mass-scale-spyware-attack-campaign/">to their report</a> they initially detected it around June of that year.</p>
+<p>The malware itself is a stealer with an extensive feature set. It is reported to be quite similar to the older Manuscrypt malware used by the Lazarus APT and this is where it draws its name from. However Kaspersky do not suggest that this family is also associated with Lazarus for a couple of key reasons, the main one being that it does not appear to have been used in the targeted attacks normally associated with these kinds of groups. Instead it seems to be deployed more generally via compromised downloads for pirated software, and has also been dropped by the Glupteba botnet which similarly makes use of dodgy downloads for its initial infection.</p>
+<p>Functionality for the family is varied and comprehensive, essentially giving an attacker full remote control over the infected machine. <a href="https://ics-cert.kaspersky.com/reports/2021/12/16/pseudomanuscrypt-a-mass-scale-spyware-attack-campaign/">According to Kaspersky</a>, it includes built-in support for &ldquo;stealing VPN connection data, logging keypresses, capturing screenshots and videos of the screen, recording sound with the microphone, stealing clipboard data and operating system event log data &hellip;, and much more&rdquo;.</p>
+<p>The team has taken a look at many samples made available by Kaspersky and have implemented initial detections for the family.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211224-m9tt7achej">211224-m9tt7achej</a></li>
+<li><a href="https://tria.ge/211224-m9t5yschek">211224-m9t5yschek</a></li>
+<li><a href="https://tria.ge/211224-m9t5yseaa7">211224-m9t5yseaa7</a></li>
+<li><a href="https://tria.ge/211224-m9t5yseaa8">211224-m9t5yseaa8</a></li>
+<li><a href="https://tria.ge/211224-m9vfqaeaa9">211224-m9vfqaeaa9</a></li>
+</ul>
+<h2 id="rook">Rook Ransomware</h2>
+<p>Rook is a relatively new ransomware family that was first observed around November 2021 by researcher <a href="https://twitter.com/techyteachme/status/1464317136944435209">Zack Allen</a>.</p>
+<p>It has been reported by several analysts since that Rook has a significant code overlap with Babuk, whose source code was leaked in the middle of last year. However it&rsquo;s by no means just a simple case of copying, as it has a number of changes over its predecessor and seems mostly to have cherry-picked certain sections of the code rather than the overall program. It is not particularly stealthy however, opening up a visible command line terminal at execution and leveraging a driver used by Process Hacker to help with disabling certain protections.</p>
+<p>As with most modern ransomware, the family attempts to exfiltrate data from infected network before encryption to be used as leverage in ransom negotiations.</p>
+<p>A full write up of Rook is available from SentinelOne on their blog <a href="https://www.sentinelone.com/labs/new-rook-ransomware-feeds-off-the-code-of-babuk/">here</a>. We have reviewed a number of samples and created some initial detections to classify it properly.</p>
+<p>Interestingly, Rook&rsquo;s successor appears to have appeared already. The NightSky ransomware was observed right at the start of 2022 and although initially identified as a separate project, is now thought to be a new version of Rook using VMProtect and with some under-the-hood changes and improvements. We&rsquo;ll be taking a look at this family in the coming weeks so watch for updates there.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211130-1ghhcagfdr">211130-1ghhcagfdr</a></li>
+<li><a href="https://tria.ge/220111-w33m7agfg9">220111-w33m7agfg9</a></li>
+</ul>
+<h2 id="modiloader">ModiLoader</h2>
+<p>ModiLoader, also known as DBatLoader or NatsoLoader, is a dropper first observed in June 2020. It is a 2 stage loader, and has been observed deploying Formbook, Netwire, and Remcos trojans.</p>
+<p>We added detections for it not long after it was spotted, and these have lasted well up until now. However we recently spotted a newer variant which wasn&rsquo;t being handled properly so have revisited the family to address that. We have also taken the opportunity to review our signatures for it generally and have made some improvements there which we hope will see us through another 18 months.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220111-ttnfssgear">220111-ttnfssgear</a></li>
+<li><a href="https://tria.ge/220104-wfqp4shfgj">220104-wfqp4shfgj</a></li>
+<li><a href="https://tria.ge/211213-y3trdseca7">211213-y3trdseca7</a></li>
+<li><a href="https://tria.ge/211213-sn2kssdgd7">211213-sn2kssdgd7</a></li>
+<li><a href="https://tria.ge/211210-rwallsacdm">211210-rwallsacdm</a></li>
+</ul>
+<h2 id="arkei">Arkei Stealer</h2>
+<p>Arkei and its younger brother Vidar were something of a regular appearance on this blog through the second half of 2021, with a new configuration extractor being added <a href="https://hatching.io/blog/2021-10-14-triage-thursday/#arkei">back in October</a> and a number of tweaks being made since to address new versions/variants.</p>
+<p>Although not hugely common on its own these days Arkei has led to multiple forks of the original project which have been quite successful in their own right, and the family itself is still regularly used in the wild. The Vidar and Baldr infostealer families were both developed from the source code of Arkei.</p>
+<p>As with the previous appearances, it returns to the news this week with some configuration extractor updates for a new variant spotted on Triage since the start of 2022. Examples are provided below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/220110-m49y8aeebq">220110-m49y8aeebq</a></li>
+<li><a href="https://tria.ge/220110-pt27qseeeq">220110-pt27qseeeq</a></li>
+<li><a href="https://tria.ge/220110-q6r3zaefbl">220110-q6r3zaefbl</a></li>
+<li><a href="https://tria.ge/220103-lnnwdahfan">220103-lnnwdahfan</a></li>
+<li><a href="https://tria.ge/220101-q66w5ahfg9">220101-q66w5ahfg9</a></li>
+</ul>
+<h2 id="flagpro">FlagPro</h2>
+<p>FlagPro is a new payload spotted in late December 2021. It has been linked to the Chinese state APT group called BlackTech, which is generally considered to be engaged in cyber espionage against foreign companies.</p>
+<p>The malware is mainly aimed at network discovery and then deployment of additional payloads. It uses Windows commands to analyse the system and any networks it is associated with and transmit the findings to its C2 infrastructure, which can then send back additional commands to run or a payload to fetch and install.</p>
+<p>It is reportedly mainly distributed via crafted, targeted phishing emails against companies. So far it has mostly gone after organisations in Taiwan and Japan, but based on language support within the samples it appears to also be able to target English-speaking users. Based on the report by NTT Security, it is likely that the family has been in use in some form since around October 2020 - about a year before being reported openly.</p>
+<p>A full writeup can be found by NTT Security in Japan <a href="https://insight-jp.nttsecurity.com/post/102hf3q/flagpro-the-new-malware-used-by-blacktech">here</a>. Some samples are provided below for reference.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210721-3fc9s711mx">210721-3fc9s711mx</a></li>
+<li><a href="https://tria.ge/211230-qxdtzsfhf8">211230-qxdtzsfhf8</a></li>
+<li><a href="https://tria.ge/211230-qxyt6afhg2">211230-qxyt6afhg2</a></li>
+<li><a href="https://tria.ge/211230-qxyt6aedhq">211230-qxyt6aedhq</a></li>
+<li><a href="https://tria.ge/211230-3svcdsehdk">211230-3svcdsehdk</a></li>
+</ul>
+<h2 id="phoenixstealer">PhoenixStealer</h2>
+<p>PhoenixStealer - not to be confused with Phoenix Keylogger which we&rsquo;ve covered <a href="https://hatching.io/blog/tt-2020-10-29/#phoenix">on this blog before</a> - is a new C++ infostealer pointed out on Twitter back in November 2021.</p>
+<p>We observed a few samples on Triage around that time, but in general it doesn&rsquo;t seem to have taken off as a widely used solution. However we have reviewed the family and implemented detections anyway, and if we see it start popping up more in the future we may revisit it for improvements and/or a proper configuration extractor as relevant.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/211024-xfr4lsfhaj">211024-xfr4lsfhaj</a></li>
+<li><a href="https://tria.ge/211101-qhs1csegel">211101-qhs1csegel</a></li>
+<li><a href="https://tria.ge/211101-qjdbashhf9">211101-qjdbashhf9</a></li>
+<li><a href="https://tria.ge/211101-m1ptwaeecm">211101-m1ptwaeecm</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>New UI, TOR support, and detection updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-06-10/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 128: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-04-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Preview of Phishing Analysis</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-03-25/">Read</a>
+        </li>
+      
+        <li>
+          <h3>SAML Release and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-05-05/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

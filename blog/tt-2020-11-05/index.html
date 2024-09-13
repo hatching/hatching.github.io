@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-36.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-36.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Mitre ATT&amp;CK Matrix UI</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Mitre ATT&amp;CK Matrix UI</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-36.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-11-05T00:00:00Z">2020-11-05</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series and our latest set of updates. It&rsquo;s a shorter post this week - our main update has been a new interface for displaying Mitre ATT&amp;CK techniques, which now appear clearly on the main report page instead of in the details for individual signatures.</p>
+<p>We also have updates for some families:</p>
+<ul>
+<li><a href="#regretlocker">RegretLocker ransomware</a></li>
+<li><a href="#jigsaw">Jigsaw ransomware v315</a></li>
+<li><a href="#phorphiex">Phorphiex Loader/Worm</a></li>
+</ul>
+<p>Stay tuned for more major updates coming in the next few weeks - we&rsquo;re working on lots of awesome features which we hope to be able to show you soon.</p>
+<p>Not signed up yet? Visit <a href="https://tria.ge/signup">https://tria.ge/signup</a> to sign up for a free account!</p>
+<h2 id="updated-mitre-attck-matrix">Updated Mitre ATT&amp;CK Matrix</h2>
+<p>We&rsquo;ve been looking at ways we can make the Mitre ATT&amp;CK information more accessible, and this week we have released a new view for the TTPs in analyses. This is designed to more closely relate to the official matrix and give easier access to more information for the various techniques.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-05/mitre_matrix.png">
+</figure>
+
+<p>Instead of being hidden away in the signatures, all TTPs are now displayed in one place matched up to the stages defined by the Mitre Matrix. Selecting a technique will take you directly to the relevant description page on the Mitre website.</p>
+<h2 id="regretlocker">RegretLocker Ransomware</h2>
+<p>The new <a href="https://x.com/malwrhunterteam/status/1321375502179905536">RegretLocker</a> ransomware was first reported at the end of October by <a href="https://twitter.com/malwrhunterteam">@MalwareHunterTeam</a>.</p>
+<p>We have added behavioural detection based on this sample and will update as needed if the family sticks around. The ransom note is also quite short and was not being picked up by our parser, so this has also been updated so that it is dumped correctly.</p>
+<pre><code>Hello, friend.
+All your files were encrypted.
+If you want to restore them, please email us : petro@ctemplar.com
+
+Your hash:
+</code></pre>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201102-qebnyska7j">201102-qebnyska7j</a></li>
+</ul>
+<h2 id="jigsaw">Jigsaw Ransomware</h2>
+<p>Jigsaw has been around since 2016, named for the wallpaper of Billy the Puppet from the Saw films which it initially deployed to encrypted systems. It gained attention for its unique mechanism of gradually deleting user files if the ransom wasn&rsquo;t paid promptly, using it as threat to encourage payment. Restarting or deleting the main executable also triggers the deletion of 1000 files from the system.</p>
+<p>A new sample recently reported on Twitter by <a href="https://twitter.com/siri_urz">@siri_urz</a> no longer uses the Saw imagery but retains the file deletion mechanism.</p>
+<p>We have extended our signatures for Jigsaw to detect the family correctly. Note that this family does not drop a ransomnote, instead giving the user instructions via an interactive interface which is part of the ransomware executable.</p>
+<p>The analyses below also feature an anti-VM technique which prevents full execution without manual interaction. A fake error message is displayed, for example warning about the installed .NET version, and a user must click OK and close the dialog for execution to proceed and files to be encrypted.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-05/fake_error.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201105-hj6s8pwrks">201105-hj6s8pwrks</a></li>
+<li><a href="https://tria.ge/201105-wwra1hx6zn">201105-wwra1hx6zn</a></li>
+<li><a href="https://tria.ge/201105-d4pfdbrzjs">201105-d4pfdbrzjs</a></li>
+</ul>
+<h2 id="phorphiex">Phorphiex Loader</h2>
+<p>Phorphiex is a worm and loader which infects systems in order to deploy additional malware, such as ransomware, stealer or cryptocurrency miners. It also incorporates machines into the Trik botnet (not to be confused with Trickbot), which is a network of infected computers used for large scale phishing and bruteforce attacks to infect more hosts.</p>
+<p>The family itself has been distributed in a number of forms over the years, mainly scripting formats such as .js files in email attachments. We recently noticed samples being reported on Twitter by <a href="https://twitter.com/58_158_177_102">@moto_sato</a> which were distributed as screensaver (.SCR) files.</p>
+<p>We have gathered what samples we can of this family and implemented detection. However if the C2 is inactive the malware doesn&rsquo;t carry out many actions, so we will continue to keep an eye on the family for anything not covered by our signatures and update them as needed.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201103-yqdbwpye9x">201103-yqdbwpye9x</a></li>
+<li><a href="https://tria.ge/201105-qhajlp5p1e">201105-qhajlp5p1e</a></li>
+<li><a href="https://tria.ge/201105-yhb3bs35rs">201105-yhb3bs35rs</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 85</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-09-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 134: Ubuntu 22.04, RedHat Linux, and French Language Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-06/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 145: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-08-22/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Windows 11, TheHive Integration, and Family Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-08-12/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

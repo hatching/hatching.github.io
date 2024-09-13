@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-47.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-47.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Family Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>Family Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-47.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-11-26T00:00:00Z">2020-11-26</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>We didn&rsquo;t publish a Triage Thursday blog last week, but we&rsquo;re back today with another set of updates to show you. We&rsquo;ve made changes to a few different areas this week. As usual we&rsquo;ll briefly go over the changes and link to some examples in this blogpost.</p>
+<p>Also, in case you missed it, we released <a href="/blog/triage-for-linux">Linux analysis support earlier this week</a>.</p>
+<ul>
+<li><a href="#search">Search feature updates</a></li>
+<li><a href="#qakbot">Updated Qakbot handling</a></li>
+<li><a href="#icedid">Updated IcedID detection</a></li>
+<li><a href="#hancitor">Hancitor family detection and configuration extractor</a></li>
+<li><a href="#pyinstaller">Static PyInstaller detection</a></li>
+<li><a href="#xmrig">XMRig cryptocurrency miner detection</a></li>
+<li><a href="#fakeav">Updated FakeAV detection</a></li>
+<li><a href="#pdf">General PDF dropper techniques</a></li>
+<li><a href="#cryptone">Updated detection of CryptOne packer</a></li>
+</ul>
+<p>If you find any issues or come across samples which aren&rsquo;t behaving the way you expect, please do send us feedback! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<hr>
+<h2 id="search">Search Term Updates</h2>
+<p>Over recent weeks have been deploying minor tweaks and updates to the Triage Search function, and today we have pushed another which adds some new filter options.</p>
+<h3 id="filter-by-analysis-score">Filter by analysis score</h3>
+<p>Previously a search for analyses which have scores within a range of values required a chain of <code>AND score:</code> filters. To simplify this we have updated it to also support a range value. For example <code>score:6-10</code>.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-26/search_score.png">
+</figure>
+
+<h3 id="filter-samples-with-extracted-configurations">Filter samples with extracted configurations</h3>
+<p>For some families our configuration extractors do not cover all variants, especially older ones. To help find only those analyses which have a configuration associated we have added the boolean filter <code>config</code>. This can be used in conjunction with logic operators like <code>AND</code> or <code>NOT</code> to combine it with other filters. For example</p>
+<pre><code>family:emotet AND config
+
+
+NOT config AND score:9-10
+</code></pre>
+<figure><img src="../../static/images/blog/tt-2020-11-26/search_config.png">
+</figure>
+
+<h2 id="qakbot">Updated Qakbot Handling</h2>
+<p>Yesterday we observed some new Qakbot samples which were not being handled correctly by our signatures and configuration extractor. Some minor changes to the binary structure were causing issues with the parser and returning no results. We have taken a look at them over the last 24 hours and extended our extractor to dump them correctly. A few examples can be found below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201126-1nz9s6f1nx">201126-1nz9s6f1nx</a></li>
+<li><a href="https://tria.ge/201125-fn8l6qafcs">201125-fn8l6qafcs</a></li>
+<li><a href="https://tria.ge/201125-ed679f8pg6">201125-ed679f8pg6</a></li>
+<li><a href="https://tria.ge/201125-nlyz3s6ktj">201125-nlyz3s6ktj</a></li>
+</ul>
+<h2 id="icedid">Updated IcedID Signatures</h2>
+<p>IcedID, often known as Bokbot, is a banking trojan which steals financial information from infected machines. It has been around in the wild since 2017, and has consistently targeted <a href="https://securityintelligence.com/posts/breaking-the-ice-a-deep-dive-into-the-icedid-banking-trojans-new-major-version-release/">business users in North America</a> in industries associated with finance and ecommerce.</p>
+<p>The malware includes the ability to carry out Man-In-The-Middle attacks against browsers to intercept banking credentials, and can also be a dropper for additional modules and payloads.</p>
+<p>We recently <a href="https://hatching.io/blog/tt-2020-10-29/#regsvr">updated Triage</a> to support executing DLL files with <code>regsvr32.exe</code> instead of <code>rundll32.exe</code>, and IcedID was one of the families affected by this change. We have now added identification for the family itself, using behavioural and static detections.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201124-ess7e2rmle">201124-ess7e2rmle</a></li>
+<li><a href="https://tria.ge/201124-88zt947xtx">201124-88zt947xtx</a></li>
+<li><a href="https://tria.ge/201119-5nq2lbgg8x">201119-5nq2lbgg8x</a></li>
+</ul>
+<h2 id="hancitor">Hancitor Configuration Extractor</h2>
+<p>Hancitor is a dropper/loader which has been around since 2014. It is sold by the developers for others to use in their campaigns, and is generally deployed through phishing emails.</p>
+<p>We have added detection for the family to Triage. Some variants of the family also now have a configuration extractor which dumps the botnet campaign ID and C2 information.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-26/hancitor_extractor.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200715-2sf2hqrd7x">200715-2sf2hqrd7x</a></li>
+<li><a href="https://tria.ge/201014-bzt48wbbj6">201014-bzt48wbbj6</a></li>
+<li><a href="https://tria.ge/201022-74sedtblss">201022-74sedtblss</a></li>
+<li><a href="https://tria.ge/201028-c6y5j3whn6">201028-c6y5j3whn6</a></li>
+</ul>
+<h2 id="pyinstaller">Static PyInstaller Detection</h2>
+<p><a href="https://www.pyinstaller.org/">PyInstaller</a> is a legitimate packaging program for Python executables. It is designed to ensure cross-platform compatibility and to minimise file sizes with compression.</p>
+<p>These features make it a useful tool for malware authors trying to get their software past detection, and ensure it runs on as many systems as possible. We have added static Yara detection for PyInstaller to mark samples which make use of it. We do not consider it to be an indicator of malicious intent on its own as it is primarily used in a wide range of legitimate software, but it will show a low-score result in the static report and assign the analysis with a tag which can be used in Search queries.</p>
+<figure><img src="../../static/images/blog/tt-2020-11-26/tag_pyinstaller.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201124-6hr6gmxmaj">201124-6hr6gmxmaj</a></li>
+<li><a href="https://tria.ge/201124-q3tfajscv2">201124-q3tfajscv2</a></li>
+</ul>
+<h2 id="xmrig">XMRig Cryptocurreny Miners</h2>
+<p><a href="https://xmrig.com/">XMRig</a> is an open-source cryptocurrency miner which is widely used legitimately. It is cross-platform and can make use of the CPU and/or GPU, making it also appealing to malware authors looking for a robust miner to install onto infected machines.</p>
+<p>Again, this is not something we consider malicious on its own but we have added static detection of the tool so that it is easier to identify and find analyses which involve it. These will be assigned <code>miner</code> tag to help with finding similar analyses through Search (this will also be assigned by any other miners we add detection for), and they will also be marked with the <code>XMRig</code> family tag.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200509-9mgqkb9xn6">200509-9mgqkb9xn6</a></li>
+<li><a href="https://tria.ge/200811-8q4fq2yyya">200811-8q4fq2yyya</a></li>
+<li><a href="https://tria.ge/200510-dz18eg1lgs">200510-dz18eg1lgs</a></li>
+<li><a href="https://tria.ge/200509-zz761pyqnx">200509-zz761pyqnx</a></li>
+<li><a href="https://tria.ge/201110-g77fp73tjj">201110-g77fp73tjj</a></li>
+</ul>
+<h2 id="fakeav">Improved FAKEAV Detection</h2>
+<p>FAKEAV, also known as RogueAntivirus, is more of a PUP than true malware. It spams fake anti-virus notifications to the victim trying to panic them into paying for supposed anti-virus software to fix their PC, but it doesn&rsquo;t exhibit other behaviour beyond its persistence mechanisms and various registry modifications to access the Windows notifications system.</p>
+<p>Triage has previously supported detection of FAKEAV, but we have recently reviewed some additional samples and updated our rules to cover more variations.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201108-2nsrs957ke">201108-2nsrs957ke</a></li>
+<li><a href="https://tria.ge/201108-cm8vq2t2w2">201108-cm8vq2t2w2</a></li>
+<li><a href="https://tria.ge/201108-mnckpgycdx">201108-mnckpgycdx</a></li>
+</ul>
+<h2 id="pdf">General PDF Dropper Techniques</h2>
+<p>Based on our reviews on recent samples we have added some static detection methods for PDFs, intended to catch general behaviours which are generally associated with droppers.</p>
+<p>These are not linked to particular families, and are intended to provide users with more useful information in the report. In general these are not associated with high scores, as they are all legitimate components of the PDF format, but we believe them to be worth reporting during analysis. Some basic examples can be seen below.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201125-jzwvhx7rln">201125-jzwvhx7rln</a></li>
+<li><a href="https://tria.ge/201120-lb6jraydrs">201120-lb6jraydrs</a></li>
+</ul>
+<h2 id="cryptone">Updated CryptOne Packer Detection</h2>
+<p>Back in October we added static detection for the CryptOne packer, which has been used in conjunction with families such as WastedLocker and ZLoader.</p>
+<p>We recently noticed some new samples of the family which had small differences in their code which evaded our original rules. Updated signatures have now been deployed to cover these variations.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201123-hewhgqgc46">201123-hewhgqgc46</a></li>
+<li><a href="https://tria.ge/201122-6x1at779dj">201122-6x1at779dj</a></li>
+<li><a href="https://tria.ge/201123-nn191jmxse">201123-nn191jmxse</a></li>
+<li><a href="https://tria.ge/201124-cgz7ehbljs">201124-cgz7ehbljs</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 85</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-09-15/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Thursday Ep. 81</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-07-21/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 135: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-06-13/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 127: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-04-11/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-38.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-38.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New UI Features and Additions to Family Detections</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New UI Features and Additions to Family Detections</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-38.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-01-21T00:00:00Z">2021-01-21</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to our Triage Thursday blog series, and another week of updates! The main things on the menu today are improvements to the Triage web interface which we hope will improve your experience using the platform and make information more accessible.</p>
+<p>As usual we also have family updates to expand and improve detection. Read on below for more information on all of the changes:</p>
+<ul>
+<li><a href="#droppedfiles">Directly submit dropped files from analysis reports</a></li>
+<li><a href="#dns">DNS queries now show the source process</a></li>
+<li><a href="#organization">Show Submitter name in Organization Samples view</a></li>
+<li><a href="#overview">Updated Overview report section to show signature summary</a></li>
+<li><a href="#dark">New dark mode for the web interface</a></li>
+<li><a href="#qakbot">Automatic handling of anti-VM measures used by Qakbot</a></li>
+<li><a href="#gozi">Review of Gozi/Ursnif family signatures</a></li>
+<li><a href="#emotet">Emotet extractor update</a></li>
+<li><a href="#icedid">New configuration extractor for IcedID/BokBot</a></li>
+<li><a href="#xenarmor">Signatures for XenArmor Suite</a></li>
+<li><a href="#velgax">Family detection for Velgax RAT</a></li>
+<li><a href="#ransomnotes">Improved handling of non-Latin characters in ransom notes</a></li>
+</ul>
+<p>If you have any feedback on Triage or particular samples please do get in touch! You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="droppedfiles">Directly submit dropped files from analysis reports</h2>
+<p>A feature that has been commonly requested through feedback is the ability to submit a file dropped by a sample as a new analysis, without having to manually download and reupload the file. We&rsquo;re pleased to say that this is now available on Triage - valid files which appear in the Download list of a report can be submitted with a single click.</p>
+<figure><img src="../../static/images/blog/tt-2021-01-21/dropped_files.png">
+</figure>
+
+<p>The Submit button will take you to the profile selection page where you can configure the analysis just the same as with any file upload submission.</p>
+<h2 id="dns">Updated DNS view to show source process</h2>
+<p>We&rsquo;ve pushed a small tweak to our Network report section, adding the name of the source process to DNS queries shown in the UI. This should help with relating activity to particular aspects of an analysis.</p>
+<figure><img src="../../static/images/blog/tt-2021-01-21/dns_both.png">
+</figure>
+
+<p>Our network section will be seeing more significant changes in the future as we look to review and improve the information made available there, so if you have any particular suggestions for this part of Triage please feel free to send them to us through the Feedback feature.</p>
+<h2 id="organization">Show name of submitter in Organization view tab</h2>
+<p><strong>Note: this is only relevant for Private Cloud users and is not available through the public tria.ge server.</strong></p>
+<p>For users of Private Cloud installations of Triage, Organizations can be configured to group users and provide shared access to samples owned by subsets of the registered accounts.</p>
+<p>Based on feedback from our users, we have added a column to the <code>Organization Samples</code> section which shows the user that submitted the sample. Note that this is only displayed on the Organization tab, and thus is not visible to anyone not also within that group.</p>
+<figure><img src="../../static/images/blog/tt-2021-01-21/submitter.png">
+</figure>
+
+<h2 id="overview">Updated Overview tab for each analysis</h2>
+<p>Back <a href="https://hatching.io/blog/tt-2020-09-17/">in September</a> we added a new Overview section to analysis reports. This brought together score and verdict information from all tasks that make up an analysis to provide a quick-glance summary of findings.</p>
+<p>With our latest update we have updated this to also include a summary of high-scoring signatures from the sub-tasks. Informational signatures will not be shown here, but these are still available on the relevant behavioural report page.</p>
+<figure><img src="../../static/images/blog/tt-2021-01-21/overview.png">
+</figure>
+
+<h2 id="dark">New Dark Mode for the web interface</h2>
+<p>We all know that the next question after &ldquo;can it run Doom?&rdquo; is &ldquo;does it have dark mode?&rdquo;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Well now Triage does!</p>
+<figure><img src="../../static/images/blog/tt-2021-01-21/darkmode.png">
+</figure>
+
+<p>You can find the new setting on the <a href="https://tria.ge/account">Account</a> page.</p>
+<h2 id="qakbot">Automatic handling of Qakbot anti-VM techniques</h2>
+<p>Qakbot has long had issues with detection stemming from anti-VM techniques which are difficult to reliably defeat from the sandbox side. Although a simple mechanism, its checks of the sample&rsquo;s filename have been tricky to circumvent in an environment where we allow users to submit with whatever file name they choose. Forcing a different filename never seemed like a practical solution due to the mismatch that would then occur between the expected system activity and how it would actually appear, potentially causing some confusion and issues with automated parsing of output.</p>
+<p>We have now found a workaround which resolves most of these issues and allows for far more reliable detection of Qakbot in a sandbox environment. We have been improving and updating many of our dumping strategies (which dictate how memory/process dumps are taken for further analysis) over recent weeks, and as part of this we are now able to dump the Qakbot payload at an earlier stage of execution and successfully identify and extract it from there.</p>
+<p>This should mean that in the future Qakbot detection will be far less dependant on the way in which it was submitted. As usual we&rsquo;ll be monitoring the family going forward and will continue making improvements if needed.</p>
+<h2 id="gozi">Review of Gozi/Ursnif signatures</h2>
+<p>The Gozi/Ursnif family is quite a messy collection of variants and forks which are regularly updated. We have been carrying out a review of the signatures we have implemented over time for the family&rsquo;s variants, as well as revisiting our naming conventions based on more recent reports and findings.</p>
+<p>As such, in future the <code>Ursnif</code> family tag will be replaced with <code>Gozi</code>. This is intended to bring it more in line with the more common naming conventions used in the industry, as well as being technically more accurate for certain samples.</p>
+<p>We have also updated the detections and the configuration extractor to be more reliable and handle more variants correctly. This is now available on tria.ge.</p>
+<h2 id="emotet">Updated Emotet extractor</h2>
+<p>Earlier this week Emotet was at it again, with another version appearing which got around our configuration extractors.</p>
+<p>The change was relatively minor but was evading our Yara rules which trigger the family extractor. We quickly tweaked the rules and this &lsquo;variant&rsquo; is now also fully supported.</p>
+<p>We&rsquo;re sure this won&rsquo;t be the last time we mention Emotet in these blogposts, but we view it as a priority and will continue pushing rapid updates for future changes. Thanks to everyone who reports broken analyses like these to us - it&rsquo;s a great help with getting fixes out quickly.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210120-jthd68vaqj">210120-jthd68vaqj</a></li>
+</ul>
+<h2 id="icedid">New configuration extractor for IcedId/BokBot</h2>
+<p>IcedID, also commonly known as BokBot, is a banking trojan which has been active since late 2017. It is <a href="https://blog.cyberint.com/icedid-stealer-man-in-the-browser-banking-trojan">relatively advanced</a>, containing a wide range of functionality including:</p>
+<ul>
+<li>Anti-VM/anti-debugging measures</li>
+<li>Web injection/man-in-the-browsers</li>
+<li>Full remote access</li>
+<li>VNC module for live control of the infected system</li>
+</ul>
+<p>IcedID has often been seen deployed by Emotet campaigns, mainly targeting financial organisations.</p>
+<p>Triage has had signatures to identify IcedID for some, but we are now fleshing this out further with a new configuration extractor which dumps basic C2 information.</p>
+<figure><img src="../../static/images/blog/tt-2021-01-21/icedid.png">
+</figure>
+
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210121-qqz8wv28w6">210121-qqz8wv28w6</a></li>
+</ul>
+<h2 id="xenarmor">Signatures for XenArmor Suite usage</h2>
+<p>XenArmor is a set of legitimate utilities related to password recovery. We have recently observed them being deployed by malware such as the BitRat family as a 3rd party tool for stealing system credentials.</p>
+<p>As such we have now added signatures to report when utilities from this suite are detected being loaded onto the VM. Although not themselves malicious it seems fair to consider their presence an indicator of compromise.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210111-ctnm1dlqhx">210111-ctnm1dlqhx</a></li>
+</ul>
+<h2 id="velgax">Family detection for Velgax RAT</h2>
+<p>Velgax is a new RAT we have observed which appears to be forked from the Quasar RAT codebase. It has been built with additional capabilities over its older brother, featuring support for extra commands once installed on a system. Rather than just classify it as Quasar, we have named it Velgax based on the mutex it creates and report it as such for clarity.</p>
+<p>We&rsquo;ll continue to keep an eye on this for further development over time.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210113-c1g9srxafs">210113-c1g9srxafs</a></li>
+</ul>
+<h2 id="ransomnotes">Updated ransom note parsing</h2>
+<p>We recently noticed a Conti ransomware sample where the ransomnote was not being successfully extracted due to Cycrillic characters being used in place of certain Latin characters they happen to resemble. To resolve this we have added a simple &rsquo;normalisation&rsquo; process for the contents of dumped text files to help our extractor identify valid ransom notes.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210121-3mlv3q5jpj">210121-3mlv3q5jpj</a></li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>We may have made this up.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>A Year of Excel 4.0 Macros</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2020-12-17/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Kbs</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/kb/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Triage Insights: Octo Android Banker</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/triage-insights-ep1/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Why We Want More Arbiters</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/why-we-want-more-arbiters/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

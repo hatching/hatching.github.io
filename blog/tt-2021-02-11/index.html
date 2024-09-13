@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-23.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-23.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>New Families and Detection Updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom theme-light">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Thursday</h5>
+        
+        <h2>New Families and Detection Updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-23.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2021-02-11T00:00:00Z">2021-02-11</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <p>Welcome back to another Triage Thursday blogpost! This week we have a collection of family tweaks and updates to introduce:</p>
+<ul>
+<li><a href="#cobalt">Review of CobaltStrike</a></li>
+<li><a href="#gozi">Tweaked Gozi Configuration Extractor</a></li>
+<li><a href="#cryptbot">Updated CryptBot signatures</a></li>
+<li><a href="#ostap">Updated Ostap rules</a></li>
+<li><a href="#sload">Updated SLoad signatures</a></li>
+<li><a href="#tinba">Updated Tinba signatures</a></li>
+</ul>
+<p>We have also added detections for several new families that weren&rsquo;t previously supported:</p>
+<ul>
+<li><a href="#hellokitty">HelloKitty Ransomware</a></li>
+<li><a href="#systembc">SystemBC</a></li>
+<li><a href="#glupteba">Glupteba</a></li>
+<li><a href="#kpot">KPOT Stealer</a></li>
+<li><a href="#vjw0rm">VjW0rm</a></li>
+<li><a href="#hiverat">HiveRAT</a></li>
+<li><a href="#sectoprat">SectopRAT</a></li>
+<li><a href="#strrat">STRRAT</a></li>
+<li><a href="#blacknet">BlackNET</a></li>
+<li><a href="#runningrat">RunningRAT</a></li>
+</ul>
+<p>If you have any comments, suggestions or other feedback about Triage feel free to get in touch with us. You can reach us directly <a href="https://hatching.io/">through the website</a>, <a href="https://twitter.com/hatching_io">on Twitter</a>, or using the Feedback option on an analysis report page.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge">tria.ge</a> to register for a free account.</p>
+<h2 id="cobalt">CobaltStrike Review</h2>
+<p>We have carried out an extensive review of CobaltStrike payloads in order to review our detections and add detail to the extracted IoCs. Some samples have also been incorrectly triggering Metasploit detections instead, and today&rsquo;s updates also address this.</p>
+<p>Alongside the family review, we have also created a new extractor for the family which can obtain the malware&rsquo;s stager from the reflective DLL loader.</p>
+<figure><img src="../../static/images/blog/tt-2021-02-11/cobaltstrike_config.png">
+</figure>
+
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210203-xqdc1s37rn">210203-xqdc1s37rn</a></li>
+<li><a href="https://tria.ge/210203-l7gxbpmxls">210203-l7gxbpmxls</a></li>
+</ul>
+<h2 id="cryptbot">Updated CryptBot Signatures</h2>
+<p>CryptBot is an info-stealer which was first seen in the wild in early 2019, and has been active fairly constantly since then. It is often distributed bundled alongside legitimate software which acts as its lure, often affecting users who have downloaded cracked versions of common programs.</p>
+<p>Signatures for the family were added to Triage early on, but over time it has accumulated minor changes and differences that have made those detections less reliable. We reviewed the family taking into account more recent samples, and have pushed updated detections.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210101-ydatejtcj6">210101-ydatejtcj6</a></li>
+<li><a href="https://tria.ge/210101-gnf7dwq5wx">210101-gnf7dwq5wx</a></li>
+<li><a href="https://tria.ge/201225-ttf1j86v6n">201225-ttf1j86v6n</a></li>
+<li><a href="https://tria.ge/201203-p9cfx4whpa">201203-p9cfx4whpa</a></li>
+<li><a href="https://tria.ge/201203-c1g84z59w2">201203-c1g84z59w2</a></li>
+</ul>
+<h2 id="gozi">Updated Gozi Configuration Extractor</h2>
+<p>We have covered some updates to Triage&rsquo;s Gozi family detection and extractor <a href="https://hatching.io/blog/tt-2021-02-04/">in recent blogposts</a>, and this week we have made some more minor changes to improve the information that is displayed.</p>
+<p>The configuration extractor for Gozi RM3 will no include fields for the <strong>URL path</strong> of the main C2 server and the <strong>locale</strong> settings defined in the malware which will halt its execution if detected on the system. We have also add a <code>server_id</code> field for all Gozi variants, to aid with campaign/version tracking.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210205-lmm8e3abda">210205-lmm8e3abda</a></li>
+<li><a href="https://tria.ge/210211-3ttsec2j32">210211-3ttsec2j32</a></li>
+</ul>
+<h2 id="ostap">Updated Ostap Signatures</h2>
+<p>Ostap is a JavaScript downloader which has been around for several years. Triage has included family detection for some time, but based on recent submissions to Triage we have reviewed and updated it to better support the current versions.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201203-34zxrv862j">201203-34zxrv862j</a></li>
+<li><a href="https://tria.ge/210201-gn2z1a6yhe">210201-gn2z1a6yhe</a></li>
+<li><a href="https://tria.ge/201006-atyeqxyfmn">201006-atyeqxyfmn</a></li>
+<li><a href="https://tria.ge/201006-696kpg4dpx">201006-696kpg4dpx</a></li>
+</ul>
+<h2 id="sload">Updated sLoad Signatures</h2>
+<p>sLoad is a loader family which has been used in campaigns since 2018. It came to prominence in 2020 after releasing a new and more effective version known as sLoad 2.0.</p>
+<p>We introduced family signatures for the sLoad family back in <a href="https://hatching.io/blog/tt-2020-09-24/#sload">September last year</a>, but as usual changes have meant that these have become less effective over time. We have reviewed recent samples and updated our detections, and added static detection to act as a fallback if a sample does not run fully for any reason.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210111-63kw6gpz7j">210111-63kw6gpz7j</a></li>
+<li><a href="https://tria.ge/201130-hvly2vhsjs">201130-hvly2vhsjs</a></li>
+<li><a href="https://tria.ge/201123-tcqt2tttye">201123-tcqt2tttye</a></li>
+<li><a href="https://tria.ge/201123-m56x24578n">201123-m56x24578n</a></li>
+<li><a href="https://tria.ge/201123-74ry3th6la">201123-74ry3th6la</a></li>
+<li><a href="https://tria.ge/201123-5h9cfn9wsn">201123-5h9cfn9wsn</a></li>
+</ul>
+<h2 id="tinba">Updated Tinba Signatures</h2>
+<p>The Tiny Banker Trojan, or Tinba for short, is a trojan targeting financial information which has been around since at least 2012. As the name suggests, initially it was designed to be as small and discreet as possible, although functionality has been added in the years since.</p>
+<p>The source for Tinba was leaked around the time it was initially discovered by the anti-malware community, meaning that it has seen many new versions and spinoffs over the years and has stayed reasonably active. We have updated Triage&rsquo;s detection for the family to take the recent variants into account.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201117-4mcd293zca">201117-4mcd293zca</a></li>
+<li><a href="https://tria.ge/201117-831jh698pj">201117-831jh698pj</a></li>
+<li><a href="https://tria.ge/201117-az9z7fh2f6">201117-az9z7fh2f6</a></li>
+<li><a href="https://tria.ge/201117-dtyhx8zs3x">201117-dtyhx8zs3x</a></li>
+<li><a href="https://tria.ge/201117-m6x3aywdj2">201117-m6x3aywdj2</a></li>
+</ul>
+<h2 id="hellokitty">Initial HelloKitty Ransomware Signatures</h2>
+<p>HelloKitty has been around since late 2020, having achieved its first publicly disclosed breach against a Brazilian power company in November. It recently rose to fame after <a href="https://www.bleepingcomputer.com/news/security/hellokitty-ransomware-behind-cd-projekt-red-cyberattack-data-theft/">reportedly compromising the large game studio CD Projekt Red</a> this week.</p>
+<p>We have obtained some older samples of the family and added initial family signatures to classify it correctly. We are currently looking at improving this with other detection methods to cover the modern versions, and will be keeping an eye on developments to ensure our detection stays up to date.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201118-4lq83cnnxs">201118-4lq83cnnxs</a></li>
+<li><a href="https://tria.ge/210209-36824yd1l2">210209-36824yd1l2</a></li>
+</ul>
+<h2 id="systembc">New SystemBC Family Signatures</h2>
+<p>SystemBC is a proxy malware and RAT which has been deployed on its own and in conjuction with other threats. It  includes remote access features like file download and remote command execution, as well as secure C2 communications. Initial versions handled this via a SOCKS5 proxy, but this has since been replaced by use of the Tor network.</p>
+<p>This week we have added detection for the family to Triage, including both behavioural signatures and static rules.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201214-72qzpyctx2">201214-72qzpyctx2</a></li>
+<li><a href="https://tria.ge/201201-159fq8bewa">201201-159fq8bewa</a></li>
+<li><a href="https://tria.ge/201129-7zy2lhx2rs">201129-7zy2lhx2rs</a></li>
+<li><a href="https://tria.ge/201128-yp7q24tp9j">201128-yp7q24tp9j</a></li>
+<li><a href="https://tria.ge/201128-7s6f8xmqga">201128-7s6f8xmqga</a></li>
+</ul>
+<h2 id="glupteba">New Glupteba Family Signatures</h2>
+<p>Glupteba is a malicious remote access tool with a range of advanced capabilities to help it evade detection and target multiple different types of devices on a compromised network, including <a href="https://nakedsecurity.sophos.com/2020/06/24/glupteba-the-bot-that-gets-secret-messages-from-the-bitcoin-blockchain/">common routers</a> and other Linux devices.</p>
+<p>The family has been around for a long time, with initial reports going back to 2011. We have examined recent samples and implemented family detection for them, and will continue to update them if required by future changes.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201017-fhe81yfg22">201017-fhe81yfg22</a></li>
+<li><a href="https://tria.ge/200827-552yb8gkke">200827-552yb8gkke</a></li>
+<li><a href="https://tria.ge/200725-d96h3a6x3n">200725-d96h3a6x3n</a></li>
+</ul>
+<h2 id="kpot">New KPOT Stealer Family Signatures</h2>
+<p>KPOT is an infostealer which mainly targets locally stored credentials from things like web browser, email clients and instant messengers. It was first observed in <a href="https://www.cyber.nj.gov/threat-center/threat-profiles/exploit-kit-variants/kpot-stealer">September 2018</a>, and in 2019 released a new version referred to as KPOT v2.0.</p>
+<p>In late 2020 <a href="https://www.zdnet.com/article/revil-ransomware-gang-acquires-kpot-malware/">it was reported</a> that the REvil ransomware group had bought the source code for KPOT at an auction held on hacking forums.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><a href="https://tria.ge/200707-nzlfzyt29x">200707-nzlfzyt29x</a></li>
+</ul>
+<h2 id="vjw0rm">New VjW0rm Family Signatures</h2>
+<p>Vjw0rm is a worm which can infect removable storage devices which are connected to an infected system, using this as a mechanism to spread further. It also has remote access and infostealer capabilities, able to receive commands from a C2 server and harvest data from local applications.</p>
+<p>The code for Vjw0rm is publicly available free of charge, meaning that it is extremely accessible and has seen widespread use since it was reported in 2019. The malware is modular, giving users a lot of flexibility in the type of attacks they carry out, ranging from acting as a zombie for DDoS attacks to more typical information stealing.</p>
+<p>The fact that this worm is open source means that we will likely see many variants of it develop, but we have built Triage detections based on recently observed samples and will continue to update them as required.</p>
+<ul>
+<li><a href="https://tria.ge/210131-m1f19a6wya">210131-m1f19a6wya</a></li>
+<li><a href="https://tria.ge/210131-k7djjmpzjs">210131-k7djjmpzjs</a></li>
+<li><a href="https://tria.ge/210118-fka9p7xvqx">210118-fka9p7xvqx</a></li>
+<li><a href="https://tria.ge/210117-hh6jad1qbe">210117-hh6jad1qbe</a></li>
+<li><a href="https://tria.ge/210114-sfl2j2wlgn">210114-sfl2j2wlgn</a></li>
+</ul>
+<h2 id="hiverat">New HiveRAT Family Signatures</h2>
+<p>HiveRAT is a remote admin tool and stealer which was reported in mid-2020 by <a href="https://twitter.com/James_inthe_box/status/1278385889685598208">@James_inthe_box</a> on Twitter.</p>
+<p>It includes common stealer behaviour, such as stealing stored browser credentials and targeting messaging clients like Discord.</p>
+<p>We have reviewed samples observed on Triage and implemented family detection.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201201-b4k57571mn">201201-b4k57571mn</a></li>
+<li><a href="https://tria.ge/201109-ly4xl49sps">201109-ly4xl49sps</a></li>
+<li><a href="https://tria.ge/201105-8lhrre6d56">201105-8lhrre6d56</a></li>
+<li><a href="https://tria.ge/201022-cxcnhy84b2">201022-cxcnhy84b2</a></li>
+</ul>
+<h2 id="sectoprat">New SectopRAT Family Signatures</h2>
+<p>SectopRAT was first reported on Twitter back in November 2019 by <a href="https://twitter.com/malwrhunterteam/status/1195288774957244416">@malwrhunterteam</a>.</p>
+<p>The RAT contains some unusual stealer tactics, including the ability to stream the system&rsquo;s desktop to a remote server. Most notably though it also has the ability to create a 2nd desktop which is hidden from the system&rsquo;s user, and is then able to launch and control web browsers through this session including disabling security restrictions.</p>
+<p>The initial version was thought to be a testing build, as it did not include any particularly malicious behaviour besides basic profiling of an infected system. However in early 2020 a sample was observed which appears to be a new, weaponised, version of the family.</p>
+<p>We have reviewed the available samples and implemented family detection for them.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210110-q3s2qpa8sa">210110-q3s2qpa8sa</a></li>
+<li><a href="https://tria.ge/210110-lxvqw5yqrj">210110-lxvqw5yqrj</a></li>
+<li><a href="https://tria.ge/210110-46g6m63t8j">210110-46g6m63t8j</a></li>
+<li><a href="https://tria.ge/210110-2lrq6lr4ln">210110-2lrq6lr4ln</a></li>
+<li><a href="https://tria.ge/210109-ejf6gnw1te">210109-ejf6gnw1te</a></li>
+</ul>
+<h2 id="strrat">New STRRAT Family Signatures</h2>
+<p>STRRAT is a family built in Java which acts as a stealer and remote backdoor. It was first reported in mid-2020, observed stealing credentials through direct file access and keylogging. It was also <a href="https://securityintelligence.com/news/new-malware-crimson-ransomware/">reported to include</a> a fake &lsquo;ransomware&rsquo; module, which added the <code>.crimson</code> extension to files - no actual encryption took place however.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/210113-has8hwr7fa">210113-has8hwr7fa</a></li>
+<li><a href="https://tria.ge/201128-xwdac4rr76">201128-xwdac4rr76</a></li>
+<li><a href="https://tria.ge/201118-8cwkg4vaha">201118-8cwkg4vaha</a></li>
+<li><a href="https://tria.ge/201104-sw3mtjzhb2">201104-sw3mtjzhb2</a></li>
+</ul>
+<h2 id="blacknet">New BlackNet Family Signatures</h2>
+<p>BlackNet RAT appeared in early 2020, <a href="https://blog.malwarebytes.com/threat-analysis/2020/03/fake-corona-antivirus-distributes-blacknet-remote-administration-tool/">exploiting CoronaVirus-based lures</a> to encourage people to download and install the application. Once installed it has a wide array of stealer and trojan activities it can perform including DDoS attacks, capturing screenshots, stealing stored browser data and cryptocurrency wallets, and keylogging.</p>
+<p>It has seen consistent updates since it&rsquo;s initial discovery, with a report at the end of 2020 <a href="https://labs.k7computing.com/?p=21365">listing the current version as v3.7</a>.</p>
+<p><strong>Analyses:</strong></p>
+<ul>
+<li><a href="https://tria.ge/201205-l4l9pd71qe">201205-l4l9pd71qe</a></li>
+<li><a href="https://tria.ge/200917-npye4zvrks">200917-npye4zvrks</a></li>
+<li><a href="https://tria.ge/200917-w2zxh52ls6">200917-w2zxh52ls6</a></li>
+<li><a href="https://tria.ge/201022-wnccgvbew2">201022-wnccgvbew2</a></li>
+<li><a href="https://tria.ge/201109-3fyklnqg4j">201109-3fyklnqg4j</a></li>
+</ul>
+<h2 id="runningrat">New RunningRAT Family Signatures</h2>
+<p>RunningRAT is an implant associated with the OlympicDestroyer campaign against the 2018 Winter Olympics in Pyeongchang. The core functionality of the RAT <a href="https://www.mcafee.com/blogs/other-blogs/mcafee-labs/gold-dragon-widens-olympics-malware-attacks-gains-permanent-presence-on-victims-systems/">is reported to be keylogging</a>, although it was also noted to contain code for additional functionality which did not appear to be in use.</p>
+<ul>
+<li><a href="https://tria.ge/210211-b3vr83s2n2">210211-b3vr83s2n2</a></li>
+<li><a href="https://tria.ge/201227-yzvphwjjge">201227-yzvphwjjge</a></li>
+<li><a href="https://tria.ge/201227-3993hhxgh6">201227-3993hhxgh6</a></li>
+<li><a href="https://tria.ge/201226-wcd7ymx7qa">201226-wcd7ymx7qa</a></li>
+<li><a href="https://tria.ge/201225-mytsvdfp8x">201225-mytsvdfp8x</a></li>
+</ul>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Triage Thursday Ep. 98</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2023-08-31/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Backend Updates and Family Detection Improvements</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2021-12-09/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Ep. 115: Triage Thursday</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2024-01-18/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Analysis on Locky dropper mechanisms</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/locky-dropper/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>

